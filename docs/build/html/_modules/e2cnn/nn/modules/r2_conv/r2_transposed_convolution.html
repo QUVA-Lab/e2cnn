@@ -1,0 +1,759 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>e2cnn.nn.modules.r2_conv.r2_transposed_convolution &mdash; e2cnn 0.1 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../../../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../../../" src="../../../../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../../../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../../../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../../../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../../../../_static/language_data.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script type="text/x-mathjax-config">MathJax.Hub.Config({"TeX": {"Macros": {"bold": ["{\\bf #1}", 1], "R": "{\\mathbb R}", "N": "{\\mathbb N}", "Z": "{\\mathbb Z}", "Ind": ["{\\operatorname{Ind}_{#1}^{#2}}", 2], "Res": ["{\\operatorname{Res}_{#1}^{#2}}", 2], "GL": ["{\\operatorname{GL}(#1)}", 1], "E": ["{\\operatorname{E}(#1)}", 1], "SE": ["{\\operatorname{SE}(#1)}", 1], "O": ["{\\operatorname{O}(#1)}", 1], "SO": ["{\\operatorname{SO}(#1)}", 1], "U": ["{\\operatorname{U}(#1)}", 1], "D": ["{\\operatorname{D}_{#1}}", 1], "C": ["{\\operatorname{C}_{#1}}", 1], "DN": "{\\operatorname{D}_{\\!N}}", "CN": "{\\operatorname{C}_{\\!N}}"}}})</script>
+    
+    <script type="text/javascript" src="../../../../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../../_static/custom.css" type="text/css" />
+    <link rel="index" title="Index" href="../../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../../../index.html" class="icon icon-home"> e2cnn
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.1
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Package Reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../api/e2cnn.group.html">e2cnn.group</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../api/e2cnn.group.html#groups">Groups</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../api/e2cnn.group.html#representations">Representations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../api/e2cnn.group.html#utility-functions">Utility Functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../api/e2cnn.group.html#subpackages">Subpackages</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../api/e2cnn.kernels.html">e2cnn.kernels</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../api/e2cnn.kernels.html#abstract-classes">Abstract Classes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../api/e2cnn.kernels.html#kernel-bases">Kernel Bases</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../api/e2cnn.kernels.html#bases-for-group-actions-on-the-plane">Bases for Group Actions on the Plane</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../api/e2cnn.gspaces.html">e2cnn.gspaces</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../api/e2cnn.gspaces.html#abstract-group-space">Abstract Group Space</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../api/e2cnn.gspaces.html#group-actions-on-the-plane">Group Actions on the Plane</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../api/e2cnn.nn.html">e2cnn.nn</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../api/e2cnn.nn.html#main-classes">Main Classes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../api/e2cnn.nn.html#utils">Utils</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../api/e2cnn.nn.html#planar-convolution">Planar Convolution</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../api/e2cnn.nn.html#non-linearities">Non Linearities</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../api/e2cnn.nn.html#invariant-maps">Invariant Maps</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../api/e2cnn.nn.html#pooling">Pooling</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../api/e2cnn.nn.html#normalization">Normalization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../api/e2cnn.nn.html#dropout">Dropout</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../api/e2cnn.nn.html#other-modules">Other Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../api/e2cnn.nn.html#module-e2cnn.nn.init">Weight Initialization</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../../index.html">e2cnn</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../../../../index.html">Module code</a> &raquo;</li>
+        
+      <li>e2cnn.nn.modules.r2_conv.r2_transposed_convolution</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for e2cnn.nn.modules.r2_conv.r2_transposed_convolution</h1><div class="highlight"><pre>
+<span></span>
+<span class="kn">from</span> <span class="nn">torch.nn.functional</span> <span class="k">import</span> <span class="n">conv_transpose2d</span>
+
+<span class="kn">from</span> <span class="nn">e2cnn.nn</span> <span class="k">import</span> <span class="n">init</span>
+<span class="kn">from</span> <span class="nn">e2cnn.nn</span> <span class="k">import</span> <span class="n">FieldType</span>
+<span class="kn">from</span> <span class="nn">e2cnn.nn</span> <span class="k">import</span> <span class="n">GeometricTensor</span>
+<span class="kn">from</span> <span class="nn">e2cnn.gspaces</span> <span class="k">import</span> <span class="o">*</span>
+
+<span class="kn">from</span> <span class="nn">..equivariant_module</span> <span class="k">import</span> <span class="n">EquivariantModule</span>
+
+<span class="kn">from</span> <span class="nn">.basisexpansion</span> <span class="k">import</span> <span class="n">BasisExpansion</span>
+<span class="kn">from</span> <span class="nn">.basisexpansion_blocks</span> <span class="k">import</span> <span class="n">BlocksBasisExpansion</span>
+
+<span class="kn">from</span> <span class="nn">typing</span> <span class="k">import</span> <span class="n">Callable</span><span class="p">,</span> <span class="n">Union</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">,</span> <span class="n">List</span>
+<span class="kn">from</span> <span class="nn">collections</span> <span class="k">import</span> <span class="n">defaultdict</span>
+
+<span class="kn">import</span> <span class="nn">torch</span>
+<span class="kn">from</span> <span class="nn">torch.nn</span> <span class="k">import</span> <span class="n">Parameter</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">scipy</span> <span class="k">import</span> <span class="n">stats</span>
+<span class="kn">import</span> <span class="nn">math</span>
+
+
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;R2ConvTransposed&quot;</span><span class="p">]</span>
+
+
+<div class="viewcode-block" id="R2ConvTransposed"><a class="viewcode-back" href="../../../../../api/e2cnn.nn.html#e2cnn.nn.R2ConvTransposed">[docs]</a><span class="k">class</span> <span class="nc">R2ConvTransposed</span><span class="p">(</span><span class="n">EquivariantModule</span><span class="p">):</span>
+    
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
+                 <span class="n">in_type</span><span class="p">:</span> <span class="n">FieldType</span><span class="p">,</span>
+                 <span class="n">out_type</span><span class="p">:</span> <span class="n">FieldType</span><span class="p">,</span>
+                 <span class="n">kernel_size</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+                 <span class="n">padding</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>
+                 <span class="n">output_padding</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>
+                 <span class="n">stride</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>
+                 <span class="n">dilation</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>
+                 <span class="n">groups</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>
+                 <span class="n">bias</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+                 <span class="n">basisexpansion</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;blocks&#39;</span><span class="p">,</span>
+                 <span class="n">sigma</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">float</span><span class="p">],</span> <span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+                 <span class="n">frequencies_cutoff</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="n">Callable</span><span class="p">[[</span><span class="nb">float</span><span class="p">],</span> <span class="nb">int</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+                 <span class="n">rings</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+                 <span class="n">maximum_offset</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+                 <span class="n">recompute</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+                 <span class="n">basis_filter</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[[</span><span class="nb">dict</span><span class="p">],</span> <span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+                 <span class="p">):</span>
+        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        </span>
+<span class="sd">        Transposed G-steerable planar convolution layer.</span>
+<span class="sd">        </span>
+<span class="sd">        .. warning ::</span>
+<span class="sd">            </span>
+<span class="sd">            Transposed convolution can produce artifacts which can harm the overall equivariance of the model.</span>
+<span class="sd">            We suggest using :class:`~e2cnn.nn.R2Upsampling` combined with :class:`~e2cnn.nn.R2Conv` to perform</span>
+<span class="sd">            upsampling.</span>
+<span class="sd">        </span>
+<span class="sd">        .. seealso ::</span>
+<span class="sd">            For additional information about the parameters and the methods of this class, see :class:`e2cnn.nn.R2Conv`.</span>
+<span class="sd">            The two modules are essentially the same, except for the type of convolution used.</span>
+<span class="sd">            </span>
+<span class="sd">        Args:</span>
+<span class="sd">            in_type (FieldType): the type of the input field</span>
+<span class="sd">            out_type (FieldType): the type of the output field</span>
+<span class="sd">            kernel_size (int): the size of the filter</span>
+<span class="sd">            padding(int, optional): implicit zero paddings on both sides of the input. Default: ``0``</span>
+<span class="sd">            output_padding(int, optional): implicit zero paddings on both sides of the input. Default: ``0``</span>
+<span class="sd">            stride(int, optional): the stride of the convolving kernel. Default: ``1``</span>
+<span class="sd">            dilation(int, optional): the spacing between kernel elements. Default: ``1``</span>
+<span class="sd">            groups (int, optional): number of blocked connections from input channels to output channels.</span>
+<span class="sd">                                    Default: ``1``.</span>
+<span class="sd">            bias (bool, optional): Whether to add a bias to the output (only to fields which contain a</span>
+<span class="sd">                    trivial irrep) or not. Default ``True``</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">assert</span> <span class="n">in_type</span><span class="o">.</span><span class="n">gspace</span> <span class="o">==</span> <span class="n">out_type</span><span class="o">.</span><span class="n">gspace</span>
+        <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">in_type</span><span class="o">.</span><span class="n">gspace</span><span class="p">,</span> <span class="n">GeneralOnR2</span><span class="p">)</span>
+
+        <span class="nb">super</span><span class="p">(</span><span class="n">R2ConvTransposed</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">space</span> <span class="o">=</span> <span class="n">in_type</span><span class="o">.</span><span class="n">gspace</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">in_type</span> <span class="o">=</span> <span class="n">in_type</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">out_type</span> <span class="o">=</span> <span class="n">out_type</span>
+        
+        <span class="bp">self</span><span class="o">.</span><span class="n">kernel_size</span> <span class="o">=</span> <span class="n">kernel_size</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">stride</span> <span class="o">=</span> <span class="n">stride</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dilation</span> <span class="o">=</span> <span class="n">dilation</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">padding</span> <span class="o">=</span> <span class="n">padding</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">output_padding</span> <span class="o">=</span> <span class="n">output_padding</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">groups</span> <span class="o">=</span> <span class="n">groups</span>
+
+        <span class="k">if</span> <span class="n">groups</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="c1"># Check the input and output classes can be split in `groups` groups, all equal to each other</span>
+            <span class="c1"># first, check that the number of fields is divisible by `groups`</span>
+            <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">in_type</span><span class="p">)</span> <span class="o">%</span> <span class="n">groups</span> <span class="o">==</span> <span class="mi">0</span>
+            <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">out_type</span><span class="p">)</span> <span class="o">%</span> <span class="n">groups</span> <span class="o">==</span> <span class="mi">0</span>
+            <span class="n">in_size</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">in_type</span><span class="p">)</span> <span class="o">//</span> <span class="n">groups</span>
+            <span class="n">out_size</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">out_type</span><span class="p">)</span> <span class="o">//</span> <span class="n">groups</span>
+            
+            <span class="c1"># then, check that all groups are equal to each other, i.e. have the same types in the same order</span>
+            <span class="k">assert</span> <span class="nb">all</span><span class="p">(</span><span class="n">in_type</span><span class="o">.</span><span class="n">representations</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">==</span> <span class="n">in_type</span><span class="o">.</span><span class="n">representations</span><span class="p">[</span><span class="n">i</span> <span class="o">%</span> <span class="n">in_size</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">in_type</span><span class="p">)))</span>
+            <span class="k">assert</span> <span class="nb">all</span><span class="p">(</span><span class="n">out_type</span><span class="o">.</span><span class="n">representations</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">==</span> <span class="n">out_type</span><span class="o">.</span><span class="n">representations</span><span class="p">[</span><span class="n">i</span> <span class="o">%</span> <span class="n">out_size</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">out_type</span><span class="p">)))</span>
+            
+            <span class="c1"># finally, retrieve the type associated to a single group in input.</span>
+            <span class="c1"># this type will be used to build a smaller kernel basis and a smaller filter</span>
+            <span class="c1"># as in PyTorch, to build a filter for grouped convolution, we build a filter which maps from one input</span>
+            <span class="c1"># group to all output groups. Then, PyTorch&#39;s standard convolution routine interpret this filter as `groups`</span>
+            <span class="c1"># different filters, each mapping an input group to an output group.</span>
+            <span class="n">in_type</span> <span class="o">=</span> <span class="n">in_type</span><span class="o">.</span><span class="n">index_select</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">in_size</span><span class="p">)))</span>
+        
+        <span class="k">if</span> <span class="n">bias</span><span class="p">:</span>
+            <span class="c1"># bias can be applied only to trivial irreps inside the representation</span>
+            <span class="c1"># to apply bias to a field we learn a bias for each trivial irreps it contains</span>
+            <span class="c1"># and, then, we transform it with the change of basis matrix to be able to apply it to the whole field</span>
+            <span class="c1"># this is equivalent to transform the field to its irreps through the inverse change of basis,</span>
+            <span class="c1"># sum the bias only to the trivial irrep and then map it back with the change of basis</span>
+            
+            <span class="c1"># count the number of trivial irreps</span>
+            <span class="n">trivials</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">out_type</span><span class="p">:</span>
+                <span class="k">for</span> <span class="n">irr</span> <span class="ow">in</span> <span class="n">r</span><span class="o">.</span><span class="n">irreps</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">out_type</span><span class="o">.</span><span class="n">fibergroup</span><span class="o">.</span><span class="n">irreps</span><span class="p">[</span><span class="n">irr</span><span class="p">]</span><span class="o">.</span><span class="n">is_trivial</span><span class="p">():</span>
+                        <span class="n">trivials</span> <span class="o">+=</span> <span class="mi">1</span>
+            
+            <span class="c1"># if there is at least 1 trivial irrep</span>
+            <span class="k">if</span> <span class="n">trivials</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+                
+                <span class="c1"># matrix containing the columns of the change of basis which map from the trivial irreps to the</span>
+                <span class="c1"># field representations. This matrix allows us to map the bias defined only over the trivial irreps</span>
+                <span class="c1"># to a bias for the whole field more efficiently</span>
+                <span class="n">bias_expansion</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">out_type</span><span class="o">.</span><span class="n">size</span><span class="p">,</span> <span class="n">trivials</span><span class="p">)</span>
+                
+                <span class="n">p</span><span class="p">,</span> <span class="n">c</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span>
+                <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">out_type</span><span class="p">:</span>
+                    <span class="n">pi</span> <span class="o">=</span> <span class="mi">0</span>
+                    <span class="k">for</span> <span class="n">irr</span> <span class="ow">in</span> <span class="n">r</span><span class="o">.</span><span class="n">irreps</span><span class="p">:</span>
+                        <span class="n">irr</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">out_type</span><span class="o">.</span><span class="n">fibergroup</span><span class="o">.</span><span class="n">irreps</span><span class="p">[</span><span class="n">irr</span><span class="p">]</span>
+                        <span class="k">if</span> <span class="n">irr</span><span class="o">.</span><span class="n">is_trivial</span><span class="p">():</span>
+                            <span class="n">bias_expansion</span><span class="p">[</span><span class="n">p</span><span class="p">:</span><span class="n">p</span><span class="o">+</span><span class="n">r</span><span class="o">.</span><span class="n">size</span><span class="p">,</span> <span class="n">c</span><span class="p">]</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">change_of_basis</span><span class="p">[:,</span> <span class="n">pi</span><span class="p">])</span>
+                            <span class="n">c</span> <span class="o">+=</span> <span class="mi">1</span>
+                        <span class="n">pi</span> <span class="o">+=</span> <span class="n">irr</span><span class="o">.</span><span class="n">size</span>
+                    <span class="n">p</span> <span class="o">+=</span> <span class="n">r</span><span class="o">.</span><span class="n">size</span>
+                
+                <span class="bp">self</span><span class="o">.</span><span class="n">register_buffer</span><span class="p">(</span><span class="s2">&quot;bias_expansion&quot;</span><span class="p">,</span> <span class="n">bias_expansion</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">bias</span> <span class="o">=</span> <span class="n">Parameter</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">trivials</span><span class="p">),</span> <span class="n">requires_grad</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">register_buffer</span><span class="p">(</span><span class="s2">&quot;expanded_bias&quot;</span><span class="p">,</span> <span class="n">torch</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">out_type</span><span class="o">.</span><span class="n">size</span><span class="p">))</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">bias</span> <span class="o">=</span> <span class="kc">None</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">expanded_bias</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">bias</span> <span class="o">=</span> <span class="kc">None</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">expanded_bias</span> <span class="o">=</span> <span class="kc">None</span>
+
+        <span class="n">grid</span><span class="p">,</span> <span class="n">basis_filter</span><span class="p">,</span> <span class="n">rings</span><span class="p">,</span> <span class="n">sigma</span><span class="p">,</span> <span class="n">maximum_frequency</span> <span class="o">=</span> <span class="n">compute_basis_params</span><span class="p">(</span><span class="n">kernel_size</span><span class="p">,</span>
+                                                                                   <span class="n">frequencies_cutoff</span><span class="p">,</span>
+                                                                                   <span class="n">rings</span><span class="p">,</span>
+                                                                                   <span class="n">sigma</span><span class="p">,</span>
+                                                                                   <span class="n">dilation</span><span class="p">,</span>
+                                                                                   <span class="n">basis_filter</span><span class="p">)</span>
+        
+        <span class="c1"># BasisExpansion: submodule which takes care of building the filter</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">basisexpansion</span> <span class="o">=</span> <span class="kc">None</span>
+        
+        <span class="c1"># notice that `in_type` is used instead of `self.in_type` such that it works also when `groups &gt; 1`</span>
+        <span class="k">if</span> <span class="n">basisexpansion</span> <span class="o">==</span> <span class="s1">&#39;blocks&#39;</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">basisexpansion</span> <span class="o">=</span> <span class="n">BlocksBasisExpansion</span><span class="p">(</span><span class="n">in_type</span><span class="p">,</span> <span class="n">out_type</span><span class="p">,</span>
+                                                       <span class="n">grid</span><span class="p">,</span>
+                                                       <span class="n">sigma</span><span class="o">=</span><span class="n">sigma</span><span class="p">,</span>
+                                                       <span class="n">rings</span><span class="o">=</span><span class="n">rings</span><span class="p">,</span>
+                                                       <span class="n">maximum_offset</span><span class="o">=</span><span class="n">maximum_offset</span><span class="p">,</span>
+                                                       <span class="n">maximum_frequency</span><span class="o">=</span><span class="n">maximum_frequency</span><span class="p">,</span>
+                                                       <span class="n">basis_filter</span><span class="o">=</span><span class="n">basis_filter</span><span class="p">,</span>
+                                                       <span class="n">recompute</span><span class="o">=</span><span class="n">recompute</span><span class="p">)</span>
+
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Basis Expansion algorithm &quot;</span><span class="si">%s</span><span class="s1">&quot; not recognized&#39;</span> <span class="o">%</span> <span class="n">basisexpansion</span><span class="p">)</span>
+        
+        <span class="bp">self</span><span class="o">.</span><span class="n">weights</span> <span class="o">=</span> <span class="n">Parameter</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">basisexpansion</span><span class="o">.</span><span class="n">dimension</span><span class="p">()),</span> <span class="n">requires_grad</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">register_buffer</span><span class="p">(</span><span class="s2">&quot;filter&quot;</span><span class="p">,</span> <span class="n">torch</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">out_type</span><span class="o">.</span><span class="n">size</span><span class="p">,</span> <span class="n">in_type</span><span class="o">.</span><span class="n">size</span><span class="p">,</span> <span class="n">kernel_size</span><span class="p">,</span> <span class="n">kernel_size</span><span class="p">))</span>
+        
+        <span class="c1"># by default, the weights are initialized with a generalized form of he&#39;s weight initialization</span>
+        <span class="n">init</span><span class="o">.</span><span class="n">generalized_he_init</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">weights</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">basisexpansion</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">basisexpansion</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">BasisExpansion</span><span class="p">:</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_basisexpansion</span>
+
+    <span class="k">def</span> <span class="nf">expand_parameters</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">,</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">]:</span>
+        <span class="nb">filter</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">basisexpansion</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">weights</span><span class="p">)</span>
+        <span class="nb">filter</span> <span class="o">=</span> <span class="nb">filter</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="nb">filter</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="nb">filter</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">kernel_size</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">kernel_size</span><span class="p">)</span>
+        <span class="nb">filter</span> <span class="o">=</span> <span class="nb">filter</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+        
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">bias</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">bias</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">bias</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">bias_expansion</span> <span class="o">@</span> <span class="bp">self</span><span class="o">.</span><span class="n">bias</span>
+            
+        <span class="k">return</span> <span class="nb">filter</span><span class="p">,</span> <span class="n">bias</span>
+
+    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">input</span><span class="p">:</span> <span class="n">GeometricTensor</span><span class="p">):</span>
+        <span class="k">assert</span> <span class="nb">input</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">in_type</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">training</span><span class="p">:</span>
+            <span class="nb">filter</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">filter</span>
+            <span class="n">bias</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">expanded_bias</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="c1"># retrieve the filter and the bias</span>
+            <span class="nb">filter</span><span class="p">,</span> <span class="n">bias</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">expand_parameters</span><span class="p">()</span>
+        
+        <span class="c1"># use it for convolution and return the result</span>
+        <span class="n">output</span> <span class="o">=</span> <span class="n">conv_transpose2d</span><span class="p">(</span>
+                        <span class="nb">input</span><span class="o">.</span><span class="n">tensor</span><span class="p">,</span> <span class="nb">filter</span><span class="p">,</span>
+                        <span class="n">padding</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">padding</span><span class="p">,</span>
+                        <span class="n">output_padding</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">output_padding</span><span class="p">,</span>
+                        <span class="n">stride</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">stride</span><span class="p">,</span>
+                        <span class="n">dilation</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">dilation</span><span class="p">,</span>
+                        <span class="n">groups</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">groups</span><span class="p">,</span>
+                        <span class="n">bias</span><span class="o">=</span><span class="n">bias</span><span class="p">)</span>
+        
+        <span class="k">return</span> <span class="n">GeometricTensor</span><span class="p">(</span><span class="n">output</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">out_type</span><span class="p">)</span>
+    
+    <span class="k">def</span> <span class="nf">train</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+        
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">mode</span><span class="p">:</span>
+            <span class="nb">filter</span><span class="p">,</span> <span class="n">bias</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">expand_parameters</span><span class="p">()</span>
+            
+            <span class="bp">self</span><span class="o">.</span><span class="n">register_buffer</span><span class="p">(</span><span class="s2">&quot;filter&quot;</span><span class="p">,</span> <span class="nb">filter</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">bias</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">register_buffer</span><span class="p">(</span><span class="s2">&quot;expanded_bias&quot;</span><span class="p">,</span> <span class="n">bias</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">expanded_bias</span> <span class="o">=</span> <span class="kc">None</span>
+
+        <span class="k">else</span><span class="p">:</span>
+            <span class="c1"># TODO thoroughly check this is not causing problems</span>
+            <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s2">&quot;filter&quot;</span><span class="p">):</span>
+                <span class="k">del</span> <span class="bp">self</span><span class="o">.</span><span class="n">filter</span>
+            <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s2">&quot;expanded_bias&quot;</span><span class="p">):</span>
+                <span class="k">del</span> <span class="bp">self</span><span class="o">.</span><span class="n">expanded_bias</span>
+        
+        <span class="k">return</span> <span class="nb">super</span><span class="p">(</span><span class="n">R2ConvTransposed</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">train</span><span class="p">(</span><span class="n">mode</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">evaluate_output_shape</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">input_shape</span><span class="p">:</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]:</span>
+        <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">input_shape</span><span class="p">)</span> <span class="o">==</span> <span class="mi">4</span>
+        <span class="k">assert</span> <span class="n">input_shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">in_type</span><span class="o">.</span><span class="n">size</span>
+    
+        <span class="n">b</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">hi</span><span class="p">,</span> <span class="n">wi</span> <span class="o">=</span> <span class="n">input_shape</span>
+        
+        <span class="n">ho</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">floor</span><span class="p">((</span><span class="n">hi</span> <span class="o">+</span> <span class="mi">2</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">padding</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">dilation</span> <span class="o">*</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">kernel_size</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">stride</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="n">wo</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">floor</span><span class="p">((</span><span class="n">wi</span> <span class="o">+</span> <span class="mi">2</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">padding</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">dilation</span> <span class="o">*</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">kernel_size</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">stride</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">b</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">out_type</span><span class="o">.</span><span class="n">size</span><span class="p">,</span> <span class="n">ho</span><span class="p">,</span> <span class="n">wo</span>
+        
+    <span class="k">def</span> <span class="nf">check_equivariance</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">atol</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.1</span><span class="p">,</span> <span class="n">rtol</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.1</span><span class="p">,</span> <span class="n">assertion</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span> <span class="n">verbose</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">):</span>
+        
+        <span class="c1"># np.set_printoptions(precision=5, threshold=30 *self.in_type.size**2, suppress=False, linewidth=30 *self.in_type.size**2)</span>
+
+        <span class="n">feature_map_size</span> <span class="o">=</span> <span class="mi">33</span>
+        <span class="n">last_downsampling</span> <span class="o">=</span> <span class="mi">5</span>
+        <span class="n">first_downsampling</span> <span class="o">=</span> <span class="mi">5</span>
+        
+        <span class="n">initial_size</span> <span class="o">=</span> <span class="p">(</span><span class="n">feature_map_size</span> <span class="o">*</span> <span class="n">last_downsampling</span> <span class="o">-</span> <span class="mi">1</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">kernel_size</span><span class="p">)</span> <span class="o">*</span> <span class="n">first_downsampling</span>
+        
+        <span class="n">c</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">in_type</span><span class="o">.</span><span class="n">size</span>
+    
+        <span class="c1"># x = torch.randn(3, c, 10, 10)</span>
+        
+        <span class="kn">import</span> <span class="nn">matplotlib.image</span> <span class="k">as</span> <span class="nn">mpimg</span>
+        <span class="kn">from</span> <span class="nn">skimage.measure</span> <span class="k">import</span> <span class="n">block_reduce</span>
+        <span class="kn">from</span> <span class="nn">skimage.transform</span> <span class="k">import</span> <span class="n">resize</span>
+        
+        <span class="n">x</span> <span class="o">=</span> <span class="n">mpimg</span><span class="o">.</span><span class="n">imread</span><span class="p">(</span><span class="s1">&#39;../test/group/testimage.jpeg&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">transpose</span><span class="p">((</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">))[</span><span class="n">np</span><span class="o">.</span><span class="n">newaxis</span><span class="p">,</span> <span class="mi">0</span><span class="p">:</span><span class="n">c</span><span class="p">,</span> <span class="p">:,</span> <span class="p">:]</span>
+        
+        <span class="n">x</span> <span class="o">=</span> <span class="n">resize</span><span class="p">(</span>
+            <span class="n">x</span><span class="p">,</span>
+            <span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">x</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">initial_size</span><span class="p">,</span> <span class="n">initial_size</span><span class="p">),</span>
+            <span class="n">anti_aliasing</span><span class="o">=</span><span class="kc">True</span>
+        <span class="p">)</span>
+        
+        <span class="n">x</span> <span class="o">=</span> <span class="n">x</span> <span class="o">/</span> <span class="mf">255.0</span> <span class="o">-</span> <span class="mf">0.5</span>
+        
+        <span class="k">if</span> <span class="n">x</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">c</span><span class="p">:</span>
+            <span class="n">to_stack</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">c</span> <span class="o">//</span> <span class="n">x</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">])]</span>
+            <span class="k">if</span> <span class="n">c</span> <span class="o">%</span> <span class="n">x</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">to_stack</span> <span class="o">+=</span> <span class="p">[</span><span class="n">x</span><span class="p">[:,</span> <span class="p">:(</span><span class="n">c</span> <span class="o">%</span> <span class="n">x</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]),</span> <span class="o">...</span><span class="p">]]</span>
+    
+            <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">(</span><span class="n">to_stack</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    
+        <span class="n">x</span> <span class="o">=</span> <span class="n">GeometricTensor</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">FloatTensor</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">in_type</span><span class="p">)</span>
+        
+        <span class="k">def</span> <span class="nf">shrink</span><span class="p">(</span><span class="n">t</span><span class="p">:</span> <span class="n">GeometricTensor</span><span class="p">,</span> <span class="n">s</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">GeometricTensor</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">GeometricTensor</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">FloatTensor</span><span class="p">(</span><span class="n">block_reduce</span><span class="p">(</span><span class="n">t</span><span class="o">.</span><span class="n">tensor</span><span class="o">.</span><span class="n">detach</span><span class="p">()</span><span class="o">.</span><span class="n">numpy</span><span class="p">(),</span> <span class="n">s</span><span class="p">,</span> <span class="n">func</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">)),</span> <span class="n">t</span><span class="o">.</span><span class="n">type</span><span class="p">)</span>
+        
+        <span class="n">errors</span> <span class="o">=</span> <span class="p">[]</span>
+    
+        <span class="k">for</span> <span class="n">el</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">space</span><span class="o">.</span><span class="n">testing_elements</span><span class="p">:</span>
+            
+            <span class="n">out1</span> <span class="o">=</span> <span class="bp">self</span><span class="p">(</span><span class="n">shrink</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">)))</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">el</span><span class="p">)</span><span class="o">.</span><span class="n">tensor</span><span class="o">.</span><span class="n">detach</span><span class="p">()</span><span class="o">.</span><span class="n">numpy</span><span class="p">()</span>
+            <span class="n">out2</span> <span class="o">=</span> <span class="bp">self</span><span class="p">(</span><span class="n">shrink</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">el</span><span class="p">),</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">)))</span><span class="o">.</span><span class="n">tensor</span><span class="o">.</span><span class="n">detach</span><span class="p">()</span><span class="o">.</span><span class="n">numpy</span><span class="p">()</span>
+            
+            <span class="n">out1</span> <span class="o">=</span> <span class="n">block_reduce</span><span class="p">(</span><span class="n">out1</span><span class="p">,</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">),</span> <span class="n">func</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">)</span>
+            <span class="n">out2</span> <span class="o">=</span> <span class="n">block_reduce</span><span class="p">(</span><span class="n">out2</span><span class="p">,</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">),</span> <span class="n">func</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">)</span>
+            
+            <span class="n">b</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">h</span><span class="p">,</span> <span class="n">w</span> <span class="o">=</span> <span class="n">out2</span><span class="o">.</span><span class="n">shape</span>
+
+            <span class="n">center_mask</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">2</span><span class="p">,</span> <span class="n">h</span><span class="p">,</span> <span class="n">w</span><span class="p">))</span>
+            <span class="n">center_mask</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="p">:,</span> <span class="p">:]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">w</span><span class="p">)</span> <span class="o">-</span> <span class="n">w</span> <span class="o">/</span> <span class="mi">2</span>
+            <span class="n">center_mask</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="p">:,</span> <span class="p">:]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">h</span><span class="p">)</span> <span class="o">-</span> <span class="n">h</span> <span class="o">/</span> <span class="mi">2</span>
+            <span class="n">center_mask</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="p">:,</span> <span class="p">:]</span> <span class="o">=</span> <span class="n">center_mask</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="p">:,</span> <span class="p">:]</span><span class="o">.</span><span class="n">T</span>
+            <span class="n">center_mask</span> <span class="o">=</span> <span class="n">center_mask</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="p">:,</span> <span class="p">:]</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">+</span> <span class="n">center_mask</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="p">:,</span> <span class="p">:]</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">&lt;</span> <span class="p">(</span><span class="n">h</span> <span class="o">/</span> <span class="mi">4</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span>
+
+            <span class="n">out1</span> <span class="o">=</span> <span class="n">out1</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="n">center_mask</span><span class="p">]</span>
+            <span class="n">out2</span> <span class="o">=</span> <span class="n">out2</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="n">center_mask</span><span class="p">]</span>
+            
+            <span class="n">out1</span> <span class="o">=</span> <span class="n">out1</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+            <span class="n">out2</span> <span class="o">=</span> <span class="n">out2</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+            
+            <span class="n">errs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">out1</span> <span class="o">-</span> <span class="n">out2</span><span class="p">)</span>
+
+            <span class="n">esum</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">maximum</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">out1</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">out2</span><span class="p">))</span>
+            <span class="n">esum</span><span class="p">[</span><span class="n">esum</span> <span class="o">==</span> <span class="mf">0.0</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+
+            <span class="n">relerr</span> <span class="o">=</span> <span class="n">errs</span> <span class="o">/</span> <span class="n">esum</span>
+    
+            <span class="k">if</span> <span class="n">verbose</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="n">el</span><span class="p">,</span> <span class="n">relerr</span><span class="o">.</span><span class="n">max</span><span class="p">(),</span> <span class="n">relerr</span><span class="o">.</span><span class="n">mean</span><span class="p">(),</span> <span class="n">relerr</span><span class="o">.</span><span class="n">var</span><span class="p">(),</span> <span class="n">errs</span><span class="o">.</span><span class="n">max</span><span class="p">(),</span> <span class="n">errs</span><span class="o">.</span><span class="n">mean</span><span class="p">(),</span> <span class="n">errs</span><span class="o">.</span><span class="n">var</span><span class="p">())</span>
+        
+            <span class="c1"># tol = rtol*(np.abs(out1) + np.abs(out2)) + atol</span>
+            <span class="n">tol</span> <span class="o">=</span> <span class="n">rtol</span> <span class="o">*</span> <span class="n">esum</span> <span class="o">+</span> <span class="n">atol</span>
+            
+            <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">any</span><span class="p">(</span><span class="n">errs</span> <span class="o">&gt;</span> <span class="n">tol</span><span class="p">)</span> <span class="ow">and</span> <span class="n">verbose</span><span class="p">:</span>
+                <span class="c1"># print(errs[errs &gt; tol])</span>
+                <span class="nb">print</span><span class="p">(</span><span class="n">out1</span><span class="p">[</span><span class="n">errs</span> <span class="o">&gt;</span> <span class="n">tol</span><span class="p">])</span>
+                <span class="nb">print</span><span class="p">(</span><span class="n">out2</span><span class="p">[</span><span class="n">errs</span> <span class="o">&gt;</span> <span class="n">tol</span><span class="p">])</span>
+                <span class="nb">print</span><span class="p">(</span><span class="n">tol</span><span class="p">[</span><span class="n">errs</span> <span class="o">&gt;</span> <span class="n">tol</span><span class="p">])</span>
+            
+            <span class="k">if</span> <span class="n">assertion</span><span class="p">:</span>
+                <span class="k">assert</span> <span class="n">np</span><span class="o">.</span><span class="n">all</span><span class="p">(</span><span class="n">errs</span> <span class="o">&lt;</span> <span class="n">tol</span><span class="p">),</span> <span class="s1">&#39;The error found during equivariance check with element &quot;</span><span class="si">{}</span><span class="s1">&quot; is too high: max = </span><span class="si">{}</span><span class="s1">, mean = </span><span class="si">{}</span><span class="s1"> var =</span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">el</span><span class="p">,</span> <span class="n">errs</span><span class="o">.</span><span class="n">max</span><span class="p">(),</span> <span class="n">errs</span><span class="o">.</span><span class="n">mean</span><span class="p">(),</span> <span class="n">errs</span><span class="o">.</span><span class="n">var</span><span class="p">())</span>
+        
+            <span class="n">errors</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">el</span><span class="p">,</span> <span class="n">errs</span><span class="o">.</span><span class="n">mean</span><span class="p">()))</span>
+    
+        <span class="k">return</span> <span class="n">errors</span></div>
+        
+        <span class="c1"># init.deltaorthonormal_init(self.weights.data, self.basisexpansion)</span>
+        <span class="c1"># filter = self.basisexpansion()</span>
+        <span class="c1"># center = self.s // 2</span>
+        <span class="c1"># filter = filter[..., center, center]</span>
+        <span class="c1"># assert torch.allclose(torch.eye(filter.shape[1]), filter.t() @ filter, atol=3e-7)</span>
+
+
+<span class="k">def</span> <span class="nf">bandlimiting_filter</span><span class="p">(</span><span class="n">frequency_cutoff</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="n">Callable</span><span class="p">[[</span><span class="nb">float</span><span class="p">],</span> <span class="nb">float</span><span class="p">]])</span> <span class="o">-&gt;</span> <span class="n">Callable</span><span class="p">[[</span><span class="nb">dict</span><span class="p">],</span> <span class="nb">bool</span><span class="p">]:</span>
+    <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">    Returns a method which takes as input the attributes (as a dictionary) of a basis element and returns a boolean</span>
+<span class="sd">    value: whether to preserve that element (True) or not (False)</span>
+<span class="sd">    </span>
+<span class="sd">    If the parameter ``frequency_cutoff`` is a scalar value, the maximum frequency allowed at a certain radius is</span>
+<span class="sd">    proportional to the radius itself. In thi case, the parameter ``frequency_cutoff`` is the factor controlling this</span>
+<span class="sd">    proportionality relation.</span>
+<span class="sd">    </span>
+<span class="sd">    If the parameter ``frequency_cutoff`` is a callable, it needs to take as input a radius (a scalar value) and return</span>
+<span class="sd">    the maximum frequency which can be sampled at that radius.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        frequency_cutoff (float): factor controlling the bandlimiting</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        a function which checks the attributes of individual basis elements and chooses whether to discard them or not</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">frequency_cutoff</span><span class="p">,</span> <span class="nb">float</span><span class="p">):</span>
+        <span class="n">frequency_cutoff</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">r</span><span class="p">,</span> <span class="n">fco</span><span class="o">=</span><span class="n">frequency_cutoff</span><span class="p">:</span> <span class="n">r</span> <span class="o">*</span> <span class="n">frequency_cutoff</span>
+    
+    <span class="k">def</span> <span class="nf">filter</span><span class="p">(</span><span class="n">attributes</span><span class="p">:</span> <span class="nb">dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">math</span><span class="o">.</span><span class="n">fabs</span><span class="p">(</span><span class="n">attributes</span><span class="p">[</span><span class="s2">&quot;frequency&quot;</span><span class="p">])</span> <span class="o">&lt;=</span> <span class="n">frequency_cutoff</span><span class="p">(</span><span class="n">attributes</span><span class="p">[</span><span class="s2">&quot;radius&quot;</span><span class="p">])</span>
+    
+    <span class="k">return</span> <span class="nb">filter</span>
+
+
+<span class="k">def</span> <span class="nf">get_grid_coords</span><span class="p">(</span><span class="n">kernel_size</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">dilation</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1</span><span class="p">):</span>
+    
+    <span class="n">actual_size</span> <span class="o">=</span> <span class="n">dilation</span> <span class="o">*</span> <span class="p">(</span><span class="n">kernel_size</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span>
+    
+    <span class="n">origin</span> <span class="o">=</span> <span class="n">actual_size</span> <span class="o">/</span> <span class="mi">2</span> <span class="o">-</span> <span class="mf">0.5</span>
+    
+    <span class="n">points</span> <span class="o">=</span> <span class="p">[]</span>
+    
+    <span class="k">for</span> <span class="n">y</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">kernel_size</span><span class="p">):</span>
+        <span class="n">y</span> <span class="o">*=</span> <span class="n">dilation</span>
+        <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">kernel_size</span><span class="p">):</span>
+            <span class="n">x</span> <span class="o">*=</span> <span class="n">dilation</span>
+            <span class="n">p</span> <span class="o">=</span> <span class="p">(</span><span class="n">x</span> <span class="o">-</span> <span class="n">origin</span><span class="p">,</span> <span class="o">-</span><span class="n">y</span> <span class="o">+</span> <span class="n">origin</span><span class="p">)</span>
+            <span class="n">points</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
+    
+    <span class="n">points</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">points</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="n">points</span><span class="o">.</span><span class="n">shape</span> <span class="o">==</span> <span class="p">(</span><span class="n">kernel_size</span> <span class="o">**</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="n">points</span><span class="o">.</span><span class="n">shape</span>
+    <span class="k">return</span> <span class="n">points</span><span class="o">.</span><span class="n">T</span>
+
+
+<span class="k">def</span> <span class="nf">compute_basis_params</span><span class="p">(</span><span class="n">kernel_size</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+                         <span class="n">frequencies_cutoff</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="n">Callable</span><span class="p">[[</span><span class="nb">float</span><span class="p">],</span> <span class="nb">float</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+                         <span class="n">rings</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+                         <span class="n">sigma</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+                         <span class="n">dilation</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>
+                         <span class="n">custom_basis_filter</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[[</span><span class="nb">dict</span><span class="p">],</span> <span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+                         <span class="p">):</span>
+    
+    <span class="c1"># compute the coordinates of the centers of the cells in the grid where the filter is sampled</span>
+    <span class="n">grid</span> <span class="o">=</span> <span class="n">get_grid_coords</span><span class="p">(</span><span class="n">kernel_size</span><span class="p">,</span> <span class="n">dilation</span><span class="p">)</span>
+    
+    <span class="n">max_radius</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">((</span><span class="n">grid</span> <span class="o">**</span><span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="mi">1</span><span class="p">))</span><span class="o">.</span><span class="n">max</span><span class="p">()</span>
+    <span class="c1"># max_radius = kernel_size // 2</span>
+    
+    <span class="c1"># by default, the number of rings equals half of the filter size</span>
+    <span class="k">if</span> <span class="n">rings</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">n_rings</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">ceil</span><span class="p">(</span><span class="n">kernel_size</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span>
+        <span class="c1"># if self.group.order() &gt; 0:</span>
+        <span class="c1">#     # compute the number of edges of the polygon inscribed in the filter (which is a square)</span>
+        <span class="c1">#     # whose points stay inside the filter under the action of the group</span>
+        <span class="c1">#     # the number of edges is lcm(group&#39;s order, 4)</span>
+        <span class="c1">#     n_edges = self.group.order()</span>
+        <span class="c1">#     while n_edges % 4 &gt; 0:</span>
+        <span class="c1">#         n_edges *= 2</span>
+        <span class="c1">#     # the largest ring we can sample has radius equal to the circumradius of the polygon described above</span>
+        <span class="c1">#     n_rings /= math.cos(math.pi/n_edges)</span>
+        
+        <span class="c1"># n_rings = s // 2 + 1</span>
+        
+        <span class="c1"># rings = torch.linspace(1 - s % 2, s // 2, n_rings)</span>
+        <span class="n">rings</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="p">(</span><span class="n">kernel_size</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">//</span> <span class="mi">2</span><span class="p">,</span> <span class="n">n_rings</span><span class="p">)</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
+    
+    <span class="k">assert</span> <span class="nb">all</span><span class="p">([</span><span class="n">max_radius</span> <span class="o">&gt;=</span> <span class="n">r</span> <span class="o">&gt;=</span> <span class="mi">0</span> <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">rings</span><span class="p">])</span>
+    
+    <span class="k">if</span> <span class="n">sigma</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">sigma</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.6</span><span class="p">]</span> <span class="o">*</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">rings</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">+</span> <span class="p">[</span><span class="mf">0.4</span><span class="p">]</span>
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">r</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">rings</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">r</span> <span class="o">==</span> <span class="mf">0.</span><span class="p">:</span>
+                <span class="n">sigma</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.005</span>
+                
+    <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">sigma</span><span class="p">,</span> <span class="nb">float</span><span class="p">):</span>
+        <span class="n">sigma</span> <span class="o">=</span> <span class="p">[</span><span class="n">sigma</span><span class="p">]</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">rings</span><span class="p">)</span>
+        
+    <span class="c1"># TODO - use a string name for this setting</span>
+    <span class="k">if</span> <span class="n">frequencies_cutoff</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">frequencies_cutoff</span> <span class="o">=</span> <span class="o">-</span><span class="mf">1.</span>
+    
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">frequencies_cutoff</span><span class="p">,</span> <span class="nb">float</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">frequencies_cutoff</span> <span class="o">==</span> <span class="o">-</span><span class="mi">3</span><span class="p">:</span>
+            <span class="n">frequencies_cutoff</span> <span class="o">=</span> <span class="n">_manual_fco3</span><span class="p">(</span><span class="n">kernel_size</span> <span class="o">//</span> <span class="mi">2</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">frequencies_cutoff</span> <span class="o">==</span> <span class="o">-</span><span class="mi">2</span><span class="p">:</span>
+            <span class="n">frequencies_cutoff</span> <span class="o">=</span> <span class="n">_manual_fco2</span><span class="p">(</span><span class="n">kernel_size</span> <span class="o">//</span> <span class="mi">2</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">frequencies_cutoff</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span>
+            <span class="n">frequencies_cutoff</span> <span class="o">=</span> <span class="n">_manual_fco1</span><span class="p">(</span><span class="n">kernel_size</span> <span class="o">//</span> <span class="mi">2</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">frequencies_cutoff</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">r</span><span class="p">,</span> <span class="n">fco</span><span class="o">=</span><span class="n">frequencies_cutoff</span><span class="p">:</span> <span class="n">fco</span> <span class="o">*</span> <span class="n">r</span>
+    
+    <span class="c1"># check if the object is a callable function</span>
+    <span class="k">assert</span> <span class="n">callable</span><span class="p">(</span><span class="n">frequencies_cutoff</span><span class="p">)</span>
+    
+    <span class="n">maximum_frequency</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">max</span><span class="p">(</span><span class="n">frequencies_cutoff</span><span class="p">(</span><span class="n">r</span><span class="p">)</span> <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">rings</span><span class="p">))</span>
+
+    <span class="n">fco_filter</span> <span class="o">=</span> <span class="n">bandlimiting_filter</span><span class="p">(</span><span class="n">frequencies_cutoff</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">custom_basis_filter</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">basis_filter</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">d</span><span class="p">,</span> <span class="n">custom_basis_filter</span><span class="o">=</span><span class="n">custom_basis_filter</span><span class="p">,</span> <span class="n">fco_filter</span><span class="o">=</span><span class="n">fco_filter</span><span class="p">:</span> <span class="p">(</span><span class="n">custom_basis_filter</span><span class="p">(</span><span class="n">d</span><span class="p">)</span> <span class="ow">and</span> <span class="n">fco_filter</span><span class="p">(</span><span class="n">d</span><span class="p">))</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">basis_filter</span> <span class="o">=</span> <span class="n">fco_filter</span>
+    
+    <span class="k">return</span> <span class="n">grid</span><span class="p">,</span> <span class="n">basis_filter</span><span class="p">,</span> <span class="n">rings</span><span class="p">,</span> <span class="n">sigma</span><span class="p">,</span> <span class="n">maximum_frequency</span>
+
+
+<span class="k">def</span> <span class="nf">_manual_fco3</span><span class="p">(</span><span class="n">max_radius</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Callable</span><span class="p">[[</span><span class="nb">float</span><span class="p">],</span> <span class="nb">float</span><span class="p">]:</span>
+    <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">    Returns a method which takes as input the radius of a ring and returns the maximum frequency which can be sampled</span>
+<span class="sd">    on that ring.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        max_radius (float): radius of the last ring touching the border of the grid</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        a function which checks the attributes of individual basis elements and chooses whether to discard them or not</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    
+    <span class="k">def</span> <span class="nf">filter</span><span class="p">(</span><span class="n">r</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+        <span class="n">max_freq</span> <span class="o">=</span> <span class="mi">0</span> <span class="k">if</span> <span class="n">r</span> <span class="o">==</span> <span class="mf">0.</span> <span class="k">else</span> <span class="mi">1</span> <span class="k">if</span> <span class="n">r</span> <span class="o">==</span> <span class="n">max_radius</span> <span class="k">else</span> <span class="mi">2</span>
+        <span class="k">return</span> <span class="n">max_freq</span>
+    
+    <span class="k">return</span> <span class="nb">filter</span>
+
+
+<span class="k">def</span> <span class="nf">_manual_fco2</span><span class="p">(</span><span class="n">max_radius</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Callable</span><span class="p">[[</span><span class="nb">float</span><span class="p">],</span> <span class="nb">float</span><span class="p">]:</span>
+    <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">    Returns a method which takes as input the radius of a ring and returns the maximum frequency which can be sampled</span>
+<span class="sd">    on that ring.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        max_radius (float): radius of the last ring touching the border of the grid</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        a function which checks the attributes of individual basis elements and chooses whether to discard them or not</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    
+    <span class="k">def</span> <span class="nf">filter</span><span class="p">(</span><span class="n">r</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+        <span class="n">max_freq</span> <span class="o">=</span> <span class="mi">0</span> <span class="k">if</span> <span class="n">r</span> <span class="o">==</span> <span class="mf">0.</span> <span class="k">else</span> <span class="nb">min</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">r</span><span class="p">,</span> <span class="mi">1</span> <span class="k">if</span> <span class="n">r</span> <span class="o">==</span> <span class="n">max_radius</span> <span class="k">else</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">r</span> <span class="o">-</span> <span class="p">(</span><span class="n">r</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">%</span> <span class="mi">2</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">max_freq</span>
+    
+    <span class="k">return</span> <span class="nb">filter</span>
+
+
+<span class="k">def</span> <span class="nf">_manual_fco1</span><span class="p">(</span><span class="n">max_radius</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Callable</span><span class="p">[[</span><span class="nb">float</span><span class="p">],</span> <span class="nb">float</span><span class="p">]:</span>
+    <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">    Returns a method which takes as input the radius of a ring and returns the maximum frequency which can be sampled</span>
+<span class="sd">    on that ring.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        max_radius (float): radius of the last ring touching the border of the grid</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        a function which checks the attributes of individual basis elements and chooses whether to discard them or not</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    
+    <span class="k">def</span> <span class="nf">filter</span><span class="p">(</span><span class="n">r</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+        <span class="n">max_freq</span> <span class="o">=</span> <span class="mi">0</span> <span class="k">if</span> <span class="n">r</span> <span class="o">==</span> <span class="mf">0.</span> <span class="k">else</span> <span class="nb">min</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">r</span><span class="p">,</span> <span class="mi">2</span> <span class="k">if</span> <span class="n">r</span> <span class="o">==</span> <span class="n">max_radius</span> <span class="k">else</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">r</span> <span class="o">-</span> <span class="p">(</span><span class="n">r</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">%</span> <span class="mi">2</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">max_freq</span>
+    
+    <span class="k">return</span> <span class="nb">filter</span>
+
+
+
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, Qualcomm Innovation Center, Inc. Developed by Gabriele Cesa, Maurice Weiler
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

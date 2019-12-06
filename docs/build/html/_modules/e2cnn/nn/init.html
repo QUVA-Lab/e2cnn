@@ -1,0 +1,347 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>e2cnn.nn.init &mdash; e2cnn 0.1 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../../_static/language_data.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script type="text/x-mathjax-config">MathJax.Hub.Config({"TeX": {"Macros": {"bold": ["{\\bf #1}", 1], "R": "{\\mathbb R}", "N": "{\\mathbb N}", "Z": "{\\mathbb Z}", "Ind": ["{\\operatorname{Ind}_{#1}^{#2}}", 2], "Res": ["{\\operatorname{Res}_{#1}^{#2}}", 2], "GL": ["{\\operatorname{GL}(#1)}", 1], "E": ["{\\operatorname{E}(#1)}", 1], "SE": ["{\\operatorname{SE}(#1)}", 1], "O": ["{\\operatorname{O}(#1)}", 1], "SO": ["{\\operatorname{SO}(#1)}", 1], "U": ["{\\operatorname{U}(#1)}", 1], "D": ["{\\operatorname{D}_{#1}}", 1], "C": ["{\\operatorname{C}_{#1}}", 1], "DN": "{\\operatorname{D}_{\\!N}}", "CN": "{\\operatorname{C}_{\\!N}}"}}})</script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/custom.css" type="text/css" />
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> e2cnn
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.1
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Package Reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../api/e2cnn.group.html">e2cnn.group</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/e2cnn.group.html#groups">Groups</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/e2cnn.group.html#representations">Representations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/e2cnn.group.html#utility-functions">Utility Functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/e2cnn.group.html#subpackages">Subpackages</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../api/e2cnn.kernels.html">e2cnn.kernels</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/e2cnn.kernels.html#abstract-classes">Abstract Classes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/e2cnn.kernels.html#kernel-bases">Kernel Bases</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/e2cnn.kernels.html#bases-for-group-actions-on-the-plane">Bases for Group Actions on the Plane</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../api/e2cnn.gspaces.html">e2cnn.gspaces</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/e2cnn.gspaces.html#abstract-group-space">Abstract Group Space</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/e2cnn.gspaces.html#group-actions-on-the-plane">Group Actions on the Plane</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../api/e2cnn.nn.html">e2cnn.nn</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/e2cnn.nn.html#main-classes">Main Classes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/e2cnn.nn.html#utils">Utils</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/e2cnn.nn.html#planar-convolution">Planar Convolution</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/e2cnn.nn.html#non-linearities">Non Linearities</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/e2cnn.nn.html#invariant-maps">Invariant Maps</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/e2cnn.nn.html#pooling">Pooling</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/e2cnn.nn.html#normalization">Normalization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/e2cnn.nn.html#dropout">Dropout</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/e2cnn.nn.html#other-modules">Other Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/e2cnn.nn.html#module-e2cnn.nn.init">Weight Initialization</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">e2cnn</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+      <li>e2cnn.nn.init</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for e2cnn.nn.init</h1><div class="highlight"><pre>
+<span></span>
+
+<span class="kn">from</span> <span class="nn">e2cnn.nn.modules.r2_conv.basisexpansion</span> <span class="k">import</span> <span class="n">BasisExpansion</span>
+
+<span class="kn">from</span> <span class="nn">collections</span> <span class="k">import</span> <span class="n">defaultdict</span>
+
+<span class="kn">import</span> <span class="nn">torch</span>
+<span class="kn">from</span> <span class="nn">scipy</span> <span class="k">import</span> <span class="n">stats</span>
+<span class="kn">import</span> <span class="nn">math</span>
+
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;generalized_he_init&quot;</span><span class="p">,</span> <span class="s2">&quot;deltaorthonormal_init&quot;</span><span class="p">]</span>
+
+
+<div class="viewcode-block" id="generalized_he_init"><a class="viewcode-back" href="../../../api/e2cnn.nn.html#e2cnn.nn.init.generalized_he_init">[docs]</a><span class="k">def</span> <span class="nf">generalized_he_init</span><span class="p">(</span><span class="n">tensor</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">,</span> <span class="n">basisexpansion</span><span class="p">:</span> <span class="n">BasisExpansion</span><span class="p">):</span>
+    <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    </span>
+<span class="sd">    Initialize the weights of a convolutional layer with a generalized He&#39;s weight initialization method.</span>
+<span class="sd">    </span>
+<span class="sd">    Args:</span>
+<span class="sd">        tensor (torch.Tensor): the tensor containing the weights</span>
+<span class="sd">        basisexpansion (BasisExpansion): the basis expansion method</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># Initialization</span>
+    
+    <span class="k">assert</span> <span class="n">tensor</span><span class="o">.</span><span class="n">shape</span> <span class="o">==</span> <span class="p">(</span><span class="n">basisexpansion</span><span class="o">.</span><span class="n">dimension</span><span class="p">(),</span> <span class="p">)</span>
+    
+    <span class="nb">vars</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">ones_like</span><span class="p">(</span><span class="n">tensor</span><span class="p">)</span>
+    
+    <span class="n">inputs_count</span> <span class="o">=</span> <span class="n">defaultdict</span><span class="p">(</span><span class="k">lambda</span><span class="p">:</span> <span class="nb">set</span><span class="p">())</span>
+    <span class="n">basis_count</span> <span class="o">=</span> <span class="n">defaultdict</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
+    
+    <span class="k">for</span> <span class="n">attr</span> <span class="ow">in</span> <span class="n">basisexpansion</span><span class="o">.</span><span class="n">get_basis_info</span><span class="p">():</span>
+        <span class="n">i</span><span class="p">,</span> <span class="n">o</span> <span class="o">=</span> <span class="n">attr</span><span class="p">[</span><span class="s2">&quot;in_irreps_position&quot;</span><span class="p">],</span> <span class="n">attr</span><span class="p">[</span><span class="s2">&quot;out_irreps_position&quot;</span><span class="p">]</span>
+        <span class="n">in_irrep</span><span class="p">,</span> <span class="n">out_irrep</span> <span class="o">=</span> <span class="n">attr</span><span class="p">[</span><span class="s2">&quot;in_irrep&quot;</span><span class="p">],</span> <span class="n">attr</span><span class="p">[</span><span class="s2">&quot;out_irrep&quot;</span><span class="p">]</span>
+        <span class="n">inputs_count</span><span class="p">[</span><span class="n">o</span><span class="p">]</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">in_irrep</span><span class="p">)</span>
+        <span class="n">basis_count</span><span class="p">[(</span><span class="n">in_irrep</span><span class="p">,</span> <span class="n">o</span><span class="p">)]</span> <span class="o">+=</span> <span class="mi">1</span>
+    
+    <span class="k">for</span> <span class="n">o</span> <span class="ow">in</span> <span class="n">inputs_count</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+        <span class="n">inputs_count</span><span class="p">[</span><span class="n">o</span><span class="p">]</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">inputs_count</span><span class="p">[</span><span class="n">o</span><span class="p">])</span>
+    
+    <span class="k">for</span> <span class="n">w</span><span class="p">,</span> <span class="n">attr</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">basisexpansion</span><span class="o">.</span><span class="n">get_basis_info</span><span class="p">()):</span>
+        <span class="n">i</span><span class="p">,</span> <span class="n">o</span> <span class="o">=</span> <span class="n">attr</span><span class="p">[</span><span class="s2">&quot;in_irreps_position&quot;</span><span class="p">],</span> <span class="n">attr</span><span class="p">[</span><span class="s2">&quot;out_irreps_position&quot;</span><span class="p">]</span>
+        <span class="n">in_irrep</span><span class="p">,</span> <span class="n">out_irrep</span> <span class="o">=</span> <span class="n">attr</span><span class="p">[</span><span class="s2">&quot;in_irrep&quot;</span><span class="p">],</span> <span class="n">attr</span><span class="p">[</span><span class="s2">&quot;out_irrep&quot;</span><span class="p">]</span>
+        <span class="nb">vars</span><span class="p">[</span><span class="n">w</span><span class="p">]</span> <span class="o">=</span> <span class="mf">1.</span> <span class="o">/</span> <span class="n">math</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">inputs_count</span><span class="p">[</span><span class="n">o</span><span class="p">]</span> <span class="o">*</span> <span class="n">basis_count</span><span class="p">[(</span><span class="n">in_irrep</span><span class="p">,</span> <span class="n">o</span><span class="p">)])</span>
+    
+    <span class="c1"># for i, o in basis_count.keys():</span>
+    <span class="c1">#     print(i, o, inputs_count[o],  basis_count[(i, o)])</span>
+    
+    <span class="n">tensor</span><span class="p">[:]</span> <span class="o">=</span> <span class="nb">vars</span> <span class="o">*</span> <span class="n">torch</span><span class="o">.</span><span class="n">randn_like</span><span class="p">(</span><span class="n">tensor</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="deltaorthonormal_init"><a class="viewcode-back" href="../../../api/e2cnn.nn.html#e2cnn.nn.init.deltaorthonormal_init">[docs]</a><span class="k">def</span> <span class="nf">deltaorthonormal_init</span><span class="p">(</span><span class="n">tensor</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">,</span> <span class="n">basisexpansion</span><span class="p">:</span> <span class="n">BasisExpansion</span><span class="p">):</span>
+    <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    </span>
+<span class="sd">    Initialize the weights of a convolutional layer with *delta-orthogonal* initialization.</span>
+<span class="sd">    </span>
+<span class="sd">    Args:</span>
+<span class="sd">        tensor (torch.Tensor): the tensor containing the weights</span>
+<span class="sd">        basisexpansion (BasisExpansion): the basis expansion method</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># Initialization</span>
+
+    <span class="k">assert</span> <span class="n">tensor</span><span class="o">.</span><span class="n">shape</span> <span class="o">==</span> <span class="p">(</span><span class="n">basisexpansion</span><span class="o">.</span><span class="n">dimension</span><span class="p">(),</span> <span class="p">)</span>
+    
+    <span class="n">tensor</span><span class="o">.</span><span class="n">fill_</span><span class="p">(</span><span class="mf">0.</span><span class="p">)</span>
+    
+    <span class="n">counts</span> <span class="o">=</span> <span class="n">defaultdict</span><span class="p">(</span><span class="k">lambda</span><span class="p">:</span> <span class="n">defaultdict</span><span class="p">(</span><span class="k">lambda</span><span class="p">:</span> <span class="p">[]))</span>
+    
+    <span class="k">for</span> <span class="n">p</span><span class="p">,</span> <span class="n">attr</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">basisexpansion</span><span class="o">.</span><span class="n">get_basis_info</span><span class="p">()):</span>
+        <span class="n">i</span> <span class="o">=</span> <span class="n">attr</span><span class="p">[</span><span class="s2">&quot;in_irrep&quot;</span><span class="p">]</span>
+        <span class="n">o</span> <span class="o">=</span> <span class="n">attr</span><span class="p">[</span><span class="s2">&quot;out_irrep&quot;</span><span class="p">]</span>
+        <span class="n">ip</span> <span class="o">=</span> <span class="n">attr</span><span class="p">[</span><span class="s2">&quot;in_irreps_position&quot;</span><span class="p">]</span>
+        <span class="n">op</span> <span class="o">=</span> <span class="n">attr</span><span class="p">[</span><span class="s2">&quot;out_irreps_position&quot;</span><span class="p">]</span>
+        <span class="n">r</span> <span class="o">=</span> <span class="n">attr</span><span class="p">[</span><span class="s2">&quot;radius&quot;</span><span class="p">]</span>
+        
+        <span class="k">if</span> <span class="n">i</span> <span class="o">==</span> <span class="n">o</span> <span class="ow">and</span> <span class="n">r</span> <span class="o">==</span> <span class="mf">0.</span><span class="p">:</span>
+            <span class="n">counts</span><span class="p">[</span><span class="n">i</span><span class="p">][(</span><span class="n">ip</span><span class="p">,</span> <span class="n">op</span><span class="p">)]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
+    
+    <span class="k">def</span> <span class="nf">same_content</span><span class="p">(</span><span class="n">l</span><span class="p">):</span>
+        <span class="n">l</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">l</span><span class="p">)</span>
+        <span class="k">return</span> <span class="nb">all</span><span class="p">(</span><span class="n">ll</span> <span class="o">==</span> <span class="n">l</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">ll</span> <span class="ow">in</span> <span class="n">l</span><span class="p">)</span>
+    
+    <span class="k">for</span> <span class="n">irrep</span><span class="p">,</span> <span class="n">count</span> <span class="ow">in</span> <span class="n">counts</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="k">assert</span> <span class="n">same_content</span><span class="p">([</span><span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">count</span><span class="o">.</span><span class="n">values</span><span class="p">()]),</span> <span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">count</span><span class="o">.</span><span class="n">values</span><span class="p">()]</span>
+        <span class="n">in_c</span> <span class="o">=</span> <span class="n">defaultdict</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
+        <span class="n">out_c</span> <span class="o">=</span> <span class="n">defaultdict</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">ip</span><span class="p">,</span> <span class="n">op</span> <span class="ow">in</span> <span class="n">count</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+            <span class="n">in_c</span><span class="p">[</span><span class="n">ip</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="n">out_c</span><span class="p">[</span><span class="n">op</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="k">assert</span> <span class="n">same_content</span><span class="p">(</span><span class="n">in_c</span><span class="o">.</span><span class="n">values</span><span class="p">()),</span> <span class="n">count</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span>
+        <span class="k">assert</span> <span class="n">same_content</span><span class="p">(</span><span class="n">out_c</span><span class="o">.</span><span class="n">values</span><span class="p">()),</span> <span class="n">count</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span>
+        
+        <span class="k">assert</span> <span class="nb">list</span><span class="p">(</span><span class="n">in_c</span><span class="o">.</span><span class="n">values</span><span class="p">())[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">out_c</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
+        <span class="k">assert</span> <span class="nb">list</span><span class="p">(</span><span class="n">out_c</span><span class="o">.</span><span class="n">values</span><span class="p">())[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">in_c</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
+        
+        <span class="n">s</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">count</span><span class="o">.</span><span class="n">values</span><span class="p">())[</span><span class="mi">0</span><span class="p">])</span>
+        <span class="n">i</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">in_c</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
+        <span class="n">o</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">out_c</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
+        
+        <span class="c1"># assert i &lt;= o, (i, o, s, irrep, self._input_size, self._output_size)</span>
+        <span class="c1"># if i &gt; o:</span>
+        <span class="c1">#     print(&quot;Warning: using delta orthogonal initialization to map to a larger number of channels&quot;)</span>
+        
+        <span class="k">if</span> <span class="nb">max</span><span class="p">(</span><span class="n">o</span><span class="p">,</span> <span class="n">i</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="n">W</span> <span class="o">=</span> <span class="n">stats</span><span class="o">.</span><span class="n">ortho_group</span><span class="o">.</span><span class="n">rvs</span><span class="p">(</span><span class="nb">max</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">o</span><span class="p">))[:</span><span class="n">o</span><span class="p">,</span> <span class="p">:</span><span class="n">i</span><span class="p">]</span>
+            <span class="c1"># W = np.eye(o, i)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">W</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">torch</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span> <span class="o">-</span> <span class="mi">1</span>
+            <span class="c1"># W = np.array([[1]])</span>
+        
+        <span class="n">w</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">randn</span><span class="p">((</span><span class="n">o</span><span class="p">,</span> <span class="n">s</span><span class="p">))</span>
+        <span class="c1"># w = torch.ones((o, s))</span>
+        <span class="n">w</span> <span class="o">*=</span> <span class="mf">5.</span>
+        <span class="n">w</span> <span class="o">/=</span> <span class="p">(</span><span class="n">w</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">dim</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">keepdim</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">sqrt</span><span class="p">()</span>
+        
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">ip</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">in_c</span><span class="o">.</span><span class="n">keys</span><span class="p">()):</span>
+            <span class="k">for</span> <span class="n">o</span><span class="p">,</span> <span class="n">op</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">out_c</span><span class="o">.</span><span class="n">keys</span><span class="p">()):</span>
+                <span class="k">for</span> <span class="n">p</span><span class="p">,</span> <span class="n">pp</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">count</span><span class="p">[(</span><span class="n">ip</span><span class="p">,</span> <span class="n">op</span><span class="p">)]):</span>
+                    <span class="n">tensor</span><span class="p">[</span><span class="n">pp</span><span class="p">]</span> <span class="o">=</span> <span class="n">w</span><span class="p">[</span><span class="n">o</span><span class="p">,</span> <span class="n">p</span><span class="p">]</span> <span class="o">*</span> <span class="n">W</span><span class="p">[</span><span class="n">o</span><span class="p">,</span> <span class="n">i</span><span class="p">]</span></div>
+
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, Qualcomm Innovation Center, Inc. Developed by Gabriele Cesa, Maurice Weiler
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

@@ -1,0 +1,517 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>e2cnn.kernels.steerable_basis &mdash; e2cnn 0.1 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../../_static/language_data.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script type="text/x-mathjax-config">MathJax.Hub.Config({"TeX": {"Macros": {"bold": ["{\\bf #1}", 1], "R": "{\\mathbb R}", "N": "{\\mathbb N}", "Z": "{\\mathbb Z}", "Ind": ["{\\operatorname{Ind}_{#1}^{#2}}", 2], "Res": ["{\\operatorname{Res}_{#1}^{#2}}", 2], "GL": ["{\\operatorname{GL}(#1)}", 1], "E": ["{\\operatorname{E}(#1)}", 1], "SE": ["{\\operatorname{SE}(#1)}", 1], "O": ["{\\operatorname{O}(#1)}", 1], "SO": ["{\\operatorname{SO}(#1)}", 1], "U": ["{\\operatorname{U}(#1)}", 1], "D": ["{\\operatorname{D}_{#1}}", 1], "C": ["{\\operatorname{C}_{#1}}", 1], "DN": "{\\operatorname{D}_{\\!N}}", "CN": "{\\operatorname{C}_{\\!N}}"}}})</script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/custom.css" type="text/css" />
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> e2cnn
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.1
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Package Reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../api/e2cnn.group.html">e2cnn.group</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/e2cnn.group.html#groups">Groups</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/e2cnn.group.html#representations">Representations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/e2cnn.group.html#utility-functions">Utility Functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/e2cnn.group.html#subpackages">Subpackages</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../api/e2cnn.kernels.html">e2cnn.kernels</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/e2cnn.kernels.html#abstract-classes">Abstract Classes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/e2cnn.kernels.html#kernel-bases">Kernel Bases</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/e2cnn.kernels.html#bases-for-group-actions-on-the-plane">Bases for Group Actions on the Plane</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../api/e2cnn.gspaces.html">e2cnn.gspaces</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/e2cnn.gspaces.html#abstract-group-space">Abstract Group Space</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/e2cnn.gspaces.html#group-actions-on-the-plane">Group Actions on the Plane</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../api/e2cnn.nn.html">e2cnn.nn</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/e2cnn.nn.html#main-classes">Main Classes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/e2cnn.nn.html#utils">Utils</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/e2cnn.nn.html#planar-convolution">Planar Convolution</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/e2cnn.nn.html#non-linearities">Non Linearities</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/e2cnn.nn.html#invariant-maps">Invariant Maps</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/e2cnn.nn.html#pooling">Pooling</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/e2cnn.nn.html#normalization">Normalization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/e2cnn.nn.html#dropout">Dropout</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/e2cnn.nn.html#other-modules">Other Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/e2cnn.nn.html#module-e2cnn.nn.init">Weight Initialization</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">e2cnn</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+      <li>e2cnn.kernels.steerable_basis</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for e2cnn.kernels.steerable_basis</h1><div class="highlight"><pre>
+<span></span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="kn">from</span> <span class="nn">.basis</span> <span class="k">import</span> <span class="n">KernelBasis</span><span class="p">,</span> <span class="n">EmptyBasisException</span>
+<span class="kn">from</span> <span class="nn">.irreps_basis</span> <span class="k">import</span> <span class="n">IrrepBasis</span>
+
+<span class="kn">from</span> <span class="nn">e2cnn.group</span> <span class="k">import</span> <span class="n">Representation</span>
+
+<span class="kn">from</span> <span class="nn">typing</span> <span class="k">import</span> <span class="n">Type</span>
+
+
+<div class="viewcode-block" id="SteerableKernelBasis"><a class="viewcode-back" href="../../../api/e2cnn.kernels.html#e2cnn.kernels.SteerableKernelBasis">[docs]</a><span class="k">class</span> <span class="nc">SteerableKernelBasis</span><span class="p">(</span><span class="n">KernelBasis</span><span class="p">):</span>
+    
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
+                 <span class="n">irreps_basis</span><span class="p">:</span> <span class="n">Type</span><span class="p">[</span><span class="n">IrrepBasis</span><span class="p">],</span>
+                 <span class="n">in_repr</span><span class="p">:</span> <span class="n">Representation</span><span class="p">,</span>
+                 <span class="n">out_repr</span><span class="p">:</span> <span class="n">Representation</span><span class="p">,</span>
+                 <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        </span>
+<span class="sd">        Implements a general basis for the vector space of equivariant kernels.</span>
+<span class="sd">        A :math:`G`-equivariant kernel :math:`\kappa`, mapping between an input field, transforming under</span>
+<span class="sd">        :math:`\rho_\text{in}` (``in_repr``), and an output field, transforming under  :math:`\rho_\text{out}`</span>
+<span class="sd">        (``out_repr``), satisfies the following constraint:</span>
+<span class="sd">        </span>
+<span class="sd">        .. math ::</span>
+<span class="sd">            </span>
+<span class="sd">            \kappa(gx) = \rho_\text{out}(g) \kappa(x) \rho_\text{in}(g)^{-1} \qquad \forall g \in G</span>
+<span class="sd">        </span>
+<span class="sd">        As the kernel constraint is a linear constraint, the space of equivariant kernels is a vector subspace of the</span>
+<span class="sd">        space of all convolutional kernels. It follows that any equivariant kernel can be expressed in terms of a basis</span>
+<span class="sd">        of this space.</span>
+<span class="sd">        </span>
+<span class="sd">        This class solves the kernel constraint for two arbitrary representations by combining the solutions of the</span>
+<span class="sd">        kernel constraints associated to their :class:`~e2cnn.group.IrreducibleRepresentation` s.</span>
+<span class="sd">        In order to do so, it relies on ``irreps_basis`` which solves individual irreps constraints. ``irreps_basis``</span>
+<span class="sd">        must be a class (subclass of :class:`~e2cnn.kernels.IrrepsBasis`) which builds a basis for equivariant</span>
+<span class="sd">        kernels associated with irreducible representations when instantiated.</span>
+<span class="sd">        </span>
+<span class="sd">        The groups :math:`G` which are currently implemented are isometries. Therefore, equivariance does not</span>
+<span class="sd">        enforce any constraint on the radial component of the kernels.</span>
+<span class="sd">        Hence, this class only implements a basis for the angular part of the kernels.</span>
+<span class="sd">        </span>
+<span class="sd">        In order to build a complete basis of kernels, you should combine this basis with a basis which defines the</span>
+<span class="sd">        radial profile (such as :class:`~e2cnn.kernels.GaussianRadialProfile`) through</span>
+<span class="sd">        :class:`~e2cnn.kernels.PolarBasis`.</span>
+<span class="sd">        </span>
+<span class="sd">        .. math::</span>
+<span class="sd">            </span>
+<span class="sd">            \mathcal{B} = \left\{ b_i (r) :=  \exp \left( \frac{ \left( r - r_i \right)^2}{2 \sigma_i^2} \right) \right\}_i</span>
+<span class="sd">        </span>
+<span class="sd">        Args:</span>
+<span class="sd">            irreps_basis (class): class defining the irreps basis. This class is instantiated for each pair of irreps to solve all irreps constraints.</span>
+<span class="sd">            in_repr (Representation): Representation associated with the input feature field</span>
+<span class="sd">            out_repr (Representation): Representation associated with the output feature field</span>
+<span class="sd">            **kwargs: additional arguments used when instantiating ``irreps_basis``</span>
+<span class="sd">            </span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        
+        <span class="k">assert</span> <span class="n">in_repr</span><span class="o">.</span><span class="n">group</span> <span class="o">==</span> <span class="n">out_repr</span><span class="o">.</span><span class="n">group</span>
+        
+        <span class="bp">self</span><span class="o">.</span><span class="n">in_repr</span> <span class="o">=</span> <span class="n">in_repr</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">out_repr</span> <span class="o">=</span> <span class="n">out_repr</span>
+        <span class="n">group</span> <span class="o">=</span> <span class="n">in_repr</span><span class="o">.</span><span class="n">group</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">group</span> <span class="o">=</span> <span class="n">group</span>
+
+        <span class="n">A_inv</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">in_repr</span><span class="o">.</span><span class="n">change_of_basis_inv</span><span class="p">,</span> <span class="n">copy</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="n">B</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">out_repr</span><span class="o">.</span><span class="n">change_of_basis</span><span class="p">,</span> <span class="n">copy</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        
+        <span class="c1"># A_inv = in_repr.change_of_basis_inv</span>
+        <span class="c1"># B = out_repr.change_of_basis</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">np</span><span class="o">.</span><span class="n">allclose</span><span class="p">(</span><span class="n">A_inv</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="n">in_repr</span><span class="o">.</span><span class="n">size</span><span class="p">)):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">A_inv</span> <span class="o">=</span> <span class="n">A_inv</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">A_inv</span> <span class="o">=</span> <span class="kc">None</span>
+            
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">np</span><span class="o">.</span><span class="n">allclose</span><span class="p">(</span><span class="n">B</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="n">out_repr</span><span class="o">.</span><span class="n">size</span><span class="p">)):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">B</span> <span class="o">=</span> <span class="n">B</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">B</span> <span class="o">=</span> <span class="kc">None</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">irreps_bases</span> <span class="o">=</span> <span class="p">{}</span>
+
+        <span class="c1"># loop over all input irreps</span>
+        <span class="k">for</span> <span class="n">i_irrep_name</span> <span class="ow">in</span> <span class="nb">set</span><span class="p">(</span><span class="n">in_repr</span><span class="o">.</span><span class="n">irreps</span><span class="p">):</span>
+            <span class="c1"># loop over all output irreps</span>
+            <span class="k">for</span> <span class="n">o_irrep_name</span> <span class="ow">in</span> <span class="nb">set</span><span class="p">(</span><span class="n">out_repr</span><span class="o">.</span><span class="n">irreps</span><span class="p">):</span>
+        
+                <span class="k">try</span><span class="p">:</span>
+                    <span class="c1"># retrieve the irrep intertwiner basis</span>
+                    <span class="n">basis</span> <span class="o">=</span> <span class="n">irreps_basis</span><span class="p">(</span><span class="n">group</span><span class="o">=</span><span class="n">group</span><span class="p">,</span>
+                                         <span class="n">in_irrep</span><span class="o">=</span><span class="n">i_irrep_name</span><span class="p">,</span>
+                                         <span class="n">out_irrep</span><span class="o">=</span><span class="n">o_irrep_name</span><span class="p">,</span>
+                                         <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+                    <span class="bp">self</span><span class="o">.</span><span class="n">irreps_bases</span><span class="p">[(</span><span class="n">i_irrep_name</span><span class="p">,</span> <span class="n">o_irrep_name</span><span class="p">)]</span> <span class="o">=</span> <span class="n">basis</span>
+
+                <span class="k">except</span> <span class="n">EmptyBasisException</span><span class="p">:</span>
+                    <span class="c1"># if the basis is empty, skip it</span>
+                    <span class="k">pass</span>
+        
+        <span class="bp">self</span><span class="o">.</span><span class="n">bases</span> <span class="o">=</span> <span class="p">[[</span><span class="kc">None</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">out_repr</span><span class="o">.</span><span class="n">irreps</span><span class="p">))]</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">in_repr</span><span class="o">.</span><span class="n">irreps</span><span class="p">))]</span>
+        
+        <span class="bp">self</span><span class="o">.</span><span class="n">in_sizes</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">out_sizes</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="c1"># loop over all input irreps</span>
+        <span class="k">for</span> <span class="n">ii</span><span class="p">,</span> <span class="n">i_irrep_name</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">in_repr</span><span class="o">.</span><span class="n">irreps</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">in_sizes</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">group</span><span class="o">.</span><span class="n">irreps</span><span class="p">[</span><span class="n">i_irrep_name</span><span class="p">]</span><span class="o">.</span><span class="n">size</span><span class="p">)</span>
+            
+        <span class="c1"># loop over all output irreps</span>
+        <span class="k">for</span> <span class="n">oo</span><span class="p">,</span> <span class="n">o_irrep_name</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">out_repr</span><span class="o">.</span><span class="n">irreps</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">out_sizes</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">group</span><span class="o">.</span><span class="n">irreps</span><span class="p">[</span><span class="n">o_irrep_name</span><span class="p">]</span><span class="o">.</span><span class="n">size</span><span class="p">)</span>
+
+        <span class="n">dim</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="c1"># loop over all input irreps</span>
+        <span class="k">for</span> <span class="n">ii</span><span class="p">,</span> <span class="n">i_irrep_name</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">in_repr</span><span class="o">.</span><span class="n">irreps</span><span class="p">):</span>
+            <span class="c1"># loop over all output irreps</span>
+            <span class="k">for</span> <span class="n">oo</span><span class="p">,</span> <span class="n">o_irrep_name</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">out_repr</span><span class="o">.</span><span class="n">irreps</span><span class="p">):</span>
+                <span class="k">if</span> <span class="p">(</span><span class="n">i_irrep_name</span><span class="p">,</span> <span class="n">o_irrep_name</span><span class="p">)</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">irreps_bases</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">bases</span><span class="p">[</span><span class="n">ii</span><span class="p">][</span><span class="n">oo</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">irreps_bases</span><span class="p">[(</span><span class="n">i_irrep_name</span><span class="p">,</span> <span class="n">o_irrep_name</span><span class="p">)]</span>
+                    <span class="n">dim</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">bases</span><span class="p">[</span><span class="n">ii</span><span class="p">][</span><span class="n">oo</span><span class="p">]</span><span class="o">.</span><span class="n">dim</span>
+        
+        <span class="nb">super</span><span class="p">(</span><span class="n">SteerableKernelBasis</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">dim</span><span class="p">,</span> <span class="p">(</span><span class="n">out_repr</span><span class="o">.</span><span class="n">size</span><span class="p">,</span> <span class="n">in_repr</span><span class="o">.</span><span class="n">size</span><span class="p">))</span>
+            
+<div class="viewcode-block" id="SteerableKernelBasis.sample"><a class="viewcode-back" href="../../../api/e2cnn.kernels.html#e2cnn.kernels.SteerableKernelBasis.sample">[docs]</a>    <span class="k">def</span> <span class="nf">sample</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">angles</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">out</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">        Sample the continuous basis elements on the discrete set of angles in ``angles``.</span>
+<span class="sd">        Optionally, store the resulting multidimentional array in ``out``.</span>
+<span class="sd">        </span>
+<span class="sd">        A value of ``nan`` is interpreted as the angle of a point placed on the origin of the axes.</span>
+
+<span class="sd">        ``angles`` must be an array of shape `(1, N)`, where `N` is the number of points.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            angles (~numpy.ndarray): angles where to evaluate the basis elements</span>
+<span class="sd">            out (~numpy.ndarray, optional): pre-existing array to use to store the output</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            the sampled basis</span>
+<span class="sd">            </span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">angles</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span>
+        <span class="k">assert</span> <span class="n">angles</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span>
+
+        <span class="k">if</span> <span class="n">out</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">out</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">dim</span><span class="p">,</span> <span class="n">angles</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">out</span><span class="o">.</span><span class="n">fill</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+        
+        <span class="k">assert</span> <span class="n">out</span><span class="o">.</span><span class="n">shape</span> <span class="o">==</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">dim</span><span class="p">,</span> <span class="n">angles</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+    
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">A_inv</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">B</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">out</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_sample_direct_sum</span><span class="p">(</span><span class="n">angles</span><span class="p">,</span> <span class="n">out</span><span class="o">=</span><span class="n">out</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">samples</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_sample_direct_sum</span><span class="p">(</span><span class="n">angles</span><span class="p">)</span>
+            <span class="n">out</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_change_of_basis</span><span class="p">(</span><span class="n">samples</span><span class="p">,</span> <span class="n">out</span><span class="o">=</span><span class="n">out</span><span class="p">)</span>
+    
+        <span class="k">return</span> <span class="n">out</span></div>
+    
+    <span class="k">def</span> <span class="nf">_sample_direct_sum</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">angles</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">out</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+        <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">angles</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span>
+    
+        <span class="k">if</span> <span class="n">out</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">out</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">dim</span><span class="p">,</span> <span class="n">angles</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span>
+
+        <span class="k">assert</span> <span class="n">out</span><span class="o">.</span><span class="n">shape</span> <span class="o">==</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">dim</span><span class="p">,</span> <span class="n">angles</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+    
+        <span class="n">basis_count</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">in_position</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">for</span> <span class="n">ii</span><span class="p">,</span> <span class="n">in_size</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">in_sizes</span><span class="p">):</span>
+            <span class="n">out_position</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="k">for</span> <span class="n">oo</span><span class="p">,</span> <span class="n">out_size</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">out_sizes</span><span class="p">):</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">bases</span><span class="p">[</span><span class="n">ii</span><span class="p">][</span><span class="n">oo</span><span class="p">]</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="n">dim</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">bases</span><span class="p">[</span><span class="n">ii</span><span class="p">][</span><span class="n">oo</span><span class="p">]</span><span class="o">.</span><span class="n">dim</span>
+                    
+                    <span class="n">block</span> <span class="o">=</span> <span class="n">out</span><span class="p">[</span>
+                            <span class="n">out_position</span><span class="p">:</span><span class="n">out_position</span><span class="o">+</span><span class="n">out_size</span><span class="p">,</span>
+                            <span class="n">in_position</span><span class="p">:</span><span class="n">in_position</span><span class="o">+</span><span class="n">in_size</span><span class="p">,</span>
+                            <span class="n">basis_count</span><span class="p">:</span><span class="n">basis_count</span><span class="o">+</span><span class="n">dim</span><span class="p">,</span>
+                            <span class="o">...</span>
+                    <span class="p">]</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">bases</span><span class="p">[</span><span class="n">ii</span><span class="p">][</span><span class="n">oo</span><span class="p">]</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="n">angles</span><span class="p">,</span> <span class="n">out</span><span class="o">=</span><span class="n">block</span><span class="p">)</span>
+                    
+                    <span class="c1"># out[</span>
+                    <span class="c1">#     out_position:out_position+out_size,</span>
+                    <span class="c1">#     in_position:in_position+in_size,</span>
+                    <span class="c1">#     basis_count:basis_count+dim,</span>
+                    <span class="c1">#     ...</span>
+                    <span class="c1"># ] = self.bases[ii][oo].sample(angles)</span>
+
+                    <span class="n">basis_count</span> <span class="o">+=</span> <span class="n">dim</span>
+                    
+                <span class="n">out_position</span> <span class="o">+=</span> <span class="n">out_size</span>
+            <span class="n">in_position</span> <span class="o">+=</span> <span class="n">in_size</span>
+
+        <span class="k">return</span> <span class="n">out</span>
+    
+    <span class="k">def</span> <span class="nf">_change_of_basis</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">samples</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">out</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+        <span class="c1"># multiply by the change of basis matrices to transform the irreps basis in the full representations basis</span>
+        
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">A_inv</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">B</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">out</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">einsum</span><span class="p">(</span><span class="s2">&quot;no,oibp,ij-&gt;njbp&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">B</span><span class="p">,</span> <span class="n">samples</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">A_inv</span><span class="p">,</span> <span class="n">out</span><span class="o">=</span><span class="n">out</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">A_inv</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">out</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">einsum</span><span class="p">(</span><span class="s2">&quot;oibp,ij-&gt;ojbp&quot;</span><span class="p">,</span> <span class="n">samples</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">A_inv</span><span class="p">,</span> <span class="n">out</span><span class="o">=</span><span class="n">out</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">B</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">out</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">einsum</span><span class="p">(</span><span class="s2">&quot;no,oibp-&gt;nibp&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">B</span><span class="p">,</span> <span class="n">samples</span><span class="p">,</span> <span class="n">out</span><span class="o">=</span><span class="n">out</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">out</span><span class="p">[</span><span class="o">...</span><span class="p">]</span> <span class="o">=</span> <span class="n">samples</span>
+        
+        <span class="k">return</span> <span class="n">out</span>
+
+    <span class="k">def</span> <span class="nf">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">idx</span><span class="p">):</span>
+        <span class="k">assert</span> <span class="n">idx</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">dim</span>
+        
+        <span class="n">count</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">for</span> <span class="n">ii</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">in_sizes</span><span class="p">)):</span>
+            <span class="k">for</span> <span class="n">oo</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">out_sizes</span><span class="p">)):</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">bases</span><span class="p">[</span><span class="n">ii</span><span class="p">][</span><span class="n">oo</span><span class="p">]</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="n">dim</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">bases</span><span class="p">[</span><span class="n">ii</span><span class="p">][</span><span class="n">oo</span><span class="p">]</span><span class="o">.</span><span class="n">dim</span>
+
+                    <span class="n">rel_idx</span> <span class="o">=</span> <span class="n">idx</span> <span class="o">-</span> <span class="n">count</span>
+                    <span class="k">if</span> <span class="n">rel_idx</span> <span class="o">&gt;=</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">rel_idx</span> <span class="o">&lt;</span> <span class="n">dim</span><span class="p">:</span>
+                        
+                        <span class="n">attr</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">bases</span><span class="p">[</span><span class="n">ii</span><span class="p">][</span><span class="n">oo</span><span class="p">][</span><span class="n">rel_idx</span><span class="p">])</span>
+                        
+                        <span class="n">attr</span><span class="p">[</span><span class="s2">&quot;shape&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">bases</span><span class="p">[</span><span class="n">ii</span><span class="p">][</span><span class="n">oo</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span>
+                        
+                        <span class="n">attr</span><span class="p">[</span><span class="s2">&quot;in_irrep&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">in_repr</span><span class="o">.</span><span class="n">irreps</span><span class="p">[</span><span class="n">ii</span><span class="p">]</span>
+                        <span class="n">attr</span><span class="p">[</span><span class="s2">&quot;out_irrep&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">out_repr</span><span class="o">.</span><span class="n">irreps</span><span class="p">[</span><span class="n">oo</span><span class="p">]</span>
+                        
+                        <span class="n">attr</span><span class="p">[</span><span class="s2">&quot;in_irrep_idx&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">ii</span>
+                        <span class="n">attr</span><span class="p">[</span><span class="s2">&quot;out_irrep_idx&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">oo</span>
+                        
+                        <span class="n">attr</span><span class="p">[</span><span class="s2">&quot;inner_idx&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">attr</span><span class="p">[</span><span class="s2">&quot;idx&quot;</span><span class="p">]</span>
+                        <span class="n">attr</span><span class="p">[</span><span class="s2">&quot;idx&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">idx</span>
+                        
+
+                        <span class="k">return</span> <span class="n">attr</span>
+                
+                    <span class="n">count</span> <span class="o">+=</span> <span class="n">dim</span>
+
+    <span class="k">def</span> <span class="nf">__iter__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">idx</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">for</span> <span class="n">ii</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">in_sizes</span><span class="p">)):</span>
+            <span class="k">for</span> <span class="n">oo</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">out_sizes</span><span class="p">)):</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">bases</span><span class="p">[</span><span class="n">ii</span><span class="p">][</span><span class="n">oo</span><span class="p">]</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="k">for</span> <span class="n">rel_idx</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">bases</span><span class="p">[</span><span class="n">ii</span><span class="p">][</span><span class="n">oo</span><span class="p">])):</span>
+                        <span class="n">attr</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">bases</span><span class="p">[</span><span class="n">ii</span><span class="p">][</span><span class="n">oo</span><span class="p">][</span><span class="n">rel_idx</span><span class="p">])</span>
+
+                        <span class="n">attr</span><span class="p">[</span><span class="s2">&quot;shape&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">bases</span><span class="p">[</span><span class="n">ii</span><span class="p">][</span><span class="n">oo</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span>
+                        
+                        <span class="n">attr</span><span class="p">[</span><span class="s2">&quot;in_irrep&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">in_repr</span><span class="o">.</span><span class="n">irreps</span><span class="p">[</span><span class="n">ii</span><span class="p">]</span>
+                        <span class="n">attr</span><span class="p">[</span><span class="s2">&quot;out_irrep&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">out_repr</span><span class="o">.</span><span class="n">irreps</span><span class="p">[</span><span class="n">oo</span><span class="p">]</span>
+                    
+                        <span class="n">attr</span><span class="p">[</span><span class="s2">&quot;in_irrep_idx&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">ii</span>
+                        <span class="n">attr</span><span class="p">[</span><span class="s2">&quot;out_irrep_idx&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">oo</span>
+                        
+                        <span class="n">attr</span><span class="p">[</span><span class="s2">&quot;inner_idx&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">attr</span><span class="p">[</span><span class="s2">&quot;idx&quot;</span><span class="p">]</span>
+                        <span class="n">attr</span><span class="p">[</span><span class="s2">&quot;idx&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">idx</span>
+
+                        <span class="k">yield</span> <span class="n">attr</span>
+                        
+                        <span class="n">idx</span> <span class="o">+=</span> <span class="mi">1</span>
+
+    <span class="k">def</span> <span class="nf">__eq__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="n">SteerableKernelBasis</span><span class="p">):</span>
+            <span class="k">return</span> <span class="kc">False</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">in_repr</span> <span class="o">!=</span> <span class="n">other</span><span class="o">.</span><span class="n">in_repr</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">out_repr</span> <span class="o">!=</span> <span class="n">other</span><span class="o">.</span><span class="n">out_repr</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">False</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">sbk1</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">irreps_bases</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
+            <span class="n">sbk2</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">other</span><span class="o">.</span><span class="n">irreps_bases</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
+            <span class="k">if</span> <span class="n">sbk1</span> <span class="o">!=</span> <span class="n">sbk2</span><span class="p">:</span>
+                <span class="k">return</span> <span class="kc">False</span>
+            
+            <span class="k">for</span> <span class="n">irreps</span><span class="p">,</span> <span class="n">basis</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">irreps_bases</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+                <span class="k">if</span> <span class="n">basis</span> <span class="o">!=</span> <span class="n">other</span><span class="o">.</span><span class="n">irreps_bases</span><span class="p">[</span><span class="n">irreps</span><span class="p">]:</span>
+                    <span class="k">return</span> <span class="kc">False</span>
+            
+            <span class="k">return</span> <span class="kc">True</span>
+
+    <span class="k">def</span> <span class="nf">__hash__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">h</span> <span class="o">=</span> <span class="nb">hash</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">in_repr</span><span class="p">)</span> <span class="o">+</span> <span class="nb">hash</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">out_repr</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">basis</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">irreps_bases</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="n">h</span> <span class="o">+=</span> <span class="nb">hash</span><span class="p">(</span><span class="n">basis</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">h</span></div>
+        
+        
+
+
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, Qualcomm Innovation Center, Inc. Developed by Gabriele Cesa, Maurice Weiler
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

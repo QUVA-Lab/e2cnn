@@ -28,9 +28,9 @@ Typically, only the high level functionalities provided in :doc:`e2cnn.gspaces <
 :doc:`e2cnn.nn <api/e2cnn.nn>` are needed to build an equivariant model.
 
 
-To get started, we provide an `introductory tutorial <https://github.com/QUVA-Lab/e2cnn/blob/development/examples/introduction.ipynb>`_
+To get started, we provide an `introductory tutorial <https://github.com/QUVA-Lab/e2cnn/blob/master/examples/introduction.ipynb>`_
 which introduces the basic functionality of the library.
-A second `tutorial <https://github.com/QUVA-Lab/e2cnn/blob/development/examples/model.ipynb>`_ goes through building and training 
+A second `tutorial <https://github.com/QUVA-Lab/e2cnn/blob/master/examples/model.ipynb>`_ goes through building and training 
 an equivariant model on the rotated MNIST dataset.
 
 

@@ -1,0 +1,74 @@
+.wy-side-nav-search, .wy-nav-top {
+    background: orangered; /* #2980B9 */
+}
+
+.rts-contant dl:not(.docutils) dt {
+    border-top: solid 3px rgba(230, 120, 92, 1);
+    /*
+    border-top: solid 3px #de6a6a;
+    border-top: solid 3px #6ab0de;
+    */
+
+    background: rgba(250, 230, 200, 1);
+    /*
+    background: #fae7e7;
+    background: #e7f2fa;
+    */
+
+    /*text color*/
+    color: rgb(234, 68, 42);
+    /*
+    color: #b92929;
+    color: #2980B9;
+    */
+}
+
+a {
+color: rgb(234, 68, 42);
+}
+
+h1 {
+	font-size: 2rem;
+    letter-spacing: 1.78px;
+    line-height: 2.5rem;
+    text-transform: uppercase;
+    margin: 1.375rem 0;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-weight: normal;
+}
+
+p.caption {
+	font-weight: 500;
+	font-size: 1rem;
+}
+
+html {
+	font-family: sans serif;
+}
+
+.rst-content .topic-title {
+    font-size: 30px;
+    /* font-weight: bold; */
+    margin-bottom: 17px;
+}
+
+/*
+.highlight {
+    background: #ffffff !important;
+}
+*/
+
+/*
+.wy-nav-side {
+    background: #2980B9;
+}
+*/
+
+
+/*
+.wy-table-responsive table th {
+   background-color: green;
+}
+

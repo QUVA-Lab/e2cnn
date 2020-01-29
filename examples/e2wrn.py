@@ -194,7 +194,7 @@ class Wide_ResNet(torch.nn.Module):
         The parameter ``N`` controls rotation equivariance and the parameter ``f`` reflection equivariance.
         
         More precisely, ``N`` is the number of discrete rotations the model is initially equivariant to.
-        ``N = 1`` means the model is only reflection equivariant form the beginning.
+        ``N = 1`` means the model is only reflection equivariant from the beginning.
         
         ``f`` is a boolean flag specifying whether the model should be reflection equivariant or not.
         If it is ``False``, the model is not reflection equivariant.

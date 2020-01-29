@@ -91,21 +91,21 @@ The following code snippet shows how to perform an equivariant convolution from 
 [group convolution](https://arxiv.org/abs/1602.07576)).
 
 ```python3
- 1|  from e2cnn import gspaces
- 2|  from e2cnn import nn
- 3|  import torch
- 4|
- 5|  r2_act = gspaces.Rot2dOnR2(N=8)
- 6|  feat_type_in  = nn.FieldType(r2_act,  3*[r2_act.trivial_repr])
- 7|  feat_type_out = nn.FieldType(r2_act, 10*[r2_act.regular_repr])
- 8|
- 9|  conv = nn.R2Conv(feat_type_in, feat_type_out, kernel_size=5)
-10|  relu = nn.ReLU(feat_type_out)
-11|
-12|  x = torch.randn(16, 3, 32, 32)
-13|  x = nn.GeometricTensor(x, feat_type_in)
-14|
-15|  y = relu(conv(x))
+from e2cnn import gspaces                                          #  1
+from e2cnn import nn                                               #  2
+import torch                                                       #  3
+                                                                   #  4
+r2_act = gspaces.Rot2dOnR2(N=8)                                    #  5
+feat_type_in  = nn.FieldType(r2_act,  3*[r2_act.trivial_repr])     #  6
+feat_type_out = nn.FieldType(r2_act, 10*[r2_act.regular_repr])     #  7
+                                                                   #  8
+conv = nn.R2Conv(feat_type_in, feat_type_out, kernel_size=5)       #  9
+relu = nn.ReLU(feat_type_out)                                      # 10
+                                                                   # 11
+x = torch.randn(16, 3, 32, 32)                                     # 12
+x = nn.GeometricTensor(x, feat_type_in)                            # 13
+                                                                   # 14
+y = relu(conv(x))                                                  # 15
 ```
 
 Line 5 specifies the symmetry group action on the image plane
@@ -144,6 +144,9 @@ python e2wrn.py --rot90
 
 
 ## Dependencies
+
+The library is based on Python3.7
+
 ```
 torch>=1.1
 numpy

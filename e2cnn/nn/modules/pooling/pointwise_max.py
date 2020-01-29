@@ -126,7 +126,7 @@ class PointwiseMaxPool(EquivariantModule):
 
     def check_equivariance(self, atol: float = 1e-6, rtol: float = 1e-5) -> List[Tuple[Any, float]]:
     
-        # this kind of pooling is not really equivariant so we can test equivariance
+        # this kind of pooling is not really equivariant so we can not test equivariance
         pass
 
 

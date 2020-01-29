@@ -33,7 +33,7 @@ class TestInducedRepresentations(TestCase):
                 self.check_induction(dg, sg_id, sg.trivial_representation)
 
     def test_quotient_dihedral_even(self):
-        N = 20
+        N = 4
         dg = dihedral_group(N)
         for n in range(1, int(round(np.sqrt(N)))+1):
             if N % n == 0:
@@ -46,7 +46,7 @@ class TestInducedRepresentations(TestCase):
                 self.check_induction(dg, sg_id, sg.trivial_representation)
 
     def test_quotient_dihedral_odd(self):
-        N = 21
+        N = 15
         dg = dihedral_group(N)
         for n in range(1, int(round(np.sqrt(N)))+1):
             if N % n == 0:
@@ -57,6 +57,14 @@ class TestInducedRepresentations(TestCase):
                 sg_id = (None, n)
                 sg, _, _ = dg.subgroup(sg_id)
                 self.check_induction(dg, sg_id, sg.trivial_representation)
+                
+    def test_quotient_dihedral(self):
+        N = 7
+        dg = dihedral_group(N)
+        
+        sg_id = (None, 1)
+        sg, _, _ = dg.subgroup(sg_id)
+        self.check_induction(dg, sg_id, sg.trivial_representation)
 
     def test_induce_irreps_dihedral_odd_dihedral_odd(self):
         dg = dihedral_group(9)
@@ -250,11 +258,24 @@ class TestInducedRepresentations(TestCase):
         
         assert repr.group == subgroup
     
-        # induced_repr = build_induced_representation(group, subgroup_id, repr)
         induced_repr = group.induced_representation(subgroup_id, repr)
         
         assert induced_repr.group == group
-
+        
+        # check the change of basis is orthonormal
+        self.assertTrue(
+            np.allclose(induced_repr.change_of_basis.T @ induced_repr.change_of_basis, np.eye(induced_repr.size)),
+            "Change of Basis not orthonormal"
+        )
+        self.assertTrue(
+            np.allclose(induced_repr.change_of_basis @ induced_repr.change_of_basis.T, np.eye(induced_repr.size)),
+            "Change of Basis not orthonormal"
+        )
+        self.assertTrue(
+            np.allclose(induced_repr.change_of_basis, induced_repr.change_of_basis_inv.T),
+            "Change of Basis not orthonormal"
+        )
+        
         restricted_repr = group.restrict_representation(subgroup_id, induced_repr)
         for e in subgroup.testing_elements():
             

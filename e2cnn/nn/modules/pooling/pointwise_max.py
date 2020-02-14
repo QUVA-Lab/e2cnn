@@ -148,7 +148,7 @@ class PointwiseMaxPoolAntialiased(PointwiseMaxPool):
         The max over a neighborhood is performed pointwise withot downsampling.
         Then, convolution with a gaussian blurring filter is performed before downsampling the feature map.
         
-        Based on `Making Convolutional Networks Shift-Invariant Again <https://arxiv.org/abs/1904.11486>`.
+        Based on `Making Convolutional Networks Shift-Invariant Again <https://arxiv.org/abs/1904.11486>`_.
         
         
         Notice that not all representations support this kind of pooling. In general, only representations which support

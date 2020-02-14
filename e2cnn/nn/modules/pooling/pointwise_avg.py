@@ -138,7 +138,7 @@ class PointwiseAvgPoolAntialiased(EquivariantModule):
         The size of the filter is computed as 3 standard deviations of the Gaussian curve.
         By default, padding is added such that input size is preserved if stride is 1.
         
-        Based on `Making Convolutional Networks Shift-Invariant Again <https://arxiv.org/abs/1904.11486>`.
+        Based on `Making Convolutional Networks Shift-Invariant Again <https://arxiv.org/abs/1904.11486>`_.
         
         Args:
             in_type (FieldType): the input field type

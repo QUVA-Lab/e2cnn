@@ -27,7 +27,7 @@ class SequentialModule(EquivariantModule):
             s = e2cnn.gspaces.Rot2dOnR2(8)
             c_in = e2cnn.nn.FieldType(s, [s.trivial_repr]*3)
             c_out = e2cnn.nn.FieldType(s, [s.regular_repr]*16)
-            model = e2cnn.nn.Sequential(
+            model = e2cnn.nn.SequentialModule(
                       e2cnn.nn.R2Conv(c_in, c_out, 5),
                       e2cnn.nn.InnerBatchNorm(c_out),
                       e2cnn.nn.ReLU(c_out),
@@ -37,7 +37,7 @@ class SequentialModule(EquivariantModule):
             s = e2cnn.gspaces.Rot2dOnR2(8)
             c_in = e2cnn.nn.FieldType(s, [s.trivial_repr]*3)
             c_out = e2cnn.nn.FieldType(s, [s.regular_repr]*16)
-            model = e2cnn.nn.Sequential(OrderedDict([
+            model = e2cnn.nn.SequentialModule(OrderedDict([
                       ('conv', e2cnn.nn.R2Conv(c_in, c_out, 5)),
                       ('bn', e2cnn.nn.InnerBatchNorm(c_out)),
                       ('relu', e2cnn.nn.ReLU(c_out)),

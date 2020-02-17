@@ -30,9 +30,6 @@ class FieldDropout(EquivariantModule):
         Notice that, with respect to :class:`~e2cnn.nn.PointwiseDropout`, this module acts on a whole field instead
         of single channels.
         
-        .. todo ::
-            Rename to ``FieldDropout``
-        
         Args:
             in_type (FieldType): the input field type
             p (float, optional): dropout probability

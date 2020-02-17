@@ -24,7 +24,7 @@ class ReshuffleModule(EquivariantModule):
         Permutes the fields of the input tensor according to the input ``permutation``.
         
         The parameter ``permutation`` should be a list containing a permutation of the integers ``{0, 1, ..., n-1}``,
-        where ``n`` is the number of fields of ``in_type`` (see :meth:`e2cnn.nn.FieldType.__len__``).
+        where ``n`` is the number of fields of ``in_type`` (see :meth:`e2cnn.nn.FieldType.__len__`).
         
         
         Args:

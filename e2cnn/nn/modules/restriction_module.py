@@ -31,8 +31,9 @@ class RestrictionModule(EquivariantModule):
         
         
         .. seealso::
-            meth:`e2cnn.nn.FieldType.restrict`, meth:`e2cnn.nn.GeometricTensor.restrict`,
-            meth:`e2cnn.gspaces.GSpace.restrict`
+            :meth:`e2cnn.nn.FieldType.restrict`,
+            :meth:`e2cnn.nn.GeometricTensor.restrict`,
+            :meth:`e2cnn.gspaces.GSpace.restrict`
         
         Args:
             in_type (FieldType): the input field type

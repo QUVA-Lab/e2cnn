@@ -1,0 +1,693 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>e2cnn.group.group &mdash; e2cnn 0.1 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../../_static/language_data.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script type="text/x-mathjax-config">MathJax.Hub.Config({"TeX": {"Macros": {"bold": ["{\\bf #1}", 1], "R": "{\\mathbb R}", "N": "{\\mathbb N}", "Z": "{\\mathbb Z}", "Ind": ["{\\operatorname{Ind}_{#1}^{#2}}", 2], "Res": ["{\\operatorname{Res}_{#1}^{#2}}", 2], "GL": ["{\\operatorname{GL}(#1)}", 1], "E": ["{\\operatorname{E}(#1)}", 1], "SE": ["{\\operatorname{SE}(#1)}", 1], "O": ["{\\operatorname{O}(#1)}", 1], "SO": ["{\\operatorname{SO}(#1)}", 1], "U": ["{\\operatorname{U}(#1)}", 1], "D": ["{\\operatorname{D}_{#1}}", 1], "C": ["{\\operatorname{C}_{#1}}", 1], "DN": "{\\operatorname{D}_{\\!N}}", "CN": "{\\operatorname{C}_{\\!N}}"}}})</script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/custom.css" type="text/css" />
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> e2cnn
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.1
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Package Reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../api/e2cnn.group.html">e2cnn.group</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/e2cnn.group.html#groups">Groups</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/e2cnn.group.html#representations">Representations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/e2cnn.group.html#utility-functions">Utility Functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/e2cnn.group.html#subpackages">Subpackages</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../api/e2cnn.kernels.html">e2cnn.kernels</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/e2cnn.kernels.html#abstract-classes">Abstract Classes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/e2cnn.kernels.html#kernel-bases">Kernel Bases</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/e2cnn.kernels.html#bases-for-group-actions-on-the-plane">Bases for Group Actions on the Plane</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../api/e2cnn.gspaces.html">e2cnn.gspaces</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/e2cnn.gspaces.html#abstract-group-space">Abstract Group Space</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/e2cnn.gspaces.html#group-actions-on-the-plane">Group Actions on the Plane</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../api/e2cnn.nn.html">e2cnn.nn</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/e2cnn.nn.html#main-classes">Main Classes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/e2cnn.nn.html#utils">Utils</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/e2cnn.nn.html#planar-convolution">Planar Convolution</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/e2cnn.nn.html#non-linearities">Non Linearities</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/e2cnn.nn.html#invariant-maps">Invariant Maps</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/e2cnn.nn.html#pooling">Pooling</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/e2cnn.nn.html#normalization">Normalization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/e2cnn.nn.html#dropout">Dropout</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/e2cnn.nn.html#other-modules">Other Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/e2cnn.nn.html#module-e2cnn.nn.init">Weight Initialization</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">e2cnn</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+      <li>e2cnn.group.group</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for e2cnn.group.group</h1><div class="highlight"><pre>
+<span></span>
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="k">import</span> <span class="n">annotations</span>
+
+<span class="kn">from</span> <span class="nn">abc</span> <span class="k">import</span> <span class="n">ABC</span><span class="p">,</span> <span class="n">abstractmethod</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="k">import</span> <span class="n">Tuple</span><span class="p">,</span> <span class="n">Callable</span><span class="p">,</span> <span class="n">Iterable</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Dict</span>
+
+<span class="kn">import</span> <span class="nn">e2cnn.group</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">scipy</span> <span class="k">import</span> <span class="n">sparse</span>
+
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;Group&quot;</span><span class="p">]</span>
+
+
+<div class="viewcode-block" id="Group"><a class="viewcode-back" href="../../../api/e2cnn.group.html#e2cnn.group.Group">[docs]</a><span class="k">class</span> <span class="nc">Group</span><span class="p">(</span><span class="n">ABC</span><span class="p">):</span>
+    
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">continuous</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span> <span class="n">abelian</span><span class="p">:</span> <span class="nb">bool</span><span class="p">):</span>
+        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Abstract class defining the interface of a group.</span>
+<span class="sd">        </span>
+<span class="sd">        Args:</span>
+<span class="sd">            name (str): name identifying the group</span>
+<span class="sd">            continuous (bool): whether the group is non-finite or finite</span>
+<span class="sd">            abelian (bool): whether the group is *abelian* (commutative)</span>
+<span class="sd">            </span>
+<span class="sd">        Attributes:</span>
+<span class="sd">            ~.name (str): Name identifying the group</span>
+<span class="sd">            ~.continuous (bool): Whether it is a non-finite or a finite group</span>
+<span class="sd">            ~.abelian (bool): Whether it is an *abelian* group (i.e. if the group law is commutative)</span>
+<span class="sd">            ~.identity : Identity element of the group. The identity element :math:`e` satisfies the</span>
+<span class="sd">                following property :math:`\forall\ g \in G,\ g \cdot e = e \cdot g= g`</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        
+        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
+        
+        <span class="bp">self</span><span class="o">.</span><span class="n">continuous</span> <span class="o">=</span> <span class="n">continuous</span>
+        
+        <span class="bp">self</span><span class="o">.</span><span class="n">abelian</span> <span class="o">=</span> <span class="n">abelian</span>
+        
+        <span class="bp">self</span><span class="o">.</span><span class="n">_irreps</span> <span class="o">=</span> <span class="p">{}</span>
+        
+        <span class="bp">self</span><span class="o">.</span><span class="n">_representations</span> <span class="o">=</span> <span class="p">{}</span>
+        
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">continuous</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">elements</span> <span class="o">=</span> <span class="kc">None</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">elements_names</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">elements</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">elements_names</span> <span class="o">=</span> <span class="p">[]</span>
+        
+        <span class="bp">self</span><span class="o">.</span><span class="n">identity</span> <span class="o">=</span> <span class="kc">None</span>
+        
+        <span class="bp">self</span><span class="o">.</span><span class="n">_subgroups</span> <span class="o">=</span> <span class="p">{}</span>
+            
+<div class="viewcode-block" id="Group.order"><a class="viewcode-back" href="../../../api/e2cnn.group.html#e2cnn.group.Group.order">[docs]</a>    <span class="k">def</span> <span class="nf">order</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns the number of elements in this group if it is a finite group, otherwise -1 is returned</span>
+<span class="sd">        </span>
+<span class="sd">        Returns:</span>
+<span class="sd">            the size of the group or ``-1`` if it is a continuous group</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">elements</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">elements</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="o">-</span><span class="mi">1</span></div>
+    
+<div class="viewcode-block" id="Group.combine"><a class="viewcode-back" href="../../../api/e2cnn.group.html#e2cnn.group.Group.combine">[docs]</a>    <span class="nd">@abstractmethod</span>
+    <span class="k">def</span> <span class="nf">combine</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">e1</span><span class="p">,</span> <span class="n">e2</span><span class="p">):</span>
+        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">        Method that returns the combination of two group elements according to the *group law*.</span>
+<span class="sd">        </span>
+<span class="sd">        Args:</span>
+<span class="sd">            e1: an element of the group</span>
+<span class="sd">            e2: another element of the group</span>
+<span class="sd">    </span>
+<span class="sd">        Returns:</span>
+<span class="sd">            the group element :math:`e_1 \cdot e_2`</span>
+<span class="sd">            </span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">pass</span></div>
+
+<div class="viewcode-block" id="Group.inverse"><a class="viewcode-back" href="../../../api/e2cnn.group.html#e2cnn.group.Group.inverse">[docs]</a>    <span class="nd">@abstractmethod</span>
+    <span class="k">def</span> <span class="nf">inverse</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">element</span><span class="p">):</span>
+        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Method that returns the inverse in the group of the element given as input</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            element: an element of the group</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            its inverse</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">pass</span></div>
+
+<div class="viewcode-block" id="Group.is_element"><a class="viewcode-back" href="../../../api/e2cnn.group.html#e2cnn.group.Group.is_element">[docs]</a>    <span class="nd">@abstractmethod</span>
+    <span class="k">def</span> <span class="nf">is_element</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">element</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Check whether the input is an element of this group or not.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            element: input object to test</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            if the input is an element of the group</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">pass</span></div>
+
+<div class="viewcode-block" id="Group.equal"><a class="viewcode-back" href="../../../api/e2cnn.group.html#e2cnn.group.Group.equal">[docs]</a>    <span class="nd">@abstractmethod</span>
+    <span class="k">def</span> <span class="nf">equal</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">e1</span><span class="p">,</span> <span class="n">e2</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Method that checks whether the two inputs are the same element of the group.</span>
+
+<span class="sd">        This is especially useful for continuous groups with periodicity; see for instance</span>
+<span class="sd">        :meth:`e2cnn.group.SO2.equal`.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            e1: an element of the group</span>
+<span class="sd">            e2: another element of the group</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            if they are equal</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">pass</span></div>
+
+    <span class="nd">@abstractmethod</span>
+    <span class="k">def</span> <span class="nf">__eq__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+        <span class="k">pass</span>
+
+<div class="viewcode-block" id="Group.subgroup"><a class="viewcode-back" href="../../../api/e2cnn.group.html#e2cnn.group.Group.subgroup">[docs]</a>    <span class="nd">@abstractmethod</span>
+    <span class="k">def</span> <span class="nf">subgroup</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">id</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">e2cnn</span><span class="o">.</span><span class="n">group</span><span class="o">.</span><span class="n">Group</span><span class="p">,</span> <span class="n">Callable</span><span class="p">,</span> <span class="n">Callable</span><span class="p">]:</span>
+        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Restrict the current group to the subgroup identified by the input ``id``.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            id: the identifier of the subgroup</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            a tuple containing</span>
+
+<span class="sd">                - the subgroup,</span>
+
+<span class="sd">                - a function which maps an element of the subgroup to its inclusion in the original group and</span>
+
+<span class="sd">                -a function which maps an element of the original group to the corresponding element in the subgroup (returns None if the element is not contained in the subgroup)</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">pass</span></div>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">irreps</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="n">e2cnn</span><span class="o">.</span><span class="n">group</span><span class="o">.</span><span class="n">IrreducibleRepresentation</span><span class="p">]:</span>
+        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Dictionary containing all irreducible representations (:class:`~e2cnn.group.IrreducibleRepresentation`)</span>
+<span class="sd">        instantiated for this group.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            a dictionary containing all irreducible representations built</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_irreps</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">representations</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="n">e2cnn</span><span class="o">.</span><span class="n">group</span><span class="o">.</span><span class="n">Representation</span><span class="p">]:</span>
+        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Dictionary containing all representations (:class:`~e2cnn.group.Representation`)</span>
+<span class="sd">        instantiated for this group.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            a dictionary containing all representations built</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_representations</span>
+
+    <span class="nd">@property</span>
+    <span class="nd">@abstractmethod</span>
+    <span class="k">def</span> <span class="nf">trivial_representation</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">e2cnn</span><span class="o">.</span><span class="n">group</span><span class="o">.</span><span class="n">Representation</span><span class="p">:</span>
+        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Builds the trivial representation of the group.</span>
+<span class="sd">        The trivial representation is a 1-dimensional representation which maps any element to 1,</span>
+<span class="sd">        i.e. :math:`\forall g \in G,\ \rho(g) = 1`.</span>
+<span class="sd">        </span>
+<span class="sd">        Returns:</span>
+<span class="sd">            the trivial representation of the group</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">pass</span>
+
+<div class="viewcode-block" id="Group.irrep"><a class="viewcode-back" href="../../../api/e2cnn.group.html#e2cnn.group.Group.irrep">[docs]</a>    <span class="nd">@abstractmethod</span>
+    <span class="k">def</span> <span class="nf">irrep</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="nb">id</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">e2cnn</span><span class="o">.</span><span class="n">group</span><span class="o">.</span><span class="n">IrreducibleRepresentation</span><span class="p">:</span>
+        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">        Builds the irreducible representation (:class:`~e2cnn.group.IrreducibleRepresentation`) of the group which is</span>
+<span class="sd">        specified by the input arguments.</span>
+
+<span class="sd">        .. seealso ::</span>
+
+<span class="sd">            Check the documentation of the specific group subclass used for more information on the valid ``id`` values.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            *id: parameters identifying the specific irrep.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            the irrep built</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">pass</span></div>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">regular_representation</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">e2cnn</span><span class="o">.</span><span class="n">group</span><span class="o">.</span><span class="n">Representation</span><span class="p">:</span>
+        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Builds the regular representation of the group if the group has a *finite* number of elements;</span>
+<span class="sd">        returns ``None`` otherwise.</span>
+<span class="sd">        </span>
+<span class="sd">        The regular representation of a finite group :math:`G` acts on a vector space :math:`\R^{|G|}` by permuting its</span>
+<span class="sd">        axes.</span>
+<span class="sd">        Specifically, associating each axis :math:`e_g` of :math:`\R^{|G|}` to an element :math:`g \in G`, the</span>
+<span class="sd">        representation of an element :math:`\tilde{g}\in G` is a permutation matrix which maps :math:`e_g` to</span>
+<span class="sd">        :math:`e_{\tilde{g}g}`.</span>
+<span class="sd">        For instance, the regular representation of the group :math:`C_4` with elements</span>
+<span class="sd">        :math:`\{r^k | k=0,\dots,3 \}` is instantiated by:</span>
+<span class="sd">        </span>
+<span class="sd">        +-----------------------------------+------------------------------------------------------------------------------------------------------------+------------------------------------------------------------------------------------------------------------+------------------------------------------------------------------------------------------------------------+------------------------------------------------------------------------------------------------------------+</span>
+<span class="sd">        |    :math:`g`                      |          :math:`e`                                                                                         |          :math:`r`                                                                                         |        :math:`r^2`                                                                                         |        :math:`r^3`                                                                                         |</span>
+<span class="sd">        +===================================+============================================================================================================+============================================================================================================+============================================================================================================+============================================================================================================+</span>
+<span class="sd">        |  :math:`\rho_\text{reg}^{C_4}(g)` | :math:`\begin{bmatrix} 1 &amp; 0 &amp; 0 &amp; 0 \\ 0 &amp; 1 &amp; 0 &amp; 0 \\  0 &amp; 0 &amp; 1 &amp; 0 \\ 0 &amp; 0 &amp; 0 &amp; 1 \\ \end{bmatrix}` | :math:`\begin{bmatrix} 0 &amp; 0 &amp; 0 &amp; 1 \\ 1 &amp; 0 &amp; 0 &amp; 0 \\  0 &amp; 1 &amp; 0 &amp; 0 \\ 0 &amp; 0 &amp; 1 &amp; 0 \\ \end{bmatrix}` | :math:`\begin{bmatrix} 0 &amp; 0 &amp; 1 &amp; 0 \\ 0 &amp; 0 &amp; 0 &amp; 1 \\  1 &amp; 0 &amp; 0 &amp; 0 \\ 0 &amp; 1 &amp; 0 &amp; 0 \\ \end{bmatrix}` | :math:`\begin{bmatrix} 0 &amp; 1 &amp; 0 &amp; 0 \\ 0 &amp; 0 &amp; 1 &amp; 0 \\  0 &amp; 0 &amp; 0 &amp; 1 \\ 1 &amp; 0 &amp; 0 &amp; 0 \\ \end{bmatrix}` |</span>
+<span class="sd">        +-----------------------------------+------------------------------------------------------------------------------------------------------------+------------------------------------------------------------------------------------------------------------+------------------------------------------------------------------------------------------------------------+------------------------------------------------------------------------------------------------------------+</span>
+<span class="sd">        </span>
+<span class="sd">        A vector :math:`v=\sum_g v_g e_g` in :math:`\R^{|G|}` can be interpreted as a scalar function</span>
+<span class="sd">        :math:`v:G \to \R,\, g \mapsto v_g` on :math:`G`.</span>
+<span class="sd">        </span>
+<span class="sd">        Returns:</span>
+<span class="sd">            the regular representation of the group</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">order</span><span class="p">()</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="n">f</span><span class="s2">&quot;Regular representation is supported only for finite groups but &quot;</span>
+                             <span class="n">f</span><span class="s2">&quot;the group </span><span class="si">{self.name}</span><span class="s2"> has an infinite number of elements&quot;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">if</span> <span class="s2">&quot;regular&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">representations</span><span class="p">:</span>
+                <span class="n">irreps</span><span class="p">,</span> <span class="n">change_of_basis</span><span class="p">,</span> <span class="n">change_of_basis_inv</span> <span class="o">=</span> <span class="n">e2cnn</span><span class="o">.</span><span class="n">group</span><span class="o">.</span><span class="n">representation</span><span class="o">.</span><span class="n">build_regular_representation</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+                <span class="n">supported_nonlinearities</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;pointwise&#39;</span><span class="p">,</span> <span class="s1">&#39;norm&#39;</span><span class="p">,</span> <span class="s1">&#39;gated&#39;</span><span class="p">,</span> <span class="s1">&#39;concatenated&#39;</span><span class="p">]</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">representations</span><span class="p">[</span><span class="s2">&quot;regular&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">e2cnn</span><span class="o">.</span><span class="n">group</span><span class="o">.</span><span class="n">Representation</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
+                                                                             <span class="s2">&quot;regular&quot;</span><span class="p">,</span>
+                                                                             <span class="p">[</span><span class="n">r</span><span class="o">.</span><span class="n">name</span> <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">irreps</span><span class="p">],</span>
+                                                                             <span class="n">change_of_basis</span><span class="p">,</span>
+                                                                             <span class="n">supported_nonlinearities</span><span class="p">,</span>
+                                                                             <span class="n">change_of_basis_inv</span><span class="o">=</span><span class="n">change_of_basis_inv</span><span class="p">,</span>
+                                                                             <span class="p">)</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">representations</span><span class="p">[</span><span class="s2">&quot;regular&quot;</span><span class="p">]</span>
+
+<div class="viewcode-block" id="Group.quotient_representation"><a class="viewcode-back" href="../../../api/e2cnn.group.html#e2cnn.group.Group.quotient_representation">[docs]</a>    <span class="k">def</span> <span class="nf">quotient_representation</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">subgroup_id</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">e2cnn</span><span class="o">.</span><span class="n">group</span><span class="o">.</span><span class="n">Representation</span><span class="p">:</span>
+        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Builds the quotient representation of the group with respect to the subgroup identified by the</span>
+<span class="sd">        input ``subgroup_id``.</span>
+<span class="sd">        </span>
+<span class="sd">        Similar to :meth:`~e2cnn.group.Group.regular_representation`, the quotient representation</span>
+<span class="sd">        :math:`\rho_\text{quot}^{G/H}` of :math:`G` w.r.t. a subgroup :math:`H` acts on :math:`\R^{|G|/|H|}` by</span>
+<span class="sd">        permuting its axes.</span>
+<span class="sd">        Labeling the axes by the cosets :math:`gH` in the quotient space :math:`G/H`, it can be defined via its action</span>
+<span class="sd">        :math:`\rho_\text{quot}^{G/H}(\tilde{g})e_{gH}=e_{\tilde{g}gH}`.</span>
+
+<span class="sd">        Regular and trivial representations are two specific cases of quotient representations obtained by choosing</span>
+<span class="sd">        :math:`H=\{e\}` or :math:`H=G`, respectively.</span>
+<span class="sd">        Vectors in the representation space :math:`\R^{|G|/|H|}` can be viewed as scalar functions on the quotient</span>
+<span class="sd">        space :math:`G/H`.</span>
+<span class="sd">        </span>
+<span class="sd">        The quotient representation :math:`\rho_\text{quot}^{G/H}` can also be defined as the</span>
+<span class="sd">        :meth:`~e2cnn.group.Group.induced_representation` from the trivial representation of the subgroup :math:`H`.</span>
+<span class="sd">        </span>
+<span class="sd">        Args:</span>
+<span class="sd">            subgroup_id: identifier of the subgroup</span>
+<span class="sd">        </span>
+<span class="sd">        Returns:</span>
+<span class="sd">            the quotient representation of the group</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        
+        <span class="n">name</span> <span class="o">=</span> <span class="n">f</span><span class="s2">&quot;quotient[</span><span class="si">{subgroup_id}</span><span class="s2">]&quot;</span>
+        
+        <span class="k">if</span> <span class="n">name</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">representations</span><span class="p">:</span>
+            <span class="n">subgroup</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">subgroup</span><span class="p">(</span><span class="n">subgroup_id</span><span class="p">)</span>
+            
+            <span class="n">supported_nonlinearities</span> <span class="o">=</span> <span class="n">_induced_nonlinearities</span><span class="p">(</span><span class="n">subgroup</span><span class="o">.</span><span class="n">trivial_representation</span><span class="p">)</span>
+            
+            <span class="n">irreps</span><span class="p">,</span> <span class="n">change_of_basis</span><span class="p">,</span> <span class="n">change_of_basis_inv</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_induced_from_irrep</span><span class="p">(</span><span class="n">subgroup_id</span><span class="p">,</span>
+                                                                                    <span class="n">subgroup</span><span class="o">.</span><span class="n">trivial_representation</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">representations</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">e2cnn</span><span class="o">.</span><span class="n">group</span><span class="o">.</span><span class="n">Representation</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
+                                                                    <span class="n">name</span><span class="p">,</span>
+                                                                    <span class="p">[</span><span class="n">r</span><span class="o">.</span><span class="n">name</span> <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">irreps</span><span class="p">],</span>
+                                                                    <span class="n">change_of_basis</span><span class="p">,</span>
+                                                                    <span class="n">supported_nonlinearities</span><span class="p">,</span>
+                                                                    <span class="n">change_of_basis_inv</span><span class="o">=</span><span class="n">change_of_basis_inv</span><span class="p">,</span>
+                                                                    <span class="p">)</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">representations</span><span class="p">[</span><span class="n">name</span><span class="p">]</span></div>
+
+<div class="viewcode-block" id="Group.induced_representation"><a class="viewcode-back" href="../../../api/e2cnn.group.html#e2cnn.group.Group.induced_representation">[docs]</a>    <span class="k">def</span> <span class="nf">induced_representation</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">subgroup_id</span><span class="p">,</span> <span class="nb">repr</span><span class="p">:</span> <span class="n">e2cnn</span><span class="o">.</span><span class="n">group</span><span class="o">.</span><span class="n">Representation</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">e2cnn</span><span class="o">.</span><span class="n">group</span><span class="o">.</span><span class="n">Representation</span><span class="p">:</span>
+        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Builds the induced representation from the input representation ``repr`` of the subgroup identified by</span>
+<span class="sd">        the input ``subgroup_id``.</span>
+<span class="sd">        </span>
+<span class="sd">        Args:</span>
+<span class="sd">            subgroup_id: identifier of the subgroup</span>
+<span class="sd">            repr (Representation): the representation of the subgroup</span>
+<span class="sd">            </span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            the induced representation of the group</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        
+        <span class="k">assert</span> <span class="nb">repr</span><span class="o">.</span><span class="n">irreducible</span><span class="p">,</span> <span class="s2">&quot;Induction from general representations is not supported yet&quot;</span>
+        
+        <span class="n">name</span> <span class="o">=</span> <span class="n">f</span><span class="s2">&quot;induced[</span><span class="si">{subgroup_id}</span><span class="s2">][</span><span class="si">{repr.name}</span><span class="s2">]&quot;</span>
+        <span class="k">if</span> <span class="n">name</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">representations</span><span class="p">:</span>
+
+            <span class="n">supported_nonlinearities</span> <span class="o">=</span> <span class="n">_induced_nonlinearities</span><span class="p">(</span><span class="nb">repr</span><span class="p">)</span>
+
+            <span class="n">irreps</span><span class="p">,</span> <span class="n">change_of_basis</span><span class="p">,</span> <span class="n">change_of_basis_inv</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_induced_from_irrep</span><span class="p">(</span><span class="n">subgroup_id</span><span class="p">,</span> <span class="nb">repr</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">representations</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">e2cnn</span><span class="o">.</span><span class="n">group</span><span class="o">.</span><span class="n">Representation</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
+                                                                    <span class="n">name</span><span class="p">,</span>
+                                                                    <span class="p">[</span><span class="n">r</span><span class="o">.</span><span class="n">name</span> <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">irreps</span><span class="p">],</span>
+                                                                    <span class="n">change_of_basis</span><span class="p">,</span>
+                                                                    <span class="n">supported_nonlinearities</span><span class="p">,</span>
+                                                                    <span class="n">change_of_basis_inv</span><span class="o">=</span><span class="n">change_of_basis_inv</span><span class="p">,</span>
+                                                                    <span class="p">)</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">representations</span><span class="p">[</span><span class="n">name</span><span class="p">]</span></div>
+
+    <span class="k">def</span> <span class="nf">_induced_from_irrep</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">subgroup_id</span><span class="p">:</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">int</span><span class="p">],</span>
+                            <span class="nb">repr</span><span class="p">:</span> <span class="n">e2cnn</span><span class="o">.</span><span class="n">group</span><span class="o">.</span><span class="n">IrreducibleRepresentation</span><span class="p">,</span>
+                            <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="n">e2cnn</span><span class="o">.</span><span class="n">group</span><span class="o">.</span><span class="n">IrreducibleRepresentation</span><span class="p">],</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">]:</span>
+    
+        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Builds the induced representation from the input *irreducible* representation ``repr`` of the subgroup</span>
+<span class="sd">        identified by the input ``subgroup_id``.</span>
+<span class="sd">        </span>
+<span class="sd">        Args:</span>
+<span class="sd">            subgroup_id: identifier of the subgroup</span>
+<span class="sd">            repr (Representation): the representation of the subgroup</span>
+<span class="sd">            </span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            a tuple containing the list of irreps, the change of basis and the inverse change of basis of</span>
+<span class="sd">            the induced representation</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+    
+        <span class="k">assert</span> <span class="nb">repr</span><span class="o">.</span><span class="n">irreducible</span>
+    
+        <span class="c1"># The method only supports *finite* group</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">order</span><span class="p">()</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="n">f</span><span class="s2">&quot;Only finite group are supported for induction but you tried to induce to the group &quot;</span>
+                             <span class="n">f</span><span class="s2">&quot;</span><span class="si">{self.name}</span><span class="s2"> which has an infinite number of elements&quot;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">e2cnn</span><span class="o">.</span><span class="n">group</span><span class="o">.</span><span class="n">representation</span><span class="o">.</span><span class="n">build_induced_representation</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">subgroup_id</span><span class="p">,</span> <span class="nb">repr</span><span class="p">)</span>
+
+<div class="viewcode-block" id="Group.restrict_representation"><a class="viewcode-back" href="../../../api/e2cnn.group.html#e2cnn.group.Group.restrict_representation">[docs]</a>    <span class="k">def</span> <span class="nf">restrict_representation</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">id</span><span class="p">,</span> <span class="nb">repr</span><span class="p">:</span> <span class="n">e2cnn</span><span class="o">.</span><span class="n">group</span><span class="o">.</span><span class="n">Representation</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">e2cnn</span><span class="o">.</span><span class="n">group</span><span class="o">.</span><span class="n">Representation</span><span class="p">:</span>
+        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">        Restrict the input :class:`~e2cnn.group.Representation` to the subgroup identified by ``id``.</span>
+<span class="sd">        </span>
+<span class="sd">        Any representation :math:`\rho : G \to \GL{\R^n}` can be uniquely restricted to a representation</span>
+<span class="sd">        of a subgroup :math:`H &lt; G` by restricting its domain of definition:</span>
+
+<span class="sd">        .. math ::</span>
+
+<span class="sd">            \Res{H}{G}(\rho): H \to \GL{{\R}^n},\ h \mapsto \rho\big|_H(h)</span>
+<span class="sd">        </span>
+<span class="sd">        .. seealso ::</span>
+
+<span class="sd">            Check the documentation of the method :meth:`~e2cnn.group.Group.subgroup()` of the group used to see</span>
+<span class="sd">            the available subgroups and accepted ids.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            id: identifier of the subgroup</span>
+<span class="sd">            repr (Representation): the representation to restrict</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            the restricted representation</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+    
+        <span class="k">assert</span> <span class="nb">repr</span><span class="o">.</span><span class="n">group</span> <span class="o">==</span> <span class="bp">self</span>
+    
+        <span class="n">sg</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">subgroup</span><span class="p">(</span><span class="nb">id</span><span class="p">)</span>
+    
+        <span class="c1"># First, restrict each irrep in the representation</span>
+    
+        <span class="n">irreps_changes_of_basis</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">irreps</span> <span class="o">=</span> <span class="p">[]</span>
+    
+        <span class="k">for</span> <span class="n">irr</span> <span class="ow">in</span> <span class="nb">repr</span><span class="o">.</span><span class="n">irreps</span><span class="p">:</span>
+            <span class="n">irrep_cob</span><span class="p">,</span> <span class="n">reduced_irreps</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_restrict_irrep</span><span class="p">(</span><span class="n">irr</span><span class="p">,</span> <span class="nb">id</span><span class="p">)</span>
+            <span class="n">size</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">irreps</span><span class="p">[</span><span class="n">irr</span><span class="p">]</span><span class="o">.</span><span class="n">size</span>
+            <span class="k">assert</span> <span class="n">irrep_cob</span><span class="o">.</span><span class="n">shape</span> <span class="o">==</span> <span class="p">(</span><span class="n">size</span><span class="p">,</span> <span class="n">size</span><span class="p">)</span>
+        
+            <span class="n">irreps_changes_of_basis</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">irrep_cob</span><span class="p">)</span>
+            <span class="n">irreps</span> <span class="o">+=</span> <span class="n">reduced_irreps</span>
+    
+        <span class="c1"># concatenate the restricted irreps and merge the representation&#39;s change of basis with the</span>
+        <span class="c1"># restricted irreps&#39; change of basis matrices</span>
+        <span class="n">irreps_changes_of_basis</span> <span class="o">=</span> <span class="n">sparse</span><span class="o">.</span><span class="n">block_diag</span><span class="p">(</span><span class="n">irreps_changes_of_basis</span><span class="p">,</span> <span class="nb">format</span><span class="o">=</span><span class="s1">&#39;csc&#39;</span><span class="p">)</span>
+        <span class="n">change_of_basis</span> <span class="o">=</span> <span class="nb">repr</span><span class="o">.</span><span class="n">change_of_basis</span> <span class="o">@</span> <span class="n">irreps_changes_of_basis</span>
+    
+        <span class="n">name</span> <span class="o">=</span> <span class="n">f</span><span class="s2">&quot;</span><span class="si">{self.name}</span><span class="s2">:</span><span class="si">{repr.name}</span><span class="s2">&quot;</span>
+    
+        <span class="n">resr</span> <span class="o">=</span> <span class="n">e2cnn</span><span class="o">.</span><span class="n">group</span><span class="o">.</span><span class="n">Representation</span><span class="p">(</span><span class="n">sg</span><span class="p">,</span>
+                                          <span class="n">name</span><span class="p">,</span>
+                                          <span class="n">irreps</span><span class="p">,</span>
+                                          <span class="n">change_of_basis</span><span class="p">,</span>
+                                          <span class="nb">repr</span><span class="o">.</span><span class="n">supported_nonlinearities</span><span class="p">)</span>
+    
+        <span class="k">if</span> <span class="n">resr</span><span class="o">.</span><span class="n">is_trivial</span><span class="p">()</span> <span class="ow">and</span> <span class="s1">&#39;pointwise&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="nb">repr</span><span class="o">.</span><span class="n">supported_nonlinearities</span><span class="p">:</span>
+            <span class="n">resr</span><span class="o">.</span><span class="n">supported_nonlinearities</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="s2">&quot;pointwise&quot;</span><span class="p">)</span>
+    
+        <span class="k">return</span> <span class="n">resr</span></div>
+
+    <span class="nd">@abstractmethod</span>
+    <span class="k">def</span> <span class="nf">_restrict_irrep</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">irrep</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="nb">id</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">matrix</span><span class="p">,</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]:</span>
+        <span class="k">pass</span>
+
+<div class="viewcode-block" id="Group.testing_elements"><a class="viewcode-back" href="../../../api/e2cnn.group.html#e2cnn.group.Group.testing_elements">[docs]</a>    <span class="nd">@abstractmethod</span>
+    <span class="k">def</span> <span class="nf">testing_elements</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Iterable</span><span class="p">[</span><span class="n">Any</span><span class="p">]:</span>
+        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        A finite number of group elements to use for testing.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">pass</span></div>
+
+    <span class="nd">@staticmethod</span>
+    <span class="nd">@abstractmethod</span>
+    <span class="k">def</span> <span class="nf">_generator</span><span class="p">(</span><span class="o">*</span><span class="n">inputs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s1">&#39;Group&#39;</span><span class="p">:</span>
+        <span class="k">pass</span></div>
+
+
+<span class="k">def</span> <span class="nf">_induced_nonlinearities</span><span class="p">(</span><span class="nb">repr</span><span class="p">:</span> <span class="n">e2cnn</span><span class="o">.</span><span class="n">group</span><span class="o">.</span><span class="n">Representation</span><span class="p">):</span>
+    
+    <span class="n">supported_nonlinearities</span> <span class="o">=</span> <span class="p">[]</span>
+    
+    <span class="k">if</span> <span class="s1">&#39;pointwise&#39;</span> <span class="ow">in</span> <span class="nb">repr</span><span class="o">.</span><span class="n">supported_nonlinearities</span><span class="p">:</span>
+        <span class="n">supported_nonlinearities</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;pointwise&#39;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="s1">&#39;concatenated&#39;</span> <span class="ow">in</span> <span class="nb">repr</span><span class="o">.</span><span class="n">supported_nonlinearities</span><span class="p">:</span>
+        <span class="n">supported_nonlinearities</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;concatenated&#39;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="s1">&#39;gated&#39;</span> <span class="ow">in</span> <span class="nb">repr</span><span class="o">.</span><span class="n">supported_nonlinearities</span><span class="p">:</span>
+        <span class="n">supported_nonlinearities</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;gated&#39;</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">nl</span> <span class="ow">in</span> <span class="nb">repr</span><span class="o">.</span><span class="n">supported_nonlinearities</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">nl</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;induced_gated&#39;</span><span class="p">):</span>
+                <span class="n">supported_nonlinearities</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">nl</span><span class="p">)</span>
+                <span class="k">break</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">supported_nonlinearities</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">f</span><span class="s1">&#39;induced_gated_</span><span class="si">{repr.size}</span><span class="s1">&#39;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="s1">&#39;norm&#39;</span> <span class="ow">in</span> <span class="nb">repr</span><span class="o">.</span><span class="n">supported_nonlinearities</span><span class="p">:</span>
+        <span class="n">supported_nonlinearities</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;norm&#39;</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">nl</span> <span class="ow">in</span> <span class="nb">repr</span><span class="o">.</span><span class="n">supported_nonlinearities</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">nl</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;induced_norm&#39;</span><span class="p">):</span>
+                <span class="n">supported_nonlinearities</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">nl</span><span class="p">)</span>
+                <span class="k">break</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">supported_nonlinearities</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">f</span><span class="s1">&#39;induced_norm_</span><span class="si">{repr.size}</span><span class="s1">&#39;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="s1">&#39;gate&#39;</span> <span class="ow">in</span> <span class="nb">repr</span><span class="o">.</span><span class="n">supported_nonlinearities</span> <span class="ow">or</span> <span class="s1">&#39;induced_gate&#39;</span> <span class="ow">in</span> <span class="nb">repr</span><span class="o">.</span><span class="n">supported_nonlinearities</span><span class="p">:</span>
+        <span class="n">supported_nonlinearities</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;induced_gate&#39;</span><span class="p">)</span>
+
+    <span class="c1"># &#39;vectorfield&#39; not always supported by the induced representation so they are not added</span>
+
+    <span class="k">return</span> <span class="n">supported_nonlinearities</span>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, Qualcomm Innovation Center, Inc. Developed by Gabriele Cesa, Maurice Weiler
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

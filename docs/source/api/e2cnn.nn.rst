@@ -37,6 +37,8 @@ Geometric Tensor
 .. autoclass:: e2cnn.nn.GeometricTensor
     :members:
     :undoc-members:
+    :exclude-members: __add__,__sub__,__iadd__,__isub__,__mul__,__repr__,__rmul__,__imul__
+
 
 Equivariant Module
 ~~~~~~~~~~~~~~~~~~

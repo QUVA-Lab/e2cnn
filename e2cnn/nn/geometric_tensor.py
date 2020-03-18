@@ -5,7 +5,7 @@ from torch import Tensor
 
 from .field_type import FieldType
 
-from typing import List
+from typing import List, Union
 
 __all__ = ["GeometricTensor", "tensor_directsum"]
 
@@ -27,6 +27,31 @@ class GeometricTensor:
         dimension (usually interpreted as the channels dimension). The following dimensions are the base space
         dimensions (eg. the spatial dimension in a conventional CNN).
         
+        The operations of vector addition and scalar product are supported.
+        For example::
+        
+            gs = e2cnn.gspaces.Rot2dOnR2(8)
+            type = e2cnn.nn.FieldType(gs, [gs.regular_repr]*3)
+            t1 = e2cnn.nn.GeometricTensor(torch.randn(1, 24, 3, 3), type)
+            t2 = e2cnn.nn.GeometricTensor(torch.randn(1, 24, 3, 3), type)
+            
+            # vector addition
+            t3 = t1 + t2
+            
+            # scalar product
+            t3 = t1 * 3.
+            
+            # scalar product also supports tensors containing only one scalar
+            t3 = t1 * torch.tensor(3.)
+            
+            # inplace operations are also supported
+            t1 += t2
+            t2 *= 3.
+        
+        .. warning ::
+            The multiplication of a PyTorch tensor containing only a scalar with a GeometricTensor is only supported
+            when using PyTorch 1.4 or higher (see this `issue <https://github.com/pytorch/pytorch/issues/26333>`_ )
+            
         Args:
             tensor (torch.Tensor): the tensor data
             type (FieldType): the type of the tensor, modeling its transformation law
@@ -225,8 +250,103 @@ class GeometricTensor:
             the sum
 
         """
-        assert self.type == other.type
+        assert self.type == other.type, 'The two geometric tensor must have the same FieldType'
         return GeometricTensor(self.tensor + other.tensor, self.type)
+
+    def __sub__(self, other: 'GeometricTensor') -> 'GeometricTensor':
+        r"""
+        Subtract two compatible :class:`~e2cnn.nn.GeometricTensor` using pointwise subtraction.
+        The two tensors needs to have the same shape and be associated to the same field type.
+
+        Args:
+            other (GeometricTensor): the other geometric tensor
+
+        Returns:
+            their difference
+
+        """
+        assert self.type == other.type, 'The two geometric tensor must have the same FieldType'
+        return GeometricTensor(self.tensor - other.tensor, self.type)
+
+    def __iadd__(self, other: 'GeometricTensor') -> 'GeometricTensor':
+        r"""
+        Add a compatible :class:`~e2cnn.nn.GeometricTensor` to this tensor inplace.
+        The two tensors needs to have the same shape and be associated to the same field type.
+
+        Args:
+            other (GeometricTensor): the other geometric tensor
+
+        Returns:
+            this tensor
+
+        """
+        assert self.type == other.type, 'The two geometric tensor must have the same FieldType'
+        self.tensor += other.tensor
+        return self
+
+    def __isub__(self, other: 'GeometricTensor') -> 'GeometricTensor':
+        r"""
+        Subtract a compatible :class:`~e2cnn.nn.GeometricTensor` to this tensor inplace.
+        The two tensors needs to have the same shape and be associated to the same field type.
+
+        Args:
+            other (GeometricTensor): the other geometric tensor
+
+        Returns:
+            this tensor
+
+        """
+        assert self.type == other.type, 'The two geometric tensor must have the same FieldType'
+
+        self.tensor -= other.tensor
+        return self
+    
+    def __mul__(self, other: Union[float, torch.Tensor]) -> 'GeometricTensor':
+        r"""
+        Scalar product of this :class:`~e2cnn.nn.GeometricTensor` with a scalar.
+        The operation is done inplace.
+        
+        The scalar can be a float number of a :class:`torch.Tensor` containing only
+        one scalar (i.e. :func:`torch.numel` should return `1`).
+
+        Args:
+            other : a scalar
+
+        Returns:
+            the scalar product
+
+        """
+        assert isinstance(other, float) or other.numel() == 1, 'Only multiplication with a scalar is allowed'
+
+        return GeometricTensor(self.tensor * other, self.type)
+
+    __rmul__ = __mul__
+
+    def __imul__(self, other: Union[float, torch.Tensor]) -> 'GeometricTensor':
+        r"""
+        Scalar product of this :class:`~e2cnn.nn.GeometricTensor` with a scalar.
+
+        The scalar can be a float number of a :class:`torch.Tensor` containing only
+        one scalar (i.e. :func:`torch.numel` should return `1`).
+
+        Args:
+            other : a scalar
+
+        Returns:
+            the scalar product
+
+        """
+        assert isinstance(other, float) or other.numel() == 1, 'Only multiplication with a scalar is allowed'
+    
+        self.tensor *= other
+        return self
+    
+    def __repr__(self):
+        t = repr(self.tensor)[:-1]
+        t = t.replace('\n', '\n  ')
+        r = 'g_' + t + ', ' + repr(self.type) + ')'
+
+        return r
 
 
 def tensor_directsum(tensors: List['GeometricTensor']) -> 'GeometricTensor':

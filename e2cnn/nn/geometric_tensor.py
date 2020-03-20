@@ -123,6 +123,10 @@ class GeometricTensor:
         (see :attr:`e2cnn.nn.FieldType.representations`), the :math:`i`-th output tensor will contain the fields
         :math:`\rho_{\text{breaks}[i-1]}, \dots, \rho_{\text{breaks}[i]-1}` of the original tensor.
         
+        If `breaks = None`, the tensor is split at each field.
+        This is equivalent to using `breaks = list(range(len(self.type)))`.
+        
+        
         Args:
             breaks (list): indices of the fields where to split the tensor
 
@@ -130,8 +134,10 @@ class GeometricTensor:
             list of :class:`~e2cnn.nn.GeometricTensor` s into which the original tensor is chunked
             
         """
-        
-        breaks.append(len(self.type.representations))
+        if breaks is None:
+            breaks = list(range(len(self.type)))
+            
+        breaks.append(len(self.type))
         
         # final list of tensors
         tensors = []

@@ -1,0 +1,845 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>e2cnn.gspaces &mdash; e2cnn 0.1 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script type="text/x-mathjax-config">MathJax.Hub.Config({"TeX": {"Macros": {"bold": ["{\\bf #1}", 1], "R": "{\\mathbb R}", "N": "{\\mathbb N}", "Z": "{\\mathbb Z}", "Ind": ["{\\operatorname{Ind}_{#1}^{#2}}", 2], "Res": ["{\\operatorname{Res}_{#1}^{#2}}", 2], "GL": ["{\\operatorname{GL}(#1)}", 1], "E": ["{\\operatorname{E}(#1)}", 1], "SE": ["{\\operatorname{SE}(#1)}", 1], "O": ["{\\operatorname{O}(#1)}", 1], "SO": ["{\\operatorname{SO}(#1)}", 1], "U": ["{\\operatorname{U}(#1)}", 1], "D": ["{\\operatorname{D}_{#1}}", 1], "C": ["{\\operatorname{C}_{#1}}", 1], "DN": "{\\operatorname{D}_{\\!N}}", "CN": "{\\operatorname{C}_{\\!N}}"}}})</script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="e2cnn.nn" href="e2cnn.nn.html" />
+    <link rel="prev" title="e2cnn.kernels" href="e2cnn.kernels.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> e2cnn
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.1
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Package Reference</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="e2cnn.group.html">e2cnn.group</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="e2cnn.group.html#groups">Groups</a></li>
+<li class="toctree-l2"><a class="reference internal" href="e2cnn.group.html#representations">Representations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="e2cnn.group.html#utility-functions">Utility Functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="e2cnn.group.html#subpackages">Subpackages</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="e2cnn.kernels.html">e2cnn.kernels</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="e2cnn.kernels.html#abstract-classes">Abstract Classes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="e2cnn.kernels.html#kernel-bases">Kernel Bases</a></li>
+<li class="toctree-l2"><a class="reference internal" href="e2cnn.kernels.html#bases-for-group-actions-on-the-plane">Bases for Group Actions on the Plane</a></li>
+</ul>
+</li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">e2cnn.gspaces</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#abstract-group-space">Abstract Group Space</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#group-actions-on-the-plane">Group Actions on the Plane</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="e2cnn.nn.html">e2cnn.nn</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="e2cnn.nn.html#main-classes">Main Classes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="e2cnn.nn.html#utils">Utils</a></li>
+<li class="toctree-l2"><a class="reference internal" href="e2cnn.nn.html#planar-convolution">Planar Convolution</a></li>
+<li class="toctree-l2"><a class="reference internal" href="e2cnn.nn.html#non-linearities">Non Linearities</a></li>
+<li class="toctree-l2"><a class="reference internal" href="e2cnn.nn.html#invariant-maps">Invariant Maps</a></li>
+<li class="toctree-l2"><a class="reference internal" href="e2cnn.nn.html#pooling">Pooling</a></li>
+<li class="toctree-l2"><a class="reference internal" href="e2cnn.nn.html#normalization">Normalization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="e2cnn.nn.html#dropout">Dropout</a></li>
+<li class="toctree-l2"><a class="reference internal" href="e2cnn.nn.html#other-modules">Other Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="e2cnn.nn.html#module-e2cnn.nn.init">Weight Initialization</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">e2cnn</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+      <li>e2cnn.gspaces</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/api/e2cnn.gspaces.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <span class="target" id="module-e2cnn.gspaces"></span><div class="section" id="e2cnn-gspaces">
+<h1>e2cnn.gspaces<a class="headerlink" href="#e2cnn-gspaces" title="Permalink to this headline">¶</a></h1>
+<p>This subpackage implements G-spaces as a user interface for defining spaces and their symmetries.
+The user typically instantiates a subclass of GSpace to specify the symmetries considered and uses
+it to instanciate equivariant neural network modules (see <a class="reference internal" href="e2cnn.nn.html"><span class="doc">e2cnn.nn</span></a>).</p>
+<p>This subpackage depends on <a class="reference internal" href="e2cnn.group.html"><span class="doc">e2cnn.group</span></a> and <a class="reference internal" href="e2cnn.kernels.html"><span class="doc">e2cnn.kernels</span></a>.</p>
+<div class="contents local topic" id="contents">
+<p class="topic-title first">Contents</p>
+<ul class="simple">
+<li><a class="reference internal" href="#abstract-group-space" id="id2">Abstract Group Space</a></li>
+<li><a class="reference internal" href="#group-actions-on-the-plane" id="id3">Group Actions on the Plane</a><ul>
+<li><a class="reference internal" href="#reflections-and-rotations" id="id4">Reflections and Rotations</a></li>
+<li><a class="reference internal" href="#rotations" id="id5">Rotations</a></li>
+<li><a class="reference internal" href="#reflections" id="id6">Reflections</a></li>
+<li><a class="reference internal" href="#trivial-action" id="id7">Trivial Action</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="abstract-group-space">
+<h2><a class="toc-backref" href="#contents">Abstract Group Space</a><a class="headerlink" href="#abstract-group-space" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="e2cnn.gspaces.GSpace">
+<em class="property">class </em><code class="descname">GSpace</code><span class="sig-paren">(</span><em>fibergroup</em>, <em>dimensionality</em>, <em>name</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/e2cnn/gspaces/gspace.html#GSpace"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#e2cnn.gspaces.GSpace" title="Permalink to this definition">¶</a></dt>
+<dd><p>Abstract class for G-spaces.</p>
+<p>A <code class="docutils literal notranslate"><span class="pre">GSpace</span></code> describes the space where a signal lives (e.g. <span class="math notranslate nohighlight">\(\R^2\)</span> for planar images) and its symmetries
+(e.g. rotations or reflections).
+As an <cite>Euclidean</cite> base space is assumed, a G-space is fully specified by the <code class="docutils literal notranslate"><span class="pre">dimensionality</span></code> of the space
+and a choice of origin-preserving symmetry group (<code class="docutils literal notranslate"><span class="pre">fibergroup</span></code>).</p>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last"><a class="reference internal" href="#e2cnn.gspaces.FlipRot2dOnR2" title="e2cnn.gspaces.FlipRot2dOnR2"><code class="xref py py-class docutils literal notranslate"><span class="pre">FlipRot2dOnR2</span></code></a>,
+<a class="reference internal" href="#e2cnn.gspaces.Rot2dOnR2" title="e2cnn.gspaces.Rot2dOnR2"><code class="xref py py-class docutils literal notranslate"><span class="pre">Rot2dOnR2</span></code></a>,
+<a class="reference internal" href="#e2cnn.gspaces.Flip2dOnR2" title="e2cnn.gspaces.Flip2dOnR2"><code class="xref py py-class docutils literal notranslate"><span class="pre">Flip2dOnR2</span></code></a>,
+<a class="reference internal" href="#e2cnn.gspaces.TrivialOnR2" title="e2cnn.gspaces.TrivialOnR2"><code class="xref py py-class docutils literal notranslate"><span class="pre">TrivialOnR2</span></code></a></p>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Mathematically, this class describes a <em>Principal Bundle</em>
+<span class="math notranslate nohighlight">\(\pi : (\R^D, +) \rtimes G \to \mathbb{R}^D, tg \mapsto tG\)</span>,
+with the Euclidean space <span class="math notranslate nohighlight">\(\mathbb{R}^D\)</span> (where <span class="math notranslate nohighlight">\(D\)</span> is the <code class="docutils literal notranslate"><span class="pre">dimensionality</span></code>) as <cite>base space</cite>
+and <span class="math notranslate nohighlight">\(G\)</span> as <cite>fiber group</cite> (<code class="docutils literal notranslate"><span class="pre">fibergroup</span></code>).
+For more details on this interpretation we refer to
+<a class="reference external" href="https://papers.nips.cc/paper/9114-a-general-theory-of-equivariant-cnns-on-homogeneous-spaces.pdf">A General Theory of Equivariant CNNs On Homogeneous Spaces</a>.</p>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>fibergroup</strong> (<a class="reference internal" href="e2cnn.group.html#e2cnn.group.Group" title="e2cnn.group.Group"><em>Group</em></a>) – the fiber group</li>
+<li><strong>dimensionality</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><em>int</em></a>) – the dimensionality of the Euclidean space on which a signal is defined</li>
+<li><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><em>str</em></a>) – an identification name</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Variables:</th><td class="field-body"><ul class="first last simple">
+<li><strong>fibergroup</strong> (<a class="reference internal" href="e2cnn.group.html#e2cnn.group.Group" title="e2cnn.group.Group"><em>Group</em></a>) – the fiber group</li>
+<li><strong>dimensionality</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><em>int</em></a>) – the dimensionality of the Euclidean space on which a signal is defined</li>
+<li><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><em>str</em></a>) – an identification name</li>
+<li><strong>basespace</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><em>str</em></a>) – the name of the space whose symmetries are modeled. It is an Euclidean space <span class="math notranslate nohighlight">\(\R^D\)</span>.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="e2cnn.gspaces.GSpace.restrict">
+<code class="descname">restrict</code><span class="sig-paren">(</span><em>id</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/e2cnn/gspaces/gspace.html#GSpace.restrict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#e2cnn.gspaces.GSpace.restrict" title="Permalink to this definition">¶</a></dt>
+<dd><p>Build the <a class="reference internal" href="#e2cnn.gspaces.GSpace" title="e2cnn.gspaces.GSpace"><code class="xref py py-class docutils literal notranslate"><span class="pre">GSpace</span></code></a> associated with the subgroup of the current fiber group identified by
+the input <code class="docutils literal notranslate"><span class="pre">id</span></code>.
+This reduces the level of symmetries of the base space to be considered.</p>
+<p>Check the <code class="docutils literal notranslate"><span class="pre">restrict</span></code> method’s documentation in the non-abstract subclass used for a description of the
+parameter <code class="docutils literal notranslate"><span class="pre">id</span></code>.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>id</strong> – id of the subgroup</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">a tuple containing<blockquote>
+<div><ul class="simple">
+<li><strong>gspace</strong>: the restricted gspace</li>
+<li><strong>back_map</strong>: a function mapping an element of the subgroup to itself in the fiber group of the original space</li>
+<li><strong>subgroup_map</strong>: a function mapping an element of the fiber group of the original space to itself in the subgroup (returns <code class="docutils literal notranslate"><span class="pre">None</span></code> if the element is not in the subgroup)</li>
+</ul>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="e2cnn.gspaces.GSpace.featurefield_action">
+<code class="descname">featurefield_action</code><span class="sig-paren">(</span><em>input</em>, <em>repr</em>, <em>element</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/e2cnn/gspaces/gspace.html#GSpace.featurefield_action"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#e2cnn.gspaces.GSpace.featurefield_action" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method implements the action of the symmetry group on a feature field defined over the basespace of this
+G-space.
+It includes both an action over the basespace (e.g. a rotation of the points on the plane) and a transformation
+of the channels by left-multiplying them with a representation of the fiber group.</p>
+<p>The method takes as input a tensor (<code class="docutils literal notranslate"><span class="pre">input</span></code>), a representation (<code class="docutils literal notranslate"><span class="pre">repr</span></code>) and an <code class="docutils literal notranslate"><span class="pre">element</span></code> of the fiber
+group. The tensor <code class="docutils literal notranslate"><span class="pre">input</span></code> is the feature field to be transformed and needs to be compatible with this G-space
+and the representation (i.e. its number of channels equals the size of that representation).
+<code class="docutils literal notranslate"><span class="pre">element</span></code> needs to belong to the fiber group: check <a class="reference internal" href="e2cnn.group.html#e2cnn.group.Group.is_element" title="e2cnn.group.Group.is_element"><code class="xref py py-meth docutils literal notranslate"><span class="pre">e2cnn.group.Group.is_element()</span></code></a>.
+This method returns a transformed tensor through the action of <code class="docutils literal notranslate"><span class="pre">element</span></code>.</p>
+<p>More precisely, given an input tensor, interpreted as an <span class="math notranslate nohighlight">\(c\)</span>-dimensional signal
+<span class="math notranslate nohighlight">\(f: \R^D \to \mathbb{R}^c\)</span> defined over the base space <span class="math notranslate nohighlight">\(\R^D\)</span>, a representation
+<span class="math notranslate nohighlight">\(\rho: G \to \mathbb{R}^{c \times c}\)</span> of <span class="math notranslate nohighlight">\(G\)</span> and an element <span class="math notranslate nohighlight">\(g \in G\)</span> of the fiber group,
+the method returns the transformed signal <span class="math notranslate nohighlight">\(f'\)</span> defined as:</p>
+<div class="math notranslate nohighlight">
+\[f'(x) := \rho(g) f(g^{-1} x)\]</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Mathematically, this method transforms the input with the <strong>induced representation</strong> from the input <code class="docutils literal notranslate"><span class="pre">repr</span></code>
+(<span class="math notranslate nohighlight">\(\rho\)</span>) of the symmetry group (<span class="math notranslate nohighlight">\(G\)</span>) to the <em>total space</em> (<span class="math notranslate nohighlight">\(P\)</span>), i.e.
+with <span class="math notranslate nohighlight">\(Ind_{G}^{P} \rho\)</span>.
+For more details on this, see
+<a class="reference external" href="https://arxiv.org/abs/1911.08251">General E(2)-Equivariant Steerable CNNs</a> or
+<a class="reference external" href="https://papers.nips.cc/paper/9114-a-general-theory-of-equivariant-cnns-on-homogeneous-spaces.pdf">A General Theory of Equivariant CNNs On Homogeneous Spaces</a>.</p>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>input</strong> (<a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.17)"><em>ndarray</em></a>) – input tensor</li>
+<li><strong>repr</strong> (<a class="reference internal" href="e2cnn.group.html#e2cnn.group.Representation" title="e2cnn.group.Representation"><em>Representation</em></a>) – representation of the fiber group</li>
+<li><strong>element</strong> – element of the fiber group</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">the transformed tensor</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="e2cnn.gspaces.GSpace.build_kernel_basis">
+<code class="descname">build_kernel_basis</code><span class="sig-paren">(</span><em>in_repr</em>, <em>out_repr</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/e2cnn/gspaces/gspace.html#GSpace.build_kernel_basis"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#e2cnn.gspaces.GSpace.build_kernel_basis" title="Permalink to this definition">¶</a></dt>
+<dd><p>Builds a basis for the space of the equivariant kernels with respect to the symmetries described by this
+<a class="reference internal" href="#e2cnn.gspaces.GSpace" title="e2cnn.gspaces.GSpace"><code class="xref py py-class docutils literal notranslate"><span class="pre">GSpace</span></code></a>.</p>
+<p>A kernel <span class="math notranslate nohighlight">\(\kappa\)</span> equivariant to a group <span class="math notranslate nohighlight">\(G\)</span> needs to satisfy the following equivariance constraint:</p>
+<div class="math notranslate nohighlight">
+\[\kappa(gx) = \rho_\text{out}(g) \kappa(x) \rho_\text{in}(g)^{-1}  \qquad \forall g \in G, x \in \R^D\]</div>
+<p>where <span class="math notranslate nohighlight">\(\rho_\text{in}\)</span> is <code class="docutils literal notranslate"><span class="pre">in_repr</span></code> while <span class="math notranslate nohighlight">\(\rho_\text{out}\)</span> is <code class="docutils literal notranslate"><span class="pre">out_repr</span></code>.</p>
+<p>This method relies on the functionalities implemented in <a class="reference internal" href="e2cnn.kernels.html#module-e2cnn.kernels" title="e2cnn.kernels"><code class="xref py py-mod docutils literal notranslate"><span class="pre">e2cnn.kernels</span></code></a> and returns an instance of
+<a class="reference internal" href="e2cnn.kernels.html#e2cnn.kernels.KernelBasis" title="e2cnn.kernels.KernelBasis"><code class="xref py py-class docutils literal notranslate"><span class="pre">KernelBasis</span></code></a>.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>in_repr</strong> (<a class="reference internal" href="e2cnn.group.html#e2cnn.group.Representation" title="e2cnn.group.Representation"><em>Representation</em></a>) – the representation associated with the input field</li>
+<li><strong>out_repr</strong> (<a class="reference internal" href="e2cnn.group.html#e2cnn.group.Representation" title="e2cnn.group.Representation"><em>Representation</em></a>) – the representation associated with the output field</li>
+<li><strong>**kwargs</strong> – additional keyword arguments for the equivariance contraint solver</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">a basis for space of equivariant convolutional kernels</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="e2cnn.gspaces.GSpace.irreps">
+<code class="descname">irreps</code><a class="headerlink" href="#e2cnn.gspaces.GSpace.irreps" title="Permalink to this definition">¶</a></dt>
+<dd><p>Dictionary containing all the already built irreducible representations of the fiber group of this space.</p>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last">See <a class="reference internal" href="e2cnn.group.html#e2cnn.group.Group.irreps" title="e2cnn.group.Group.irreps"><code class="xref py py-attr docutils literal notranslate"><span class="pre">e2cnn.group.Group.irreps</span></code></a> for more details</p>
+</div>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="e2cnn.gspaces.GSpace.representations">
+<code class="descname">representations</code><a class="headerlink" href="#e2cnn.gspaces.GSpace.representations" title="Permalink to this definition">¶</a></dt>
+<dd><p>Dictionary containing all the already built representations of the fiber group of this space.</p>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last">See <a class="reference internal" href="e2cnn.group.html#e2cnn.group.Group.representations" title="e2cnn.group.Group.representations"><code class="xref py py-attr docutils literal notranslate"><span class="pre">e2cnn.group.Group.representations</span></code></a> for more details</p>
+</div>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="e2cnn.gspaces.GSpace.trivial_repr">
+<code class="descname">trivial_repr</code><a class="headerlink" href="#e2cnn.gspaces.GSpace.trivial_repr" title="Permalink to this definition">¶</a></dt>
+<dd><p>The trivial representation of the fiber group of this space.</p>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last"><a class="reference internal" href="e2cnn.group.html#e2cnn.group.Group.trivial_representation" title="e2cnn.group.Group.trivial_representation"><code class="xref py py-attr docutils literal notranslate"><span class="pre">e2cnn.group.Group.trivial_representation</span></code></a></p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="e2cnn.gspaces.GSpace.irrep">
+<code class="descname">irrep</code><span class="sig-paren">(</span><em>*id</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/e2cnn/gspaces/gspace.html#GSpace.irrep"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#e2cnn.gspaces.GSpace.irrep" title="Permalink to this definition">¶</a></dt>
+<dd><p>Builds the irreducible representation (<a class="reference internal" href="e2cnn.group.html#e2cnn.group.IrreducibleRepresentation" title="e2cnn.group.IrreducibleRepresentation"><code class="xref py py-class docutils literal notranslate"><span class="pre">IrreducibleRepresentation</span></code></a>) of the fiber group
+identified by the input arguments.</p>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last">This method is a wrapper for <a class="reference internal" href="e2cnn.group.html#e2cnn.group.Group.irrep" title="e2cnn.group.Group.irrep"><code class="xref py py-meth docutils literal notranslate"><span class="pre">e2cnn.group.Group.irrep()</span></code></a>. See its documentation for more details.
+Check the documentation of <a class="reference internal" href="e2cnn.group.html#e2cnn.group.Group.irrep" title="e2cnn.group.Group.irrep"><code class="xref py py-meth docutils literal notranslate"><span class="pre">irrep()</span></code></a> of the specific fiber group used for more
+information on the valid <code class="docutils literal notranslate"><span class="pre">id</span></code>.</p>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>*id</strong> – parameters identifying the irrep.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="e2cnn.gspaces.GSpace.regular_repr">
+<code class="descname">regular_repr</code><a class="headerlink" href="#e2cnn.gspaces.GSpace.regular_repr" title="Permalink to this definition">¶</a></dt>
+<dd><p>The regular representation of the fiber group of this space.</p>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last"><a class="reference internal" href="e2cnn.group.html#e2cnn.group.Group.regular_representation" title="e2cnn.group.Group.regular_representation"><code class="xref py py-attr docutils literal notranslate"><span class="pre">e2cnn.group.Group.regular_representation</span></code></a></p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="e2cnn.gspaces.GSpace.quotient_repr">
+<code class="descname">quotient_repr</code><span class="sig-paren">(</span><em>subgroup_id</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/e2cnn/gspaces/gspace.html#GSpace.quotient_repr"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#e2cnn.gspaces.GSpace.quotient_repr" title="Permalink to this definition">¶</a></dt>
+<dd><p>Builds the quotient representation of the fiber group of this space with respect to the subgroup identified
+by <code class="docutils literal notranslate"><span class="pre">subgroup_id</span></code>.</p>
+<p>Check the <a class="reference internal" href="#e2cnn.gspaces.GSpace.restrict" title="e2cnn.gspaces.GSpace.restrict"><code class="xref py py-meth docutils literal notranslate"><span class="pre">restrict()</span></code></a> method’s documentation in the non-abstract subclass used
+for a description of the parameter <code class="docutils literal notranslate"><span class="pre">subgroup_id</span></code>.</p>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last">See <a class="reference internal" href="e2cnn.group.html#e2cnn.group.Group.quotient_representation" title="e2cnn.group.Group.quotient_representation"><code class="xref py py-attr docutils literal notranslate"><span class="pre">e2cnn.group.Group.quotient_representation</span></code></a> for more details on the representation.</p>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>subgroup_id</strong> – identifier of the subgroup</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="e2cnn.gspaces.GSpace.induced_repr">
+<code class="descname">induced_repr</code><span class="sig-paren">(</span><em>subgroup_id</em>, <em>repr</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/e2cnn/gspaces/gspace.html#GSpace.induced_repr"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#e2cnn.gspaces.GSpace.induced_repr" title="Permalink to this definition">¶</a></dt>
+<dd><p>Builds the induced representation of the fiber group of this space from the representation <code class="docutils literal notranslate"><span class="pre">repr</span></code> of
+the subgroup identified by <code class="docutils literal notranslate"><span class="pre">subgroup_id</span></code>.</p>
+<p>Check the <a class="reference internal" href="#e2cnn.gspaces.GSpace.restrict" title="e2cnn.gspaces.GSpace.restrict"><code class="xref py py-meth docutils literal notranslate"><span class="pre">restrict()</span></code></a> method’s documentation in the non-abstract subclass used
+for a description of the parameter <code class="docutils literal notranslate"><span class="pre">subgroup_id</span></code>.</p>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last">See <a class="reference internal" href="e2cnn.group.html#e2cnn.group.Group.induced_representation" title="e2cnn.group.Group.induced_representation"><code class="xref py py-attr docutils literal notranslate"><span class="pre">e2cnn.group.Group.induced_representation</span></code></a> for more details on the representation.</p>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>subgroup_id</strong> – identifier of the subgroup</li>
+<li><strong>repr</strong> (<a class="reference internal" href="e2cnn.group.html#e2cnn.group.Representation" title="e2cnn.group.Representation"><em>Representation</em></a>) – the representation of the subgroup to induce</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="e2cnn.gspaces.GSpace.testing_elements">
+<code class="descname">testing_elements</code><a class="headerlink" href="#e2cnn.gspaces.GSpace.testing_elements" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="group-actions-on-the-plane">
+<h2><a class="toc-backref" href="#contents">Group Actions on the Plane</a><a class="headerlink" href="#group-actions-on-the-plane" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="e2cnn.gspaces.GeneralOnR2">
+<em class="property">class </em><code class="descname">GeneralOnR2</code><span class="sig-paren">(</span><em>fibergroup</em>, <em>name</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/e2cnn/gspaces/r2/general_r2.html#GeneralOnR2"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#e2cnn.gspaces.GeneralOnR2" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">e2cnn.gspaces.gspace.GSpace</span></code></p>
+<p>Abstract class for the G-spaces which define the symmetries of the plane <span class="math notranslate nohighlight">\(\R^2\)</span>.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>fibergroup</strong> (<a class="reference internal" href="e2cnn.group.html#e2cnn.group.Group" title="e2cnn.group.Group"><em>Group</em></a>) – group of origin-preserving symmetries (fiber group)</li>
+<li><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><em>str</em></a>) – identification name</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="e2cnn.gspaces.GeneralOnR2.build_kernel_basis">
+<code class="descname">build_kernel_basis</code><span class="sig-paren">(</span><em>in_repr</em>, <em>out_repr</em>, <em>sigma</em>, <em>rings</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/e2cnn/gspaces/r2/general_r2.html#GeneralOnR2.build_kernel_basis"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#e2cnn.gspaces.GeneralOnR2.build_kernel_basis" title="Permalink to this definition">¶</a></dt>
+<dd><p>Builds a basis for the space of the equivariant kernels with respect to the symmetries described by this
+<a class="reference internal" href="#e2cnn.gspaces.GSpace" title="e2cnn.gspaces.GSpace"><code class="xref py py-class docutils literal notranslate"><span class="pre">GSpace</span></code></a>.</p>
+<p>A kernel <span class="math notranslate nohighlight">\(\kappa\)</span> equivariant to a group <span class="math notranslate nohighlight">\(G\)</span> needs to satisfy the following equivariance constraint:</p>
+<div class="math notranslate nohighlight">
+\[\kappa(gx) = \rho_\text{out}(g) \kappa(x) \rho_\text{in}(g)^{-1}  \qquad \forall g \in G, x \in \R^2\]</div>
+<p>where <span class="math notranslate nohighlight">\(\rho_\text{in}\)</span> is <code class="docutils literal notranslate"><span class="pre">in_repr</span></code> while <span class="math notranslate nohighlight">\(\rho_\text{out}\)</span> is <code class="docutils literal notranslate"><span class="pre">out_repr</span></code>.</p>
+<p>Because the equivariance constraints only restrict the angular part of the kernels, any radial profile is
+permitted.
+The basis for the radial profile used here contains rings with different radii (<code class="docutils literal notranslate"><span class="pre">rings</span></code>)
+associated with (possibly different) widths (<code class="docutils literal notranslate"><span class="pre">sigma</span></code>).
+A ring is implemented as a Gaussian function over the radial component, centered at one radius
+(see also <a class="reference internal" href="e2cnn.kernels.html#e2cnn.kernels.GaussianRadialProfile" title="e2cnn.kernels.GaussianRadialProfile"><code class="xref py py-class docutils literal notranslate"><span class="pre">GaussianRadialProfile</span></code></a>).</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p>This method is a wrapper for the functions building the bases which are defined in <a class="reference internal" href="e2cnn.kernels.html"><span class="doc">e2cnn.kernels</span></a>:</p>
+<ul class="last simple">
+<li><a class="reference internal" href="e2cnn.kernels.html#e2cnn.kernels.kernels_O2_act_R2" title="e2cnn.kernels.kernels_O2_act_R2"><code class="xref py py-meth docutils literal notranslate"><span class="pre">e2cnn.kernels.kernels_O2_act_R2()</span></code></a>,</li>
+<li><a class="reference internal" href="e2cnn.kernels.html#e2cnn.kernels.kernels_SO2_act_R2" title="e2cnn.kernels.kernels_SO2_act_R2"><code class="xref py py-meth docutils literal notranslate"><span class="pre">e2cnn.kernels.kernels_SO2_act_R2()</span></code></a>,</li>
+<li><a class="reference internal" href="e2cnn.kernels.html#e2cnn.kernels.kernels_DN_act_R2" title="e2cnn.kernels.kernels_DN_act_R2"><code class="xref py py-meth docutils literal notranslate"><span class="pre">e2cnn.kernels.kernels_DN_act_R2()</span></code></a>,</li>
+<li><a class="reference internal" href="e2cnn.kernels.html#e2cnn.kernels.kernels_CN_act_R2" title="e2cnn.kernels.kernels_CN_act_R2"><code class="xref py py-meth docutils literal notranslate"><span class="pre">e2cnn.kernels.kernels_CN_act_R2()</span></code></a>,</li>
+<li><a class="reference internal" href="e2cnn.kernels.html#e2cnn.kernels.kernels_Flip_act_R2" title="e2cnn.kernels.kernels_Flip_act_R2"><code class="xref py py-meth docutils literal notranslate"><span class="pre">e2cnn.kernels.kernels_Flip_act_R2()</span></code></a>,</li>
+<li><a class="reference internal" href="e2cnn.kernels.html#e2cnn.kernels.kernels_Trivial_act_R2" title="e2cnn.kernels.kernels_Trivial_act_R2"><code class="xref py py-meth docutils literal notranslate"><span class="pre">e2cnn.kernels.kernels_Trivial_act_R2()</span></code></a></li>
+</ul>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>in_repr</strong> (<a class="reference internal" href="e2cnn.group.html#e2cnn.group.Representation" title="e2cnn.group.Representation"><em>Representation</em></a>) – the input representation</li>
+<li><strong>out_repr</strong> (<a class="reference internal" href="e2cnn.group.html#e2cnn.group.Representation" title="e2cnn.group.Representation"><em>Representation</em></a>) – the output representation</li>
+<li><strong>sigma</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.8)"><em>list</em></a><em> or </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.8)"><em>float</em></a>) – parameters controlling the width of each ring of the radial profile.
+If only one scalar is passed, it is used for all rings</li>
+<li><strong>rings</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.8)"><em>list</em></a>) – radii of the rings defining the radial profile</li>
+<li><strong>**kwargs</strong> – Group-specific keywords arguments for <code class="docutils literal notranslate"><span class="pre">_basis_generator</span></code> method</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">the analytical basis</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<div class="section" id="reflections-and-rotations">
+<h3><a class="toc-backref" href="#contents">Reflections and Rotations</a><a class="headerlink" href="#reflections-and-rotations" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="e2cnn.gspaces.FlipRot2dOnR2">
+<em class="property">class </em><code class="descname">FlipRot2dOnR2</code><span class="sig-paren">(</span><em>N=None</em>, <em>maximum_frequency=None</em>, <em>axis=1.5707963267948966</em>, <em>fibergroup=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/e2cnn/gspaces/r2/fliprot2d_on_r2.html#FlipRot2dOnR2"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#e2cnn.gspaces.FlipRot2dOnR2" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">e2cnn.gspaces.r2.general_r2.GeneralOnR2</span></code></p>
+<p>Describes reflectional and rotational symmetries of the plane <span class="math notranslate nohighlight">\(\R^2\)</span>.</p>
+<p>Reflections are applied with respect to the line through the origin with an angle <code class="docutils literal notranslate"><span class="pre">axis</span></code> degrees with respect
+to the <em>X</em>-axis.</p>
+<p>If <code class="docutils literal notranslate"><span class="pre">N</span> <span class="pre">&gt;</span> <span class="pre">1</span></code>, the class models reflections and <em>discrete</em> rotations by angles multiple of <span class="math notranslate nohighlight">\(\frac{2\pi}{N}\)</span>
+(<a class="reference internal" href="e2cnn.group.html#e2cnn.group.DihedralGroup" title="e2cnn.group.DihedralGroup"><code class="xref py py-class docutils literal notranslate"><span class="pre">DihedralGroup</span></code></a>).
+Otherwise, if <code class="docutils literal notranslate"><span class="pre">N=-1</span></code>, the class models reflections and <em>continuous</em> planar rotations
+(<a class="reference internal" href="e2cnn.group.html#e2cnn.group.O2" title="e2cnn.group.O2"><code class="xref py py-class docutils literal notranslate"><span class="pre">O2</span></code></a>).
+In that case the parameter <code class="docutils literal notranslate"><span class="pre">maximum_frequency</span></code> is required to specify the maximum frequency of the irreps of
+<a class="reference internal" href="e2cnn.group.html#e2cnn.group.O2" title="e2cnn.group.O2"><code class="xref py py-class docutils literal notranslate"><span class="pre">O2</span></code></a> (see its documentation for more details)</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">All axes obtained from the axis defined by <code class="docutils literal notranslate"><span class="pre">axis</span></code> with a rotation in the symmetry group are equivalent.
+For instance, if <code class="docutils literal notranslate"><span class="pre">N</span> <span class="pre">=</span> <span class="pre">4</span></code>, an axis <span class="math notranslate nohighlight">\(\beta\)</span> is equivalent to the axis <span class="math notranslate nohighlight">\(\beta + \pi/2\)</span>.
+It follows that for <code class="docutils literal notranslate"><span class="pre">N</span> <span class="pre">=</span> <span class="pre">-1</span></code>, i.e. in case the symmetry group contains all continuous rotations, any
+reflection axis is theoretically equivalent.
+In practice, though, a basis for equivariant convolutional filter sampled on a grid is affected by the
+specific choice of the axis. In general, choosing an axis aligned with the grid (an horizontal or a
+vertical axis, i.e. <span class="math notranslate nohighlight">\(0\)</span> or <span class="math notranslate nohighlight">\(\pi/2\)</span>) is suggested.</p>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>N</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><em>int</em></a>) – number of discrete rotations (integer greater than 1) or -1 for continuous rotations</li>
+<li><strong>maximum_frequency</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><em>int</em></a>) – maximum frequency of <a class="reference internal" href="e2cnn.group.html#e2cnn.group.O2" title="e2cnn.group.O2"><code class="xref py py-class docutils literal notranslate"><span class="pre">O2</span></code></a> ‘s irreps if <code class="docutils literal notranslate"><span class="pre">N</span> <span class="pre">=</span> <span class="pre">-1</span></code></li>
+<li><strong>axis</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.8)"><em>float</em></a><em>, </em><em>optional</em>) – the slope of the axis of the flip (in radians)</li>
+<li><strong>fibergroup</strong> (<a class="reference internal" href="e2cnn.group.html#e2cnn.group.Group" title="e2cnn.group.Group"><em>Group</em></a><em>, </em><em>optional</em>) – use an already existing instance of the symmetry group.
+In that case only the parameter <code class="docutils literal notranslate"><span class="pre">axis</span></code> should be used.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Variables:</th><td class="field-body"><p class="first last"><strong>axis</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.8)"><em>float</em></a>) – Angle with respect to the horizontal axis which defines the reflection axis.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="e2cnn.gspaces.FlipRot2dOnR2.restrict">
+<code class="descname">restrict</code><span class="sig-paren">(</span><em>id</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/e2cnn/gspaces/r2/fliprot2d_on_r2.html#FlipRot2dOnR2.restrict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#e2cnn.gspaces.FlipRot2dOnR2.restrict" title="Permalink to this definition">¶</a></dt>
+<dd><p>Build the <code class="xref py py-class docutils literal notranslate"><span class="pre">GSpace</span></code> associated with the subgroup of the current fiber group identified by
+the input <code class="docutils literal notranslate"><span class="pre">id</span></code>, which is a tuple <span class="math notranslate nohighlight">\((k, M)\)</span>.</p>
+<p>Here, <span class="math notranslate nohighlight">\(M\)</span> is a positive integer indicating the number of discrete rotations in the subgroup while
+<span class="math notranslate nohighlight">\(k\)</span> is either <code class="docutils literal notranslate"><span class="pre">None</span></code> (no reflections) or an angle indicating the axis of reflection.
+If the current fiber group is <span class="math notranslate nohighlight">\(D_N\)</span> (<a class="reference internal" href="e2cnn.group.html#e2cnn.group.DihedralGroup" title="e2cnn.group.DihedralGroup"><code class="xref py py-class docutils literal notranslate"><span class="pre">DihedralGroup</span></code></a>), then <span class="math notranslate nohighlight">\(M\)</span> needs to divide
+<span class="math notranslate nohighlight">\(N\)</span> and <span class="math notranslate nohighlight">\(k\)</span> needs to be an integer in <span class="math notranslate nohighlight">\(\{0, \dots, \frac{N}{M}-1\}\)</span>.
+Otherwise, <span class="math notranslate nohighlight">\(M\)</span> can be any positive integer while <span class="math notranslate nohighlight">\(k\)</span> needs to be a real number in
+<span class="math notranslate nohighlight">\([0, \frac{2\pi}{M}]\)</span>.</p>
+<p>Valid combinations are:</p>
+<ul class="simple">
+<li>(<code class="docutils literal notranslate"><span class="pre">None</span></code>, <span class="math notranslate nohighlight">\(1\)</span>): restrict to no reflection and rotation symmetries</li>
+<li>(<code class="docutils literal notranslate"><span class="pre">None</span></code>, <span class="math notranslate nohighlight">\(M\)</span>): restrict to only the <span class="math notranslate nohighlight">\(M\)</span> rotations generated by <span class="math notranslate nohighlight">\(r_{2\pi/M}\)</span>.</li>
+<li>(<span class="math notranslate nohighlight">\(0\)</span>, <span class="math notranslate nohighlight">\(1\)</span>): restrict to only reflections <span class="math notranslate nohighlight">\(\langle f \rangle\)</span> around the same axis as in the current group</li>
+<li>(<span class="math notranslate nohighlight">\(0\)</span>, <span class="math notranslate nohighlight">\(M\)</span>): restrict to reflections and <span class="math notranslate nohighlight">\(M\)</span> rotations generated by <span class="math notranslate nohighlight">\(r_{2\pi/M}\)</span> and <span class="math notranslate nohighlight">\(f\)</span></li>
+</ul>
+<p>If the current fiber group is <span class="math notranslate nohighlight">\(D_N\)</span> (an instance of <a class="reference internal" href="e2cnn.group.html#e2cnn.group.DihedralGroup" title="e2cnn.group.DihedralGroup"><code class="xref py py-class docutils literal notranslate"><span class="pre">DihedralGroup</span></code></a>):</p>
+<ul class="simple">
+<li>(<span class="math notranslate nohighlight">\(k\)</span>, <span class="math notranslate nohighlight">\(M\)</span>): restrict to reflections <span class="math notranslate nohighlight">\(\langle r_{k\frac{2\pi}{N}} f \rangle\)</span> around the axis of the current G-space rotated by <span class="math notranslate nohighlight">\(k\frac{\pi}{N}\)</span> and <span class="math notranslate nohighlight">\(M\)</span> rotations generated by <span class="math notranslate nohighlight">\(r_{2\pi/M}\)</span></li>
+</ul>
+<p>If the current fiber group is <span class="math notranslate nohighlight">\(O(2)\)</span> (an instance of <a class="reference internal" href="e2cnn.group.html#e2cnn.group.O2" title="e2cnn.group.O2"><code class="xref py py-class docutils literal notranslate"><span class="pre">O2</span></code></a>):</p>
+<ul class="simple">
+<li>(<span class="math notranslate nohighlight">\(\theta\)</span>, <span class="math notranslate nohighlight">\(M\)</span>): restrict to reflections <span class="math notranslate nohighlight">\(\langle r_{\theta} f \rangle\)</span> around the axis of the current G-space rotated by <span class="math notranslate nohighlight">\(\frac{\theta}{2}\)</span> and <span class="math notranslate nohighlight">\(M\)</span> rotations generated by <span class="math notranslate nohighlight">\(r_{2\pi/M}\)</span></li>
+<li>(<code class="docutils literal notranslate"><span class="pre">None</span></code>, <span class="math notranslate nohighlight">\(-1\)</span>): restrict to all (continuous) rotations</li>
+</ul>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.8)"><em>tuple</em></a>) – the id of the subgroup</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">a tuple containing<blockquote>
+<div><ul class="simple">
+<li><strong>gspace</strong>: the restricted gspace</li>
+<li><strong>back_map</strong>: a function mapping an element of the subgroup to itself in the fiber group of the original space</li>
+<li><strong>subgroup_map</strong>: a function mapping an element of the fiber group of the original space to itself in the subgroup (returns <code class="docutils literal notranslate"><span class="pre">None</span></code> if the element is not in the subgroup)</li>
+</ul>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="rotations">
+<h3><a class="toc-backref" href="#contents">Rotations</a><a class="headerlink" href="#rotations" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="e2cnn.gspaces.Rot2dOnR2">
+<em class="property">class </em><code class="descname">Rot2dOnR2</code><span class="sig-paren">(</span><em>N=None</em>, <em>maximum_frequency=None</em>, <em>fibergroup=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/e2cnn/gspaces/r2/rot2d_on_r2.html#Rot2dOnR2"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#e2cnn.gspaces.Rot2dOnR2" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">e2cnn.gspaces.r2.general_r2.GeneralOnR2</span></code></p>
+<p>Describes rotation symmetries of the plane <span class="math notranslate nohighlight">\(\R^2\)</span>.</p>
+<p>If <code class="docutils literal notranslate"><span class="pre">N</span> <span class="pre">&gt;</span> <span class="pre">1</span></code>, the class models <em>discrete</em> rotations by angles which are multiple of <span class="math notranslate nohighlight">\(\frac{2\pi}{N}\)</span>
+(<a class="reference internal" href="e2cnn.group.html#e2cnn.group.CyclicGroup" title="e2cnn.group.CyclicGroup"><code class="xref py py-class docutils literal notranslate"><span class="pre">CyclicGroup</span></code></a>).
+Otherwise, if <code class="docutils literal notranslate"><span class="pre">N=-1</span></code>, the class models <em>continuous</em> planar rotations (<a class="reference internal" href="e2cnn.group.html#e2cnn.group.SO2" title="e2cnn.group.SO2"><code class="xref py py-class docutils literal notranslate"><span class="pre">SO2</span></code></a>).
+In that case the parameter <code class="docutils literal notranslate"><span class="pre">maximum_frequency</span></code> is required to specify the maximum frequency of the irreps of
+<a class="reference internal" href="e2cnn.group.html#e2cnn.group.SO2" title="e2cnn.group.SO2"><code class="xref py py-class docutils literal notranslate"><span class="pre">SO2</span></code></a> (see its documentation for more details)</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>N</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><em>int</em></a>) – number of discrete rotations (integer greater than 1) or <code class="docutils literal notranslate"><span class="pre">-1</span></code> for continuous rotations</li>
+<li><strong>maximum_frequency</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><em>int</em></a>) – maximum frequency of <a class="reference internal" href="e2cnn.group.html#e2cnn.group.SO2" title="e2cnn.group.SO2"><code class="xref py py-class docutils literal notranslate"><span class="pre">SO2</span></code></a>’s irreps if <code class="docutils literal notranslate"><span class="pre">N</span> <span class="pre">=</span> <span class="pre">-1</span></code></li>
+<li><strong>fibergroup</strong> (<a class="reference internal" href="e2cnn.group.html#e2cnn.group.Group" title="e2cnn.group.Group"><em>Group</em></a><em>, </em><em>optional</em>) – use an already existing instance of the symmetry group.
+In that case, the other parameters should not be provided.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="e2cnn.gspaces.Rot2dOnR2.restrict">
+<code class="descname">restrict</code><span class="sig-paren">(</span><em>id</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/e2cnn/gspaces/r2/rot2d_on_r2.html#Rot2dOnR2.restrict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#e2cnn.gspaces.Rot2dOnR2.restrict" title="Permalink to this definition">¶</a></dt>
+<dd><p>Build the <code class="xref py py-class docutils literal notranslate"><span class="pre">GSpace</span></code> associated with the subgroup of the current fiber group identified by
+the input <code class="docutils literal notranslate"><span class="pre">id</span></code>.</p>
+<p><code class="docutils literal notranslate"><span class="pre">id</span></code> is a positive integer <span class="math notranslate nohighlight">\(M\)</span> indicating the number of rotations in the subgroup.
+If the current fiber group is <span class="math notranslate nohighlight">\(C_N\)</span> (<a class="reference internal" href="e2cnn.group.html#e2cnn.group.CyclicGroup" title="e2cnn.group.CyclicGroup"><code class="xref py py-class docutils literal notranslate"><span class="pre">CyclicGroup</span></code></a>), then <span class="math notranslate nohighlight">\(M\)</span> needs to divide
+<span class="math notranslate nohighlight">\(N\)</span>. Otherwise, <span class="math notranslate nohighlight">\(M\)</span> can be any positive integer.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>id</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><em>int</em></a>) – the number <span class="math notranslate nohighlight">\(M\)</span> of rotations in the subgroup</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">a tuple containing<blockquote>
+<div><ul class="simple">
+<li><strong>gspace</strong>: the restricted gspace</li>
+<li><strong>back_map</strong>: a function mapping an element of the subgroup to itself in the fiber group of the original space</li>
+<li><strong>subgroup_map</strong>: a function mapping an element of the fiber group of the original space to itself in the subgroup (returns <code class="docutils literal notranslate"><span class="pre">None</span></code> if the element is not in the subgroup)</li>
+</ul>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="reflections">
+<h3><a class="toc-backref" href="#contents">Reflections</a><a class="headerlink" href="#reflections" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="e2cnn.gspaces.Flip2dOnR2">
+<em class="property">class </em><code class="descname">Flip2dOnR2</code><span class="sig-paren">(</span><em>axis=1.5707963267948966</em>, <em>fibergroup=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/e2cnn/gspaces/r2/flip2d_on_r2.html#Flip2dOnR2"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#e2cnn.gspaces.Flip2dOnR2" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">e2cnn.gspaces.r2.general_r2.GeneralOnR2</span></code></p>
+<p>Describes reflectional symmetries of the plane <span class="math notranslate nohighlight">\(\R^2\)</span>.</p>
+<p>Reflections are applied along the line through the origin with an angle <code class="docutils literal notranslate"><span class="pre">axis</span></code> degrees with respect to
+the <em>X</em>-axis.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>axis</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.8)"><em>float</em></a><em>, </em><em>optional</em>) – the slope of the axis of the reflection (in radians).
+By default, the vertical axis is used (<span class="math notranslate nohighlight">\(\pi/2\)</span>).</li>
+<li><strong>fibergroup</strong> (<a class="reference internal" href="e2cnn.group.html#e2cnn.group.Group" title="e2cnn.group.Group"><em>Group</em></a><em>, </em><em>optional</em>) – use an already existing instance of the symmetry group</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Variables:</th><td class="field-body"><p class="first last"><strong>axis</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.8)"><em>float</em></a>) – Angle with respect to the horizontal axis which defines the reflection axis.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="e2cnn.gspaces.Flip2dOnR2.restrict">
+<code class="descname">restrict</code><span class="sig-paren">(</span><em>id</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/e2cnn/gspaces/r2/flip2d_on_r2.html#Flip2dOnR2.restrict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#e2cnn.gspaces.Flip2dOnR2.restrict" title="Permalink to this definition">¶</a></dt>
+<dd><p>Build the <a class="reference internal" href="#e2cnn.gspaces.GSpace" title="e2cnn.gspaces.GSpace"><code class="xref py py-class docutils literal notranslate"><span class="pre">GSpace</span></code></a> associated with the subgroup of the current fiber group identified
+by the input <code class="docutils literal notranslate"><span class="pre">id</span></code>.</p>
+<p>As the reflection group contains only two elements, it has only one subgroup: the trivial group.
+The only accepted input values are <code class="docutils literal notranslate"><span class="pre">id=1</span></code> which returns an instance of <a class="reference internal" href="#e2cnn.gspaces.TrivialOnR2" title="e2cnn.gspaces.TrivialOnR2"><code class="xref py py-class docutils literal notranslate"><span class="pre">TrivialOnR2</span></code></a> and
+<code class="docutils literal notranslate"><span class="pre">id=2</span></code> which returns a new instance of the current group.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.8)"><em>tuple</em></a>) – the id of the subgroup</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">a tuple containing<blockquote>
+<div><ul class="simple">
+<li><strong>gspace</strong>: the restricted gspace</li>
+<li><strong>back_map</strong>: a function mapping an element of the subgroup to itself in the fiber group of the original space</li>
+<li><strong>subgroup_map</strong>: a function mapping an element of the fiber group of the original space to itself in the subgroup (returns <code class="docutils literal notranslate"><span class="pre">None</span></code> if the element is not in the subgroup)</li>
+</ul>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="trivial-action">
+<h3><a class="toc-backref" href="#contents">Trivial Action</a><a class="headerlink" href="#trivial-action" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="e2cnn.gspaces.TrivialOnR2">
+<em class="property">class </em><code class="descname">TrivialOnR2</code><span class="sig-paren">(</span><em>fibergroup=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/e2cnn/gspaces/r2/trivial_on_r2.html#TrivialOnR2"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#e2cnn.gspaces.TrivialOnR2" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">e2cnn.gspaces.r2.general_r2.GeneralOnR2</span></code></p>
+<p>Describes the plane <span class="math notranslate nohighlight">\(\R^2\)</span> without considering any origin-preserving symmetry.
+This is modeled by a choosing trivial fiber group <span class="math notranslate nohighlight">\(\{e\}\)</span>.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">This models the symmetries of conventional <em>Convolutional Neural Networks</em> which are not equivariant to
+origin preserving transformations such as rotations and reflections.</p>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>fibergroup</strong> (<a class="reference internal" href="e2cnn.group.html#e2cnn.group.Group" title="e2cnn.group.Group"><em>Group</em></a><em>, </em><em>optional</em>) – use an already existing instance of the symmetry group.
+By default, it builds a new instance of the trivial group.</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="e2cnn.gspaces.TrivialOnR2.restrict">
+<code class="descname">restrict</code><span class="sig-paren">(</span><em>id</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/e2cnn/gspaces/r2/trivial_on_r2.html#TrivialOnR2.restrict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#e2cnn.gspaces.TrivialOnR2.restrict" title="Permalink to this definition">¶</a></dt>
+<dd><p>Build the <code class="xref py py-class docutils literal notranslate"><span class="pre">GSpace</span></code> associated with the subgroup of the current fiber group identified by
+the input <code class="docutils literal notranslate"><span class="pre">id</span></code>.</p>
+<p>As the trivial group contains only one element, there are no other subgroups.
+The only accepted input value is <code class="docutils literal notranslate"><span class="pre">id=1</span></code> and returns this same group.
+This functionality is implemented only for consistency with the other G-spaces.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>id</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><em>int</em></a>) – the order of the subgroup</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">a tuple containing<blockquote>
+<div><ul class="simple">
+<li><strong>gspace</strong>: the restricted gspace</li>
+<li><strong>back_map</strong>: a function mapping an element of the subgroup to itself in the fiber group of the original space</li>
+<li><strong>subgroup_map</strong>: a function mapping an element of the fiber group of the original space to itself in the subgroup (returns <code class="docutils literal notranslate"><span class="pre">None</span></code> if the element is not in the subgroup)</li>
+</ul>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="e2cnn.nn.html" class="btn btn-neutral float-right" title="e2cnn.nn" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="e2cnn.kernels.html" class="btn btn-neutral float-left" title="e2cnn.kernels" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, Qualcomm Innovation Center, Inc. Developed by Gabriele Cesa, Maurice Weiler
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

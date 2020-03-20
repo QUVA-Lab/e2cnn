@@ -1,0 +1,633 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>e2cnn.nn.geometric_tensor &mdash; e2cnn 0.1 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../../_static/language_data.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script type="text/x-mathjax-config">MathJax.Hub.Config({"TeX": {"Macros": {"bold": ["{\\bf #1}", 1], "R": "{\\mathbb R}", "N": "{\\mathbb N}", "Z": "{\\mathbb Z}", "Ind": ["{\\operatorname{Ind}_{#1}^{#2}}", 2], "Res": ["{\\operatorname{Res}_{#1}^{#2}}", 2], "GL": ["{\\operatorname{GL}(#1)}", 1], "E": ["{\\operatorname{E}(#1)}", 1], "SE": ["{\\operatorname{SE}(#1)}", 1], "O": ["{\\operatorname{O}(#1)}", 1], "SO": ["{\\operatorname{SO}(#1)}", 1], "U": ["{\\operatorname{U}(#1)}", 1], "D": ["{\\operatorname{D}_{#1}}", 1], "C": ["{\\operatorname{C}_{#1}}", 1], "DN": "{\\operatorname{D}_{\\!N}}", "CN": "{\\operatorname{C}_{\\!N}}"}}})</script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/custom.css" type="text/css" />
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> e2cnn
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.1
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Package Reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../api/e2cnn.group.html">e2cnn.group</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/e2cnn.group.html#groups">Groups</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/e2cnn.group.html#representations">Representations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/e2cnn.group.html#utility-functions">Utility Functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/e2cnn.group.html#subpackages">Subpackages</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../api/e2cnn.kernels.html">e2cnn.kernels</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/e2cnn.kernels.html#abstract-classes">Abstract Classes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/e2cnn.kernels.html#kernel-bases">Kernel Bases</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/e2cnn.kernels.html#bases-for-group-actions-on-the-plane">Bases for Group Actions on the Plane</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../api/e2cnn.gspaces.html">e2cnn.gspaces</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/e2cnn.gspaces.html#abstract-group-space">Abstract Group Space</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/e2cnn.gspaces.html#group-actions-on-the-plane">Group Actions on the Plane</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../api/e2cnn.nn.html">e2cnn.nn</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/e2cnn.nn.html#main-classes">Main Classes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/e2cnn.nn.html#utils">Utils</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/e2cnn.nn.html#planar-convolution">Planar Convolution</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/e2cnn.nn.html#non-linearities">Non Linearities</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/e2cnn.nn.html#invariant-maps">Invariant Maps</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/e2cnn.nn.html#pooling">Pooling</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/e2cnn.nn.html#normalization">Normalization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/e2cnn.nn.html#dropout">Dropout</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/e2cnn.nn.html#other-modules">Other Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/e2cnn.nn.html#module-e2cnn.nn.init">Weight Initialization</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">e2cnn</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+      <li>e2cnn.nn.geometric_tensor</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for e2cnn.nn.geometric_tensor</h1><div class="highlight"><pre>
+<span></span>
+<span class="kn">import</span> <span class="nn">torch</span>
+
+<span class="kn">from</span> <span class="nn">torch</span> <span class="k">import</span> <span class="n">Tensor</span>
+
+<span class="kn">from</span> <span class="nn">.field_type</span> <span class="k">import</span> <span class="n">FieldType</span>
+
+<span class="kn">from</span> <span class="nn">typing</span> <span class="k">import</span> <span class="n">List</span><span class="p">,</span> <span class="n">Union</span>
+
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;GeometricTensor&quot;</span><span class="p">,</span> <span class="s2">&quot;tensor_directsum&quot;</span><span class="p">]</span>
+
+
+<div class="viewcode-block" id="GeometricTensor"><a class="viewcode-back" href="../../../api/e2cnn.nn.html#e2cnn.nn.GeometricTensor">[docs]</a><span class="k">class</span> <span class="nc">GeometricTensor</span><span class="p">:</span>
+    
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tensor</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">,</span> <span class="nb">type</span><span class="p">:</span> <span class="n">FieldType</span><span class="p">):</span>
+        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        </span>
+<span class="sd">        A GeometricTensor can be interpreted as a *typed* tensor.</span>
+<span class="sd">        It is wrapping a common :class:`torch.Tensor` and endows it with a (compatible) :class:`~e2cnn.nn.FieldType` as</span>
+<span class="sd">        transformation law.</span>
+<span class="sd">        </span>
+<span class="sd">        The :class:`~e2cnn.nn.FieldType` describes the action of a group :math:`G` on the tensor.</span>
+<span class="sd">        This action includes both a transformation of the base space and a transformation of the channels according to</span>
+<span class="sd">        a :math:`G`-representation :math:`\rho`.</span>
+<span class="sd">        </span>
+<span class="sd">        All neural network operations have :class:`~e2cnn.nn.GeometricTensor` s as inputs and outputs.</span>
+<span class="sd">        They perform a dynamic typechecking, ensuring that the transformation law of the data and the operation match.</span>
+<span class="sd">        See also :class:`~e2cnn.nn.EquivariantModule`.</span>
+<span class="sd"> </span>
+<span class="sd">        As usual, the first dimension of the tensor is interpreted as the batch dimension. The second is the fiber</span>
+<span class="sd">        dimension (usually interpreted as the channels dimension). The following dimensions are the base space</span>
+<span class="sd">        dimensions (eg. the spatial dimension in a conventional CNN).</span>
+<span class="sd">        </span>
+<span class="sd">        The operations of vector addition and scalar product are supported.</span>
+<span class="sd">        For example::</span>
+<span class="sd">        </span>
+<span class="sd">            gs = e2cnn.gspaces.Rot2dOnR2(8)</span>
+<span class="sd">            type = e2cnn.nn.FieldType(gs, [gs.regular_repr]*3)</span>
+<span class="sd">            t1 = e2cnn.nn.GeometricTensor(torch.randn(1, 24, 3, 3), type)</span>
+<span class="sd">            t2 = e2cnn.nn.GeometricTensor(torch.randn(1, 24, 3, 3), type)</span>
+<span class="sd">            </span>
+<span class="sd">            # vector addition</span>
+<span class="sd">            t3 = t1 + t2</span>
+<span class="sd">            </span>
+<span class="sd">            # scalar product</span>
+<span class="sd">            t3 = t1 * 3.</span>
+<span class="sd">            </span>
+<span class="sd">            # scalar product also supports tensors containing only one scalar</span>
+<span class="sd">            t3 = t1 * torch.tensor(3.)</span>
+<span class="sd">            </span>
+<span class="sd">            # inplace operations are also supported</span>
+<span class="sd">            t1 += t2</span>
+<span class="sd">            t2 *= 3.</span>
+<span class="sd">        </span>
+<span class="sd">        .. warning ::</span>
+<span class="sd">            The multiplication of a PyTorch tensor containing only a scalar with a GeometricTensor is only supported</span>
+<span class="sd">            when using PyTorch 1.4 or higher (see this `issue &lt;https://github.com/pytorch/pytorch/issues/26333&gt;`_ )</span>
+<span class="sd">            </span>
+<span class="sd">        Args:</span>
+<span class="sd">            tensor (torch.Tensor): the tensor data</span>
+<span class="sd">            type (FieldType): the type of the tensor, modeling its transformation law</span>
+<span class="sd">        </span>
+<span class="sd">        Attributes:</span>
+<span class="sd">            ~.tensor (torch.Tensor)</span>
+<span class="sd">            ~.type (FieldType)</span>
+<span class="sd">            </span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">tensor</span><span class="p">,</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">)</span>
+        <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="nb">type</span><span class="p">,</span> <span class="n">FieldType</span><span class="p">)</span>
+        
+        <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">tensor</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">2</span>
+        <span class="k">assert</span> <span class="n">tensor</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="nb">type</span><span class="o">.</span><span class="n">size</span><span class="p">,</span> <span class="p">(</span><span class="n">tensor</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="nb">type</span><span class="o">.</span><span class="n">size</span><span class="p">)</span>
+        
+        <span class="c1"># torch.Tensor: PyTorch tensor containing the data</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tensor</span> <span class="o">=</span> <span class="n">tensor</span>
+        
+        <span class="c1"># FieldType: field type of the signal</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">type</span> <span class="o">=</span> <span class="nb">type</span>
+    
+<div class="viewcode-block" id="GeometricTensor.restrict"><a class="viewcode-back" href="../../../api/e2cnn.nn.html#e2cnn.nn.GeometricTensor.restrict">[docs]</a>    <span class="k">def</span> <span class="nf">restrict</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">id</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s1">&#39;GeometricTensor&#39;</span><span class="p">:</span>
+        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Restrict the field type of this tensor.</span>
+<span class="sd">        </span>
+<span class="sd">        The method returns a new :class:`~e2cnn.nn.GeometricTensor` whose :attr:`~e2cnn.nn.GeometricTensor.type`</span>
+<span class="sd">        is equal to this tensor&#39;s :attr:`~e2cnn.nn.GeometricTensor.type`</span>
+<span class="sd">        restricted to a subgroup :math:`H&lt;G` (see :meth:`e2cnn.nn.FieldType.restrict`).</span>
+<span class="sd">        The restricted :attr:`~e2cnn.nn.GeometricTensor.type` is associated with the restricted representation</span>
+<span class="sd">        :math:`\Res{H}{G}\rho` of the :math:`G`-representation :math:`\rho` associated to this tensor&#39;s</span>
+<span class="sd">        :attr:`~e2cnn.nn.GeometricTensor.type`.</span>
+<span class="sd">        The input ``id`` specifies the subgroup :math:`H &lt; G`.</span>
+<span class="sd">        </span>
+<span class="sd">        Notice that the underlying :attr:`~e2cnn.nn.GeometricTensor.tensor` instance will be shared between</span>
+<span class="sd">        the current tensor and the returned one.</span>
+<span class="sd">        </span>
+<span class="sd">        .. warning ::</span>
+<span class="sd">        </span>
+<span class="sd">            The method builds the new representation on the fly; hence, if this operation is needed at run time,</span>
+<span class="sd">            we suggest to use :class:`e2cnn.nn.RestrictionModule` which pre-computes the new representation offline.</span>
+<span class="sd">        </span>
+<span class="sd">        .. seealso ::</span>
+<span class="sd">        </span>
+<span class="sd">            Check the documentation of the :meth:`~e2cnn.gspaces.GSpace.restrict` method in the</span>
+<span class="sd">            :class:`~e2cnn.gspaces.GSpace` instance used for a description of the parameter ``id``.</span>
+<span class="sd">        </span>
+<span class="sd">        </span>
+<span class="sd">        Args:</span>
+<span class="sd">            id: the id identifying the subgroup :math:`H` the representations are restricted to</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            the geometric tensor with the restricted representations</span>
+<span class="sd">            </span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">new_class</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">type</span><span class="o">.</span><span class="n">restrict</span><span class="p">(</span><span class="nb">id</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">GeometricTensor</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tensor</span><span class="p">,</span> <span class="n">new_class</span><span class="p">)</span></div>
+    
+<div class="viewcode-block" id="GeometricTensor.split"><a class="viewcode-back" href="../../../api/e2cnn.nn.html#e2cnn.nn.GeometricTensor.split">[docs]</a>    <span class="k">def</span> <span class="nf">split</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">breaks</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">]):</span>
+        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        </span>
+<span class="sd">        Split this tensor on the channel dimension in a list of smaller tensors.</span>
+<span class="sd">        The original tensor is split at the *fields* specified by the index list ``breaks``.</span>
+<span class="sd">        </span>
+<span class="sd">        If the tensor is associated with the list of fields :math:`\{\rho_i\}_i`</span>
+<span class="sd">        (see :attr:`e2cnn.nn.FieldType.representations`), the :math:`i`-th output tensor will contain the fields</span>
+<span class="sd">        :math:`\rho_{\text{breaks}[i-1]}, \dots, \rho_{\text{breaks}[i]-1}` of the original tensor.</span>
+<span class="sd">        </span>
+<span class="sd">        If `breaks = None`, the tensor is split at each field.</span>
+<span class="sd">        This is equivalent to using `breaks = list(range(len(self.type)))`.</span>
+<span class="sd">        </span>
+<span class="sd">        </span>
+<span class="sd">        Args:</span>
+<span class="sd">            breaks (list): indices of the fields where to split the tensor</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            list of :class:`~e2cnn.nn.GeometricTensor` s into which the original tensor is chunked</span>
+<span class="sd">            </span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">breaks</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">breaks</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">type</span><span class="p">)))</span>
+            
+        <span class="n">breaks</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">type</span><span class="p">))</span>
+        
+        <span class="c1"># final list of tensors</span>
+        <span class="n">tensors</span> <span class="o">=</span> <span class="p">[]</span>
+        
+        <span class="c1"># list containing the index of the channels separating consecutive fields in this tensor</span>
+        <span class="n">positions</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">last</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">for</span> <span class="nb">repr</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">type</span><span class="o">.</span><span class="n">representations</span><span class="p">:</span>
+            <span class="n">positions</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">last</span><span class="p">)</span>
+            <span class="n">last</span> <span class="o">+=</span> <span class="nb">repr</span><span class="o">.</span><span class="n">size</span>
+        <span class="n">positions</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">last</span><span class="p">)</span>
+        
+        <span class="n">last_field</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="c1"># for each break point</span>
+        <span class="k">for</span> <span class="n">b</span> <span class="ow">in</span> <span class="n">breaks</span><span class="p">:</span>
+            <span class="k">assert</span> <span class="n">b</span> <span class="o">&gt;</span> <span class="n">last_field</span><span class="p">,</span> <span class="s1">&#39;Error! &quot;breaks&quot; must be an increasing list of positive indexes&#39;</span>
+            
+            <span class="c1"># compute the sub-class of the new sub-tensor</span>
+            <span class="nb">repr</span> <span class="o">=</span> <span class="n">FieldType</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">type</span><span class="o">.</span><span class="n">gspace</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">type</span><span class="o">.</span><span class="n">representations</span><span class="p">[</span><span class="n">last_field</span><span class="p">:</span> <span class="n">b</span><span class="p">])</span>
+            
+            <span class="c1"># retrieve the sub-tensor</span>
+            <span class="n">data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">tensor</span><span class="p">[:,</span> <span class="n">positions</span><span class="p">[</span><span class="n">last_field</span><span class="p">]:</span><span class="n">positions</span><span class="p">[</span><span class="n">b</span><span class="p">],</span> <span class="o">...</span><span class="p">]</span>
+            
+            <span class="n">tensors</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">GeometricTensor</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="nb">repr</span><span class="p">))</span>
+            
+            <span class="n">last_field</span> <span class="o">=</span> <span class="n">b</span>
+        
+        <span class="k">return</span> <span class="n">tensors</span></div>
+
+<div class="viewcode-block" id="GeometricTensor.transform"><a class="viewcode-back" href="../../../api/e2cnn.nn.html#e2cnn.nn.GeometricTensor.transform">[docs]</a>    <span class="k">def</span> <span class="nf">transform</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">element</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s1">&#39;GeometricTensor&#39;</span><span class="p">:</span>
+        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Transform the current tensor according to the group representation associated to the input element</span>
+<span class="sd">        and its induced action on the base space</span>
+
+<span class="sd">        .. warning ::</span>
+<span class="sd">            The input tensor is detached before the transformation therefore no gradient is backpropagated</span>
+<span class="sd">            through this operation</span>
+
+<span class="sd">            See :meth:`e2cnn.nn.GeometricTensor.transform_fibers` to transform only the fibers, i.e. not transform</span>
+<span class="sd">            the base space.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            element: an element of the group of symmetries of the fiber.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            the transformed tensor</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+    
+        <span class="n">transformed</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">type</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tensor</span><span class="p">,</span> <span class="n">element</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">GeometricTensor</span><span class="p">(</span><span class="n">transformed</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">type</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="GeometricTensor.transform_fibers"><a class="viewcode-back" href="../../../api/e2cnn.nn.html#e2cnn.nn.GeometricTensor.transform_fibers">[docs]</a>    <span class="k">def</span> <span class="nf">transform_fibers</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">element</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s1">&#39;GeometricTensor&#39;</span><span class="p">:</span>
+        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        </span>
+<span class="sd">        Transform the feature vectors of the underlying tensor according to the group representation associated to</span>
+<span class="sd">        the input element.</span>
+<span class="sd">        </span>
+<span class="sd">        Interpreting the tensor as a vector-valued signal :math:`f: X \to \mathbb{R}^c` over a base space :math:`X`</span>
+<span class="sd">        (where :math:`c` is the number of channels of the tensor), given the input ``element`` :math:`g \in G`</span>
+<span class="sd">        (:math:`G` fiber group) the method returns the new signal :math:`f&#39;`:</span>
+<span class="sd">        </span>
+<span class="sd">        .. math ::</span>
+<span class="sd">            f&#39;(x) := \rho(g) f(x)</span>
+<span class="sd">        </span>
+<span class="sd">        for :math:`x \in X` point in the base space and :math:`\rho` the representation of :math:`G` in the</span>
+<span class="sd">        field type of this tensor.</span>
+<span class="sd">        </span>
+<span class="sd">        </span>
+<span class="sd">        Notice that the input element has to be an element of the fiber group of this tensor&#39;s field type.</span>
+<span class="sd">        </span>
+<span class="sd">        .. seealso ::</span>
+<span class="sd">        </span>
+<span class="sd">            See :meth:`e2cnn.nn.GeometricTensor.transform` to transform the whole tensor.</span>
+<span class="sd">        </span>
+<span class="sd">        Args:</span>
+<span class="sd">            element: an element of the group of symmetries of the fiber.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            the transformed tensor</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">rho</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">FloatTensor</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">type</span><span class="o">.</span><span class="n">representation</span><span class="p">(</span><span class="n">element</span><span class="p">))</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">einsum</span><span class="p">(</span><span class="s2">&quot;oi,bihw-&gt;bohw&quot;</span><span class="p">,</span> <span class="p">(</span><span class="n">rho</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">tensor</span><span class="o">.</span><span class="n">contiguous</span><span class="p">()))</span><span class="o">.</span><span class="n">contiguous</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">GeometricTensor</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">type</span><span class="p">)</span></div>
+    
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">shape</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Alias for ``self.tensor.shape``</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">tensor</span><span class="o">.</span><span class="n">shape</span>
+
+<div class="viewcode-block" id="GeometricTensor.size"><a class="viewcode-back" href="../../../api/e2cnn.nn.html#e2cnn.nn.GeometricTensor.size">[docs]</a>    <span class="k">def</span> <span class="nf">size</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Alias for ``self.tensor.size()``</span>
+
+<span class="sd">        .. seealso ::</span>
+<span class="sd">            :meth:`torch.Tensor.size`</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">tensor</span><span class="o">.</span><span class="n">size</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="GeometricTensor.to"><a class="viewcode-back" href="../../../api/e2cnn.nn.html#e2cnn.nn.GeometricTensor.to">[docs]</a>    <span class="k">def</span> <span class="nf">to</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        </span>
+<span class="sd">        Alias for ``self.tensor.to(*args, **kwargs)``.</span>
+<span class="sd">        </span>
+<span class="sd">        Applies :meth:`torch.Tensor.to` to the underlying tensor and wraps the resulting tensor in a new</span>
+<span class="sd">        :class:`~e2cnn.nn.GeometricTensor` with the same type.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">tensor</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">tensor</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">GeometricTensor</span><span class="p">(</span><span class="n">tensor</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">type</span><span class="p">)</span></div>
+
+    <span class="k">def</span> <span class="nf">__add__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">:</span> <span class="s1">&#39;GeometricTensor&#39;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s1">&#39;GeometricTensor&#39;</span><span class="p">:</span>
+        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Add two compatible :class:`~e2cnn.nn.GeometricTensor` using pointwise addition.</span>
+<span class="sd">        The two tensors needs to have the same shape and be associated to the same field type.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            other (GeometricTensor): the other geometric tensor</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            the sum</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">assert</span> <span class="bp">self</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">type</span><span class="p">,</span> <span class="s1">&#39;The two geometric tensor must have the same FieldType&#39;</span>
+        <span class="k">return</span> <span class="n">GeometricTensor</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tensor</span> <span class="o">+</span> <span class="n">other</span><span class="o">.</span><span class="n">tensor</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">type</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">__sub__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">:</span> <span class="s1">&#39;GeometricTensor&#39;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s1">&#39;GeometricTensor&#39;</span><span class="p">:</span>
+        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Subtract two compatible :class:`~e2cnn.nn.GeometricTensor` using pointwise subtraction.</span>
+<span class="sd">        The two tensors needs to have the same shape and be associated to the same field type.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            other (GeometricTensor): the other geometric tensor</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            their difference</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">assert</span> <span class="bp">self</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">type</span><span class="p">,</span> <span class="s1">&#39;The two geometric tensor must have the same FieldType&#39;</span>
+        <span class="k">return</span> <span class="n">GeometricTensor</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tensor</span> <span class="o">-</span> <span class="n">other</span><span class="o">.</span><span class="n">tensor</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">type</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">__iadd__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">:</span> <span class="s1">&#39;GeometricTensor&#39;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s1">&#39;GeometricTensor&#39;</span><span class="p">:</span>
+        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Add a compatible :class:`~e2cnn.nn.GeometricTensor` to this tensor inplace.</span>
+<span class="sd">        The two tensors needs to have the same shape and be associated to the same field type.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            other (GeometricTensor): the other geometric tensor</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            this tensor</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">assert</span> <span class="bp">self</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">type</span><span class="p">,</span> <span class="s1">&#39;The two geometric tensor must have the same FieldType&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tensor</span> <span class="o">+=</span> <span class="n">other</span><span class="o">.</span><span class="n">tensor</span>
+        <span class="k">return</span> <span class="bp">self</span>
+
+    <span class="k">def</span> <span class="nf">__isub__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">:</span> <span class="s1">&#39;GeometricTensor&#39;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s1">&#39;GeometricTensor&#39;</span><span class="p">:</span>
+        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Subtract a compatible :class:`~e2cnn.nn.GeometricTensor` to this tensor inplace.</span>
+<span class="sd">        The two tensors needs to have the same shape and be associated to the same field type.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            other (GeometricTensor): the other geometric tensor</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            this tensor</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">assert</span> <span class="bp">self</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">type</span><span class="p">,</span> <span class="s1">&#39;The two geometric tensor must have the same FieldType&#39;</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">tensor</span> <span class="o">-=</span> <span class="n">other</span><span class="o">.</span><span class="n">tensor</span>
+        <span class="k">return</span> <span class="bp">self</span>
+    
+    <span class="k">def</span> <span class="nf">__mul__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="s1">&#39;GeometricTensor&#39;</span><span class="p">:</span>
+        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Scalar product of this :class:`~e2cnn.nn.GeometricTensor` with a scalar.</span>
+<span class="sd">        The operation is done inplace.</span>
+<span class="sd">        </span>
+<span class="sd">        The scalar can be a float number of a :class:`torch.Tensor` containing only</span>
+<span class="sd">        one scalar (i.e. :func:`torch.numel` should return `1`).</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            other : a scalar</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            the scalar product</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="nb">float</span><span class="p">)</span> <span class="ow">or</span> <span class="n">other</span><span class="o">.</span><span class="n">numel</span><span class="p">()</span> <span class="o">==</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;Only multiplication with a scalar is allowed&#39;</span>
+
+        <span class="k">return</span> <span class="n">GeometricTensor</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tensor</span> <span class="o">*</span> <span class="n">other</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">type</span><span class="p">)</span>
+
+    <span class="fm">__rmul__</span> <span class="o">=</span> <span class="fm">__mul__</span>
+
+    <span class="k">def</span> <span class="nf">__imul__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="s1">&#39;GeometricTensor&#39;</span><span class="p">:</span>
+        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Scalar product of this :class:`~e2cnn.nn.GeometricTensor` with a scalar.</span>
+
+<span class="sd">        The scalar can be a float number of a :class:`torch.Tensor` containing only</span>
+<span class="sd">        one scalar (i.e. :func:`torch.numel` should return `1`).</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            other : a scalar</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            the scalar product</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="nb">float</span><span class="p">)</span> <span class="ow">or</span> <span class="n">other</span><span class="o">.</span><span class="n">numel</span><span class="p">()</span> <span class="o">==</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;Only multiplication with a scalar is allowed&#39;</span>
+    
+        <span class="bp">self</span><span class="o">.</span><span class="n">tensor</span> <span class="o">*=</span> <span class="n">other</span>
+        <span class="k">return</span> <span class="bp">self</span>
+    
+    <span class="k">def</span> <span class="nf">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">t</span> <span class="o">=</span> <span class="nb">repr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tensor</span><span class="p">)[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+        <span class="n">t</span> <span class="o">=</span> <span class="n">t</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">,</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">  &#39;</span><span class="p">)</span>
+        <span class="n">r</span> <span class="o">=</span> <span class="s1">&#39;g_&#39;</span> <span class="o">+</span> <span class="n">t</span> <span class="o">+</span> <span class="s1">&#39;, &#39;</span> <span class="o">+</span> <span class="nb">repr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">type</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39;)&#39;</span>
+
+        <span class="k">return</span> <span class="n">r</span></div>
+
+
+<div class="viewcode-block" id="tensor_directsum"><a class="viewcode-back" href="../../../api/e2cnn.nn.html#e2cnn.nn.tensor_directsum">[docs]</a><span class="k">def</span> <span class="nf">tensor_directsum</span><span class="p">(</span><span class="n">tensors</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="s1">&#39;GeometricTensor&#39;</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="s1">&#39;GeometricTensor&#39;</span><span class="p">:</span>
+    <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Concatenate a list of :class:`~e2cnn.nn.GeometricTensor` s on the channels dimension (``dim=1``).</span>
+<span class="sd">    The input tensors have to be compatible: they need to have the same shape except for the channels</span>
+<span class="sd">    dimension (``dim=1``).</span>
+<span class="sd">    In the resulting :class:`~e2cnn.nn.GeometricTensor`, the channels dimension will be associated with the direct sum</span>
+<span class="sd">    representation of the representations of the input tensors.</span>
+<span class="sd">    </span>
+<span class="sd">    .. seealso::</span>
+<span class="sd">        </span>
+<span class="sd">        :func:`e2cnn.group.directsum`</span>
+<span class="sd">    </span>
+<span class="sd">    Args:</span>
+<span class="sd">        tensors (list): a list of :class:`~e2cnn.nn.GeometricTensor` s</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        the direct sum of the inputs</span>
+<span class="sd">        </span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># assert len(tensors) &gt; 1</span>
+    
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">tensors</span><span class="p">)):</span>
+        <span class="k">assert</span> <span class="n">tensors</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">type</span><span class="o">.</span><span class="n">gspace</span> <span class="o">==</span> <span class="n">tensors</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">type</span><span class="o">.</span><span class="n">gspace</span>
+        <span class="k">assert</span> <span class="n">tensors</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">tensor</span><span class="o">.</span><span class="n">ndimension</span><span class="p">()</span> <span class="o">==</span> <span class="n">tensors</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">tensor</span><span class="o">.</span><span class="n">ndimension</span><span class="p">()</span>
+        <span class="k">assert</span> <span class="n">tensors</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">tensor</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="n">tensors</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">tensor</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="k">assert</span> <span class="n">tensors</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">tensor</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">2</span><span class="p">:]</span> <span class="o">==</span> <span class="n">tensors</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">tensor</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">2</span><span class="p">:]</span>
+    
+    <span class="c1"># concatenate all representations from all field types</span>
+    <span class="n">reprs</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">tensors</span><span class="p">:</span>
+        <span class="n">reprs</span> <span class="o">+=</span> <span class="n">t</span><span class="o">.</span><span class="n">type</span><span class="o">.</span><span class="n">representations</span>
+    
+    <span class="c1"># build the new field type</span>
+    <span class="bp">cls</span> <span class="o">=</span> <span class="n">FieldType</span><span class="p">(</span><span class="n">tensors</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">type</span><span class="o">.</span><span class="n">gspace</span><span class="p">,</span> <span class="n">reprs</span><span class="p">)</span>
+    
+    <span class="c1"># concatenate the underlying tensors</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">cat</span><span class="p">([</span><span class="n">t</span><span class="o">.</span><span class="n">tensor</span> <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">tensors</span><span class="p">],</span> <span class="n">dim</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    
+    <span class="c1"># build the new Geometric Tensor</span>
+    <span class="k">return</span> <span class="n">GeometricTensor</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="bp">cls</span><span class="p">)</span></div>
+
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, Qualcomm Innovation Center, Inc. Developed by Gabriele Cesa, Maurice Weiler
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

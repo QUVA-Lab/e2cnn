@@ -1,0 +1,1542 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>e2cnn.group.representation &mdash; e2cnn 0.1 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../../_static/language_data.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script type="text/x-mathjax-config">MathJax.Hub.Config({"TeX": {"Macros": {"bold": ["{\\bf #1}", 1], "R": "{\\mathbb R}", "N": "{\\mathbb N}", "Z": "{\\mathbb Z}", "Ind": ["{\\operatorname{Ind}_{#1}^{#2}}", 2], "Res": ["{\\operatorname{Res}_{#1}^{#2}}", 2], "GL": ["{\\operatorname{GL}(#1)}", 1], "E": ["{\\operatorname{E}(#1)}", 1], "SE": ["{\\operatorname{SE}(#1)}", 1], "O": ["{\\operatorname{O}(#1)}", 1], "SO": ["{\\operatorname{SO}(#1)}", 1], "U": ["{\\operatorname{U}(#1)}", 1], "D": ["{\\operatorname{D}_{#1}}", 1], "C": ["{\\operatorname{C}_{#1}}", 1], "DN": "{\\operatorname{D}_{\\!N}}", "CN": "{\\operatorname{C}_{\\!N}}"}}})</script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/custom.css" type="text/css" />
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> e2cnn
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.1
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Package Reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../api/e2cnn.group.html">e2cnn.group</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/e2cnn.group.html#groups">Groups</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/e2cnn.group.html#representations">Representations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/e2cnn.group.html#utility-functions">Utility Functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/e2cnn.group.html#subpackages">Subpackages</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../api/e2cnn.kernels.html">e2cnn.kernels</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/e2cnn.kernels.html#abstract-classes">Abstract Classes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/e2cnn.kernels.html#kernel-bases">Kernel Bases</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/e2cnn.kernels.html#bases-for-group-actions-on-the-plane">Bases for Group Actions on the Plane</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../api/e2cnn.gspaces.html">e2cnn.gspaces</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/e2cnn.gspaces.html#abstract-group-space">Abstract Group Space</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/e2cnn.gspaces.html#group-actions-on-the-plane">Group Actions on the Plane</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../api/e2cnn.nn.html">e2cnn.nn</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/e2cnn.nn.html#main-classes">Main Classes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/e2cnn.nn.html#utils">Utils</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/e2cnn.nn.html#planar-convolution">Planar Convolution</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/e2cnn.nn.html#non-linearities">Non Linearities</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/e2cnn.nn.html#invariant-maps">Invariant Maps</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/e2cnn.nn.html#pooling">Pooling</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/e2cnn.nn.html#normalization">Normalization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/e2cnn.nn.html#dropout">Dropout</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/e2cnn.nn.html#other-modules">Other Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/e2cnn.nn.html#module-e2cnn.nn.init">Weight Initialization</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">e2cnn</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+      <li>e2cnn.group.representation</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for e2cnn.group.representation</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">__future__</span> <span class="k">import</span> <span class="n">annotations</span>
+
+<span class="kn">import</span> <span class="nn">e2cnn.group</span>
+<span class="kn">from</span> <span class="nn">e2cnn.group</span> <span class="k">import</span> <span class="n">Group</span>
+
+<span class="kn">from</span> <span class="nn">collections</span> <span class="k">import</span> <span class="n">defaultdict</span>
+
+<span class="kn">from</span> <span class="nn">typing</span> <span class="k">import</span> <span class="n">Callable</span><span class="p">,</span> <span class="n">Any</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">,</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">Union</span><span class="p">,</span> <span class="n">Set</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">scipy</span> <span class="k">as</span> <span class="nn">sp</span>
+<span class="kn">import</span> <span class="nn">math</span>
+<span class="kn">from</span> <span class="nn">scipy.sparse.csgraph</span> <span class="k">import</span> <span class="n">connected_components</span>
+
+
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s2">&quot;Representation&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;build_from_discrete_group_representation&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;directsum&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;disentangle&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;change_basis&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;build_regular_representation&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;build_quotient_representation&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;build_induced_representation&quot;</span>
+<span class="p">]</span>
+
+
+<div class="viewcode-block" id="Representation"><a class="viewcode-back" href="../../../api/e2cnn.group.html#e2cnn.group.Representation">[docs]</a><span class="k">class</span> <span class="nc">Representation</span><span class="p">:</span>
+    
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
+                 <span class="n">group</span><span class="p">:</span> <span class="n">Group</span><span class="p">,</span>
+                 <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+                 <span class="n">irreps</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span>
+                 <span class="n">change_of_basis</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span>
+                 <span class="n">supported_nonlinearities</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span> <span class="n">Set</span><span class="p">[</span><span class="nb">str</span><span class="p">]],</span>
+                 <span class="n">representation</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Dict</span><span class="p">[</span><span class="n">Any</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">],</span> <span class="n">Callable</span><span class="p">[[</span><span class="n">Any</span><span class="p">],</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+                 <span class="n">character</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Dict</span><span class="p">[</span><span class="n">Any</span><span class="p">,</span> <span class="nb">float</span><span class="p">],</span> <span class="n">Callable</span><span class="p">[[</span><span class="n">Any</span><span class="p">],</span> <span class="nb">float</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+                 <span class="n">change_of_basis_inv</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+                 <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Class used to describe a group representation.</span>
+<span class="sd">        </span>
+<span class="sd">        A (real) representation :math:`\rho` of a group :math:`G` on a vector space :math:`V=\mathbb{R}^n` is a map</span>
+<span class="sd">        (a *homomorphism*) from the group elements to invertible matrices of shape :math:`n \times n`, i.e.:</span>
+<span class="sd">        </span>
+<span class="sd">        .. math::</span>
+<span class="sd">            \rho : G \to \GL{V}</span>
+<span class="sd">            </span>
+<span class="sd">        such that the group composition is modeled by a matrix multiplication:</span>
+<span class="sd">        </span>
+<span class="sd">        .. math::</span>
+<span class="sd">            \rho(g_1 g_2) = \rho(g_1) \rho(g_2) \qquad  \forall \ g_1, g_2 \in G \ .</span>
+<span class="sd">        </span>
+<span class="sd">        Any representation (of a compact group) can be decomposed into the *direct sum* of smaller, irreducible</span>
+<span class="sd">        representations (*irreps*) of the group up to a change of basis:</span>
+<span class="sd">        </span>
+<span class="sd">        .. math::</span>
+<span class="sd">            \forall \ g \in G, \ \rho(g) = Q \left( \bigoplus\nolimits_{i \in I} \psi_i(g) \right) Q^{-1} \ .</span>
+<span class="sd">        </span>
+<span class="sd">        Here :math:`I` is an index set over the irreps of the group :math:`G` which are contained in the</span>
+<span class="sd">        representation :math:`\rho`.</span>
+<span class="sd">        </span>
+<span class="sd">        This property enables one to study a representation by its irreps and it is used here to work with arbitrary</span>
+<span class="sd">        representations.</span>
+<span class="sd">        </span>
+<span class="sd">        :attr:`e2cnn.group.Representation.change_of_basis` contains the change of basis matrix :math:`Q` while</span>
+<span class="sd">        :attr:`e2cnn.group.Representation.irreps` is an ordered list containing the names of the irreps :math:`\psi_i`</span>
+<span class="sd">        indexed by the index set :math:`I`.</span>
+<span class="sd">        </span>
+<span class="sd">        A ``Representation`` instance can be used to describe a feature field in a feature map.</span>
+<span class="sd">        It is the building block to build the representation of a feature map, by &quot;stacking&quot; multiple representations</span>
+<span class="sd">        (taking their *direct sum*).</span>
+<span class="sd">        </span>
+<span class="sd">        .. note ::</span>
+<span class="sd">            In most of the cases, it should not be necessary to manually instantiate this class.</span>
+<span class="sd">            Indeed, the user can build the most common representations or some custom representations via the following</span>
+<span class="sd">            methods and functions:</span>
+<span class="sd">            </span>
+<span class="sd">            - :meth:`e2cnn.group.Group.irrep`,</span>
+<span class="sd">            </span>
+<span class="sd">            - :meth:`e2cnn.group.Group.regular_representation`,</span>
+<span class="sd">            </span>
+<span class="sd">            - :meth:`e2cnn.group.Group.quotient_representation`,</span>
+<span class="sd">            </span>
+<span class="sd">            - :meth:`e2cnn.group.Group.induced_representation`,</span>
+<span class="sd">            </span>
+<span class="sd">            - :meth:`e2cnn.group.Group.restrict_representation`,</span>
+<span class="sd">            </span>
+<span class="sd">            - :func:`e2cnn.group.directsum`,</span>
+<span class="sd">            </span>
+<span class="sd">            - :func:`e2cnn.group.change_basis`</span>
+<span class="sd">            </span>
+<span class="sd">            </span>
+<span class="sd">        </span>
+<span class="sd">        If ``representation`` is ``None`` (default), it is automatically inferred by evaluating each irrep, stacking</span>
+<span class="sd">        their results (through direct sum) and then applying the changes of basis. Warning: the representation of an</span>
+<span class="sd">        element is built at run-time every time this object is called (through ``__call__``) and this approach might</span>
+<span class="sd">        become computationally expensive with large representations.</span>
+<span class="sd">        </span>
+<span class="sd">        Analogously, if the ``character`` of the representation is ``None`` (default), it is automatically inferred</span>
+<span class="sd">        evaluating ``representation`` and computing its trace.</span>
+<span class="sd">        </span>
+<span class="sd">        .. todo::</span>
+<span class="sd">            improve the interface for &quot;supported non-linearities&quot; and write somewhere the available options</span>
+<span class="sd">        </span>
+<span class="sd">        Args:</span>
+<span class="sd">            group (Group): the group to be represented.</span>
+<span class="sd">            name (str): an identification name for this representation.</span>
+<span class="sd">            irreps (list): a list of strings. Each string represents the name of one of the *irreps* of the</span>
+<span class="sd">                    group (see :attr:`e2cnn.group.Group.irreps`).</span>
+<span class="sd">            change_of_basis (~numpy.ndarray): the matrix which transforms the direct sum of the irreps</span>
+<span class="sd">                    in this representation.</span>
+<span class="sd">            supported_nonlinearities (list or set): a list or set of nonlinearity types supported by this</span>
+<span class="sd">                    representation.</span>
+<span class="sd">            representation (dict or callable, optional): a callable implementing this representation or a dictionary</span>
+<span class="sd">                    mapping each of the group&#39;s elements to its representation.</span>
+<span class="sd">            character (callable or dict, optional): a callable returning the character of this representation for an</span>
+<span class="sd">                    input element or a dictionary mapping each element to its character.</span>
+<span class="sd">            change_of_basis_inv (~numpy.ndarray, optional): the inverse of the ``change_of_basis`` matrix; if not</span>
+<span class="sd">                    provided (``None``), it is computed from ``change_of_basis``.</span>
+<span class="sd">            **kwargs: custom attributes the user can set and, then, access from the dictionary in</span>
+<span class="sd">                    :attr:`e2cnn.group.Representation.attributes`</span>
+<span class="sd">            </span>
+<span class="sd">        Attributes:</span>
+<span class="sd">            ~.group (Group): The group which is being represented.</span>
+<span class="sd">            ~.name (str): A string identifying this representation.</span>
+<span class="sd">            ~.size (int): Dimensionality of the vector space of this representation. In practice, this is the size of the</span>
+<span class="sd">                matrices this representation maps the group elements to.</span>
+<span class="sd">            ~.change_of_basis (~numpy.ndarray): Change of basis matrix for the irreps decomposition.</span>
+<span class="sd">            ~.change_of_basis_inv (~numpy.ndarray): Inverse of the change of basis matrix for the irreps decomposition.</span>
+<span class="sd">            ~.representation (callable): Method implementing the map from group elements to their representation matrix.</span>
+<span class="sd">            ~.supported_nonlinearities (set): A set of strings identifying the non linearities types supported by this representation.</span>
+<span class="sd">            ~.irreps (list): List of irreps into which this representation decomposes.</span>
+<span class="sd">            ~.attributes (dict): Custom attributes set when creating the instance of this class.</span>
+<span class="sd">            ~.irreducible (bool): Whether this is an irreducible representation or not (i.e. if it can&#39;t be decomposed into further invariant subspaces).</span>
+
+<span class="sd">        </span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        
+        <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">change_of_basis</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span> <span class="ow">and</span> <span class="n">change_of_basis</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="n">change_of_basis</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+        
+        <span class="c1"># can&#39;t have the name of an already existing representation</span>
+        <span class="k">assert</span> <span class="n">name</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">group</span><span class="o">.</span><span class="n">representations</span><span class="p">,</span> <span class="n">f</span><span class="s2">&quot;A representation for </span><span class="si">{group.name}</span><span class="s2"> with name </span><span class="si">{name}</span><span class="s2"> already exists!&quot;</span>
+        
+        <span class="k">if</span> <span class="n">change_of_basis_inv</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">change_of_basis_inv</span> <span class="o">=</span> <span class="n">sp</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">inv</span><span class="p">(</span><span class="n">change_of_basis</span><span class="p">)</span>
+
+        <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">change_of_basis_inv</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span>
+        <span class="k">assert</span> <span class="n">change_of_basis_inv</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="n">change_of_basis</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="k">assert</span> <span class="n">change_of_basis_inv</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="n">change_of_basis</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+        <span class="k">assert</span> <span class="n">np</span><span class="o">.</span><span class="n">allclose</span><span class="p">(</span><span class="n">change_of_basis</span> <span class="o">@</span> <span class="n">change_of_basis_inv</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="n">change_of_basis</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span>
+        <span class="k">assert</span> <span class="n">np</span><span class="o">.</span><span class="n">allclose</span><span class="p">(</span><span class="n">change_of_basis_inv</span> <span class="o">@</span> <span class="n">change_of_basis</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="n">change_of_basis</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span>
+        
+        <span class="c1"># Group: A string identifying this representation.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">group</span> <span class="o">=</span> <span class="n">group</span>
+        
+        <span class="c1"># str: The group this is a representation of.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
+        
+        <span class="c1"># int: Dimensionality of the vector space of this representation.</span>
+        <span class="c1"># In practice, this is the size of the matrices this representation maps the group elements to.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">size</span> <span class="o">=</span> <span class="n">change_of_basis</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        
+        <span class="c1"># np.ndarray: Change of basis matrix for the irreps decomposition.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">change_of_basis</span> <span class="o">=</span> <span class="n">change_of_basis</span>
+
+        <span class="c1"># np.ndarray: Inverse of the change of basis matrix for the irreps decomposition.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">change_of_basis_inv</span> <span class="o">=</span> <span class="n">change_of_basis_inv</span>
+
+        <span class="k">if</span> <span class="n">representation</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">irreps_instances</span> <span class="o">=</span> <span class="p">[</span><span class="n">group</span><span class="o">.</span><span class="n">irreps</span><span class="p">[</span><span class="n">n</span><span class="p">]</span> <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="n">irreps</span><span class="p">]</span>
+            <span class="n">representation</span> <span class="o">=</span> <span class="n">direct_sum_factory</span><span class="p">(</span><span class="n">irreps_instances</span><span class="p">,</span> <span class="n">change_of_basis</span><span class="p">,</span> <span class="n">change_of_basis_inv</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">representation</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
+            <span class="k">assert</span> <span class="nb">set</span><span class="p">(</span><span class="n">representation</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span> <span class="o">==</span> <span class="nb">set</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">group</span><span class="o">.</span><span class="n">elements</span><span class="p">),</span> <span class="s2">&quot;Error! Keys don&#39;t match group&#39;s elements&quot;</span>
+            
+            <span class="bp">self</span><span class="o">.</span><span class="n">_stored_representations</span> <span class="o">=</span> <span class="n">representation</span>
+            <span class="n">representation</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">e</span><span class="p">,</span> <span class="nb">repr</span><span class="o">=</span><span class="bp">self</span><span class="p">:</span> <span class="nb">repr</span><span class="o">.</span><span class="n">_stored_representations</span><span class="p">[</span><span class="n">e</span><span class="p">]</span>
+            
+        <span class="k">elif</span> <span class="ow">not</span> <span class="n">callable</span><span class="p">(</span><span class="n">representation</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Error! &quot;representation&quot; is neither a dictionary nor callable&#39;</span><span class="p">)</span>
+        
+        <span class="c1"># Callable: Method implementing the map from group elements to matrix representations.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">representation</span> <span class="o">=</span> <span class="n">representation</span>
+
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">character</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
+            
+            <span class="k">assert</span> <span class="nb">set</span><span class="p">(</span><span class="n">character</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span> <span class="o">==</span> <span class="nb">set</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">group</span><span class="o">.</span><span class="n">elements</span><span class="p">),</span> <span class="s2">&quot;Error! Keys don&#39;t match group&#39;s elements&quot;</span>
+            
+            <span class="bp">self</span><span class="o">.</span><span class="n">_characters</span> <span class="o">=</span> <span class="n">character</span>
+
+        <span class="k">elif</span> <span class="n">callable</span><span class="p">(</span><span class="n">character</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_characters</span> <span class="o">=</span> <span class="n">character</span>
+        <span class="k">elif</span> <span class="n">character</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="c1"># if the character is not given as input, it is automatically inferred from the given representation</span>
+            <span class="c1"># taking its trace</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_characters</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Error! &quot;character&quot; must be a dictionary, a callable or &quot;None&quot;&#39;</span><span class="p">)</span>
+
+        <span class="c1"># TODO - assert size matches size of the matrix returned by the callable</span>
+        
+        <span class="c1"># list(str): List of irreps this representation decomposes into</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">irreps</span> <span class="o">=</span> <span class="n">irreps</span>
+        
+        <span class="bp">self</span><span class="o">.</span><span class="n">supported_nonlinearities</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">supported_nonlinearities</span><span class="p">)</span>
+        
+        <span class="c1"># dict: Custom attributes set when creating the instance of this class</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">attributes</span> <span class="o">=</span> <span class="n">kwargs</span>
+
+        <span class="c1"># TODO : remove the condition of an identity change of basis?</span>
+        <span class="c1"># bool: Whether this is an irreducible representation or not (i.e.: if it can&#39;t be decomposed further)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">irreducible</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">irreps</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span> <span class="ow">and</span> <span class="n">np</span><span class="o">.</span><span class="n">allclose</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">change_of_basis</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">change_of_basis</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span>
+    
+<div class="viewcode-block" id="Representation.character"><a class="viewcode-back" href="../../../api/e2cnn.group.html#e2cnn.group.Representation.character">[docs]</a>    <span class="k">def</span> <span class="nf">character</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">e</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">        The *character* of a finite-dimensional real representation is a function mapping a group element</span>
+<span class="sd">        to the trace of its representation:</span>
+
+<span class="sd">        .. math::</span>
+
+<span class="sd">            \chi_\rho: G \to \mathbb{C}, \ \ g \mapsto \chi_\rho(g) := \operatorname{tr}(\rho(g))</span>
+
+<span class="sd">        It is useful to perform the irreps decomposition of a representation using *Character Theory*.</span>
+<span class="sd">        </span>
+<span class="sd">        Args:</span>
+<span class="sd">            e: an element of the group of this representation</span>
+<span class="sd">        </span>
+<span class="sd">        Returns:</span>
+<span class="sd">            the character of the element</span>
+<span class="sd">        </span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_characters</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="c1"># if the character is not given as input, it is automatically inferred from the given representation</span>
+            <span class="c1"># taking its trace</span>
+            <span class="nb">repr</span> <span class="o">=</span> <span class="bp">self</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">trace</span><span class="p">(</span><span class="nb">repr</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_characters</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_characters</span><span class="p">[</span><span class="n">e</span><span class="p">]</span>
+
+        <span class="k">elif</span> <span class="n">callable</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_characters</span><span class="p">):</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_characters</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s1">&#39;Error! Character not recognized!&#39;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Representation.is_trivial"><a class="viewcode-back" href="../../../api/e2cnn.group.html#e2cnn.group.Representation.is_trivial">[docs]</a>    <span class="k">def</span> <span class="nf">is_trivial</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        </span>
+<span class="sd">        Whether this representation is trivial or not.</span>
+<span class="sd">        </span>
+<span class="sd">        Returns:</span>
+<span class="sd">            if the representation is trivial</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">irreducible</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">group</span><span class="o">.</span><span class="n">trivial_representation</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">irreps</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span></div>
+    
+<div class="viewcode-block" id="Representation.contains_trivial"><a class="viewcode-back" href="../../../api/e2cnn.group.html#e2cnn.group.Representation.contains_trivial">[docs]</a>    <span class="k">def</span> <span class="nf">contains_trivial</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">        Whether this representation contains the trivial representation among its irreps.</span>
+<span class="sd">        This is an alias for::</span>
+<span class="sd">            </span>
+<span class="sd">            any(self.group.irreps[irr].is_trivial() for irr in self.irreps)</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">           if it contains the trivial representation</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">irrep</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">irreps</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">group</span><span class="o">.</span><span class="n">irreps</span><span class="p">[</span><span class="n">irrep</span><span class="p">]</span><span class="o">.</span><span class="n">is_trivial</span><span class="p">():</span>
+                <span class="k">return</span> <span class="kc">True</span>
+        <span class="k">return</span> <span class="kc">False</span></div>
+
+<div class="viewcode-block" id="Representation.restrict"><a class="viewcode-back" href="../../../api/e2cnn.group.html#e2cnn.group.Representation.restrict">[docs]</a>    <span class="k">def</span> <span class="nf">restrict</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">id</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">e2cnn</span><span class="o">.</span><span class="n">group</span><span class="o">.</span><span class="n">Representation</span><span class="p">:</span>
+        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        </span>
+<span class="sd">        Restrict the current representation to the subgroup identified by ``id``.</span>
+<span class="sd">        Check the documentation of the :meth:`~e2cnn.group.Group.subgroup` method in the underlying group to see the</span>
+<span class="sd">        available subgroups and accepted ids.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            id: identifier of the subgroup</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            the restricted representation</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">group</span><span class="o">.</span><span class="n">restrict_representation</span><span class="p">(</span><span class="nb">id</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span></div>
+    
+<div class="viewcode-block" id="Representation.__call__"><a class="viewcode-back" href="../../../api/e2cnn.group.html#e2cnn.group.Representation.__call__">[docs]</a>    <span class="k">def</span> <span class="nf">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">element</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        An instance of this class can be called and it implements the mapping from an element of a group to its</span>
+<span class="sd">        representation.</span>
+<span class="sd">        </span>
+<span class="sd">        This is equivalent to calling :meth:`e2cnn.group.Representation.representation`,</span>
+<span class="sd">        though ``__call__`` first checks ``element`` is a valid input (i.e. an element of the group).</span>
+<span class="sd">        It is recommended to use this call.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            element: an element of the group</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            A matrix representing the input element</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        
+        <span class="k">assert</span> <span class="bp">self</span><span class="o">.</span><span class="n">group</span><span class="o">.</span><span class="n">is_element</span><span class="p">(</span><span class="n">element</span><span class="p">),</span> <span class="n">f</span><span class="s2">&quot;</span><span class="si">{self.group.name}</span><span class="s2">, </span><span class="si">{element}</span><span class="s2">: {self.group.is_element(element)}&quot;</span>
+        
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">representation</span><span class="p">(</span><span class="n">element</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Representation.__add__"><a class="viewcode-back" href="../../../api/e2cnn.group.html#e2cnn.group.Representation.__add__">[docs]</a>    <span class="k">def</span> <span class="nf">__add__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">:</span> <span class="n">e2cnn</span><span class="o">.</span><span class="n">group</span><span class="o">.</span><span class="n">Representation</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">e2cnn</span><span class="o">.</span><span class="n">group</span><span class="o">.</span><span class="n">Representation</span><span class="p">:</span>
+        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">        Compute the *direct sum* of two representations of a group.</span>
+
+<span class="sd">        The two representations need to belong to the same group.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            other (Representation): another representation</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            the direct sum</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        
+        <span class="k">return</span> <span class="n">directsum</span><span class="p">([</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">])</span></div>
+    
+    <span class="k">def</span> <span class="nf">__eq__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">:</span> <span class="n">e2cnn</span><span class="o">.</span><span class="n">group</span><span class="o">.</span><span class="n">Representation</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="n">Representation</span><span class="p">):</span>
+            <span class="k">return</span> <span class="kc">False</span>
+        
+        <span class="k">return</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">name</span>
+                <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">group</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">group</span>
+                <span class="ow">and</span> <span class="n">np</span><span class="o">.</span><span class="n">allclose</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">change_of_basis</span><span class="p">,</span> <span class="n">other</span><span class="o">.</span><span class="n">change_of_basis</span><span class="p">)</span>
+                <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">irreps</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">irreps</span>
+                <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">supported_nonlinearities</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">supported_nonlinearities</span><span class="p">)</span>
+    
+    <span class="k">def</span> <span class="nf">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">f</span><span class="s2">&quot;</span><span class="si">{self.group.name}</span><span class="s2">|</span><span class="si">{self.name}</span><span class="s2">:</span><span class="si">{self.size}</span><span class="s2">,{len(self.irreps)},{self.change_of_basis.sum()}&quot;</span>
+    
+    <span class="k">def</span> <span class="nf">__hash__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">hash</span><span class="p">(</span><span class="nb">repr</span><span class="p">(</span><span class="bp">self</span><span class="p">))</span></div>
+    
+    <span class="c1"># TODO when built from &quot;directsum&quot; we can &quot;optimize&quot; the representation by sorting the internal irreps</span>
+    <span class="c1">#      and permuting the change of basis matrix&#39;s columns accordingly. Could be useful when one uses GNORM batchnorm</span>
+   
+    
+<span class="k">def</span> <span class="nf">build_from_discrete_group_representation</span><span class="p">(</span><span class="n">representation</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="n">Any</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">],</span>
+                                             <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+                                             <span class="n">group</span><span class="p">:</span> <span class="n">e2cnn</span><span class="o">.</span><span class="n">group</span><span class="o">.</span><span class="n">Group</span><span class="p">,</span>
+                                             <span class="n">supported_nonlinearities</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span>
+                                             <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">e2cnn</span><span class="o">.</span><span class="n">group</span><span class="o">.</span><span class="n">Representation</span><span class="p">:</span>
+    <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Given a representation of a finite group as a dictionary of matrices, the method decomposes it as a direct sum</span>
+<span class="sd">    of the irreps of the group and computes the change-of-basis matrix. Then, a new instance of</span>
+<span class="sd">    :class:`~e2cnn.group.Representation` is built using the direct sum of irreps and the change-of-basis matrix as</span>
+<span class="sd">    representation taking as input elements from the continuous parent group.</span>
+<span class="sd">    </span>
+<span class="sd">    For instance, given a regular representation of a cyclic group of order :math:`n` implemented as a</span>
+<span class="sd">    list of permutations matrices, the method builds a representation of SO(2) whose values are these permutation</span>
+<span class="sd">    matrices when evaluated to the angles corresponding to the elements of the cyclic group (i.e. any angle in the</span>
+<span class="sd">    form :math:`k 2 \pi / n` with :math:`k` in :math:`[0, \dots, n-1]`)</span>
+<span class="sd">    </span>
+<span class="sd">    Args:</span>
+<span class="sd">        representation (dict): a dictionary mapping an element of ``group`` to a numpy array (must be a squared matrix)</span>
+<span class="sd">        name (str): an identification name of the representation</span>
+<span class="sd">        group (Group): the group whose representation has to be built</span>
+<span class="sd">        supported_nonlinearities (list): list of non linearities types supported by this representation.</span>
+<span class="sd">    </span>
+<span class="sd">    Returns:</span>
+<span class="sd">        a new representation</span>
+<span class="sd">        </span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">assert</span> <span class="nb">set</span><span class="p">(</span><span class="n">representation</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span> <span class="o">==</span> <span class="nb">set</span><span class="p">(</span><span class="n">group</span><span class="o">.</span><span class="n">elements</span><span class="p">),</span> <span class="s2">&quot;Error! Keys don&#39;t match group&#39;s elements&quot;</span>
+
+    <span class="c1"># decompose the representation</span>
+    <span class="n">cob</span><span class="p">,</span> <span class="n">multiplicities</span> <span class="o">=</span> <span class="n">decompose_representation</span><span class="p">(</span><span class="n">representation</span><span class="p">,</span> <span class="n">group</span><span class="p">)</span>
+
+    <span class="c1"># build a list of representation instances with their multiplicities</span>
+    <span class="n">irreps_with_multiplicities</span> <span class="o">=</span> <span class="p">[(</span><span class="n">group</span><span class="o">.</span><span class="n">irreps</span><span class="p">[</span><span class="n">name</span><span class="p">],</span> <span class="n">m</span><span class="p">)</span> <span class="k">for</span> <span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">m</span><span class="p">)</span> <span class="ow">in</span> <span class="n">multiplicities</span><span class="p">]</span>
+
+    <span class="c1"># build the character of this representation</span>
+    <span class="n">new_character</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">element</span><span class="p">,</span> <span class="n">irreps</span><span class="o">=</span><span class="n">irreps_with_multiplicities</span><span class="p">:</span> <span class="nb">sum</span><span class="p">([</span><span class="n">m</span> <span class="o">*</span> <span class="n">irrep</span><span class="o">.</span><span class="n">character</span><span class="p">(</span><span class="n">element</span><span class="p">)</span> <span class="k">for</span> <span class="p">(</span><span class="n">irrep</span><span class="p">,</span> <span class="n">m</span><span class="p">)</span> <span class="ow">in</span> <span class="n">irreps</span><span class="p">])</span>
+
+    <span class="n">irreps</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">irr</span><span class="p">,</span> <span class="n">m</span> <span class="ow">in</span> <span class="n">multiplicities</span><span class="p">:</span>
+       <span class="n">irreps</span> <span class="o">+=</span> <span class="p">[</span><span class="n">irr</span><span class="p">]</span> <span class="o">*</span> <span class="n">m</span>
+
+    <span class="c1"># build the representation object</span>
+    <span class="k">return</span> <span class="n">Representation</span><span class="p">(</span><span class="n">group</span><span class="p">,</span>
+                          <span class="n">name</span><span class="p">,</span>
+                          <span class="n">irreps</span><span class="p">,</span>
+                          <span class="n">cob</span><span class="p">,</span>
+                          <span class="n">supported_nonlinearities</span><span class="p">,</span>
+                          <span class="n">representation</span><span class="o">=</span><span class="n">representation</span><span class="p">,</span>
+                          <span class="n">character</span><span class="o">=</span><span class="n">new_character</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="directsum"><a class="viewcode-back" href="../../../api/e2cnn.group.html#e2cnn.group.directsum">[docs]</a><span class="k">def</span> <span class="nf">directsum</span><span class="p">(</span><span class="n">reprs</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">e2cnn</span><span class="o">.</span><span class="n">group</span><span class="o">.</span><span class="n">Representation</span><span class="p">],</span>
+              <span class="n">change_of_basis</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+              <span class="n">name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span>
+              <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">e2cnn</span><span class="o">.</span><span class="n">group</span><span class="o">.</span><span class="n">Representation</span><span class="p">:</span>
+    <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">    Compute the *direct sum* of a list of representations of a group.</span>
+<span class="sd">    </span>
+<span class="sd">    The direct sum of two representations is defined as follow:</span>
+<span class="sd">    </span>
+<span class="sd">    .. math::</span>
+<span class="sd">        \rho_1(g) \oplus \rho_2(g) = \begin{bmatrix} \rho_1(g) &amp; 0 \\ 0 &amp; \rho_2(g) \end{bmatrix}</span>
+<span class="sd">    </span>
+<span class="sd">    This can be generalized to multiple representations as:</span>
+<span class="sd">    </span>
+<span class="sd">    .. math::</span>
+<span class="sd">        \bigoplus_{i=1}^I \rho_i(g) = (\rho_1(g) \oplus (\rho_2(g) \oplus (\rho_3(g) \oplus \dots = \begin{bmatrix}</span>
+<span class="sd">            \rho_1(g) &amp;         0 &amp;  \dots &amp;      0 \\</span>
+<span class="sd">                    0 &amp; \rho_2(g) &amp;  \dots &amp; \vdots \\</span>
+<span class="sd">               \vdots &amp;    \vdots &amp; \ddots &amp;      0 \\</span>
+<span class="sd">                    0 &amp;     \dots &amp;      0 &amp; \rho_I(g) \\</span>
+<span class="sd">        \end{bmatrix}</span>
+<span class="sd">    </span>
+
+<span class="sd">    .. note::</span>
+<span class="sd">        All the input representations need to belong to the same group.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        reprs (list): the list of representations to sum.</span>
+<span class="sd">        change_of_basis (~numpy.ndarray, optional): an invertible square matrix to use as change of basis after computing the direct sum.</span>
+<span class="sd">                By default (``None``), an identity matrix is used, such that only the direct sum is evaluated.</span>
+<span class="sd">        name (str, optional): a name for the new representation.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        the direct sum</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    
+    <span class="n">group</span> <span class="o">=</span> <span class="n">reprs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">group</span>
+    <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">reprs</span><span class="p">:</span>
+        <span class="k">assert</span> <span class="n">group</span> <span class="o">==</span> <span class="n">r</span><span class="o">.</span><span class="n">group</span>
+    
+    <span class="k">if</span> <span class="n">name</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;_&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="n">f</span><span class="s2">&quot;[</span><span class="si">{r.name}</span><span class="s2">]&quot;</span> <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">reprs</span><span class="p">])</span>
+    
+    <span class="n">irreps</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">reprs</span><span class="p">:</span>
+        <span class="n">irreps</span> <span class="o">+=</span> <span class="n">r</span><span class="o">.</span><span class="n">irreps</span>
+    
+    <span class="n">size</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">([</span><span class="n">r</span><span class="o">.</span><span class="n">size</span> <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">reprs</span><span class="p">])</span>
+    
+    <span class="n">cob</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">size</span><span class="p">,</span> <span class="n">size</span><span class="p">))</span>
+    <span class="n">cob_inv</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">size</span><span class="p">,</span> <span class="n">size</span><span class="p">))</span>
+    <span class="n">p</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">reprs</span><span class="p">:</span>
+        <span class="n">cob</span><span class="p">[</span><span class="n">p</span><span class="p">:</span><span class="n">p</span> <span class="o">+</span> <span class="n">r</span><span class="o">.</span><span class="n">size</span><span class="p">,</span> <span class="n">p</span><span class="p">:</span><span class="n">p</span> <span class="o">+</span> <span class="n">r</span><span class="o">.</span><span class="n">size</span><span class="p">]</span> <span class="o">=</span> <span class="n">r</span><span class="o">.</span><span class="n">change_of_basis</span>
+        <span class="n">cob_inv</span><span class="p">[</span><span class="n">p</span><span class="p">:</span><span class="n">p</span> <span class="o">+</span> <span class="n">r</span><span class="o">.</span><span class="n">size</span><span class="p">,</span> <span class="n">p</span><span class="p">:</span><span class="n">p</span> <span class="o">+</span> <span class="n">r</span><span class="o">.</span><span class="n">size</span><span class="p">]</span> <span class="o">=</span> <span class="n">r</span><span class="o">.</span><span class="n">change_of_basis_inv</span>
+        <span class="n">p</span> <span class="o">+=</span> <span class="n">r</span><span class="o">.</span><span class="n">size</span>
+
+    <span class="k">if</span> <span class="n">change_of_basis</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">change_of_basis</span> <span class="o">=</span> <span class="n">change_of_basis</span> <span class="o">@</span> <span class="n">cob</span>
+        <span class="n">change_of_basis_inv</span> <span class="o">=</span> <span class="n">sp</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">inv</span><span class="p">(</span><span class="n">change_of_basis</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">change_of_basis</span> <span class="o">=</span> <span class="n">cob</span>
+        <span class="n">change_of_basis_inv</span> <span class="o">=</span> <span class="n">cob_inv</span>
+
+    <span class="n">supported_nonlinearities</span> <span class="o">=</span> <span class="nb">set</span><span class="o">.</span><span class="n">intersection</span><span class="p">(</span><span class="o">*</span><span class="p">[</span><span class="n">r</span><span class="o">.</span><span class="n">supported_nonlinearities</span> <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">reprs</span><span class="p">])</span>
+    
+    <span class="k">return</span> <span class="n">Representation</span><span class="p">(</span><span class="n">group</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">irreps</span><span class="p">,</span> <span class="n">change_of_basis</span><span class="p">,</span> <span class="n">supported_nonlinearities</span><span class="p">,</span> <span class="n">change_of_basis_inv</span><span class="o">=</span><span class="n">change_of_basis_inv</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="disentangle"><a class="viewcode-back" href="../../../api/e2cnn.group.html#e2cnn.group.disentangle">[docs]</a><span class="k">def</span> <span class="nf">disentangle</span><span class="p">(</span><span class="nb">repr</span><span class="p">:</span> <span class="n">Representation</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">List</span><span class="p">[</span><span class="n">Representation</span><span class="p">]]:</span>
+    <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    </span>
+<span class="sd">    If possible, disentangle the input representation by decomposing it into the direct sum of smaller representations</span>
+<span class="sd">    and a change of basis acting as a permutation matrix.</span>
+<span class="sd">    </span>
+<span class="sd">    This method is useful to decompose a feature vector transforming with a complex representation into multiple feature</span>
+<span class="sd">    vectors which transform independently with simpler representations.</span>
+<span class="sd">    </span>
+<span class="sd">    Note that this method only decomposes a representation by applying a permutation of axes.</span>
+<span class="sd">    A more general decomposition using any invertible matrix is possible but is just a decomposition into</span>
+<span class="sd">    irreducible representations (see :class:`~e2cnn.group.Representation`).</span>
+<span class="sd">    However, since the choice of change of basis is relevant for the kind of operations which can be performed</span>
+<span class="sd">    (e.g. non-linearities), it is often not desirable to discard any change of basis and completely disentangle a</span>
+<span class="sd">    representation.</span>
+<span class="sd">    </span>
+<span class="sd">    Considering only change of basis matrices which are permutation matrices is sometimes more useful.</span>
+<span class="sd">    For instance, the restriction of the regular representation of a group to a subgroup results in a representation containing</span>
+<span class="sd">    multiple regular representations of the subgroup (one for each `coset`).</span>
+<span class="sd">    However, depending on how the original representation is built, the restricted representation might not be</span>
+<span class="sd">    block-diagonal and, so, the subgroup&#39;s regular representations might not be clearly separated.</span>
+<span class="sd">    </span>
+<span class="sd">    For example, this happens when restricting the regular representation of :math:`\D3`</span>
+<span class="sd">    </span>
+<span class="sd">    +-----------------------------------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+</span>
+<span class="sd">    |    :math:`g`                      |          :math:`e`                                                                                                                                                                       |          :math:`r`                                                                                                                                                                       |        :math:`r^2`                                                                                                                                                                       |          :math:`f`                                                                                                                                                                       |         :math:`rf`                                                                                                                                                                       |       :math:`r^2f`                                                                                                                                                                       |</span>
+<span class="sd">    +===================================+==========================================================================================================================================================================================+==========================================================================================================================================================================================+==========================================================================================================================================================================================+==========================================================================================================================================================================================+==========================================================================================================================================================================================+==========================================================================================================================================================================================+</span>
+<span class="sd">    |  :math:`\rho_\text{reg}^{\D3}(g)` | :math:`\begin{bmatrix} 1 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 \\ 0 &amp; 1 &amp; 0 &amp; 0 &amp; 0 &amp; 0 \\ 0 &amp; 0 &amp; 1 &amp; 0 &amp; 0 &amp; 0 \\ 0 &amp; 0 &amp; 0 &amp; 1 &amp; 0 &amp; 0 \\ 0 &amp; 0 &amp; 0 &amp; 0 &amp; 1 &amp; 0 \\ 0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 1 \end{bmatrix}` | :math:`\begin{bmatrix} 0 &amp; 0 &amp; 1 &amp; 0 &amp; 0 &amp; 0 \\ 1 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 \\ 0 &amp; 1 &amp; 0 &amp; 0 &amp; 0 &amp; 0 \\ 0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 1 \\ 0 &amp; 0 &amp; 0 &amp; 1 &amp; 0 &amp; 0 \\ 0 &amp; 0 &amp; 0 &amp; 0 &amp; 1 &amp; 0 \end{bmatrix}` | :math:`\begin{bmatrix} 0 &amp; 1 &amp; 0 &amp; 0 &amp; 0 &amp; 0 \\ 0 &amp; 0 &amp; 1 &amp; 0 &amp; 0 &amp; 0 \\ 1 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 \\ 0 &amp; 0 &amp; 0 &amp; 0 &amp; 1 &amp; 0 \\ 0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 1 \\ 0 &amp; 0 &amp; 0 &amp; 1 &amp; 0 &amp; 0 \end{bmatrix}` | :math:`\begin{bmatrix} 0 &amp; 0 &amp; 0 &amp; 1 &amp; 0 &amp; 0 \\ 0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 1 \\ 0 &amp; 0 &amp; 0 &amp; 0 &amp; 1 &amp; 0 \\ 1 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 \\ 0 &amp; 0 &amp; 1 &amp; 0 &amp; 0 &amp; 0 \\ 0 &amp; 1 &amp; 0 &amp; 0 &amp; 0 &amp; 0 \end{bmatrix}` | :math:`\begin{bmatrix} 0 &amp; 0 &amp; 0 &amp; 0 &amp; 1 &amp; 0 \\ 0 &amp; 0 &amp; 0 &amp; 1 &amp; 0 &amp; 0 \\ 0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 1 \\ 0 &amp; 1 &amp; 0 &amp; 0 &amp; 0 &amp; 0 \\ 1 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 \\ 0 &amp; 0 &amp; 1 &amp; 0 &amp; 0 &amp; 0 \end{bmatrix}` | :math:`\begin{bmatrix} 0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 1 \\ 0 &amp; 0 &amp; 0 &amp; 0 &amp; 1 &amp; 0 \\ 0 &amp; 0 &amp; 0 &amp; 1 &amp; 0 &amp; 0 \\ 0 &amp; 0 &amp; 1 &amp; 0 &amp; 0 &amp; 0 \\ 0 &amp; 1 &amp; 0 &amp; 0 &amp; 0 &amp; 0 \\ 1 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 \end{bmatrix}` |</span>
+<span class="sd">    +-----------------------------------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+</span>
+<span class="sd">    </span>
+<span class="sd">    to the reflection group :math:`\C2`</span>
+<span class="sd">    </span>
+<span class="sd">    +--------------------------------------------------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+</span>
+<span class="sd">    |    :math:`g`                                     |          :math:`e`                                                                                                                                                                       |          :math:`f`                                                                                                                                                                       |</span>
+<span class="sd">    +==================================================+==========================================================================================================================================================================================+==========================================================================================================================================================================================+</span>
+<span class="sd">    |  :math:`\Res{\C2}{\D3} \rho_\text{reg}^{\D3}(g)` | :math:`\begin{bmatrix} 1 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 \\ 0 &amp; 1 &amp; 0 &amp; 0 &amp; 0 &amp; 0 \\ 0 &amp; 0 &amp; 1 &amp; 0 &amp; 0 &amp; 0 \\ 0 &amp; 0 &amp; 0 &amp; 1 &amp; 0 &amp; 0 \\ 0 &amp; 0 &amp; 0 &amp; 0 &amp; 1 &amp; 0 \\ 0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 1 \end{bmatrix}` | :math:`\begin{bmatrix} 0 &amp; 0 &amp; 0 &amp; 1 &amp; 0 &amp; 0 \\ 0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 1 \\ 0 &amp; 0 &amp; 0 &amp; 0 &amp; 1 &amp; 0 \\ 1 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 \\ 0 &amp; 0 &amp; 1 &amp; 0 &amp; 0 &amp; 0 \\ 0 &amp; 1 &amp; 0 &amp; 0 &amp; 0 &amp; 0 \end{bmatrix}` |</span>
+<span class="sd">    +--------------------------------------------------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+</span>
+<span class="sd">    </span>
+<span class="sd">    Indeed, in :math:`\Res{\C2}{\D3} \rho_\text{reg}^{\D3}(g)` the three pairs of entries (1, 4), (2, 6) and (3, 5)</span>
+<span class="sd">    never mix with each other but only permute internally.</span>
+<span class="sd">    Moreover, each pair transform according to the regular representation of :math:`\C2`.</span>
+<span class="sd">    Through a permutation of the entries, it is possible to make all the entries belonging to the same pair contiguous.</span>
+<span class="sd">    This this reshuffled representation is then equal to</span>
+<span class="sd">    :math:`\rho_\text{reg}^{\C2} \oplus \rho_\text{reg}^{\C2} \oplus \rho_\text{reg}^{\C2}`.</span>
+<span class="sd">    Though theoretically equivalent, an implementation of this representation where the entries are contiguous is</span>
+<span class="sd">    convenient when computing functions over single fields like batch normalization.</span>
+<span class="sd">    </span>
+<span class="sd">    Notice that applying the change of basis returned to the input representation (e.g. through</span>
+<span class="sd">    :func:`e2cnn.group.change_basis`) will result in a representation containing the direct sum of the representations</span>
+<span class="sd">    in the list returned.</span>
+<span class="sd">    </span>
+<span class="sd">    .. seealso::</span>
+<span class="sd">        :func:`~e2cnn.group.directsum`,</span>
+<span class="sd">        :func:`~e2cnn.group.change_basis`</span>
+<span class="sd">    </span>
+<span class="sd">    Args:</span>
+<span class="sd">        repr (Representation): the input representation to disentangle</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        a tuple containing</span>
+<span class="sd">        </span>
+<span class="sd">            - **change of basis**: a (square) permutation matrix of the size of the input representation</span>
+<span class="sd">            </span>
+<span class="sd">            - **representation**: the list of representations the input one is decomposed into</span>
+<span class="sd">        </span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    
+    <span class="n">rsize</span> <span class="o">=</span> <span class="nb">repr</span><span class="o">.</span><span class="n">size</span>
+    <span class="n">nirreps</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="nb">repr</span><span class="o">.</span><span class="n">irreps</span><span class="p">)</span>
+    
+    <span class="n">cob_mask</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">isclose</span><span class="p">(</span><span class="nb">repr</span><span class="o">.</span><span class="n">change_of_basis</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="nb">repr</span><span class="o">.</span><span class="n">change_of_basis</span><span class="p">))</span>
+    <span class="n">cob_mask</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">invert</span><span class="p">(</span><span class="n">cob_mask</span><span class="p">)</span>
+    
+    <span class="n">irreps</span> <span class="o">=</span> <span class="p">[</span><span class="nb">repr</span><span class="o">.</span><span class="n">group</span><span class="o">.</span><span class="n">irreps</span><span class="p">[</span><span class="n">irr</span><span class="p">]</span> <span class="k">for</span> <span class="n">irr</span> <span class="ow">in</span> <span class="nb">repr</span><span class="o">.</span><span class="n">irreps</span><span class="p">]</span>
+    <span class="n">irreps_pos</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">cumsum</span><span class="p">([</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="p">[</span><span class="n">irr</span><span class="o">.</span><span class="n">size</span> <span class="k">for</span> <span class="n">irr</span> <span class="ow">in</span> <span class="n">irreps</span><span class="p">])</span>
+    
+    <span class="n">masks</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">i_pos</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">irr</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">irreps</span><span class="p">):</span>
+        <span class="n">mask</span> <span class="o">=</span> <span class="n">cob_mask</span><span class="p">[:,</span> <span class="n">i_pos</span><span class="p">:</span><span class="n">i_pos</span> <span class="o">+</span> <span class="n">irr</span><span class="o">.</span><span class="n">size</span><span class="p">]</span><span class="o">.</span><span class="n">any</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">masks</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">mask</span><span class="p">)</span>
+        <span class="n">i_pos</span> <span class="o">+=</span> <span class="n">irr</span><span class="o">.</span><span class="n">size</span>
+    
+    <span class="n">cob_mask</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">masks</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">bool</span><span class="p">)</span>
+    
+    <span class="n">graph</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">nirreps</span> <span class="o">+</span> <span class="n">rsize</span><span class="p">,</span> <span class="n">nirreps</span> <span class="o">+</span> <span class="n">rsize</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">bool</span><span class="p">)</span>
+    <span class="n">graph</span><span class="p">[:</span><span class="n">nirreps</span><span class="p">,</span> <span class="n">nirreps</span><span class="p">:]</span> <span class="o">=</span> <span class="n">cob_mask</span>
+    <span class="n">graph</span><span class="p">[</span><span class="n">nirreps</span><span class="p">:,</span> <span class="p">:</span><span class="n">nirreps</span><span class="p">]</span> <span class="o">=</span> <span class="n">cob_mask</span><span class="o">.</span><span class="n">T</span>
+    
+    <span class="n">n_blocks</span><span class="p">,</span> <span class="n">labels</span> <span class="o">=</span> <span class="n">connected_components</span><span class="p">(</span><span class="n">graph</span><span class="p">,</span> <span class="n">directed</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">return_labels</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    
+    <span class="n">irreps_labels</span> <span class="o">=</span> <span class="n">labels</span><span class="p">[:</span><span class="n">nirreps</span><span class="p">]</span>
+    <span class="n">field_labels</span> <span class="o">=</span> <span class="n">labels</span><span class="p">[</span><span class="n">nirreps</span><span class="p">:]</span>
+    
+    <span class="n">blocks</span> <span class="o">=</span> <span class="p">[([],</span> <span class="p">[])</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_blocks</span><span class="p">)]</span>
+    
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">nirreps</span><span class="p">):</span>
+        <span class="n">blocks</span><span class="p">[</span><span class="n">irreps_labels</span><span class="p">[</span><span class="n">i</span><span class="p">]][</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">rsize</span><span class="p">):</span>
+        <span class="n">blocks</span><span class="p">[</span><span class="n">field_labels</span><span class="p">[</span><span class="n">i</span><span class="p">]][</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+    
+    <span class="n">change_of_basis</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="nb">repr</span><span class="o">.</span><span class="n">change_of_basis</span><span class="p">)</span>
+    
+    <span class="n">representations</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">current_position</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">block</span><span class="p">,</span> <span class="p">(</span><span class="n">irreps_indices</span><span class="p">,</span> <span class="n">row_indices</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">blocks</span><span class="p">):</span>
+        
+        <span class="n">irreps_indices</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">irreps_indices</span><span class="p">)</span>
+        <span class="n">row_indices</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">row_indices</span><span class="p">)</span>
+        
+        <span class="n">total_size</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">row_indices</span><span class="p">)</span>
+        
+        <span class="k">assert</span> <span class="nb">sum</span><span class="p">([</span><span class="n">irreps</span><span class="p">[</span><span class="n">irr</span><span class="p">]</span><span class="o">.</span><span class="n">size</span> <span class="k">for</span> <span class="n">irr</span> <span class="ow">in</span> <span class="n">irreps_indices</span><span class="p">])</span> <span class="o">==</span> <span class="n">total_size</span>
+        
+        <span class="n">col_indices</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">irr</span> <span class="ow">in</span> <span class="n">irreps_indices</span><span class="p">:</span>
+            <span class="n">col_indices</span> <span class="o">+=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">irreps_pos</span><span class="p">[</span><span class="n">irr</span><span class="p">],</span> <span class="n">irreps_pos</span><span class="p">[</span><span class="n">irr</span><span class="p">]</span><span class="o">+</span><span class="n">irreps</span><span class="p">[</span><span class="n">irr</span><span class="p">]</span><span class="o">.</span><span class="n">size</span><span class="p">))</span>
+        
+        <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">col_indices</span><span class="p">)</span> <span class="o">==</span> <span class="n">total_size</span>
+        
+        <span class="n">new_cob</span> <span class="o">=</span> <span class="nb">repr</span><span class="o">.</span><span class="n">change_of_basis</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">ix_</span><span class="p">(</span><span class="n">row_indices</span><span class="p">,</span> <span class="n">col_indices</span><span class="p">)]</span>
+        
+        <span class="n">field_repr</span> <span class="o">=</span> <span class="n">Representation</span><span class="p">(</span><span class="nb">repr</span><span class="o">.</span><span class="n">group</span><span class="p">,</span>
+                                      <span class="n">f</span><span class="s2">&quot;</span><span class="si">{repr.name}</span><span class="s2">_</span><span class="si">{block}</span><span class="s2">&quot;</span><span class="p">,</span>
+                                      <span class="p">[</span><span class="n">irreps</span><span class="p">[</span><span class="nb">id</span><span class="p">]</span><span class="o">.</span><span class="n">name</span> <span class="k">for</span> <span class="nb">id</span> <span class="ow">in</span> <span class="n">irreps_indices</span><span class="p">],</span>
+                                      <span class="n">new_cob</span><span class="p">,</span>
+                                      <span class="nb">repr</span><span class="o">.</span><span class="n">supported_nonlinearities</span><span class="p">)</span>
+        <span class="n">representations</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">field_repr</span><span class="p">)</span>
+
+        <span class="n">next_position</span> <span class="o">=</span> <span class="n">current_position</span> <span class="o">+</span> <span class="nb">len</span><span class="p">(</span><span class="n">row_indices</span><span class="p">)</span>
+        <span class="n">change_of_basis</span><span class="p">[</span><span class="n">current_position</span><span class="p">:</span><span class="n">next_position</span><span class="p">,</span> <span class="n">row_indices</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">row_indices</span><span class="p">))</span>
+        
+        <span class="n">current_position</span> <span class="o">=</span> <span class="n">next_position</span>
+        
+    <span class="k">return</span> <span class="n">change_of_basis</span><span class="p">,</span> <span class="n">representations</span></div>
+
+
+<div class="viewcode-block" id="change_basis"><a class="viewcode-back" href="../../../api/e2cnn.group.html#e2cnn.group.change_basis">[docs]</a><span class="k">def</span> <span class="nf">change_basis</span><span class="p">(</span><span class="nb">repr</span><span class="p">:</span> <span class="n">Representation</span><span class="p">,</span>
+                 <span class="n">change_of_basis</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span>
+                 <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+                 <span class="n">supported_nonlinearities</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+                 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Representation</span><span class="p">:</span>
+    <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Build a new representation from an already existing one by applying a change of basis.</span>
+<span class="sd">    In other words, if :math:`\rho(\cdot)` is the representation and :math:`Q` the change of basis in input, the</span>
+<span class="sd">    resulting representation will evaluate to :math:`Q \rho(\cdot) Q^{-1}`.</span>
+<span class="sd">    </span>
+<span class="sd">    Notice that the change of basis :math:`Q` has to be invertible.</span>
+<span class="sd">    </span>
+<span class="sd">    </span>
+<span class="sd">    Args:</span>
+<span class="sd">        repr (Representation): the input representation</span>
+<span class="sd">        change_of_basis (~numpy.ndarray): the change of basis to apply</span>
+<span class="sd">        name (str, optional): the name to use to identify the new representation</span>
+<span class="sd">        supported_nonlinearities (list, optional): a list containing the ids of the supported non-linearities</span>
+<span class="sd">            for the new representation</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        the new representation</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">change_of_basis</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span>
+    <span class="k">assert</span> <span class="n">change_of_basis</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="n">change_of_basis</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+    <span class="k">assert</span> <span class="n">change_of_basis</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="nb">repr</span><span class="o">.</span><span class="n">size</span>
+    
+    <span class="k">if</span> <span class="n">supported_nonlinearities</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="c1"># by default, no non-linearities are supported</span>
+        <span class="n">supported_nonlinearities</span> <span class="o">=</span> <span class="p">[]</span>
+    
+    <span class="c1"># compute the new change of basis</span>
+    <span class="n">new_cob</span> <span class="o">=</span> <span class="n">change_of_basis</span> <span class="o">@</span> <span class="nb">repr</span><span class="o">.</span><span class="n">change_of_basis</span>
+    <span class="n">new_cob_inv</span> <span class="o">=</span> <span class="nb">repr</span><span class="o">.</span><span class="n">change_of_basis_inv</span> <span class="o">@</span> <span class="n">sp</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">inv</span><span class="p">(</span><span class="n">change_of_basis</span><span class="p">)</span>
+    
+    <span class="k">return</span> <span class="n">Representation</span><span class="p">(</span><span class="nb">repr</span><span class="o">.</span><span class="n">group</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="nb">repr</span><span class="o">.</span><span class="n">irreps</span><span class="p">,</span> <span class="n">new_cob</span><span class="p">,</span>
+                          <span class="n">supported_nonlinearities</span><span class="o">=</span><span class="n">supported_nonlinearities</span><span class="p">,</span>
+                          <span class="n">change_of_basis_inv</span><span class="o">=</span><span class="n">new_cob_inv</span><span class="p">)</span></div>
+
+
+<span class="k">def</span> <span class="nf">build_regular_representation</span><span class="p">(</span><span class="n">group</span><span class="p">:</span> <span class="n">e2cnn</span><span class="o">.</span><span class="n">group</span><span class="o">.</span><span class="n">Group</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="n">e2cnn</span><span class="o">.</span><span class="n">group</span><span class="o">.</span><span class="n">IrreducibleRepresentation</span><span class="p">],</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">]:</span>
+    <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    </span>
+<span class="sd">    Build the regular representation of the input ``group``.</span>
+<span class="sd">    As the regular representation has size equal to the number of elements in the group, only</span>
+<span class="sd">    finite groups are accepted.</span>
+<span class="sd">    </span>
+<span class="sd">    Args:</span>
+<span class="sd">        group (Group): the group whose representations has to be built</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        a tuple containing the list of irreps, the change of basis and the inverse change of basis of</span>
+<span class="sd">        the regular representation</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">assert</span> <span class="n">group</span><span class="o">.</span><span class="n">order</span><span class="p">()</span> <span class="o">&gt;</span> <span class="mi">0</span>
+    <span class="k">assert</span> <span class="n">group</span><span class="o">.</span><span class="n">elements</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">group</span><span class="o">.</span><span class="n">elements</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span>
+    
+    <span class="n">size</span> <span class="o">=</span> <span class="n">group</span><span class="o">.</span><span class="n">order</span><span class="p">()</span>
+
+    <span class="n">index</span> <span class="o">=</span> <span class="p">{</span><span class="n">e</span><span class="p">:</span> <span class="n">i</span> <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">e</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">group</span><span class="o">.</span><span class="n">elements</span><span class="p">)}</span>
+    
+    <span class="n">representation</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="n">character</span> <span class="o">=</span> <span class="p">{}</span>
+    
+    <span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="n">group</span><span class="o">.</span><span class="n">elements</span><span class="p">:</span>
+        <span class="c1"># print(index[e], e)</span>
+        <span class="n">r</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">size</span><span class="p">,</span> <span class="n">size</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">g</span> <span class="ow">in</span> <span class="n">group</span><span class="o">.</span><span class="n">elements</span><span class="p">:</span>
+            
+            <span class="n">eg</span> <span class="o">=</span> <span class="n">group</span><span class="o">.</span><span class="n">combine</span><span class="p">(</span><span class="n">e</span><span class="p">,</span> <span class="n">g</span><span class="p">)</span>
+
+            <span class="n">i</span> <span class="o">=</span> <span class="n">index</span><span class="p">[</span><span class="n">g</span><span class="p">]</span>
+            <span class="n">j</span> <span class="o">=</span> <span class="n">index</span><span class="p">[</span><span class="n">eg</span><span class="p">]</span>
+            
+            <span class="n">r</span><span class="p">[</span><span class="n">j</span><span class="p">,</span> <span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="mf">1.0</span>
+        
+        <span class="n">representation</span><span class="p">[</span><span class="n">e</span><span class="p">]</span> <span class="o">=</span> <span class="n">r</span>
+        <span class="c1"># the character maps an element to the trace of its representation</span>
+        <span class="n">character</span><span class="p">[</span><span class="n">e</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">trace</span><span class="p">(</span><span class="n">r</span><span class="p">)</span>
+
+    <span class="c1"># compute the multiplicities of the irreps from the dot product between</span>
+    <span class="c1"># their characters and the character of the representation</span>
+    <span class="n">irreps</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">multiplicities</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">irrep_name</span><span class="p">,</span> <span class="n">irrep</span> <span class="ow">in</span> <span class="n">group</span><span class="o">.</span><span class="n">irreps</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="c1"># for each irrep</span>
+        <span class="n">multiplicity</span> <span class="o">=</span> <span class="mf">0.0</span>
+    
+        <span class="c1"># compute the inner product with the representation&#39;s character</span>
+        <span class="k">for</span> <span class="n">element</span><span class="p">,</span> <span class="n">char</span> <span class="ow">in</span> <span class="n">character</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="n">multiplicity</span> <span class="o">+=</span> <span class="n">char</span> <span class="o">*</span> <span class="n">irrep</span><span class="o">.</span><span class="n">character</span><span class="p">(</span><span class="n">group</span><span class="o">.</span><span class="n">inverse</span><span class="p">(</span><span class="n">element</span><span class="p">))</span>
+    
+        <span class="n">multiplicity</span> <span class="o">/=</span> <span class="nb">len</span><span class="p">(</span><span class="n">character</span><span class="p">)</span> <span class="o">*</span> <span class="n">irrep</span><span class="o">.</span><span class="n">sum_of_squares_constituents</span>
+    
+        <span class="c1"># the result has to be an integer</span>
+        <span class="k">assert</span> <span class="n">math</span><span class="o">.</span><span class="n">isclose</span><span class="p">(</span><span class="n">multiplicity</span><span class="p">,</span> <span class="nb">round</span><span class="p">(</span><span class="n">multiplicity</span><span class="p">),</span> <span class="n">abs_tol</span><span class="o">=</span><span class="mf">1e-9</span><span class="p">),</span> \
+            <span class="s2">&quot;Multiplicity of irrep </span><span class="si">%s</span><span class="s2"> is not an integer: </span><span class="si">%f</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">irrep_name</span><span class="p">,</span> <span class="n">multiplicity</span><span class="p">)</span>
+        <span class="c1"># print(irrep_name, multiplicity)</span>
+
+        <span class="n">multiplicity</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">round</span><span class="p">(</span><span class="n">multiplicity</span><span class="p">))</span>
+        <span class="n">irreps</span> <span class="o">+=</span> <span class="p">[</span><span class="n">irrep</span><span class="p">]</span><span class="o">*</span><span class="n">multiplicity</span>
+        <span class="n">multiplicities</span> <span class="o">+=</span> <span class="p">[(</span><span class="n">irrep</span><span class="p">,</span> <span class="n">multiplicity</span><span class="p">)]</span>
+    
+    <span class="n">P</span> <span class="o">=</span> <span class="n">directsum</span><span class="p">(</span><span class="n">irreps</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;irreps&quot;</span><span class="p">)</span>
+    
+    <span class="n">v</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">size</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float</span><span class="p">)</span>
+    
+    <span class="n">p</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">irr</span><span class="p">,</span> <span class="n">m</span> <span class="ow">in</span> <span class="n">multiplicities</span><span class="p">:</span>
+        <span class="k">assert</span> <span class="n">irr</span><span class="o">.</span><span class="n">size</span> <span class="o">&gt;=</span> <span class="n">m</span>
+        <span class="n">s</span> <span class="o">=</span> <span class="n">irr</span><span class="o">.</span><span class="n">size</span>
+        <span class="n">v</span><span class="p">[</span><span class="n">p</span><span class="p">:</span><span class="n">p</span><span class="o">+</span><span class="n">m</span><span class="o">*</span><span class="n">s</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="n">s</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+        <span class="n">p</span> <span class="o">+=</span> <span class="n">m</span><span class="o">*</span><span class="n">s</span>
+        
+    <span class="n">change_of_basis</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">size</span><span class="p">,</span> <span class="n">size</span><span class="p">))</span>
+    
+    <span class="n">np</span><span class="o">.</span><span class="n">set_printoptions</span><span class="p">(</span><span class="n">precision</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">threshold</span><span class="o">=</span><span class="mi">10</span><span class="o">*</span><span class="n">size</span><span class="o">**</span><span class="mi">2</span><span class="p">,</span> <span class="n">suppress</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">25</span><span class="o">*</span><span class="n">size</span> <span class="o">+</span> <span class="mi">5</span><span class="p">)</span>
+    
+    <span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="n">group</span><span class="o">.</span><span class="n">elements</span><span class="p">:</span>
+        <span class="n">ev</span> <span class="o">=</span> <span class="n">P</span><span class="p">(</span><span class="n">e</span><span class="p">)</span> <span class="o">@</span> <span class="n">v</span>
+        <span class="n">change_of_basis</span><span class="p">[</span><span class="n">index</span><span class="p">[</span><span class="n">e</span><span class="p">],</span> <span class="p">:]</span> <span class="o">=</span> <span class="n">ev</span><span class="o">.</span><span class="n">T</span>
+    
+    <span class="n">change_of_basis</span> <span class="o">/=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">size</span><span class="p">)</span>
+    
+    <span class="c1"># the computed change of basis is an orthonormal matrix</span>
+    
+    <span class="c1"># change_of_basis_inv = sp.linalg.inv(change_of_basis)</span>
+    <span class="n">change_of_basis_inv</span> <span class="o">=</span> <span class="n">change_of_basis</span><span class="o">.</span><span class="n">T</span>
+    
+    <span class="k">return</span> <span class="n">irreps</span><span class="p">,</span> <span class="n">change_of_basis</span><span class="p">,</span> <span class="n">change_of_basis_inv</span>
+    
+    <span class="c1"># return Representation(group,</span>
+    <span class="c1">#                       &quot;regular&quot;,</span>
+    <span class="c1">#                       [r.name for r in irreps],</span>
+    <span class="c1">#                       change_of_basis,</span>
+    <span class="c1">#                       [&#39;pointwise&#39;, &#39;norm&#39;, &#39;gated&#39;, &#39;concatenated&#39;],</span>
+    <span class="c1">#                       representation=representation,</span>
+    <span class="c1">#                       change_of_basis_inv=change_of_basis_inv)</span>
+
+
+<span class="k">def</span> <span class="nf">build_quotient_representation</span><span class="p">(</span><span class="n">group</span><span class="p">:</span> <span class="n">e2cnn</span><span class="o">.</span><span class="n">group</span><span class="o">.</span><span class="n">Group</span><span class="p">,</span>
+                                  <span class="n">subgroup_id</span>
+                                  <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="n">e2cnn</span><span class="o">.</span><span class="n">group</span><span class="o">.</span><span class="n">IrreducibleRepresentation</span><span class="p">],</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">]:</span>
+    <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">    Build the quotient representation of the input ``group`` with respect to the subgroup identified by ``subgroup_id``.</span>
+<span class="sd">    </span>
+<span class="sd">    .. seealso::</span>
+<span class="sd">        See the :class:`~e2cnn.group.Group` instance&#39;s implementation of the method :meth:`~e2cnn.group.Group.subgroup`</span>
+<span class="sd">        for more details on ``subgroup_id``.</span>
+<span class="sd">    </span>
+<span class="sd">    .. warning ::</span>
+<span class="sd">        Only finite groups are supported</span>
+<span class="sd">    </span>
+<span class="sd">    Args:</span>
+<span class="sd">        group (Group): the group whose representation has to be built</span>
+<span class="sd">        subgroup_id: identifier of the subgroup</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        a tuple containing the list of irreps, the change of basis and the inverse change of basis of</span>
+<span class="sd">        the quotient representation</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">subgroup</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">group</span><span class="o">.</span><span class="n">subgroup</span><span class="p">(</span><span class="n">subgroup_id</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">build_induced_representation</span><span class="p">(</span><span class="n">group</span><span class="p">,</span>
+                                        <span class="n">subgroup_id</span><span class="p">,</span>
+                                        <span class="n">subgroup</span><span class="o">.</span><span class="n">trivial_representation</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">build_induced_representation</span><span class="p">(</span><span class="n">group</span><span class="p">:</span> <span class="n">e2cnn</span><span class="o">.</span><span class="n">group</span><span class="o">.</span><span class="n">Group</span><span class="p">,</span>
+                                 <span class="n">subgroup_id</span><span class="p">,</span>
+                                 <span class="nb">repr</span><span class="p">:</span> <span class="n">e2cnn</span><span class="o">.</span><span class="n">group</span><span class="o">.</span><span class="n">IrreducibleRepresentation</span><span class="p">,</span>
+                                 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="n">e2cnn</span><span class="o">.</span><span class="n">group</span><span class="o">.</span><span class="n">IrreducibleRepresentation</span><span class="p">],</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">]:</span>
+    <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">    Build the induced representation of the input ``group`` from the representation ``repr`` of the subgroup</span>
+<span class="sd">    identified by ``subgroup_id``.</span>
+
+<span class="sd">    .. seealso::</span>
+<span class="sd">        See the :class:`~e2cnn.group.Group` instance&#39;s implementation of the method :meth:`~e2cnn.group.Group.subgroup`</span>
+<span class="sd">        for more details on ``subgroup_id``.</span>
+
+<span class="sd">    .. warning ::</span>
+<span class="sd">        Only irreducible representations are supported as the subgroup representation.</span>
+<span class="sd">        </span>
+<span class="sd">    .. warning ::</span>
+<span class="sd">        Only finite groups are supported.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        group (Group): the group whose representation has to be built</span>
+<span class="sd">        subgroup_id: identifier of the subgroup</span>
+<span class="sd">        repr (IrreducibleRepresentation): the representation of the subgroup</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        a tuple containing the list of irreps, the change of basis and the inverse change of basis of</span>
+<span class="sd">        the induced representation</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    
+    <span class="k">assert</span> <span class="nb">repr</span><span class="o">.</span><span class="n">irreducible</span><span class="p">,</span> <span class="s2">&quot;Induction from general representations is not supported yet&quot;</span>
+    <span class="k">assert</span> <span class="n">group</span><span class="o">.</span><span class="n">order</span><span class="p">()</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;Induction from non-discrete groups is not supported yet&quot;</span>
+    <span class="k">assert</span> <span class="n">group</span><span class="o">.</span><span class="n">elements</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">group</span><span class="o">.</span><span class="n">elements</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span>
+    
+    <span class="n">subgroup</span><span class="p">,</span> <span class="n">parent</span><span class="p">,</span> <span class="n">child</span> <span class="o">=</span> <span class="n">group</span><span class="o">.</span><span class="n">subgroup</span><span class="p">(</span><span class="n">subgroup_id</span><span class="p">)</span>
+    
+    <span class="k">assert</span> <span class="nb">repr</span><span class="o">.</span><span class="n">group</span> <span class="o">==</span> <span class="n">subgroup</span>
+    
+    <span class="n">quotient_size</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">group</span><span class="o">.</span><span class="n">order</span><span class="p">()</span> <span class="o">/</span> <span class="n">subgroup</span><span class="o">.</span><span class="n">order</span><span class="p">())</span>
+    <span class="n">size</span> <span class="o">=</span> <span class="nb">repr</span><span class="o">.</span><span class="n">size</span> <span class="o">*</span> <span class="n">quotient_size</span>
+
+    <span class="c1"># the coset each element belongs to</span>
+    <span class="n">cosets</span> <span class="o">=</span> <span class="p">{}</span>
+    
+    <span class="c1"># map from a representative to the elements of its coset</span>
+    <span class="n">representatives</span> <span class="o">=</span> <span class="n">defaultdict</span><span class="p">(</span><span class="k">lambda</span><span class="p">:</span> <span class="p">[])</span>
+    
+    <span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="n">group</span><span class="o">.</span><span class="n">elements</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">e</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">cosets</span><span class="p">:</span>
+            <span class="n">representatives</span><span class="p">[</span><span class="n">e</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="k">for</span> <span class="n">g</span> <span class="ow">in</span> <span class="n">subgroup</span><span class="o">.</span><span class="n">elements</span><span class="p">:</span>
+                <span class="n">eg</span> <span class="o">=</span> <span class="n">group</span><span class="o">.</span><span class="n">combine</span><span class="p">(</span><span class="n">e</span><span class="p">,</span> <span class="n">parent</span><span class="p">(</span><span class="n">g</span><span class="p">))</span>
+                
+                <span class="n">cosets</span><span class="p">[</span><span class="n">eg</span><span class="p">]</span> <span class="o">=</span> <span class="n">e</span>
+                
+                <span class="n">representatives</span><span class="p">[</span><span class="n">e</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">eg</span><span class="p">)</span>
+    
+    <span class="c1"># for r, coset in representatives.items():</span>
+    <span class="c1">#     print(r, coset)</span>
+    
+    <span class="n">index</span> <span class="o">=</span> <span class="p">{</span><span class="n">e</span><span class="p">:</span> <span class="n">i</span> <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">e</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">representatives</span><span class="p">)}</span>
+    
+    <span class="n">representation</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="n">character</span> <span class="o">=</span> <span class="p">{}</span>
+    
+    <span class="k">for</span> <span class="n">g</span> <span class="ow">in</span> <span class="n">group</span><span class="o">.</span><span class="n">elements</span><span class="p">:</span>
+        <span class="n">repr_g</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">size</span><span class="p">,</span> <span class="n">size</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">representatives</span><span class="p">:</span>
+            
+            <span class="n">gr</span> <span class="o">=</span> <span class="n">group</span><span class="o">.</span><span class="n">combine</span><span class="p">(</span><span class="n">g</span><span class="p">,</span> <span class="n">r</span><span class="p">)</span>
+            
+            <span class="n">g_r</span> <span class="o">=</span> <span class="n">cosets</span><span class="p">[</span><span class="n">gr</span><span class="p">]</span>
+            
+            <span class="n">i</span> <span class="o">=</span> <span class="n">index</span><span class="p">[</span><span class="n">r</span><span class="p">]</span>
+            <span class="n">j</span> <span class="o">=</span> <span class="n">index</span><span class="p">[</span><span class="n">g_r</span><span class="p">]</span>
+            
+            <span class="n">hp</span> <span class="o">=</span> <span class="n">group</span><span class="o">.</span><span class="n">combine</span><span class="p">(</span><span class="n">group</span><span class="o">.</span><span class="n">inverse</span><span class="p">(</span><span class="n">g_r</span><span class="p">),</span> <span class="n">gr</span><span class="p">)</span>
+            
+            <span class="n">h</span> <span class="o">=</span> <span class="n">child</span><span class="p">(</span><span class="n">hp</span><span class="p">)</span>
+            <span class="k">assert</span> <span class="n">h</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">,</span> <span class="p">(</span><span class="n">g</span><span class="p">,</span> <span class="n">r</span><span class="p">,</span> <span class="n">gr</span><span class="p">,</span> <span class="n">g_r</span><span class="p">,</span> <span class="n">group</span><span class="o">.</span><span class="n">inverse</span><span class="p">(</span><span class="n">g_r</span><span class="p">),</span> <span class="n">hp</span><span class="p">)</span>
+            
+            <span class="n">repr_g</span><span class="p">[</span><span class="n">j</span><span class="o">*</span><span class="nb">repr</span><span class="o">.</span><span class="n">size</span><span class="p">:(</span><span class="n">j</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span><span class="o">*</span><span class="nb">repr</span><span class="o">.</span><span class="n">size</span><span class="p">,</span> <span class="n">i</span><span class="o">*</span><span class="nb">repr</span><span class="o">.</span><span class="n">size</span><span class="p">:(</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span><span class="o">*</span><span class="nb">repr</span><span class="o">.</span><span class="n">size</span><span class="p">]</span> <span class="o">=</span> <span class="nb">repr</span><span class="p">(</span><span class="n">h</span><span class="p">)</span>
+        
+        <span class="n">representation</span><span class="p">[</span><span class="n">g</span><span class="p">]</span> <span class="o">=</span> <span class="n">repr_g</span>
+        
+        <span class="c1"># the character maps an element to the trace of its representation</span>
+        <span class="n">character</span><span class="p">[</span><span class="n">g</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">trace</span><span class="p">(</span><span class="n">repr_g</span><span class="p">)</span>
+    
+    <span class="c1"># compute the multiplicities of the irreps from the dot product between</span>
+    <span class="c1"># their characters and the character of the representation</span>
+    <span class="n">irreps</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">multiplicities</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">irrep_name</span><span class="p">,</span> <span class="n">irrep</span> <span class="ow">in</span> <span class="n">group</span><span class="o">.</span><span class="n">irreps</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="c1"># for each irrep</span>
+        <span class="n">multiplicity</span> <span class="o">=</span> <span class="mf">0.0</span>
+        
+        <span class="c1"># compute the inner product with the representation&#39;s character</span>
+        <span class="k">for</span> <span class="n">element</span><span class="p">,</span> <span class="n">char</span> <span class="ow">in</span> <span class="n">character</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="n">multiplicity</span> <span class="o">+=</span> <span class="n">char</span> <span class="o">*</span> <span class="n">irrep</span><span class="o">.</span><span class="n">character</span><span class="p">(</span><span class="n">group</span><span class="o">.</span><span class="n">inverse</span><span class="p">(</span><span class="n">element</span><span class="p">))</span>
+        
+        <span class="n">multiplicity</span> <span class="o">/=</span> <span class="nb">len</span><span class="p">(</span><span class="n">character</span><span class="p">)</span> <span class="o">*</span> <span class="n">irrep</span><span class="o">.</span><span class="n">sum_of_squares_constituents</span>
+        
+        <span class="c1"># the result has to be an integer</span>
+        <span class="k">assert</span> <span class="n">math</span><span class="o">.</span><span class="n">isclose</span><span class="p">(</span><span class="n">multiplicity</span><span class="p">,</span> <span class="nb">round</span><span class="p">(</span><span class="n">multiplicity</span><span class="p">),</span> <span class="n">abs_tol</span><span class="o">=</span><span class="mf">1e-9</span><span class="p">),</span> \
+            <span class="s2">&quot;Multiplicity of irrep </span><span class="si">%s</span><span class="s2"> is not an integer: </span><span class="si">%f</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">irrep_name</span><span class="p">,</span> <span class="n">multiplicity</span><span class="p">)</span>
+
+        <span class="n">multiplicity</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">round</span><span class="p">(</span><span class="n">multiplicity</span><span class="p">))</span>
+        <span class="n">irreps</span> <span class="o">+=</span> <span class="p">[</span><span class="n">irrep</span><span class="p">]</span><span class="o">*</span><span class="n">multiplicity</span>
+        <span class="n">multiplicities</span> <span class="o">+=</span> <span class="p">[(</span><span class="n">irrep</span><span class="p">,</span> <span class="n">multiplicity</span><span class="p">)]</span>
+        <span class="c1"># if multiplicity &gt; 0:</span>
+        <span class="c1">#     print(irrep_name, irrep.size, multiplicity)</span>
+    
+    <span class="n">P</span> <span class="o">=</span> <span class="n">directsum</span><span class="p">(</span><span class="n">irreps</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;irreps&quot;</span><span class="p">)</span>
+    
+    <span class="n">v</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="nb">repr</span><span class="o">.</span><span class="n">size</span><span class="p">,</span> <span class="n">size</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">build_commuting_matrix</span><span class="p">(</span><span class="n">rho</span><span class="p">,</span> <span class="n">t</span><span class="p">):</span>
+        <span class="n">X</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">rho</span><span class="o">.</span><span class="n">size</span><span class="p">,</span> <span class="n">rho</span><span class="o">.</span><span class="n">size</span><span class="p">))</span>
+        <span class="k">if</span> <span class="n">rho</span><span class="o">.</span><span class="n">size</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="n">E</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">E</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">]])</span>
+            <span class="k">if</span> <span class="n">t</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">E</span> <span class="o">=</span> <span class="n">E</span><span class="o">.</span><span class="n">T</span>
+
+        <span class="n">gr</span> <span class="o">=</span> <span class="n">rho</span><span class="o">.</span><span class="n">group</span>
+        <span class="k">for</span> <span class="n">h</span> <span class="ow">in</span> <span class="n">gr</span><span class="o">.</span><span class="n">elements</span><span class="p">:</span>
+            <span class="n">r</span> <span class="o">=</span> <span class="n">rho</span><span class="p">(</span><span class="n">h</span><span class="p">)</span>
+            <span class="n">X</span> <span class="o">+=</span> <span class="n">r</span><span class="o">.</span><span class="n">T</span> <span class="o">@</span> <span class="n">E</span> <span class="o">@</span> <span class="n">r</span>
+        <span class="n">X</span> <span class="o">/=</span> <span class="n">gr</span><span class="o">.</span><span class="n">order</span><span class="p">()</span>
+        
+        <span class="n">X</span> <span class="o">/=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">X</span><span class="nd">@X</span><span class="o">.</span><span class="n">T</span><span class="p">)</span><span class="o">/</span><span class="n">rho</span><span class="o">.</span><span class="n">size</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">X</span>
+
+    <span class="n">p</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">irr</span><span class="p">,</span> <span class="n">m</span> <span class="ow">in</span> <span class="n">multiplicities</span><span class="p">:</span>
+        <span class="k">assert</span> <span class="n">irr</span><span class="o">.</span><span class="n">size</span> <span class="o">&gt;=</span> <span class="n">m</span>
+        
+        <span class="k">if</span> <span class="n">m</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">restricted_irr</span> <span class="o">=</span> <span class="n">group</span><span class="o">.</span><span class="n">restrict_representation</span><span class="p">(</span><span class="n">subgroup_id</span><span class="p">,</span> <span class="n">irr</span><span class="p">)</span>
+            
+            <span class="n">n_repetitions</span> <span class="o">=</span> <span class="nb">len</span><span class="p">([</span><span class="n">name</span> <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">restricted_irr</span><span class="o">.</span><span class="n">irreps</span> <span class="k">if</span> <span class="n">name</span> <span class="o">==</span> <span class="nb">repr</span><span class="o">.</span><span class="n">name</span><span class="p">])</span>
+            <span class="k">assert</span> <span class="nb">repr</span><span class="o">.</span><span class="n">size</span><span class="o">*</span><span class="n">n_repetitions</span> <span class="o">&gt;=</span> <span class="n">m</span><span class="p">,</span> <span class="p">(</span><span class="n">f</span><span class="s2">&quot;</span><span class="si">{group.name}</span><span class="s2">\</span><span class="si">{subgroup.name}</span><span class="s2">:</span><span class="si">{repr.name}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">irr</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">m</span><span class="p">,</span> <span class="n">n_repetitions</span><span class="p">)</span>
+            
+            <span class="k">for</span> <span class="n">shift</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">m</span><span class="p">):</span>
+                <span class="n">commuting_matrix</span> <span class="o">=</span> <span class="n">build_commuting_matrix</span><span class="p">(</span><span class="nb">repr</span><span class="p">,</span> <span class="n">shift</span> <span class="o">//</span> <span class="n">n_repetitions</span><span class="p">)</span>
+                <span class="n">x</span> <span class="o">=</span> <span class="n">p</span>
+                <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span>
+                <span class="k">for</span> <span class="n">r_irrep</span> <span class="ow">in</span> <span class="n">restricted_irr</span><span class="o">.</span><span class="n">irreps</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="n">r_irrep</span> <span class="o">==</span> <span class="nb">repr</span><span class="o">.</span><span class="n">name</span><span class="p">:</span>
+                        <span class="k">if</span> <span class="n">i</span> <span class="o">==</span> <span class="n">shift</span> <span class="o">%</span> <span class="n">n_repetitions</span><span class="p">:</span>
+                            <span class="n">v</span><span class="p">[:,</span> <span class="n">x</span><span class="p">:</span><span class="n">x</span><span class="o">+</span><span class="nb">repr</span><span class="o">.</span><span class="n">size</span><span class="p">]</span> <span class="o">=</span> <span class="n">commuting_matrix</span>
+                        <span class="n">i</span> <span class="o">+=</span> <span class="mi">1</span>
+                    <span class="n">x</span> <span class="o">+=</span> <span class="n">subgroup</span><span class="o">.</span><span class="n">irreps</span><span class="p">[</span><span class="n">r_irrep</span><span class="p">]</span><span class="o">.</span><span class="n">size</span>
+                    
+                <span class="n">v</span><span class="p">[:,</span> <span class="n">p</span><span class="p">:</span><span class="n">p</span><span class="o">+</span><span class="n">irr</span><span class="o">.</span><span class="n">size</span><span class="p">]</span> <span class="o">=</span> <span class="n">v</span><span class="p">[:,</span> <span class="n">p</span><span class="p">:</span><span class="n">p</span><span class="o">+</span><span class="n">irr</span><span class="o">.</span><span class="n">size</span><span class="p">]</span> <span class="o">@</span> <span class="n">restricted_irr</span><span class="o">.</span><span class="n">change_of_basis_inv</span>
+                <span class="n">v</span><span class="p">[:,</span> <span class="n">p</span><span class="p">:</span><span class="n">p</span><span class="o">+</span><span class="n">irr</span><span class="o">.</span><span class="n">size</span><span class="p">]</span> <span class="o">*=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">irr</span><span class="o">.</span><span class="n">size</span><span class="p">)</span>
+                
+                <span class="n">p</span> <span class="o">+=</span> <span class="n">irr</span><span class="o">.</span><span class="n">size</span>
+    
+    <span class="c1"># np.set_printoptions(precision=4, threshold=10 * size ** 2, suppress=True, linewidth=25 * size + 5)</span>
+    <span class="c1"># Pr = group.restrict_representation(subgroup_id, P)</span>
+    <span class="c1"># v = v @ Pr.change_of_basis_inv</span>
+    
+    <span class="c1"># print(v)</span>
+    
+    <span class="n">v</span> <span class="o">/=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">size</span><span class="p">)</span>
+    
+    <span class="n">change_of_basis</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">size</span><span class="p">,</span> <span class="n">size</span><span class="p">))</span>
+
+    <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">representatives</span><span class="p">:</span>
+        <span class="n">i</span> <span class="o">=</span> <span class="n">index</span><span class="p">[</span><span class="n">r</span><span class="p">]</span>
+        <span class="n">change_of_basis</span><span class="p">[</span><span class="n">i</span><span class="o">*</span><span class="nb">repr</span><span class="o">.</span><span class="n">size</span><span class="p">:(</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span><span class="o">*</span><span class="nb">repr</span><span class="o">.</span><span class="n">size</span><span class="p">,</span> <span class="p">:]</span> <span class="o">=</span> <span class="n">v</span> <span class="o">@</span> <span class="n">P</span><span class="p">(</span><span class="n">group</span><span class="o">.</span><span class="n">inverse</span><span class="p">(</span><span class="n">r</span><span class="p">))</span>
+    
+    <span class="n">change_of_basis_inv</span> <span class="o">=</span> <span class="n">change_of_basis</span><span class="o">.</span><span class="n">T</span>
+
+    <span class="c1"># for g, r in representation.items():</span>
+    <span class="c1">#     print(g, np.allclose(change_of_basis @ P(g) @ change_of_basis_inv, representation[g]))</span>
+    <span class="c1">#     ir = change_of_basis @ P(g) @ change_of_basis_inv</span>
+    <span class="c1">#     assert np.allclose(ir, representation[g]), f&quot;{group.name}\{subgroup.name}:{repr.name} - {g}:\n{ir}\n{representation[g]}\n&quot;</span>
+    
+    <span class="k">return</span> <span class="n">irreps</span><span class="p">,</span> <span class="n">change_of_basis</span><span class="p">,</span> <span class="n">change_of_basis_inv</span>
+
+
+<span class="c1">########################################################################################################################</span>
+<span class="c1"># Utils methods for decomposing or composing representations ###########################################################</span>
+<span class="c1">########################################################################################################################</span>
+
+<span class="kn">from</span> <span class="nn">scipy</span> <span class="k">import</span> <span class="n">linalg</span><span class="p">,</span> <span class="n">sparse</span>
+<span class="kn">import</span> <span class="nn">scipy.sparse.linalg</span> <span class="k">as</span> <span class="nn">slinalg</span>
+<span class="kn">from</span> <span class="nn">scipy.sparse</span> <span class="k">import</span> <span class="n">find</span>
+
+
+<span class="k">try</span><span class="p">:</span>
+    <span class="kn">import</span> <span class="nn">pymanopt</span>
+    <span class="kn">from</span> <span class="nn">pymanopt.manifolds</span> <span class="k">import</span> <span class="n">Euclidean</span>
+    <span class="kn">from</span> <span class="nn">pymanopt.solvers</span> <span class="k">import</span> <span class="n">TrustRegions</span>
+    
+<span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
+    <span class="n">pymanopt</span> <span class="o">=</span> <span class="kc">None</span>
+    
+<span class="k">try</span><span class="p">:</span>
+    <span class="kn">import</span> <span class="nn">autograd.numpy</span> <span class="k">as</span> <span class="nn">anp</span>
+<span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
+    <span class="n">anp</span> <span class="o">=</span> <span class="kc">None</span>
+
+
+<span class="k">def</span> <span class="nf">direct_sum_factory</span><span class="p">(</span><span class="n">irreps</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">e2cnn</span><span class="o">.</span><span class="n">group</span><span class="o">.</span><span class="n">IrreducibleRepresentation</span><span class="p">],</span>
+                       <span class="n">change_of_basis</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span>
+                       <span class="n">change_of_basis_inv</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span> <span class="o">=</span> <span class="kc">None</span>
+                       <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Callable</span><span class="p">[[</span><span class="n">Any</span><span class="p">],</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">]:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    The method builds and returns a function implementing the direct sum of the &quot;irreps&quot; transformed by the given</span>
+<span class="sd">    &quot;change_of_basis&quot; matrix.</span>
+
+<span class="sd">    More precisely, the built method will take as input a value accepted by all the irreps, evaluate the irreps on that</span>
+<span class="sd">    input and return the direct sum of the produced matrices left and right multiplied respectively by the</span>
+<span class="sd">    change_of_basis matrix and its inverse.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        irreps (list): list of irreps</span>
+<span class="sd">        change_of_basis: the matrix transforming the direct sum of the irreps</span>
+<span class="sd">        change_of_basis_inv: the inverse of the change of basis matrix</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        function taking an input accepted by the irreps and returning the direct sum of the irreps evaluated</span>
+<span class="sd">        on that input</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    
+    <span class="n">shape</span> <span class="o">=</span> <span class="n">change_of_basis</span><span class="o">.</span><span class="n">shape</span>
+    <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">shape</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span> <span class="ow">and</span> <span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+    
+    <span class="k">if</span> <span class="n">change_of_basis_inv</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="c1"># pre-compute the inverse of the change-of-_bases matrix</span>
+        <span class="n">change_of_basis_inv</span> <span class="o">=</span> <span class="n">linalg</span><span class="o">.</span><span class="n">inv</span><span class="p">(</span><span class="n">change_of_basis</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">change_of_basis_inv</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span>
+        <span class="k">assert</span> <span class="n">change_of_basis_inv</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="n">change_of_basis</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="k">assert</span> <span class="n">change_of_basis_inv</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="n">change_of_basis</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+        <span class="k">assert</span> <span class="n">np</span><span class="o">.</span><span class="n">allclose</span><span class="p">(</span><span class="n">change_of_basis</span> <span class="o">@</span> <span class="n">change_of_basis_inv</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="n">change_of_basis</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span>
+        <span class="k">assert</span> <span class="n">np</span><span class="o">.</span><span class="n">allclose</span><span class="p">(</span><span class="n">change_of_basis_inv</span> <span class="o">@</span> <span class="n">change_of_basis</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="n">change_of_basis</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span>
+    
+    <span class="n">unique_irreps</span> <span class="o">=</span> <span class="nb">list</span><span class="p">({</span><span class="n">irr</span><span class="o">.</span><span class="n">name</span><span class="p">:</span> <span class="n">irr</span> <span class="k">for</span> <span class="n">irr</span> <span class="ow">in</span> <span class="n">irreps</span><span class="p">}</span><span class="o">.</span><span class="n">items</span><span class="p">())</span>
+    <span class="n">irreps_names</span> <span class="o">=</span> <span class="p">[</span><span class="n">irr</span><span class="o">.</span><span class="n">name</span> <span class="k">for</span> <span class="n">irr</span> <span class="ow">in</span> <span class="n">irreps</span><span class="p">]</span>
+    
+    <span class="k">def</span> <span class="nf">direct_sum</span><span class="p">(</span><span class="n">element</span><span class="p">,</span>
+                   <span class="n">irreps_names</span><span class="o">=</span><span class="n">irreps_names</span><span class="p">,</span> <span class="n">change_of_basis</span><span class="o">=</span><span class="n">change_of_basis</span><span class="p">,</span>
+                   <span class="n">change_of_basis_inv</span><span class="o">=</span><span class="n">change_of_basis_inv</span><span class="p">,</span> <span class="n">unique_irreps</span><span class="o">=</span><span class="n">unique_irreps</span><span class="p">):</span>
+        <span class="n">reprs</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">for</span> <span class="n">n</span><span class="p">,</span> <span class="n">irr</span> <span class="ow">in</span> <span class="n">unique_irreps</span><span class="p">:</span>
+            <span class="n">reprs</span><span class="p">[</span><span class="n">n</span><span class="p">]</span> <span class="o">=</span> <span class="n">irr</span><span class="p">(</span><span class="n">element</span><span class="p">)</span>
+        
+        <span class="n">blocks</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">irrep_name</span> <span class="ow">in</span> <span class="n">irreps_names</span><span class="p">:</span>
+            <span class="nb">repr</span> <span class="o">=</span> <span class="n">reprs</span><span class="p">[</span><span class="n">irrep_name</span><span class="p">]</span>
+            <span class="n">blocks</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">repr</span><span class="p">)</span>
+        
+        <span class="n">P</span> <span class="o">=</span> <span class="n">sparse</span><span class="o">.</span><span class="n">block_diag</span><span class="p">(</span><span class="n">blocks</span><span class="p">,</span> <span class="nb">format</span><span class="o">=</span><span class="s1">&#39;csc&#39;</span><span class="p">)</span>
+        
+        <span class="k">return</span> <span class="n">change_of_basis</span> <span class="o">@</span> <span class="n">P</span> <span class="o">@</span> <span class="n">change_of_basis_inv</span>
+    
+    <span class="k">return</span> <span class="n">direct_sum</span>
+
+
+<span class="k">def</span> <span class="nf">null</span><span class="p">(</span><span class="n">A</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">matrix</span><span class="p">,</span> <span class="n">sparse</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">LinearOperator</span><span class="p">],</span>
+         <span class="n">use_sparse</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
+         <span class="n">eps</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1e-12</span>
+         <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Compute _bases for the Kernel space of the matrix A.</span>
+
+<span class="sd">    If ``use_sparse`` is ``True``, :meth:`scipy.sparse.linalg.svds` is used;</span>
+<span class="sd">    otherwise, :meth:`scipy.linalg.svd` is used.</span>
+
+<span class="sd">    Moreover, if the input is a sparse matrix, ``use_sparse`` has to be set to ``True``.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        A: input matrix</span>
+<span class="sd">        use_sparse: whether to use spare methods or not</span>
+<span class="sd">        eps: threshold to consider a value zero. The default value is ``1e-12``</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        A matrix whose columns are a basis of the kernel space</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">use_sparse</span><span class="p">:</span>
+        <span class="n">u</span><span class="p">,</span> <span class="n">s</span><span class="p">,</span> <span class="n">vh</span> <span class="o">=</span> <span class="n">slinalg</span><span class="o">.</span><span class="n">svds</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">k</span><span class="o">=</span><span class="nb">min</span><span class="p">(</span><span class="n">A</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">u</span><span class="p">,</span> <span class="n">s</span><span class="p">,</span> <span class="n">vh</span> <span class="o">=</span> <span class="n">linalg</span><span class="o">.</span><span class="n">svd</span><span class="p">(</span><span class="n">A</span><span class="p">)</span>
+    
+    <span class="c1"># print(u.shape, s.shape, vh.shape)</span>
+    <span class="c1"># print(min(s))</span>
+    <span class="n">null_space</span> <span class="o">=</span> <span class="n">sp</span><span class="o">.</span><span class="n">compress</span><span class="p">((</span><span class="n">s</span> <span class="o">&lt;=</span> <span class="n">eps</span><span class="p">),</span> <span class="n">vh</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">sp</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="n">null_space</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">find_orthogonal_matrix</span><span class="p">(</span><span class="n">basis</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">shape</span><span class="p">):</span>
+    
+    <span class="k">if</span> <span class="n">pymanopt</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ImportError</span><span class="p">(</span><span class="s2">&quot;Missing optional &#39;pymanopt&#39; dependency. Install &#39;pymanopt&#39; to use this function&quot;</span><span class="p">)</span>
+    
+    <span class="k">if</span> <span class="n">anp</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ImportError</span><span class="p">(</span><span class="s2">&quot;Missing optional &#39;autograd&#39; dependency. Install &#39;autograd&#39; to use this function&quot;</span><span class="p">)</span>
+
+    <span class="n">manifold</span> <span class="o">=</span> <span class="n">Euclidean</span><span class="p">(</span><span class="n">basis</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+    
+    <span class="k">def</span> <span class="nf">cost</span><span class="p">(</span><span class="n">X</span><span class="p">):</span>
+        <span class="n">d</span> <span class="o">=</span> <span class="n">anp</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">basis</span><span class="p">,</span> <span class="n">X</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">shape</span><span class="p">,</span> <span class="n">order</span><span class="o">=</span><span class="s1">&#39;F&#39;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">anp</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span>
+            <span class="n">anp</span><span class="o">.</span><span class="n">square</span><span class="p">(</span><span class="n">anp</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="n">d</span><span class="o">.</span><span class="n">T</span><span class="p">)</span> <span class="o">-</span> <span class="n">anp</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="o">*</span><span class="n">shape</span><span class="p">))</span> <span class="o">+</span>
+            <span class="n">anp</span><span class="o">.</span><span class="n">square</span><span class="p">(</span><span class="n">anp</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">d</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="n">d</span><span class="p">)</span> <span class="o">-</span> <span class="n">anp</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="o">*</span><span class="n">shape</span><span class="p">))</span>
+        <span class="p">)</span>
+    
+    <span class="n">problem</span> <span class="o">=</span> <span class="n">pymanopt</span><span class="o">.</span><span class="n">Problem</span><span class="p">(</span><span class="n">manifold</span><span class="o">=</span><span class="n">manifold</span><span class="p">,</span> <span class="n">cost</span><span class="o">=</span><span class="n">cost</span><span class="p">)</span>
+    
+    <span class="c1"># solver = TrustRegions(use_rand=True, miniter=10, mingradnorm=1e-10)</span>
+    <span class="c1"># solver = ParticleSwarm(populationsize=500, maxcostevals=10000, logverbosity=0)</span>
+    <span class="c1"># solver = ParticleSwarm(logverbosity=0)</span>
+    
+    <span class="kn">import</span> <span class="nn">os</span><span class="o">,</span> <span class="nn">sys</span>
+    
+    <span class="n">old_stdout</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">stdout</span>
+    <span class="n">sys</span><span class="o">.</span><span class="n">stdout</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">devnull</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span>
+    <span class="c1">#</span>
+    <span class="c1"># Xopt = solver.solve(problem)</span>
+    <span class="c1"># c = cost(Xopt)</span>
+    <span class="c1"># print(&#39;PSO, Final Error:&#39;, c)</span>
+    <span class="c1">#</span>
+    <span class="c1"># x = Xopt</span>
+    
+    <span class="n">solver</span> <span class="o">=</span> <span class="n">TrustRegions</span><span class="p">(</span><span class="n">mingradnorm</span><span class="o">=</span><span class="mf">1e-10</span><span class="p">,</span> <span class="n">logverbosity</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+    
+    <span class="n">Xopt</span> <span class="o">=</span> <span class="n">solver</span><span class="o">.</span><span class="n">solve</span><span class="p">(</span><span class="n">problem</span><span class="p">)</span>  <span class="c1"># , x=x) #, Delta_bar=np.sqrt(basis.shape[1])*2)</span>
+    
+    <span class="n">c</span> <span class="o">=</span> <span class="n">cost</span><span class="p">(</span><span class="n">Xopt</span><span class="p">)</span>
+    
+    <span class="n">sys</span><span class="o">.</span><span class="n">stdout</span> <span class="o">=</span> <span class="n">old_stdout</span>  <span class="c1"># sys.__stdout__</span>
+    
+    <span class="c1"># print(&#39;TrustRegions, Final Error:&#39;, c)</span>
+    <span class="c1"># print(&#39;Weights:&#39;, Xopt)</span>
+    
+    <span class="n">D</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">basis</span><span class="p">,</span> <span class="n">Xopt</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">shape</span><span class="p">,</span> <span class="n">order</span><span class="o">=</span><span class="s1">&#39;F&#39;</span><span class="p">)</span>
+    
+    <span class="k">return</span> <span class="n">D</span><span class="p">,</span> <span class="n">c</span>
+
+
+<span class="k">def</span> <span class="nf">compute_change_of_basis</span><span class="p">(</span><span class="n">representation</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="n">Any</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">matrix</span><span class="p">],</span>
+                            <span class="n">irreps</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Tuple</span><span class="p">[</span><span class="n">Callable</span><span class="p">[[</span><span class="n">Any</span><span class="p">],</span> <span class="n">np</span><span class="o">.</span><span class="n">matrix</span><span class="p">],</span> <span class="nb">int</span><span class="p">]]</span>
+                            <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">matrix</span><span class="p">:</span>
+    <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This method computes the change-of-_bases matrix that decompose a representation of a finite group</span>
+<span class="sd">    in a direct sum of irreps.</span>
+
+<span class="sd">    Notice that the irreps are &quot;stacked&quot; in the same order as they are in the &quot;irreps&quot; list and consecutive copies</span>
+<span class="sd">    of each irrep are added accordingly to the multiplicities specified.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        representation: a dictionary mapping an element of &quot;group&quot; to a matrix</span>
+<span class="sd">        irreps: a list of pairs (callable, integer). The callable implements an representation (takes an element as input and returns a matrix)</span>
+<span class="sd">        and the integer is the multiplicity of this representation (i.e. how many times it has to appear in the decomposition)</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        the change of _bases matrix</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    
+    <span class="c1"># Contains a list of Sylvester Equations, one for each group element</span>
+    <span class="n">equations</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="c1"># for each group element build the corresponding equation and append it to the list</span>
+    <span class="k">for</span> <span class="n">element</span><span class="p">,</span> <span class="n">rho</span> <span class="ow">in</span> <span class="n">representation</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="c1"># Build the direct sum of the irreps for this element</span>
+        <span class="n">blocks</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="p">(</span><span class="n">irrep</span><span class="p">,</span> <span class="n">m</span><span class="p">)</span> <span class="ow">in</span> <span class="n">irreps</span><span class="p">:</span>
+            <span class="nb">repr</span> <span class="o">=</span> <span class="n">irrep</span><span class="p">(</span><span class="n">element</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">m</span><span class="p">):</span>
+                <span class="n">blocks</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">repr</span><span class="p">)</span>
+        <span class="n">P</span> <span class="o">=</span> <span class="n">sparse</span><span class="o">.</span><span class="n">block_diag</span><span class="p">(</span><span class="n">blocks</span><span class="p">,</span> <span class="nb">format</span><span class="o">=</span><span class="s1">&#39;csc&#39;</span><span class="p">)</span>
+        
+        <span class="c1"># build the linear system corresponding to the Sylvester Equation with the current group element</span>
+        <span class="n">equation</span> <span class="o">=</span> <span class="n">sparse</span><span class="o">.</span><span class="n">kronsum</span><span class="p">(</span><span class="n">rho</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span> <span class="o">*</span> <span class="n">P</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="nb">format</span><span class="o">=</span><span class="s1">&#39;csc&#39;</span><span class="p">)</span>
+        
+        <span class="n">equations</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">equation</span><span class="p">)</span>
+    
+    <span class="c1"># stack all equations in one unique matrix</span>
+    <span class="n">M</span> <span class="o">=</span> <span class="n">sparse</span><span class="o">.</span><span class="n">vstack</span><span class="p">(</span><span class="n">equations</span><span class="p">,</span> <span class="nb">format</span><span class="o">=</span><span class="s1">&#39;csc&#39;</span><span class="p">)</span>
+    
+    <span class="c1"># the kernel space of this matrix contains the solutions of our problem</span>
+    
+    <span class="k">if</span> <span class="n">M</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="k">assert</span> <span class="n">np</span><span class="o">.</span><span class="n">count_nonzero</span><span class="p">(</span><span class="n">M</span><span class="o">.</span><span class="n">todense</span><span class="p">())</span> <span class="o">==</span> <span class="mi">0</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
+    <span class="k">else</span><span class="p">:</span>
+        
+        <span class="c1"># compute the basis of the kernel</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">representation</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">10</span><span class="p">:</span>
+            <span class="n">basis</span> <span class="o">=</span> <span class="n">null</span><span class="p">(</span><span class="n">M</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">basis</span> <span class="o">=</span> <span class="n">null</span><span class="p">(</span><span class="n">M</span><span class="o">.</span><span class="n">todense</span><span class="p">(),</span> <span class="kc">False</span><span class="p">)</span>
+        
+        <span class="k">assert</span> <span class="n">np</span><span class="o">.</span><span class="n">allclose</span><span class="p">(</span><span class="n">M</span> <span class="o">@</span> <span class="n">basis</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">([</span><span class="n">M</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">basis</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]]))</span>
+        
+        <span class="c1"># reshape it to get the Change of Basis matrix</span>
+        <span class="n">shape</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">representation</span><span class="o">.</span><span class="n">values</span><span class="p">())[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span>
+        
+        <span class="c1"># np.set_printoptions(precision=2, threshold=2 * len(representation)**2, suppress=True,</span>
+        <span class="c1">#                     linewidth=len(representation) * 10 + 3)</span>
+        
+        <span class="n">basis</span> <span class="o">=</span> <span class="n">linalg</span><span class="o">.</span><span class="n">orth</span><span class="p">(</span><span class="n">basis</span><span class="p">)</span>
+        
+        <span class="c1"># we could take any linear combination of the basis vectors to get the vectorized form of the Change of Basis matrix</span>
+        <span class="c1"># d = basis @ np.random.randn(basis.shape[1], 1)</span>
+        
+        <span class="c1"># in case of CyclicGroup, if we have all the basis (i.e. we don&#39;t use the SparseSVD algorithm),</span>
+        <span class="c1"># the sum of all basis vectors seems to always lead to an orthonormal matrix</span>
+        <span class="c1"># d = basis @ np.ones((basis.shape[1], 1))</span>
+        <span class="c1"># D = np.reshape(d, shape, order=&#39;F&#39;)</span>
+        
+        <span class="c1"># however, for large groups we can&#39;t use the dense SVD, so we need to find another orthonormal matrix in the</span>
+        <span class="c1"># smaller space of solutions</span>
+        <span class="n">D</span><span class="p">,</span> <span class="n">err</span> <span class="o">=</span> <span class="n">find_orthogonal_matrix</span><span class="p">(</span><span class="n">basis</span><span class="p">,</span> <span class="n">shape</span><span class="p">)</span>
+        
+        <span class="c1"># print(D)</span>
+        <span class="c1"># print(D @ D.T)</span>
+        <span class="c1"># print(D.T @ D)</span>
+        
+        <span class="c1"># assert np.allclose(D @ D.T, np.eye(*shape))</span>
+        <span class="c1"># assert np.allclose(D.T @ D, np.eye(*shape))</span>
+        
+        <span class="c1"># in case we take a random combination of the basis vectors, it is possible that the generated matrix is</span>
+        <span class="c1"># singular. To be sure it is not we sample a few matrices and pick the one with the largest smallest singular</span>
+        <span class="c1"># value. Anyway, the event of sampling a singular matrix should be unlikely enough to assume it never happens</span>
+        
+        <span class="c1"># max_sv = min(linalg.svd(D, compute_uv=False))</span>
+        <span class="c1"># for i in range(50):</span>
+        <span class="c1">#     # take any linear combination of them to get the vectorized form of the Change of Basis matrix</span>
+        <span class="c1">#     d = _bases @ np.random.randn(_bases.shape[1], 1)</span>
+        <span class="c1">#</span>
+        <span class="c1">#     d = np.reshape(d, shape, order=&#39;F&#39;)</span>
+        <span class="c1">#</span>
+        <span class="c1">#     s = min(linalg.svd(d, compute_uv=False))</span>
+        <span class="c1">#</span>
+        <span class="c1">#     if s &gt; max_sv:</span>
+        <span class="c1">#         max_sv = s</span>
+        <span class="c1">#         D = d</span>
+        
+        <span class="c1"># Check the change of basis found is right</span>
+        <span class="n">D_inv</span> <span class="o">=</span> <span class="n">linalg</span><span class="o">.</span><span class="n">inv</span><span class="p">(</span><span class="n">D</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">element</span><span class="p">,</span> <span class="n">rho</span> <span class="ow">in</span> <span class="n">representation</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="c1"># Build the direct sum of the irreps for this element</span>
+            <span class="n">blocks</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="k">for</span> <span class="p">(</span><span class="n">irrep</span><span class="p">,</span> <span class="n">m</span><span class="p">)</span> <span class="ow">in</span> <span class="n">irreps</span><span class="p">:</span>
+                <span class="nb">repr</span> <span class="o">=</span> <span class="n">irrep</span><span class="p">(</span><span class="n">element</span><span class="p">)</span>
+                <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">m</span><span class="p">):</span>
+                    <span class="n">blocks</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">repr</span><span class="p">)</span>
+            
+            <span class="n">P</span> <span class="o">=</span> <span class="n">sparse</span><span class="o">.</span><span class="n">block_diag</span><span class="p">(</span><span class="n">blocks</span><span class="p">,</span> <span class="nb">format</span><span class="o">=</span><span class="s1">&#39;csc&#39;</span><span class="p">)</span>
+            
+            <span class="c1"># if not np.allclose(rho, D @ P @ D_inv):</span>
+            <span class="c1">#     print(element)</span>
+            <span class="c1">#     print(rho)</span>
+            <span class="c1">#     print(D @ P @ D_inv)</span>
+            
+            <span class="k">assert</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">allclose</span><span class="p">(</span><span class="n">rho</span><span class="p">,</span> <span class="n">D</span> <span class="o">@</span> <span class="n">P</span> <span class="o">@</span> <span class="n">D_inv</span><span class="p">)),</span> <span class="s2">&quot;Error at element </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">element</span><span class="p">)</span>
+        
+        <span class="k">return</span> <span class="n">D</span>
+
+
+<span class="k">def</span> <span class="nf">decompose_representation</span><span class="p">(</span><span class="n">representation</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="n">Any</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">matrix</span><span class="p">],</span>
+                             <span class="n">group</span><span class="p">:</span> <span class="n">e2cnn</span><span class="o">.</span><span class="n">group</span><span class="o">.</span><span class="n">Group</span>
+                             <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">matrix</span><span class="p">,</span> <span class="n">List</span><span class="p">[</span><span class="n">Tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">int</span><span class="p">]]]:</span>
+    <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Decompose the input ``representation`` in a direct sum of irreps of the input ``group``.</span>
+<span class="sd">    First, the method computes the multiplicities of each irrep in the representation using the inner product of their</span>
+<span class="sd">    characters. Then, it computes the change-of-basis matrix which transforms the block-diagonal matrix coming from</span>
+<span class="sd">    the direct sum of the irreps in the input representation.</span>
+
+<span class="sd">    It returns the decomposition in irreps as a change-of-basis matrix and a list of &quot;(irrep-name, multiplicity)&quot; pairs,</span>
+<span class="sd">    where &quot;irrep-name&quot; is the name of one of the irreps in ``group`` (a key in the :attr:`e2cnn.group.Group.irreps`</span>
+<span class="sd">    dictionary) and &quot;multiplicity&quot; is the number of times this irrep appears in the decomposition.</span>
+<span class="sd">    The order of this list follows the alphabetic order of the names and it represents the order in which the irreps</span>
+<span class="sd">    have to be summed to build the block-diagonal representation.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        representation: a dictionary associating to each group element a matrix representation</span>
+<span class="sd">        group: the group whose irreps have to be used</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        a tuple containing:</span>
+
+<span class="sd">                - the change-of-basis matrix,</span>
+
+<span class="sd">                - an ordered list of pairs (irrep-name, multiplicity)</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    
+    <span class="c1"># TODO - check elements of the dictionary are all and only the elements of the group</span>
+    
+    <span class="c1"># compute the character of the representation w.r.t. the discrete group given</span>
+    <span class="n">character</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="k">for</span> <span class="n">element</span><span class="p">,</span> <span class="nb">repr</span> <span class="ow">in</span> <span class="n">representation</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="c1"># the character maps an element to the trace of its representation</span>
+        <span class="n">character</span><span class="p">[</span><span class="n">element</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">trace</span><span class="p">(</span><span class="nb">repr</span><span class="p">)</span>
+    
+    <span class="c1"># compute the multiplicities of the irreps from the dot product between</span>
+    <span class="c1"># their characters and the character of the representation</span>
+    <span class="n">multiplicities</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">irrep_name</span><span class="p">,</span> <span class="n">irrep</span> <span class="ow">in</span> <span class="n">group</span><span class="o">.</span><span class="n">irreps</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="c1"># for each irrep</span>
+        <span class="n">multiplicity</span> <span class="o">=</span> <span class="mf">0.0</span>
+        
+        <span class="c1"># compute the inner product with the representation&#39;s character</span>
+        <span class="k">for</span> <span class="n">element</span><span class="p">,</span> <span class="n">char</span> <span class="ow">in</span> <span class="n">character</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="n">multiplicity</span> <span class="o">+=</span> <span class="n">char</span> <span class="o">*</span> <span class="n">irrep</span><span class="o">.</span><span class="n">character</span><span class="p">(</span><span class="n">group</span><span class="o">.</span><span class="n">inverse</span><span class="p">(</span><span class="n">element</span><span class="p">))</span>
+        
+        <span class="n">multiplicity</span> <span class="o">/=</span> <span class="nb">len</span><span class="p">(</span><span class="n">character</span><span class="p">)</span> <span class="o">*</span> <span class="n">irrep</span><span class="o">.</span><span class="n">sum_of_squares_constituents</span>
+        
+        <span class="c1"># the result has to be an integer</span>
+        <span class="k">assert</span> <span class="n">math</span><span class="o">.</span><span class="n">isclose</span><span class="p">(</span><span class="n">multiplicity</span><span class="p">,</span> <span class="nb">round</span><span class="p">(</span><span class="n">multiplicity</span><span class="p">),</span> <span class="n">abs_tol</span><span class="o">=</span><span class="mf">1e-9</span><span class="p">),</span> \
+            <span class="s2">&quot;Multiplicity of irrep </span><span class="si">%s</span><span class="s2"> is not an integer: </span><span class="si">%f</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">irrep_name</span><span class="p">,</span> <span class="n">multiplicity</span><span class="p">)</span>
+        
+        <span class="n">multiplicities</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">irrep_name</span><span class="p">,</span> <span class="nb">int</span><span class="p">(</span><span class="nb">round</span><span class="p">(</span><span class="n">multiplicity</span><span class="p">))))</span>
+    
+    <span class="c1"># sort irreps by their name</span>
+    <span class="n">multiplicities</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">multiplicities</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+    
+    <span class="c1"># build a list of representation instaces with their multiplicities</span>
+    <span class="n">irreps</span> <span class="o">=</span> <span class="p">[(</span><span class="n">group</span><span class="o">.</span><span class="n">irreps</span><span class="p">[</span><span class="n">name</span><span class="p">],</span> <span class="n">m</span><span class="p">)</span> <span class="k">for</span> <span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">m</span><span class="p">)</span> <span class="ow">in</span> <span class="n">multiplicities</span><span class="p">]</span>
+    
+    <span class="c1"># compute te Change-Of-Basis matrix that transform the direct sum of irreps in the representation</span>
+    <span class="n">cob</span> <span class="o">=</span> <span class="n">compute_change_of_basis</span><span class="p">(</span><span class="n">representation</span><span class="p">,</span> <span class="n">irreps</span><span class="p">)</span>
+    
+    <span class="k">return</span> <span class="n">cob</span><span class="p">,</span> <span class="n">multiplicities</span>
+
+
+<span class="k">def</span> <span class="nf">sparse_allclose</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">B</span><span class="p">,</span> <span class="n">atol</span><span class="o">=</span><span class="mf">1e-8</span><span class="p">):</span>
+    <span class="n">diff</span> <span class="o">=</span> <span class="nb">abs</span><span class="p">(</span><span class="n">A</span> <span class="o">-</span> <span class="n">B</span><span class="p">)</span>
+    <span class="n">_</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">v</span> <span class="o">=</span> <span class="n">find</span><span class="p">(</span><span class="n">diff</span><span class="p">)</span>
+    
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">less_equal</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="n">atol</span><span class="p">)</span><span class="o">.</span><span class="n">all</span><span class="p">()</span>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, Qualcomm Innovation Center, Inc. Developed by Gabriele Cesa, Maurice Weiler
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

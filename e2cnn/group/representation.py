@@ -219,7 +219,7 @@ class Representation:
 
         .. math::
 
-            \chi_\rho: G \to \mathbb{C}, \ \ g \to \chi_\rho(g) := \operatorname{tr}(\rho(g))
+            \chi_\rho: G \to \mathbb{C}, \ \ g \mapsto \chi_\rho(g) := \operatorname{tr}(\rho(g))
 
         It is useful to perform the irreps decomposition of a representation using *Character Theory*.
         

@@ -19,6 +19,10 @@ class GeometricTensor:
         It is wrapping a common :class:`torch.Tensor` and endows it with a (compatible) :class:`~e2cnn.nn.FieldType` as
         transformation law.
         
+        The :class:`~e2cnn.nn.FieldType` describes the action of a group :math:`G` on the tensor.
+        This action includes both a transformation of the base space and a transformation of the channels according to
+        a :math:`G`-representation :math:`\rho`.
+        
         All neural network operations have :class:`~e2cnn.nn.GeometricTensor` s as inputs and outputs.
         They perform a dynamic typechecking, ensuring that the transformation law of the data and the operation match.
         See also :class:`~e2cnn.nn.EquivariantModule`.
@@ -75,9 +79,15 @@ class GeometricTensor:
     
     def restrict(self, id) -> 'GeometricTensor':
         r"""
+        Restrict the field type of this tensor.
         
-        Return a new :class:`~e2cnn.nn.GeometricTensor` whose field type is the restriction through the input
-        ``id`` of the current tensor's one.
+        The method returns a new :class:`~e2cnn.nn.GeometricTensor` whose :attr:`~e2cnn.nn.GeometricTensor.type`
+        is equal to this tensor's :attr:`~e2cnn.nn.GeometricTensor.type`
+        restricted to a subgroup :math:`H<G` (see :meth:`e2cnn.nn.FieldType.restrict`).
+        The restricted :attr:`~e2cnn.nn.GeometricTensor.type` is associated with the restricted representation
+        :math:`\Res{H}{G}\rho` of the :math:`G`-representation :math:`\rho` associated to this tensor's
+        :attr:`~e2cnn.nn.GeometricTensor.type`.
+        The input ``id`` specifies the subgroup :math:`H < G`.
         
         Notice that the underlying :attr:`~e2cnn.nn.GeometricTensor.tensor` instance will be shared between
         the current tensor and the returned one.
@@ -94,10 +104,10 @@ class GeometricTensor:
         
         
         Args:
-            id: the id identifying the subgroup to restrict to
+            id: the id identifying the subgroup :math:`H` the representations are restricted to
 
         Returns:
-            the geometric tensor with the restricted representation
+            the geometric tensor with the restricted representations
             
         """
         new_class = self.type.restrict(id)

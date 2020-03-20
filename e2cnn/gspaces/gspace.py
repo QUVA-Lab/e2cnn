@@ -24,22 +24,21 @@ class GSpace(ABC):
         As an `Euclidean` base space is assumed, a G-space is fully specified by the ``dimensionality`` of the space
         and a choice of origin-preserving symmetry group (``fibergroup``).
         
-        .. note ::
-        
-            Mathematically, this class describes a *Principal Bundle* :math:`\pi : P \to \mathbb{R}^D`,
-            with the Euclidean space :math:`\mathbb{R}^D` (where :math:`D` is the ``dimensionality``) as `base space`
-            and :math:`G` as `fiber group` (``fibergroup``).
-            The group :math:`G` is homomorphic to any `fiber` :math:`F_x = \pi^{-1}(x)` for :math:`x \in \mathbb{R}^D`.
-            The space :math:`P` is called the `total space`.
-            For more details on this interpretation we refer to
-            `A General Theory of Equivariant CNNs On Homogeneous Spaces <https://papers.nips.cc/paper/9114-a-general-theory-of-equivariant-cnns-on-homogeneous-spaces.pdf>`_.
-        
         .. seealso::
             
             :class:`~e2cnn.gspaces.FlipRot2dOnR2`,
             :class:`~e2cnn.gspaces.Rot2dOnR2`,
             :class:`~e2cnn.gspaces.Flip2dOnR2`,
             :class:`~e2cnn.gspaces.TrivialOnR2`
+        
+        .. note ::
+        
+            Mathematically, this class describes a *Principal Bundle*
+            :math:`\pi : (\R^D, +) \rtimes G \to \mathbb{R}^D, tg \mapsto tG`,
+            with the Euclidean space :math:`\mathbb{R}^D` (where :math:`D` is the ``dimensionality``) as `base space`
+            and :math:`G` as `fiber group` (``fibergroup``).
+            For more details on this interpretation we refer to
+            `A General Theory of Equivariant CNNs On Homogeneous Spaces <https://papers.nips.cc/paper/9114-a-general-theory-of-equivariant-cnns-on-homogeneous-spaces.pdf>`_.
         
         
         Args:

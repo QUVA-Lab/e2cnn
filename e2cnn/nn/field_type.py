@@ -38,12 +38,14 @@ class FieldType:
         
         .. note ::
             
-            Mathematically, this class describes an *associated vector bundle*.
+            Mathematically, this class describes a *(trivial) vector bundle*, *associated* to the symmetry group
+            :math:`(\R^D, +) \rtimes G`.
             
-            Given a *principal bundle* :math:`\pi: P \to X` with fiber group :math:`G`, an *associated vector bundle*
-            has the same base space :math:`X` but its fibers are vector spaces like :math:`\mathbb{R}^c`.
-            Moreover, these vector spaces are associated to a c-dimensional representation :math:`\rho` of the fiber
-            group and transform accordingly.
+            Given a *principal bundle* :math:`\pi: (\R^D, +) \rtimes G \to \R^D, tg \mapsto tG`
+            with fiber group :math:`G`, an *associated vector bundle* has the same base space
+            :math:`\R^D` but its fibers are vector spaces like :math:`\mathbb{R}^c`.
+            Moreover, these vector spaces are associated to a :math:`c`-dimensional representation :math:`\rho` of the
+            fiber group :math:`G` and transform accordingly.
             
             The representation :math:`\rho` is defined as the *direct sum* of the representations :math:`\{\rho_i\}_i`
             in ``representations``. See also :func:`~e2cnn.group.directsum`.

@@ -100,6 +100,77 @@ class TestGeometricTensor(TestCase):
                 
                     self.assertTrue(torch.allclose(out1, out2))
 
+    def test_slicing(self):
+        for N in [2, 4, 7, 16]:
+            gs = Rot2dOnR2(N)
+            for irr in gs.irreps.values():
+                type = FieldType(gs, [irr] * 3)
+                for i in range(3):
+                    t = torch.randn(10, type.size, 11, 11)
+                    gt = GeometricTensor(t, type)
+                    
+                    # slice all dims
+                    self.assertTrue(torch.allclose(
+                        t[2:3, :, 2:7, 2:7],
+                        gt[2:3, 2:7, 2:7].tensor,
+                    ))
+
+                    # slice only spatial dims
+                    self.assertTrue(torch.allclose(
+                        t[:, :, 2:7, 2:7],
+                        gt[:, 2:7, 2:7].tensor,
+                    ))
+                    
+                    self.assertTrue(torch.allclose(
+                        t[:, :, 2:7, 2:7],
+                        gt[..., 2:7, 2:7].tensor,
+                    ))
+
+                    # slice only 1 spatial
+                    self.assertTrue(torch.allclose(
+                        t[..., 2:7],
+                        gt[..., 2:7].tensor,
+                    ))
+                    
+                    # slice only batch
+                    self.assertTrue(torch.allclose(
+                        t[2:4],
+                        gt[2:4, ...].tensor,
+                    ))
+                    self.assertTrue(torch.allclose(
+                        t[2:4],
+                        gt[2:4].tensor,
+                    ))
+                    
+                    # different ranges
+                    self.assertTrue(torch.allclose(
+                        t[:, :, 1:9:2, 0:8:3],
+                        gt[..., 1:9:2, 0:8:3].tensor,
+                    ))
+                    
+                    # no slicing
+                    self.assertTrue(torch.allclose(
+                        t,
+                        gt[:].tensor,
+                    ))
+                    self.assertTrue(torch.allclose(
+                        t,
+                        gt[:, :, :].tensor,
+                    ))
+                    self.assertTrue(torch.allclose(
+                        t,
+                        gt[:, :].tensor,
+                    ))
+
+                    self.assertTrue(torch.allclose(
+                        t,
+                        gt[...].tensor,
+                    ))
+                    
+                    # raise error
+                    with self.assertRaises(TypeError):
+                        sliced = gt[2:5, 0:4, 1:7, 1:7]
+
 
 if __name__ == '__main__':
     unittest.main()

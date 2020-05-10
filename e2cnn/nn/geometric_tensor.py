@@ -56,6 +56,46 @@ class GeometricTensor:
             The multiplication of a PyTorch tensor containing only a scalar with a GeometricTensor is only supported
             when using PyTorch 1.4 or higher (see this `issue <https://github.com/pytorch/pytorch/issues/26333>`_ )
             
+        A GeometricTensor also supports slicing in a similar way to :class:`torch.Tensor`.
+        However, slicing is not allowed along the channel dimension as it could break equivariance.
+        In case the tensor needs to be split along the channels dimension, the method
+        :meth:`~e2cnn.nn.GeometricTensor.split` can be used.
+        
+        If multiple indices are passed, the first is interpreted as an index over the batch dimension while the
+        following ones index, in order, the spatial dimensions.
+        Examples::
+        
+            # Example of GeometricTensor slicing
+            space = e2cnn.gspaces.Rot2dOnR2(4)
+            type = e2cnn.nn.FieldType(space, [space.regular_repr])
+            
+            geom_tensor = e2cnn.nn.GeometricTensor(torch.randn(10, type.size, 7, 7), type)
+            
+            geom_tensor.shape
+            >> torch.Size([10, 4, 7, 7])
+            
+            geom_tensor[1:3, 2:5, 2:5].shape
+            >> torch.Size([2, 4, 3, 3])
+            
+            geom_tensor[1:3].shape
+            >> torch.Size([2, 4, 7, 7])
+            
+            geom_tensor[1:3, ...].shape
+            >> torch.Size([2, 4, 7, 7])
+            
+            geom_tensor[..., 2:5].shape
+            >> torch.Size([10, 4, 7, 3])
+        
+        .. note ::
+    
+            Slicing is not supported for setting values inside the tensor
+            (:meth:`~object.__setitem__` is not implemented).
+            Indeed, this operation can break the symmetry of the tensor which may not transform anymore according to
+            its transformation law (specified by ``type``).
+            In case this feature is needed, one can directly access the underlying :class:`torch.Tensor`, e.g.
+            ``geom_tensor.tensor[:3, :, 2:5, 2:5] = torch.randn(3, 4, 3, 3)``.
+            
+            
         Args:
             tensor (torch.Tensor): the tensor data
             type (FieldType): the type of the tensor, modeling its transformation law
@@ -293,6 +333,39 @@ class GeometricTensor:
         """
         tensor = self.tensor.to(*args, **kwargs)
         return GeometricTensor(tensor, self.type)
+
+    def __getitem__(self, slices):
+        r'''
+        
+        A GeometricTensor supports slicing in a similar way to PyTorch's :class:`torch.Tensor`.
+        However, slicing is not allowed along the channel dimension as it could break equivariance.
+        If you need to split the tensor along the channels dimension, the method
+        :meth:`~e2cnn.nn.GeometricTensor.split` can be used.
+        
+        If multiple indices are passed, the first is interpreted as an index over the batch dimension while the
+        following ones index, in order, the spatial dimensions.
+        
+        Slicing is not supported for setting values inside the tensor (:meth:`object.__setitem__` is not implemented).
+        
+        '''
+        
+        # Slicing is not supported on the channel dimension.
+        if isinstance(slices, tuple):
+            if len(slices) > len(self.tensor.shape) - 1:
+                raise TypeError(
+                    f'''
+                        Error! Too many slicing indices for GeometricTensor.
+                        Indexing is only supported along the batch and the spatial dimensions.
+                        At most {len(self.tensor.shape) - 1} indices expected but {len(slices)} indices passed.
+                    '''
+                )
+        else:
+            slices = (slices,)
+        
+        # This is equivalent to use [:] on the channels dimensions
+        idxs = (slices[0], slice(None, None, None), *slices[1:])
+        sliced_tensor = self.tensor[idxs]
+        return GeometricTensor(sliced_tensor, self.type)
 
     def __add__(self, other: 'GeometricTensor') -> 'GeometricTensor':
         r"""

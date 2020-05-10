@@ -25,7 +25,7 @@ class SteerableKernelBasis(KernelBasis):
         
         .. math ::
             
-            \kappa(gx) = \rho_\text{out}(g) \kappa(x) \rho_\text{in}(g)^{-1} \qquad \forall g \in G
+            \kappa(gx) = \rho_\text{out}(g) \kappa(x) \rho_\text{in}(g)^{-1} \qquad \forall g \in G, \forall x \in X
         
         As the kernel constraint is a linear constraint, the space of equivariant kernels is a vector subspace of the
         space of all convolutional kernels. It follows that any equivariant kernel can be expressed in terms of a basis
@@ -37,8 +37,11 @@ class SteerableKernelBasis(KernelBasis):
         must be a class (subclass of :class:`~e2cnn.kernels.IrrepsBasis`) which builds a basis for equivariant
         kernels associated with irreducible representations when instantiated.
         
-        The groups :math:`G` which are currently implemented are isometries. Therefore, equivariance does not
-        enforce any constraint on the radial component of the kernels.
+        The groups :math:`G` which are currently implemented are origin-preserving isometries (what are called
+        structure groups, or sometimes gauge groups, in the language of
+        `Gauge Equivariant CNNs <https://arxiv.org/abs/1902.04615>`_ ).
+        The origin-preserving isometries of :math:`\R^d` are subgroups of :math:`O(d)`, i.e. reflections and rotations.
+        Therefore, equivariance does not enforce any constraint on the radial component of the kernels.
         Hence, this class only implements a basis for the angular part of the kernels.
         
         In order to build a complete basis of kernels, you should combine this basis with a basis which defines the
@@ -48,6 +51,11 @@ class SteerableKernelBasis(KernelBasis):
         .. math::
             
             \mathcal{B} = \left\{ b_i (r) :=  \exp \left( \frac{ \left( r - r_i \right)^2}{2 \sigma_i^2} \right) \right\}_i
+        
+        .. warning ::
+            
+            Typically, the user does not need to manually instantiate this class.
+            Instead, we suggest to use the interface provided in :doc:`e2cnn.gspaces`.
         
         Args:
             irreps_basis (class): class defining the irreps basis. This class is instantiated for each pair of irreps to solve all irreps constraints.

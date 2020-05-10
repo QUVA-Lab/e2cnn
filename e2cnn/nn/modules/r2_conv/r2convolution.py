@@ -40,6 +40,7 @@ class R2Conv(EquivariantModule):
                  maximum_offset: int = None,
                  recompute: bool = False,
                  basis_filter: Callable[[dict], bool] = None,
+                 initialize: bool = True,
                  ):
         r"""
         
@@ -70,11 +71,35 @@ class R2Conv(EquivariantModule):
         For feature fields on :math:`\R^2` (e.g. images), the complete G-steerable kernel spaces for :math:`G \leq \O2`
         is derived in `General E(2)-Equivariant Steerable CNNs <https://arxiv.org/abs/1911.08251>`_.
 
-        During training, in each forward pass the module expand the basis of G-steerable kernels with learned weights
+        During training, in each forward pass the module expands the basis of G-steerable kernels with learned weights
         before calling :func:`torch.nn.functional.conv2d`.
-        When :meth:`~troch.nn.Module.eval()` is called, the filter is built with the current trained weights and stored
+        When :meth:`~torch.nn.Module.eval()` is called, the filter is built with the current trained weights and stored
         for future reuse such that no overhead of expanding the kernel remains.
+        
+        .. warning ::
+            
+            When :meth:`~torch.nn.Module.train()` is called, the attributes :attr:`~e2cnn.nn.R2Conv.filter` and
+            :attr:`~e2cnn.nn.R2Conv.expanded_bias` are discarded to avoid situations of mismatch with the
+            learnable expansion coefficients.
+            See also :meth:`e2cnn.nn.R2Conv.train`.
+            
+            This behaviour can cause problems when storing the :meth:`~torch.nn.Module.state_dict` of a model while in
+            a mode and lately loading it in a model with a different mode, as the attributes of the class change.
+            To avoid this issue, we recommend converting the model to eval mode before storing or loading the state
+            dictionary.
  
+ 
+        The learnable expansion coefficients of the this module can be initialized with the methods in
+        :mod:`e2cnn.nn.init`.
+        By default, the weights are initialized in the constructors using :func:`~e2cnn.nn.init.generalized_he_init`.
+        
+        .. warning ::
+            
+            This initialization procedure can be extremely slow for wide layers.
+            In case initializing the model is not required (e.g. before loading the state dict of a pre-trained model)
+            or another initialization method is preferred (e.g. :func:`~e2cnn.nn.init.deltaorthonormal_init`), the
+            parameter ``initialize`` can be set to ``False`` to avoid unnecessary overhead.
+        
         
         The parameters ``basisexpansion``, ``sigma``, ``frequencies_cutoff``, ``rings`` and ``maximum_offset`` are
         optional parameters used to control how the basis for the filters is built, how it is sampled on the filter
@@ -109,6 +134,7 @@ class R2Conv(EquivariantModule):
             basis_filter (callable, optional): function which takes as input a descriptor of a basis element
                     (as a dictionary) and returns a boolean value: whether to preserve (``True``) or discard (``False``)
                     the basis element. By default (``None``), no filtering is applied.
+            initialize (bool, optional): initialize the weights of the model. Default: ``True``
         
         Attributes:
             
@@ -225,8 +251,9 @@ class R2Conv(EquivariantModule):
         self.weights = Parameter(torch.zeros(self.basisexpansion.dimension()), requires_grad=True)
         self.register_buffer("filter", torch.zeros(out_type.size, in_type.size, kernel_size, kernel_size))
         
-        # by default, the weights are initialized with a generalized form of He's weight initialization
-        init.generalized_he_init(self.weights.data, self.basisexpansion)
+        if initialize:
+            # by default, the weights are initialized with a generalized form of He's weight initialization
+            init.generalized_he_init(self.weights.data, self.basisexpansion)
     
     @property
     def basisexpansion(self) -> BasisExpansion:
@@ -295,12 +322,19 @@ class R2Conv(EquivariantModule):
     def train(self, mode=True):
         r"""
         
-        If ``mode=True``, sets the module in training mode and discards the :attr:`~e2cnn.nn.R2Conv.filter` and
-        :attr:`~e2cnn.nn.R2Conv.expanded_bias`.
+        If ``mode=True``, the method sets the module in training mode and discards the :attr:`~e2cnn.nn.R2Conv.filter`
+        and :attr:`~e2cnn.nn.R2Conv.expanded_bias` attributes.
         
-        If ``mode=False``, sets the module in evaluation mode. Moreover, the method builds the filter and the bias using
+        If ``mode=False``, it sets the module in evaluation mode. Moreover, the method builds the filter and the bias using
         the current values of the trainable parameters and store them in :attr:`~e2cnn.nn.R2Conv.filter` and
         :attr:`~e2cnn.nn.R2Conv.expanded_bias` such that they are not recomputed at each forward pass.
+        
+        .. warning ::
+            
+            This behaviour can cause problems when storing the :meth:`~torch.nn.Module.state_dict` of a model while in
+            a mode and lately loading it in a model with a different mode, as the attributes of this class change.
+            To avoid this issue, we recommend converting the model to eval mode before storing or loading the state
+            dictionary.
         
         Args:
             mode (bool, optional): whether to set training mode (``True``) or evaluation mode (``False``).

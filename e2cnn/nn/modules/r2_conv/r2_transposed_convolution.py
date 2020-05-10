@@ -43,6 +43,7 @@ class R2ConvTransposed(EquivariantModule):
                  maximum_offset: int = None,
                  recompute: bool = False,
                  basis_filter: Callable[[dict], bool] = None,
+                 initialize: bool = True,
                  ):
         r"""
         
@@ -70,6 +71,8 @@ class R2ConvTransposed(EquivariantModule):
                                     Default: ``1``.
             bias (bool, optional): Whether to add a bias to the output (only to fields which contain a
                     trivial irrep) or not. Default ``True``
+            initialize (bool, optional): initialize the weights of the model. Default: ``True``
+            
         """
 
         assert in_type.gspace == out_type.gspace
@@ -177,8 +180,9 @@ class R2ConvTransposed(EquivariantModule):
         self.weights = Parameter(torch.zeros(self.basisexpansion.dimension()), requires_grad=True)
         self.register_buffer("filter", torch.zeros(out_type.size, in_type.size, kernel_size, kernel_size))
         
-        # by default, the weights are initialized with a generalized form of he's weight initialization
-        init.generalized_he_init(self.weights.data, self.basisexpansion)
+        if initialize:
+            # by default, the weights are initialized with a generalized form of he's weight initialization
+            init.generalized_he_init(self.weights.data, self.basisexpansion)
 
     @property
     def basisexpansion(self) -> BasisExpansion:

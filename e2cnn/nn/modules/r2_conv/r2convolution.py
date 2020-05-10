@@ -40,6 +40,7 @@ class R2Conv(EquivariantModule):
                  maximum_offset: int = None,
                  recompute: bool = False,
                  basis_filter: Callable[[dict], bool] = None,
+                 initialize: bool = True,
                  ):
         r"""
         
@@ -87,6 +88,18 @@ class R2Conv(EquivariantModule):
             To avoid this issue, we recommend converting the model to eval mode before storing or loading the state
             dictionary.
  
+ 
+        The learnable expansion coefficients of the this module can be initialized with the methods in
+        :mod:`e2cnn.nn.init`.
+        By default, the weights are initialized in the constructors using :func:`~e2cnn.nn.init.generalized_he_init`.
+        
+        .. warning ::
+            
+            This initialization procedure can be extremely slow for wide layers.
+            In case initializing the model is not required (e.g. before loading the state dict of a pre-trained model)
+            or another initialization method is preferred (e.g. :func:`~e2cnn.nn.init.deltaorthonormal_init`), the
+            parameter ``initialize`` can be set to ``False`` to avoid unnecessary overhead.
+        
         
         The parameters ``basisexpansion``, ``sigma``, ``frequencies_cutoff``, ``rings`` and ``maximum_offset`` are
         optional parameters used to control how the basis for the filters is built, how it is sampled on the filter
@@ -121,6 +134,7 @@ class R2Conv(EquivariantModule):
             basis_filter (callable, optional): function which takes as input a descriptor of a basis element
                     (as a dictionary) and returns a boolean value: whether to preserve (``True``) or discard (``False``)
                     the basis element. By default (``None``), no filtering is applied.
+            initialize (bool, optional): initialize the weights of the model. Default: ``True``
         
         Attributes:
             
@@ -237,8 +251,9 @@ class R2Conv(EquivariantModule):
         self.weights = Parameter(torch.zeros(self.basisexpansion.dimension()), requires_grad=True)
         self.register_buffer("filter", torch.zeros(out_type.size, in_type.size, kernel_size, kernel_size))
         
-        # by default, the weights are initialized with a generalized form of He's weight initialization
-        init.generalized_he_init(self.weights.data, self.basisexpansion)
+        if initialize:
+            # by default, the weights are initialized with a generalized form of He's weight initialization
+            init.generalized_he_init(self.weights.data, self.basisexpansion)
     
     @property
     def basisexpansion(self) -> BasisExpansion:

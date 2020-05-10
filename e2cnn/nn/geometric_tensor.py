@@ -120,12 +120,52 @@ class GeometricTensor:
         The original tensor is split at the *fields* specified by the index list ``breaks``.
         
         If the tensor is associated with the list of fields :math:`\{\rho_i\}_i`
-        (see :attr:`e2cnn.nn.FieldType.representations`), the :math:`i`-th output tensor will contain the fields
-        :math:`\rho_{\text{breaks}[i-1]}, \dots, \rho_{\text{breaks}[i]-1}` of the original tensor.
+        (see :attr:`e2cnn.nn.FieldType.representations`), the :math:`j`-th output tensor will contain the fields
+        :math:`\rho_{\text{breaks}[j-1]}, \dots, \rho_{\text{breaks}[j]-1}` of the original tensor.
         
         If `breaks = None`, the tensor is split at each field.
         This is equivalent to using `breaks = list(range(len(self.type)))`.
         
+        Example ::
+        
+            space = e2cnn.gspaces.Rot2dOnR2(4)
+            type = e2cnn.nn.FieldType(space, [
+                space.regular_repr,     # size = 4
+                space.regular_repr,     # size = 4
+                space.irrep(1),         # size = 2
+                space.irrep(1),         # size = 2
+                space.trivial_repr,     # size = 1
+                space.trivial_repr,     # size = 1
+                space.trivial_repr,     # size = 1
+            ])                          #  sum = 15
+            
+            type.size
+            >> 15
+            
+            geom_tensor = e2cnn.nn.GeometricTensor(torch.randn(10, type.size, 7, 7), type)
+            
+            geom_tensor.shape
+            >> torch.Size([10, 15, 7, 7])
+            
+            # split the tensor in 3 parts
+            len(geom_tensor.split([0, 4, 6]))
+            >> 3
+            
+            # the first contains
+            # - the first 2 regular fields (2*4 = 8 channels)
+            # - 2 vector fields (irrep(1)) (2*2 = 4 channels)
+            # and, therefore, contains 12 channels
+            geom_tensor.split([0, 4, 6])[0].shape
+            >> torch.Size([10, 12, 7, 7])
+            
+            # the second contains only 2 scalar (trivial) fields (2*1 = 2 channels)
+            geom_tensor.split([0, 4, 6])[1].shape
+            >> torch.Size([10, 2, 7, 7])
+            
+            # the last contains only 1 scalar (trivial) field (1*1 = 1 channels)
+            geom_tensor.split([0, 4, 6])[2].shape
+            >> torch.Size([10, 1, 7, 7])
+            
         
         Args:
             breaks (list): indices of the fields where to split the tensor

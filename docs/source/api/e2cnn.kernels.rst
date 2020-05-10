@@ -64,6 +64,15 @@ General Steerable Basis for equivariant kernels
 Bases for Group Actions on the Plane
 ------------------------------------
 
+The following factory functions provide an interface to build the bases for kernels equivariant to groups acting on the
+two dimensional plane.
+The names of the functions follow this convention `kernels_[G]_act_R[d]`, where :math:`G` is the origin-preserving isometry
+group while :math:`\R^d` is the space on which it acts, interpreted as the domain of the
+kernel :math:`\kappa: \R^d \to \R^{c_\text{out} \times c_\text{in}}`.
+Here, :math:`d=2` as we only consider the planar setting.
+In the language of `Gauge Equivariant CNNs <https://arxiv.org/abs/1902.04615>`_ , the origin-preserving isometry
+:math:`G` is called *structure group* (or, sometimes, *gauge group*).
+
 Reflections and Continuous Rotations
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 

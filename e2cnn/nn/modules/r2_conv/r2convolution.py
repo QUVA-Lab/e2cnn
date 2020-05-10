@@ -70,10 +70,22 @@ class R2Conv(EquivariantModule):
         For feature fields on :math:`\R^2` (e.g. images), the complete G-steerable kernel spaces for :math:`G \leq \O2`
         is derived in `General E(2)-Equivariant Steerable CNNs <https://arxiv.org/abs/1911.08251>`_.
 
-        During training, in each forward pass the module expand the basis of G-steerable kernels with learned weights
+        During training, in each forward pass the module expands the basis of G-steerable kernels with learned weights
         before calling :func:`torch.nn.functional.conv2d`.
-        When :meth:`~troch.nn.Module.eval()` is called, the filter is built with the current trained weights and stored
+        When :meth:`~torch.nn.Module.eval()` is called, the filter is built with the current trained weights and stored
         for future reuse such that no overhead of expanding the kernel remains.
+        
+        .. warning ::
+            
+            When :meth:`~torch.nn.Module.train()` is called, the attributes :attr:`~e2cnn.nn.R2Conv.filter` and
+            :attr:`~e2cnn.nn.R2Conv.expanded_bias` are discarded to avoid situations of mismatch with the
+            learnable expansion coefficients.
+            See also :meth:`e2cnn.nn.R2Conv.train`.
+            
+            This behaviour can cause problems when storing the :meth:`~torch.nn.Module.state_dict` of a model while in
+            a mode and lately loading it in a model with a different mode, as the attributes of the class change.
+            To avoid this issue, we recommend converting the model to eval mode before storing or loading the state
+            dictionary.
  
         
         The parameters ``basisexpansion``, ``sigma``, ``frequencies_cutoff``, ``rings`` and ``maximum_offset`` are
@@ -295,12 +307,19 @@ class R2Conv(EquivariantModule):
     def train(self, mode=True):
         r"""
         
-        If ``mode=True``, sets the module in training mode and discards the :attr:`~e2cnn.nn.R2Conv.filter` and
-        :attr:`~e2cnn.nn.R2Conv.expanded_bias`.
+        If ``mode=True``, the method sets the module in training mode and discards the :attr:`~e2cnn.nn.R2Conv.filter`
+        and :attr:`~e2cnn.nn.R2Conv.expanded_bias` attributes.
         
-        If ``mode=False``, sets the module in evaluation mode. Moreover, the method builds the filter and the bias using
+        If ``mode=False``, it sets the module in evaluation mode. Moreover, the method builds the filter and the bias using
         the current values of the trainable parameters and store them in :attr:`~e2cnn.nn.R2Conv.filter` and
         :attr:`~e2cnn.nn.R2Conv.expanded_bias` such that they are not recomputed at each forward pass.
+        
+        .. warning ::
+            
+            This behaviour can cause problems when storing the :meth:`~torch.nn.Module.state_dict` of a model while in
+            a mode and lately loading it in a model with a different mode, as the attributes of this class change.
+            To avoid this issue, we recommend converting the model to eval mode before storing or loading the state
+            dictionary.
         
         Args:
             mode (bool, optional): whether to set training mode (``True``) or evaluation mode (``False``).

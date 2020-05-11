@@ -106,7 +106,9 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../../../api/e2cnn.nn.html">e2cnn.nn</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../../../api/e2cnn.nn.html#main-classes">Main Classes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/e2cnn.nn.html#field-type">Field Type</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/e2cnn.nn.html#geometric-tensor">Geometric Tensor</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/e2cnn.nn.html#equivariant-module">Equivariant Module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../api/e2cnn.nn.html#utils">Utils</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../api/e2cnn.nn.html#planar-convolution">Planar Convolution</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../api/e2cnn.nn.html#non-linearities">Non Linearities</a></li>
@@ -303,12 +305,52 @@
 <span class="sd">        The original tensor is split at the *fields* specified by the index list ``breaks``.</span>
 <span class="sd">        </span>
 <span class="sd">        If the tensor is associated with the list of fields :math:`\{\rho_i\}_i`</span>
-<span class="sd">        (see :attr:`e2cnn.nn.FieldType.representations`), the :math:`i`-th output tensor will contain the fields</span>
-<span class="sd">        :math:`\rho_{\text{breaks}[i-1]}, \dots, \rho_{\text{breaks}[i]-1}` of the original tensor.</span>
+<span class="sd">        (see :attr:`e2cnn.nn.FieldType.representations`), the :math:`j`-th output tensor will contain the fields</span>
+<span class="sd">        :math:`\rho_{\text{breaks}[j-1]}, \dots, \rho_{\text{breaks}[j]-1}` of the original tensor.</span>
 <span class="sd">        </span>
 <span class="sd">        If `breaks = None`, the tensor is split at each field.</span>
 <span class="sd">        This is equivalent to using `breaks = list(range(len(self.type)))`.</span>
 <span class="sd">        </span>
+<span class="sd">        Example ::</span>
+<span class="sd">        </span>
+<span class="sd">            space = e2cnn.gspaces.Rot2dOnR2(4)</span>
+<span class="sd">            type = e2cnn.nn.FieldType(space, [</span>
+<span class="sd">                space.regular_repr,     # size = 4</span>
+<span class="sd">                space.regular_repr,     # size = 4</span>
+<span class="sd">                space.irrep(1),         # size = 2</span>
+<span class="sd">                space.irrep(1),         # size = 2</span>
+<span class="sd">                space.trivial_repr,     # size = 1</span>
+<span class="sd">                space.trivial_repr,     # size = 1</span>
+<span class="sd">                space.trivial_repr,     # size = 1</span>
+<span class="sd">            ])                          #  sum = 15</span>
+<span class="sd">            </span>
+<span class="sd">            type.size</span>
+<span class="sd">            &gt;&gt; 15</span>
+<span class="sd">            </span>
+<span class="sd">            geom_tensor = e2cnn.nn.GeometricTensor(torch.randn(10, type.size, 7, 7), type)</span>
+<span class="sd">            </span>
+<span class="sd">            geom_tensor.shape</span>
+<span class="sd">            &gt;&gt; torch.Size([10, 15, 7, 7])</span>
+<span class="sd">            </span>
+<span class="sd">            # split the tensor in 3 parts</span>
+<span class="sd">            len(geom_tensor.split([0, 4, 6]))</span>
+<span class="sd">            &gt;&gt; 3</span>
+<span class="sd">            </span>
+<span class="sd">            # the first contains</span>
+<span class="sd">            # - the first 2 regular fields (2*4 = 8 channels)</span>
+<span class="sd">            # - 2 vector fields (irrep(1)) (2*2 = 4 channels)</span>
+<span class="sd">            # and, therefore, contains 12 channels</span>
+<span class="sd">            geom_tensor.split([0, 4, 6])[0].shape</span>
+<span class="sd">            &gt;&gt; torch.Size([10, 12, 7, 7])</span>
+<span class="sd">            </span>
+<span class="sd">            # the second contains only 2 scalar (trivial) fields (2*1 = 2 channels)</span>
+<span class="sd">            geom_tensor.split([0, 4, 6])[1].shape</span>
+<span class="sd">            &gt;&gt; torch.Size([10, 2, 7, 7])</span>
+<span class="sd">            </span>
+<span class="sd">            # the last contains only 1 scalar (trivial) field (1*1 = 1 channels)</span>
+<span class="sd">            geom_tensor.split([0, 4, 6])[2].shape</span>
+<span class="sd">            &gt;&gt; torch.Size([10, 1, 7, 7])</span>
+<span class="sd">            </span>
 <span class="sd">        </span>
 <span class="sd">        Args:</span>
 <span class="sd">            breaks (list): indices of the fields where to split the tensor</span>

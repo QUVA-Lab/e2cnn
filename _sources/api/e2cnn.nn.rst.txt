@@ -21,18 +21,16 @@ This subpackage depends on :doc:`e2cnn.group` and :doc:`e2cnn.gspaces`.
     :backlinks: top
 
 
-Main Classes
-------------
 
 Field Type
-~~~~~~~~~~
+----------
 
 .. autoclass:: e2cnn.nn.FieldType
     :members:
     :undoc-members:
 
 Geometric Tensor
-~~~~~~~~~~~~~~~~
+----------------
 
 .. autoclass:: e2cnn.nn.GeometricTensor
     :members:
@@ -41,7 +39,7 @@ Geometric Tensor
 
 
 Equivariant Module
-~~~~~~~~~~~~~~~~~~
+------------------
 
 .. autoclass:: e2cnn.nn.EquivariantModule
     :members:

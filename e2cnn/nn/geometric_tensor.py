@@ -8,6 +8,8 @@ from .field_type import FieldType
 from typing import List, Union
 
 import itertools
+from collections.abc import Iterable
+
 
 __all__ = ["GeometricTensor", "tensor_directsum"]
 
@@ -19,21 +21,21 @@ class GeometricTensor:
         
         A GeometricTensor can be interpreted as a *typed* tensor.
         It is wrapping a common :class:`torch.Tensor` and endows it with a (compatible) :class:`~e2cnn.nn.FieldType` as
-        transformation law.
+        *transformation law*.
         
         The :class:`~e2cnn.nn.FieldType` describes the action of a group :math:`G` on the tensor.
         This action includes both a transformation of the base space and a transformation of the channels according to
         a :math:`G`-representation :math:`\rho`.
         
-        All neural network operations have :class:`~e2cnn.nn.GeometricTensor` s as inputs and outputs.
-        They perform a dynamic typechecking, ensuring that the transformation law of the data and the operation match.
+        All *e2cnn* neural network operations have :class:`~e2cnn.nn.GeometricTensor` s as inputs and outputs.
+        They perform a dynamic typechecking, ensuring that the transformation laws of the data and the operation match.
         See also :class:`~e2cnn.nn.EquivariantModule`.
  
         As usual, the first dimension of the tensor is interpreted as the batch dimension. The second is the fiber
-        dimension (usually interpreted as the channels dimension). The following dimensions are the base space
-        dimensions (eg. the spatial dimension in a conventional CNN).
+        (or channel) dimension, which is associated with a group representation by the field type. The following
+        dimensions are the spatial dimensions (like in a conventional CNN).
         
-        The operations of vector addition and scalar product are supported.
+        The operations of **addition** and **scalar product** are supported.
         For example::
         
             gs = e2cnn.gspaces.Rot2dOnR2(8)
@@ -41,7 +43,7 @@ class GeometricTensor:
             t1 = e2cnn.nn.GeometricTensor(torch.randn(1, 24, 3, 3), type)
             t2 = e2cnn.nn.GeometricTensor(torch.randn(1, 24, 3, 3), type)
             
-            # vector addition
+            # addition
             t3 = t1 + t2
             
             # scalar product
@@ -58,12 +60,24 @@ class GeometricTensor:
             The multiplication of a PyTorch tensor containing only a scalar with a GeometricTensor is only supported
             when using PyTorch 1.4 or higher (see this `issue <https://github.com/pytorch/pytorch/issues/26333>`_ )
             
-        A GeometricTensor supports slicing in a similar way to PyTorch's :class:`torch.Tensor`.
+        A GeometricTensor supports **slicing** in a similar way to PyTorch's :class:`torch.Tensor`.
         More precisely, slicing along the batch (1st) and the spatial (3rd, 4th, ...) dimensions works as usual.
-        However, slicing along the channel dimension could break equivariance by splitting the channels belonging to the
-        same field.
-        For this reason, indexing on the second dimension is defined over fields instead of channels.
-        A few examples can make this behavior clearer::
+        However, slicing the fiber (2nd) dimension would break equivariance when splitting the channels
+        belonging to the same field.
+        For this reason, on the second dimension, it is defined over *fields* instead of channels.
+        
+        .. warning ::
+            
+            GeometricTensor only supports basic *slicing* but it does **not** support *advanced indexing* (see NumPy's
+            documentation about
+            `indexing <https://docs.scipy.org/doc/numpy/reference/arrays.indexing.html#basic-slicing-and-indexing>`_
+            for more details).
+            Moreover, with respect to NumPy and PyTorch, an index containing a single integer value **does not** reduce
+            the dimensionality of the tensor.
+            In this way, the resulting tensor can always be interpreted as a GeometricTensor.
+            
+        
+        A few examples can make the behavior clearer::
         
             # Example of GeometricTensor slicing
             space = e2cnn.gspaces.Rot2dOnR2(4)
@@ -80,7 +94,7 @@ class GeometricTensor:
             
             # this FieldType contains 8 fields
             len(type)
-            >> 8
+            >> 7
             
             # the size of this FieldType is equal to the sum of the sizes of each of its fields
             type.size
@@ -94,6 +108,9 @@ class GeometricTensor:
             geom_tensor[1:3, :, 2:5, 2:5].shape
             >> torch.Size([2, 15, 3, 3])
             
+            geom_tensor[..., 2:5].shape
+            >> torch.Size([10, 15, 9, 3])
+            
             # the tensor contains the fields 1:4, i.e 1, 2 and 3
             # these fields have size, respectively, 4, 2 and 2
             # so the resulting tensor has 8 channels
@@ -103,32 +120,32 @@ class GeometricTensor:
             # the tensor contains the fields 0:6:2, i.e 0, 2 and 4
             # these fields have size, respectively, 4, 2 and 1
             # so the resulting tensor has 7 channels
-            geom_tensor[:, 0:6:2, ...].shape
+            geom_tensor[:, 0:6:2].shape
             >> torch.Size([10, 7, 9, 9])
             
-            # the tensor contains the fields 0, 3 and 5
-            # these fields have size, respectively, 4, 2 and 1
-            # so the resulting tensor has 7 channels
-            geom_tensor[:, [0, 3, 5]].shape
-            >> torch.Size([10, 7, 9, 9])
-            
-            geom_tensor[..., 2:5].shape
-            >> torch.Size([10, 15, 9, 3])
+            # the tensor contains only the field 2, which has size 2
+            # note, also, that even though a single index is used for the batch dimension, the resulting tensor
+            # still has 4 dimensions
+            geom_tensor[3, 2].shape
+            >> torch.Size(1, 2, 9, 9)
         
-        When a continuous (step=1) slice is used over the fields/channels dimension (the 2nd axis), it is converted
-        into a continuous slice over the channels.
-        This is not possible when the step is greater than 1 or negative.
-        In such cases, the slice over the fields is converted into an index over the channels.
-        However, this is less efficient as indexing is usually slower than slicing.
+        .. warning ::
+        
+            *Slicing* over the fiber (2nd) dimension with ``step > 1`` or with a negative step needs to be converted
+            into an *index* over the channels.
+            This means that, in these cases, slicing behaves like *advanced indexing* in PyTorch and NumPy
+            **returning a copy instead of a view**.
+            For more details, see the *note* `here <https://pytorch.org/docs/stable/tensor_view.html>`_ and
+            *NumPy*'s `docs <https://docs.scipy.org/doc/numpy/reference/arrays.indexing.html>`_ .
         
         .. note ::
     
             Slicing is not supported for setting values inside the tensor
-            (:meth:`~object.__setitem__` is not implemented).
-            Indeed, this operation can break the symmetry of the tensor which may not transform anymore according to
-            its transformation law (specified by ``type``).
-            In case this feature is needed, one can directly access the underlying :class:`torch.Tensor`, e.g.
-            ``geom_tensor.tensor[:3, :, 2:5, 2:5] = torch.randn(3, 4, 3, 3)``.
+            (i.e. :meth:`~object.__setitem__` is not implemented).
+            Indeed, depending on the values which are assigned, this operation can break the symmetry of the tensor
+            which may not transform anymore according to its transformation law (specified by ``type``).
+            In case this feature is necessary, one can directly access the underlying :class:`torch.Tensor`, e.g.
+            ``geom_tensor.tensor[:3, :, 2:5, 2:5] = torch.randn(3, 4, 3, 3)``, although this is not recommended.
             
             
         Args:
@@ -143,8 +160,9 @@ class GeometricTensor:
         assert isinstance(tensor, torch.Tensor)
         assert isinstance(type, FieldType)
         
-        assert len(tensor.shape) > 2
-        assert tensor.shape[1] == type.size, (tensor.shape, type.size)
+        assert len(tensor.shape) >= 2
+        assert tensor.shape[1] == type.size, \
+            f"Error! The size of the tensor {tensor.shape} does not match the size of the field type {type.size}."
         
         # torch.Tensor: PyTorch tensor containing the data
         self.tensor = tensor
@@ -372,19 +390,22 @@ class GeometricTensor:
     def __getitem__(self, slices) -> 'GeometricTensor':
         r'''
         
-        A GeometricTensor supports slicing in a similar way to PyTorch's :class:`torch.Tensor`.
+        A GeometricTensor supports *slicing* in a similar way to PyTorch's :class:`torch.Tensor`.
         More precisely, slicing along the batch (1st) and the spatial (3rd, 4th, ...) dimensions works as usual.
         However, slicing along the channel dimension could break equivariance by splitting the channels belonging to the
         same field.
-        For this reason, indexing on the second dimension is not defined over the channels but over fields.
+        For this reason, slicing on the second dimension is not defined over the channels but over fields.
         
         When a continuous (step=1) slice is used over the fields/channels dimension (the 2nd axis), it is converted
         into a continuous slice over the channels.
         This is not possible when the step is greater than 1 or negative.
         In such cases, the slice over the fields needs to be converted into an index over the channels.
-        However, this is less efficient as indexing is usually slower than slicing.
         
-        Slicing is not supported for setting values inside the tensor (:meth:`object.__setitem__` is not implemented).
+        Moreover, when a single integer is used to index an axis, that axis is not discarded as in PyTorch but is
+        preserved with size 1.
+        
+        Slicing is not supported for setting values inside the tensor (i.e. :meth:`object.__setitem__`
+        is not implemented).
         
         '''
         
@@ -399,6 +420,13 @@ class GeometricTensor:
                 )
         else:
             slices = (slices,)
+            
+        for i, idx in enumerate(slices):
+            if not (isinstance(idx, slice) or isinstance(idx, int) or idx == Ellipsis):
+                raise TypeError(f'''
+                        Error! Advanced Indexing over a GeometricTensor is not supported yet.
+                        Currently, only basic slicing is supported.
+                ''')
         
         naxes = len(self.tensor.shape)
         
@@ -423,14 +451,30 @@ class GeometricTensor:
             else:
                 # other indices are preserved
                 expanded_idxs.append(s)
-                
+        
+        # maximum index per dimension
+        idx_max = list(self.tensor.shape)
+        idx_max[1] = len(self.type)
+        
+        # If an index containing a single integer is passed, it is converted into a slice
+        # which starts at that index and ends at the following one.
+        # In this way, when passing a single integer to index a dimension, the resulting tensor will still have that
+        # dimension with size 1
+        for i in range(len(expanded_idxs)):
+            if isinstance(expanded_idxs[i], int):
+                idx = expanded_idxs[i]
+                if idx < 0:
+                    # convert a negative index into a positive index
+                    idx = idx_max[i] + idx
+                expanded_idxs[i] = slice(idx, idx+1, 1)
+        
         if len(expanded_idxs) == 1:
             # if only the first dimension is indexed, there is no need to do anything
             # the resulting tensor will have the same type of the original as the indexing does not affect the
             # channels/fields dimension
             type = self.type
             
-        elif isinstance(expanded_idxs[1], slice) and expanded_idxs[1].step is None or expanded_idxs[1].step == 1:
+        elif isinstance(expanded_idxs[1], slice) and (expanded_idxs[1].step is None or expanded_idxs[1].step == 1):
             # If the index over the fields is a slice and it is contiguous, we can convert it into a
             # contiguous slice over the channels.
             # The slice will start from the first channel of the first field and will stop at the last channel
@@ -458,8 +502,22 @@ class GeometricTensor:
             # into an index over the channels. We first use the index provided to retrieve the list of fields
             # and then add the index of their channels in a list of indexes
             idxs = []
+
+            # convert the indices into iterable and retrieve the subset of field representations
+            if isinstance(expanded_idxs[1], slice):
+                fields = range(len(self.type))[expanded_idxs[1]]
+                representations = self.type.representations[expanded_idxs[1]]
+            elif isinstance(expanded_idxs[1], int):
+                fields = [expanded_idxs[1]]
+                representations = self.type.representations[expanded_idxs[1]]
+            elif isinstance(expanded_idxs[1], Iterable):
+                fields = expanded_idxs[1]
+                representations = [self.type.representations[f] for f in fields]
+            else:
+                raise ValueError('Index over the fiber (2nd) dimension not recognized.')
+
             # iterate over all fields indexed by the user
-            for field in range(len(self.type))[expanded_idxs[1]]:
+            for field in fields:
                 # append the indexes of the channels in the field
                 idxs.append(list(
                     range(
@@ -470,7 +528,7 @@ class GeometricTensor:
                 ))
 
             # only a subset of the fields are preserved by this index
-            type = FieldType(self.type.gspace, self.type.representations[expanded_idxs[1]])
+            type = FieldType(self.type.gspace, representations)
             
             # concatenate all the channel indexes
             channel_idxs = list(itertools.chain(*idxs))

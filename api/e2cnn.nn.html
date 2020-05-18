@@ -190,8 +190,8 @@
 <p>This subpackage provides implementations of equivariant neural network modules.</p>
 <p>In an equivariant network, features are associated with a transformation law under actions of a symmetry group.
 The transformation law of a feature field is implemented by its <a class="reference internal" href="#e2cnn.nn.FieldType" title="e2cnn.nn.FieldType"><code class="xref py py-class docutils literal notranslate"><span class="pre">FieldType</span></code></a> which can be interpreted as a data type.
-A <a class="reference internal" href="#e2cnn.nn.GeometricTensor" title="e2cnn.nn.GeometricTensor"><code class="xref py py-class docutils literal notranslate"><span class="pre">GeometricTensor</span></code></a> is wrapping a <a class="reference external" href="https://pytorch.org/docs/master/tensors.html#torch.Tensor" title="(in PyTorch vmaster (1.6.0a0+324dc16 ))"><code class="xref py py-class docutils literal notranslate"><span class="pre">torch.Tensor</span></code></a> to endow it with a <a class="reference internal" href="#e2cnn.nn.FieldType" title="e2cnn.nn.FieldType"><code class="xref py py-class docutils literal notranslate"><span class="pre">FieldType</span></code></a>.
-Geometric tensors are processed by <a class="reference internal" href="#e2cnn.nn.EquivariantModule" title="e2cnn.nn.EquivariantModule"><code class="xref py py-class docutils literal notranslate"><span class="pre">EquivariantModule</span></code></a> s which are <a class="reference external" href="https://pytorch.org/docs/master/generated/torch.nn.Module.html#torch.nn.Module" title="(in PyTorch vmaster (1.6.0a0+324dc16 ))"><code class="xref py py-class docutils literal notranslate"><span class="pre">torch.nn.Module</span></code></a> s that guarantee the
+A <a class="reference internal" href="#e2cnn.nn.GeometricTensor" title="e2cnn.nn.GeometricTensor"><code class="xref py py-class docutils literal notranslate"><span class="pre">GeometricTensor</span></code></a> is wrapping a <a class="reference external" href="https://pytorch.org/docs/master/tensors.html#torch.Tensor" title="(in PyTorch vmaster (1.6.0a0+176174a ))"><code class="xref py py-class docutils literal notranslate"><span class="pre">torch.Tensor</span></code></a> to endow it with a <a class="reference internal" href="#e2cnn.nn.FieldType" title="e2cnn.nn.FieldType"><code class="xref py py-class docutils literal notranslate"><span class="pre">FieldType</span></code></a>.
+Geometric tensors are processed by <a class="reference internal" href="#e2cnn.nn.EquivariantModule" title="e2cnn.nn.EquivariantModule"><code class="xref py py-class docutils literal notranslate"><span class="pre">EquivariantModule</span></code></a> s which are <a class="reference external" href="https://pytorch.org/docs/master/generated/torch.nn.Module.html#torch.nn.Module" title="(in PyTorch vmaster (1.6.0a0+176174a ))"><code class="xref py py-class docutils literal notranslate"><span class="pre">torch.nn.Module</span></code></a> s that guarantee the
 specified behavior of their output fields given a transformation of their input fields.</p>
 <p>This subpackage depends on <a class="reference internal" href="e2cnn.group.html"><span class="doc">e2cnn.group</span></a> and <a class="reference internal" href="e2cnn.gspaces.html"><span class="doc">e2cnn.gspaces</span></a>.</p>
 <div class="contents local topic" id="contents">
@@ -403,7 +403,7 @@ It is the concatenation of the irreps in each representation in <code class="xre
 <dl class="method">
 <dt id="e2cnn.nn.FieldType.get_dense_change_of_basis">
 <code class="descname">get_dense_change_of_basis</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/e2cnn/nn/field_type.html#FieldType.get_dense_change_of_basis"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#e2cnn.nn.FieldType.get_dense_change_of_basis" title="Permalink to this definition">¶</a></dt>
-<dd><p>The method returns a dense <a class="reference external" href="https://pytorch.org/docs/master/tensors.html#torch.Tensor" title="(in PyTorch vmaster (1.6.0a0+324dc16 ))"><code class="xref py py-class docutils literal notranslate"><span class="pre">torch.Tensor</span></code></a> containing a copy of the change-of-basis matrix.</p>
+<dd><p>The method returns a dense <a class="reference external" href="https://pytorch.org/docs/master/tensors.html#torch.Tensor" title="(in PyTorch vmaster (1.6.0a0+176174a ))"><code class="xref py py-class docutils literal notranslate"><span class="pre">torch.Tensor</span></code></a> containing a copy of the change-of-basis matrix.</p>
 <div class="admonition seealso">
 <p class="first admonition-title">See also</p>
 <p class="last">See <a class="reference internal" href="#e2cnn.nn.FieldType.change_of_basis" title="e2cnn.nn.FieldType.change_of_basis"><code class="xref py py-attr docutils literal notranslate"><span class="pre">e2cnn.nn.FieldType.change_of_basis</span></code></a> for more details.</p>
@@ -413,7 +413,7 @@ It is the concatenation of the irreps in each representation in <code class="xre
 <dl class="method">
 <dt id="e2cnn.nn.FieldType.get_dense_change_of_basis_inv">
 <code class="descname">get_dense_change_of_basis_inv</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/e2cnn/nn/field_type.html#FieldType.get_dense_change_of_basis_inv"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#e2cnn.nn.FieldType.get_dense_change_of_basis_inv" title="Permalink to this definition">¶</a></dt>
-<dd><p>The method returns a dense <a class="reference external" href="https://pytorch.org/docs/master/tensors.html#torch.Tensor" title="(in PyTorch vmaster (1.6.0a0+324dc16 ))"><code class="xref py py-class docutils literal notranslate"><span class="pre">torch.Tensor</span></code></a> containing a copy of the inverse of the
+<dd><p>The method returns a dense <a class="reference external" href="https://pytorch.org/docs/master/tensors.html#torch.Tensor" title="(in PyTorch vmaster (1.6.0a0+176174a ))"><code class="xref py py-class docutils literal notranslate"><span class="pre">torch.Tensor</span></code></a> containing a copy of the inverse of the
 change-of-basis matrix.</p>
 <div class="admonition seealso">
 <p class="first admonition-title">See also</p>
@@ -445,7 +445,7 @@ the base space.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>input</strong> (<a class="reference external" href="https://pytorch.org/docs/master/tensors.html#torch.Tensor" title="(in PyTorch vmaster (1.6.0a0+324dc16 ))"><em>torch.Tensor</em></a>) – input tensor</li>
+<li><strong>input</strong> (<a class="reference external" href="https://pytorch.org/docs/master/tensors.html#torch.Tensor" title="(in PyTorch vmaster (1.6.0a0+176174a ))"><em>torch.Tensor</em></a>) – input tensor</li>
 <li><strong>element</strong> – element of the fiber group</li>
 </ul>
 </td>
@@ -567,6 +567,22 @@ in the current field type</td>
 </table>
 </dd></dl>
 
+<dl class="attribute">
+<dt id="e2cnn.nn.FieldType.fields_end">
+<code class="descname">fields_end</code><a class="headerlink" href="#e2cnn.nn.FieldType.fields_end" title="Permalink to this definition">¶</a></dt>
+<dd><p>Array containing the index of the first channel following each field.
+More precisely, the integer in the <span class="math notranslate nohighlight">\(i\)</span>-th position is equal to the index of the last channel of
+the <span class="math notranslate nohighlight">\(i\)</span>-th field plus <span class="math notranslate nohighlight">\(1\)</span>.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="e2cnn.nn.FieldType.fields_start">
+<code class="descname">fields_start</code><a class="headerlink" href="#e2cnn.nn.FieldType.fields_start" title="Permalink to this definition">¶</a></dt>
+<dd><p>Array containing the index of the first channel of each field.
+More precisely, the integer in the <span class="math notranslate nohighlight">\(i\)</span>-th position is equal to the index of the first channel of
+the <span class="math notranslate nohighlight">\(i\)</span>-th field.</p>
+</dd></dl>
+
 <dl class="method">
 <dt id="e2cnn.nn.FieldType.group_by_labels">
 <code class="descname">group_by_labels</code><span class="sig-paren">(</span><em>labels</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/e2cnn/nn/field_type.html#FieldType.group_by_labels"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#e2cnn.nn.FieldType.group_by_labels" title="Permalink to this definition">¶</a></dt>
@@ -612,25 +628,25 @@ and group them accordingly into new <a class="reference internal" href="#e2cnn.n
 <dt id="e2cnn.nn.GeometricTensor">
 <em class="property">class </em><code class="descname">GeometricTensor</code><span class="sig-paren">(</span><em>tensor</em>, <em>type</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/e2cnn/nn/geometric_tensor.html#GeometricTensor"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#e2cnn.nn.GeometricTensor" title="Permalink to this definition">¶</a></dt>
 <dd><p>A GeometricTensor can be interpreted as a <em>typed</em> tensor.
-It is wrapping a common <a class="reference external" href="https://pytorch.org/docs/master/tensors.html#torch.Tensor" title="(in PyTorch vmaster (1.6.0a0+324dc16 ))"><code class="xref py py-class docutils literal notranslate"><span class="pre">torch.Tensor</span></code></a> and endows it with a (compatible) <a class="reference internal" href="#e2cnn.nn.FieldType" title="e2cnn.nn.FieldType"><code class="xref py py-class docutils literal notranslate"><span class="pre">FieldType</span></code></a> as
-transformation law.</p>
+It is wrapping a common <a class="reference external" href="https://pytorch.org/docs/master/tensors.html#torch.Tensor" title="(in PyTorch vmaster (1.6.0a0+176174a ))"><code class="xref py py-class docutils literal notranslate"><span class="pre">torch.Tensor</span></code></a> and endows it with a (compatible) <a class="reference internal" href="#e2cnn.nn.FieldType" title="e2cnn.nn.FieldType"><code class="xref py py-class docutils literal notranslate"><span class="pre">FieldType</span></code></a> as
+<em>transformation law</em>.</p>
 <p>The <a class="reference internal" href="#e2cnn.nn.FieldType" title="e2cnn.nn.FieldType"><code class="xref py py-class docutils literal notranslate"><span class="pre">FieldType</span></code></a> describes the action of a group <span class="math notranslate nohighlight">\(G\)</span> on the tensor.
 This action includes both a transformation of the base space and a transformation of the channels according to
 a <span class="math notranslate nohighlight">\(G\)</span>-representation <span class="math notranslate nohighlight">\(\rho\)</span>.</p>
-<p>All neural network operations have <a class="reference internal" href="#e2cnn.nn.GeometricTensor" title="e2cnn.nn.GeometricTensor"><code class="xref py py-class docutils literal notranslate"><span class="pre">GeometricTensor</span></code></a> s as inputs and outputs.
-They perform a dynamic typechecking, ensuring that the transformation law of the data and the operation match.
+<p>All <em>e2cnn</em> neural network operations have <a class="reference internal" href="#e2cnn.nn.GeometricTensor" title="e2cnn.nn.GeometricTensor"><code class="xref py py-class docutils literal notranslate"><span class="pre">GeometricTensor</span></code></a> s as inputs and outputs.
+They perform a dynamic typechecking, ensuring that the transformation laws of the data and the operation match.
 See also <a class="reference internal" href="#e2cnn.nn.EquivariantModule" title="e2cnn.nn.EquivariantModule"><code class="xref py py-class docutils literal notranslate"><span class="pre">EquivariantModule</span></code></a>.</p>
 <p>As usual, the first dimension of the tensor is interpreted as the batch dimension. The second is the fiber
-dimension (usually interpreted as the channels dimension). The following dimensions are the base space
-dimensions (eg. the spatial dimension in a conventional CNN).</p>
-<p>The operations of vector addition and scalar product are supported.
+(or channel) dimension, which is associated with a group representation by the field type. The following
+dimensions are the spatial dimensions (like in a conventional CNN).</p>
+<p>The operations of <strong>addition</strong> and <strong>scalar multiplication</strong> are supported.
 For example:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">gs</span> <span class="o">=</span> <span class="n">e2cnn</span><span class="o">.</span><span class="n">gspaces</span><span class="o">.</span><span class="n">Rot2dOnR2</span><span class="p">(</span><span class="mi">8</span><span class="p">)</span>
 <span class="nb">type</span> <span class="o">=</span> <span class="n">e2cnn</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">FieldType</span><span class="p">(</span><span class="n">gs</span><span class="p">,</span> <span class="p">[</span><span class="n">gs</span><span class="o">.</span><span class="n">regular_repr</span><span class="p">]</span><span class="o">*</span><span class="mi">3</span><span class="p">)</span>
 <span class="n">t1</span> <span class="o">=</span> <span class="n">e2cnn</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">GeometricTensor</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">24</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="nb">type</span><span class="p">)</span>
 <span class="n">t2</span> <span class="o">=</span> <span class="n">e2cnn</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">GeometricTensor</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">24</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="nb">type</span><span class="p">)</span>
 
-<span class="c1"># vector addition</span>
+<span class="c1"># addition</span>
 <span class="n">t3</span> <span class="o">=</span> <span class="n">t1</span> <span class="o">+</span> <span class="n">t2</span>
 
 <span class="c1"># scalar product</span>
@@ -649,18 +665,103 @@ For example:</p>
 <p class="last">The multiplication of a PyTorch tensor containing only a scalar with a GeometricTensor is only supported
 when using PyTorch 1.4 or higher (see this <a class="reference external" href="https://github.com/pytorch/pytorch/issues/26333">issue</a> )</p>
 </div>
+<p>A GeometricTensor supports <strong>slicing</strong> in a similar way to PyTorch’s <a class="reference external" href="https://pytorch.org/docs/master/tensors.html#torch.Tensor" title="(in PyTorch vmaster (1.6.0a0+176174a ))"><code class="xref py py-class docutils literal notranslate"><span class="pre">torch.Tensor</span></code></a>.
+More precisely, slicing along the batch (1st) and the spatial (3rd, 4th, …) dimensions works as usual.
+However, slicing the fiber (2nd) dimension would break equivariance when splitting channels belonging to
+the same field.
+To prevent this, slicing on the second dimension is defined over <em>fields</em> instead of channels.</p>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">GeometricTensor only supports basic <em>slicing</em> but it does <strong>not</strong> support <em>advanced indexing</em> (see NumPy’s
+documentation about
+<a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/arrays.indexing.html#basic-slicing-and-indexing">indexing</a>
+for more details).
+Moreover, in contrast to NumPy and PyTorch, an index containing a single integer value <strong>does not</strong> reduce
+the dimensionality of the tensor.
+In this way, the resulting tensor can always be interpreted as a GeometricTensor.</p>
+</div>
+<p>We give few examples to illustrate this behavior:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Example of GeometricTensor slicing</span>
+<span class="n">space</span> <span class="o">=</span> <span class="n">e2cnn</span><span class="o">.</span><span class="n">gspaces</span><span class="o">.</span><span class="n">Rot2dOnR2</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>
+<span class="nb">type</span> <span class="o">=</span> <span class="n">e2cnn</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">FieldType</span><span class="p">(</span><span class="n">space</span><span class="p">,</span> <span class="p">[</span>
+    <span class="c1"># field type            # index # size</span>
+    <span class="n">space</span><span class="o">.</span><span class="n">regular_repr</span><span class="p">,</span>     <span class="c1">#   0   #  4</span>
+    <span class="n">space</span><span class="o">.</span><span class="n">regular_repr</span><span class="p">,</span>     <span class="c1">#   1   #  4</span>
+    <span class="n">space</span><span class="o">.</span><span class="n">irrep</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span>         <span class="c1">#   2   #  2</span>
+    <span class="n">space</span><span class="o">.</span><span class="n">irrep</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span>         <span class="c1">#   3   #  2</span>
+    <span class="n">space</span><span class="o">.</span><span class="n">trivial_repr</span><span class="p">,</span>     <span class="c1">#   4   #  1</span>
+    <span class="n">space</span><span class="o">.</span><span class="n">trivial_repr</span><span class="p">,</span>     <span class="c1">#   5   #  1</span>
+    <span class="n">space</span><span class="o">.</span><span class="n">trivial_repr</span><span class="p">,</span>     <span class="c1">#   6   #  1</span>
+<span class="p">])</span>                          <span class="c1">#   sum = 15</span>
+
+<span class="c1"># this FieldType contains 8 fields</span>
+<span class="nb">len</span><span class="p">(</span><span class="nb">type</span><span class="p">)</span>
+<span class="o">&gt;&gt;</span> <span class="mi">7</span>
+
+<span class="c1"># the size of this FieldType is equal to the sum of the sizes of each of its fields</span>
+<span class="nb">type</span><span class="o">.</span><span class="n">size</span>
+<span class="o">&gt;&gt;</span> <span class="mi">15</span>
+
+<span class="n">geom_tensor</span> <span class="o">=</span> <span class="n">e2cnn</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">GeometricTensor</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="nb">type</span><span class="o">.</span><span class="n">size</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">9</span><span class="p">),</span> <span class="nb">type</span><span class="p">)</span>
+
+<span class="n">geom_tensor</span><span class="o">.</span><span class="n">shape</span>
+<span class="o">&gt;&gt;</span> <span class="n">torch</span><span class="o">.</span><span class="n">Size</span><span class="p">([</span><span class="mi">10</span><span class="p">,</span> <span class="mi">15</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">9</span><span class="p">])</span>
+
+<span class="n">geom_tensor</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="mi">3</span><span class="p">,</span> <span class="p">:,</span> <span class="mi">2</span><span class="p">:</span><span class="mi">5</span><span class="p">,</span> <span class="mi">2</span><span class="p">:</span><span class="mi">5</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span>
+<span class="o">&gt;&gt;</span> <span class="n">torch</span><span class="o">.</span><span class="n">Size</span><span class="p">([</span><span class="mi">2</span><span class="p">,</span> <span class="mi">15</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">])</span>
+
+<span class="n">geom_tensor</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="mi">2</span><span class="p">:</span><span class="mi">5</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span>
+<span class="o">&gt;&gt;</span> <span class="n">torch</span><span class="o">.</span><span class="n">Size</span><span class="p">([</span><span class="mi">10</span><span class="p">,</span> <span class="mi">15</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">3</span><span class="p">])</span>
+
+<span class="c1"># the tensor contains the fields 1:4, i.e 1, 2 and 3</span>
+<span class="c1"># these fields have size, respectively, 4, 2 and 2</span>
+<span class="c1"># so the resulting tensor has 8 channels</span>
+<span class="n">geom_tensor</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">:</span><span class="mi">4</span><span class="p">,</span> <span class="o">...</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span>
+<span class="o">&gt;&gt;</span> <span class="n">torch</span><span class="o">.</span><span class="n">Size</span><span class="p">([</span><span class="mi">10</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">9</span><span class="p">])</span>
+
+<span class="c1"># the tensor contains the fields 0:6:2, i.e 0, 2 and 4</span>
+<span class="c1"># these fields have size, respectively, 4, 2 and 1</span>
+<span class="c1"># so the resulting tensor has 7 channels</span>
+<span class="n">geom_tensor</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">:</span><span class="mi">6</span><span class="p">:</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span>
+<span class="o">&gt;&gt;</span> <span class="n">torch</span><span class="o">.</span><span class="n">Size</span><span class="p">([</span><span class="mi">10</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">9</span><span class="p">])</span>
+
+<span class="c1"># the tensor contains only the field 2, which has size 2</span>
+<span class="c1"># note, also, that even though a single index is used for the batch dimension, the resulting tensor</span>
+<span class="c1"># still has 4 dimensions</span>
+<span class="n">geom_tensor</span><span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span>
+<span class="o">&gt;&gt;</span> <span class="n">torch</span><span class="o">.</span><span class="n">Size</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">9</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last"><em>Slicing</em> over the fiber (2nd) dimension with <code class="docutils literal notranslate"><span class="pre">step</span> <span class="pre">&gt;</span> <span class="pre">1</span></code> or with a negative step is converted
+into <em>indexing</em> over the channels.
+This means that, in these cases, slicing behaves like <em>advanced indexing</em> in PyTorch and NumPy
+<strong>returning a copy instead of a view</strong>.
+For more details, see the <em>note</em> <a class="reference external" href="https://pytorch.org/docs/stable/tensor_view.html">here</a> and
+<em>NumPy</em>’s <a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/arrays.indexing.html">docs</a> .</p>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Slicing is not supported for setting values inside the tensor
+(i.e. <a class="reference external" href="https://docs.python.org/3/reference/datamodel.html#object.__setitem__" title="(in Python v3.8)"><code class="xref py py-meth docutils literal notranslate"><span class="pre">__setitem__()</span></code></a> is not implemented).
+Indeed, depending on the values which are assigned, this operation can break the symmetry of the tensor
+which may not transform anymore according to its transformation law (specified by <code class="docutils literal notranslate"><span class="pre">type</span></code>).
+In case this feature is necessary, one can directly access the underlying <a class="reference external" href="https://pytorch.org/docs/master/tensors.html#torch.Tensor" title="(in PyTorch vmaster (1.6.0a0+176174a ))"><code class="xref py py-class docutils literal notranslate"><span class="pre">torch.Tensor</span></code></a>, e.g.
+<code class="docutils literal notranslate"><span class="pre">geom_tensor.tensor[:3,</span> <span class="pre">:,</span> <span class="pre">2:5,</span> <span class="pre">2:5]</span> <span class="pre">=</span> <span class="pre">torch.randn(3,</span> <span class="pre">4,</span> <span class="pre">3,</span> <span class="pre">3)</span></code>, although this is not recommended.</p>
+</div>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>tensor</strong> (<a class="reference external" href="https://pytorch.org/docs/master/tensors.html#torch.Tensor" title="(in PyTorch vmaster (1.6.0a0+324dc16 ))"><em>torch.Tensor</em></a>) – the tensor data</li>
+<li><strong>tensor</strong> (<a class="reference external" href="https://pytorch.org/docs/master/tensors.html#torch.Tensor" title="(in PyTorch vmaster (1.6.0a0+176174a ))"><em>torch.Tensor</em></a>) – the tensor data</li>
 <li><strong>type</strong> (<a class="reference internal" href="#e2cnn.nn.FieldType" title="e2cnn.nn.FieldType"><em>FieldType</em></a>) – the type of the tensor, modeling its transformation law</li>
 </ul>
 </td>
 </tr>
 <tr class="field-even field"><th class="field-name">Variables:</th><td class="field-body"><ul class="first last simple">
-<li><strong>tensor</strong> (<a class="reference external" href="https://pytorch.org/docs/master/tensors.html#torch.Tensor" title="(in PyTorch vmaster (1.6.0a0+324dc16 ))"><em>torch.Tensor</em></a>) – </li>
+<li><strong>tensor</strong> (<a class="reference external" href="https://pytorch.org/docs/master/tensors.html#torch.Tensor" title="(in PyTorch vmaster (1.6.0a0+176174a ))"><em>torch.Tensor</em></a>) – </li>
 <li><strong>type</strong> (<a class="reference internal" href="#e2cnn.nn.FieldType" title="e2cnn.nn.FieldType"><em>FieldType</em></a>) – </li>
 </ul>
 </td>
@@ -829,7 +930,7 @@ field type of this tensor.</p>
 <dd><p>Alias for <code class="docutils literal notranslate"><span class="pre">self.tensor.size()</span></code></p>
 <div class="admonition seealso">
 <p class="first admonition-title">See also</p>
-<p class="last"><a class="reference external" href="https://pytorch.org/docs/master/tensors.html#torch.Tensor.size" title="(in PyTorch vmaster (1.6.0a0+324dc16 ))"><code class="xref py py-meth docutils literal notranslate"><span class="pre">torch.Tensor.size()</span></code></a></p>
+<p class="last"><a class="reference external" href="https://pytorch.org/docs/master/tensors.html#torch.Tensor.size" title="(in PyTorch vmaster (1.6.0a0+176174a ))"><code class="xref py py-meth docutils literal notranslate"><span class="pre">torch.Tensor.size()</span></code></a></p>
 </div>
 </dd></dl>
 
@@ -837,8 +938,26 @@ field type of this tensor.</p>
 <dt id="e2cnn.nn.GeometricTensor.to">
 <code class="descname">to</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/e2cnn/nn/geometric_tensor.html#GeometricTensor.to"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#e2cnn.nn.GeometricTensor.to" title="Permalink to this definition">¶</a></dt>
 <dd><p>Alias for <code class="docutils literal notranslate"><span class="pre">self.tensor.to(*args,</span> <span class="pre">**kwargs)</span></code>.</p>
-<p>Applies <a class="reference external" href="https://pytorch.org/docs/master/tensors.html#torch.Tensor.to" title="(in PyTorch vmaster (1.6.0a0+324dc16 ))"><code class="xref py py-meth docutils literal notranslate"><span class="pre">torch.Tensor.to()</span></code></a> to the underlying tensor and wraps the resulting tensor in a new
+<p>Applies <a class="reference external" href="https://pytorch.org/docs/master/tensors.html#torch.Tensor.to" title="(in PyTorch vmaster (1.6.0a0+176174a ))"><code class="xref py py-meth docutils literal notranslate"><span class="pre">torch.Tensor.to()</span></code></a> to the underlying tensor and wraps the resulting tensor in a new
 <a class="reference internal" href="#e2cnn.nn.GeometricTensor" title="e2cnn.nn.GeometricTensor"><code class="xref py py-class docutils literal notranslate"><span class="pre">GeometricTensor</span></code></a> with the same type.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="e2cnn.nn.GeometricTensor.__getitem__">
+<code class="descname">__getitem__</code><span class="sig-paren">(</span><em>slices</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/e2cnn/nn/geometric_tensor.html#GeometricTensor.__getitem__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#e2cnn.nn.GeometricTensor.__getitem__" title="Permalink to this definition">¶</a></dt>
+<dd><p>A GeometricTensor supports <em>slicing</em> in a similar way to PyTorch’s <a class="reference external" href="https://pytorch.org/docs/master/tensors.html#torch.Tensor" title="(in PyTorch vmaster (1.6.0a0+176174a ))"><code class="xref py py-class docutils literal notranslate"><span class="pre">torch.Tensor</span></code></a>.
+More precisely, slicing along the batch (1st) and the spatial (3rd, 4th, …) dimensions works as usual.
+However, slicing along the channel dimension could break equivariance by splitting the channels belonging to the
+same field.
+For this reason, slicing on the second dimension is not defined over the channels but over fields.</p>
+<p>When a continuous (step=1) slice is used over the fields/channels dimension (the 2nd axis), it is converted
+into a continuous slice over the channels.
+This is not possible when the step is greater than 1 or negative.
+In such cases, the slice over the fields needs to be converted into an index over the channels.</p>
+<p>Moreover, when a single integer is used to index an axis, that axis is not discarded as in PyTorch but is
+preserved with size 1.</p>
+<p>Slicing is not supported for setting values inside the tensor (i.e. <a class="reference external" href="https://docs.python.org/3/reference/datamodel.html#object.__setitem__" title="(in Python v3.8)"><code class="xref py py-meth docutils literal notranslate"><span class="pre">object.__setitem__()</span></code></a>
+is not implemented).</p>
 </dd></dl>
 
 </dd></dl>
@@ -850,16 +969,16 @@ field type of this tensor.</p>
 <dt id="e2cnn.nn.EquivariantModule">
 <em class="property">class </em><code class="descname">EquivariantModule</code><a class="reference internal" href="../_modules/e2cnn/nn/modules/equivariant_module.html#EquivariantModule"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#e2cnn.nn.EquivariantModule" title="Permalink to this definition">¶</a></dt>
 <dd><p>Abstract base class for all equivariant modules.</p>
-<p>An <a class="reference internal" href="#e2cnn.nn.EquivariantModule" title="e2cnn.nn.EquivariantModule"><code class="xref py py-class docutils literal notranslate"><span class="pre">EquivariantModule</span></code></a> is a subclass of <a class="reference external" href="https://pytorch.org/docs/master/generated/torch.nn.Module.html#torch.nn.Module" title="(in PyTorch vmaster (1.6.0a0+324dc16 ))"><code class="xref py py-class docutils literal notranslate"><span class="pre">torch.nn.Module</span></code></a>.
+<p>An <a class="reference internal" href="#e2cnn.nn.EquivariantModule" title="e2cnn.nn.EquivariantModule"><code class="xref py py-class docutils literal notranslate"><span class="pre">EquivariantModule</span></code></a> is a subclass of <a class="reference external" href="https://pytorch.org/docs/master/generated/torch.nn.Module.html#torch.nn.Module" title="(in PyTorch vmaster (1.6.0a0+176174a ))"><code class="xref py py-class docutils literal notranslate"><span class="pre">torch.nn.Module</span></code></a>.
 It follows that any subclass of <a class="reference internal" href="#e2cnn.nn.EquivariantModule" title="e2cnn.nn.EquivariantModule"><code class="xref py py-class docutils literal notranslate"><span class="pre">EquivariantModule</span></code></a> needs to implement the
 <code class="xref py py-meth docutils literal notranslate"><span class="pre">forward()</span></code> method.
-With respect to a general <a class="reference external" href="https://pytorch.org/docs/master/generated/torch.nn.Module.html#torch.nn.Module" title="(in PyTorch vmaster (1.6.0a0+324dc16 ))"><code class="xref py py-class docutils literal notranslate"><span class="pre">torch.nn.Module</span></code></a>, an <em>equivariant module</em> implements a <em>typed</em> function as
+With respect to a general <a class="reference external" href="https://pytorch.org/docs/master/generated/torch.nn.Module.html#torch.nn.Module" title="(in PyTorch vmaster (1.6.0a0+176174a ))"><code class="xref py py-class docutils literal notranslate"><span class="pre">torch.nn.Module</span></code></a>, an <em>equivariant module</em> implements a <em>typed</em> function as
 both its input and its output are associated with specific <a class="reference internal" href="#e2cnn.nn.FieldType" title="e2cnn.nn.FieldType"><code class="xref py py-class docutils literal notranslate"><span class="pre">FieldType</span></code></a> s.
 Therefore, usually, the inputs and the outputs of an <em>equivariant module</em> are not just instances of
-<a class="reference external" href="https://pytorch.org/docs/master/tensors.html#torch.Tensor" title="(in PyTorch vmaster (1.6.0a0+324dc16 ))"><code class="xref py py-class docutils literal notranslate"><span class="pre">torch.Tensor</span></code></a> but <a class="reference internal" href="#e2cnn.nn.GeometricTensor" title="e2cnn.nn.GeometricTensor"><code class="xref py py-class docutils literal notranslate"><span class="pre">GeometricTensor</span></code></a> s.</p>
-<p>As a subclass of <a class="reference external" href="https://pytorch.org/docs/master/generated/torch.nn.Module.html#torch.nn.Module" title="(in PyTorch vmaster (1.6.0a0+324dc16 ))"><code class="xref py py-class docutils literal notranslate"><span class="pre">torch.nn.Module</span></code></a>, it supports most of the commonly used methods (e.g.
-<a class="reference external" href="https://pytorch.org/docs/master/generated/torch.nn.Module.html#torch.nn.Module.to" title="(in PyTorch vmaster (1.6.0a0+324dc16 ))"><code class="xref py py-meth docutils literal notranslate"><span class="pre">torch.nn.Module.to()</span></code></a>, <a class="reference external" href="https://pytorch.org/docs/master/generated/torch.nn.Module.html#torch.nn.Module.cuda" title="(in PyTorch vmaster (1.6.0a0+324dc16 ))"><code class="xref py py-meth docutils literal notranslate"><span class="pre">torch.nn.Module.cuda()</span></code></a>, <a class="reference external" href="https://pytorch.org/docs/master/generated/torch.nn.Module.html#torch.nn.Module.train" title="(in PyTorch vmaster (1.6.0a0+324dc16 ))"><code class="xref py py-meth docutils literal notranslate"><span class="pre">torch.nn.Module.train()</span></code></a> or
-<a class="reference external" href="https://pytorch.org/docs/master/generated/torch.nn.Module.html#torch.nn.Module.eval" title="(in PyTorch vmaster (1.6.0a0+324dc16 ))"><code class="xref py py-meth docutils literal notranslate"><span class="pre">torch.nn.Module.eval()</span></code></a>)</p>
+<a class="reference external" href="https://pytorch.org/docs/master/tensors.html#torch.Tensor" title="(in PyTorch vmaster (1.6.0a0+176174a ))"><code class="xref py py-class docutils literal notranslate"><span class="pre">torch.Tensor</span></code></a> but <a class="reference internal" href="#e2cnn.nn.GeometricTensor" title="e2cnn.nn.GeometricTensor"><code class="xref py py-class docutils literal notranslate"><span class="pre">GeometricTensor</span></code></a> s.</p>
+<p>As a subclass of <a class="reference external" href="https://pytorch.org/docs/master/generated/torch.nn.Module.html#torch.nn.Module" title="(in PyTorch vmaster (1.6.0a0+176174a ))"><code class="xref py py-class docutils literal notranslate"><span class="pre">torch.nn.Module</span></code></a>, it supports most of the commonly used methods (e.g.
+<a class="reference external" href="https://pytorch.org/docs/master/generated/torch.nn.Module.html#torch.nn.Module.to" title="(in PyTorch vmaster (1.6.0a0+176174a ))"><code class="xref py py-meth docutils literal notranslate"><span class="pre">torch.nn.Module.to()</span></code></a>, <a class="reference external" href="https://pytorch.org/docs/master/generated/torch.nn.Module.html#torch.nn.Module.cuda" title="(in PyTorch vmaster (1.6.0a0+176174a ))"><code class="xref py py-meth docutils literal notranslate"><span class="pre">torch.nn.Module.cuda()</span></code></a>, <a class="reference external" href="https://pytorch.org/docs/master/generated/torch.nn.Module.html#torch.nn.Module.train" title="(in PyTorch vmaster (1.6.0a0+176174a ))"><code class="xref py py-meth docutils literal notranslate"><span class="pre">torch.nn.Module.train()</span></code></a> or
+<a class="reference external" href="https://pytorch.org/docs/master/generated/torch.nn.Module.html#torch.nn.Module.eval" title="(in PyTorch vmaster (1.6.0a0+176174a ))"><code class="xref py py-meth docutils literal notranslate"><span class="pre">torch.nn.Module.eval()</span></code></a>)</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -979,16 +1098,16 @@ equivariant convolutional map</em> between the input and output fields.
 For feature fields on <span class="math notranslate nohighlight">\(\R^2\)</span> (e.g. images), the complete G-steerable kernel spaces for <span class="math notranslate nohighlight">\(G \leq \O2\)</span>
 is derived in <a class="reference external" href="https://arxiv.org/abs/1911.08251">General E(2)-Equivariant Steerable CNNs</a>.</p>
 <p>During training, in each forward pass the module expands the basis of G-steerable kernels with learned weights
-before calling <a class="reference external" href="https://pytorch.org/docs/master/nn.functional.html#torch.nn.functional.conv2d" title="(in PyTorch vmaster (1.6.0a0+324dc16 ))"><code class="xref py py-func docutils literal notranslate"><span class="pre">torch.nn.functional.conv2d()</span></code></a>.
-When <a class="reference external" href="https://pytorch.org/docs/master/generated/torch.nn.Module.html#torch.nn.Module.eval" title="(in PyTorch vmaster (1.6.0a0+324dc16 ))"><code class="xref py py-meth docutils literal notranslate"><span class="pre">eval()</span></code></a> is called, the filter is built with the current trained weights and stored
+before calling <a class="reference external" href="https://pytorch.org/docs/master/nn.functional.html#torch.nn.functional.conv2d" title="(in PyTorch vmaster (1.6.0a0+176174a ))"><code class="xref py py-func docutils literal notranslate"><span class="pre">torch.nn.functional.conv2d()</span></code></a>.
+When <a class="reference external" href="https://pytorch.org/docs/master/generated/torch.nn.Module.html#torch.nn.Module.eval" title="(in PyTorch vmaster (1.6.0a0+176174a ))"><code class="xref py py-meth docutils literal notranslate"><span class="pre">eval()</span></code></a> is called, the filter is built with the current trained weights and stored
 for future reuse such that no overhead of expanding the kernel remains.</p>
 <div class="admonition warning">
 <p class="first admonition-title">Warning</p>
-<p>When <a class="reference external" href="https://pytorch.org/docs/master/generated/torch.nn.Module.html#torch.nn.Module.train" title="(in PyTorch vmaster (1.6.0a0+324dc16 ))"><code class="xref py py-meth docutils literal notranslate"><span class="pre">train()</span></code></a> is called, the attributes <code class="xref py py-attr docutils literal notranslate"><span class="pre">filter</span></code> and
+<p>When <a class="reference external" href="https://pytorch.org/docs/master/generated/torch.nn.Module.html#torch.nn.Module.train" title="(in PyTorch vmaster (1.6.0a0+176174a ))"><code class="xref py py-meth docutils literal notranslate"><span class="pre">train()</span></code></a> is called, the attributes <code class="xref py py-attr docutils literal notranslate"><span class="pre">filter</span></code> and
 <code class="xref py py-attr docutils literal notranslate"><span class="pre">expanded_bias</span></code> are discarded to avoid situations of mismatch with the
 learnable expansion coefficients.
 See also <a class="reference internal" href="#e2cnn.nn.R2Conv.train" title="e2cnn.nn.R2Conv.train"><code class="xref py py-meth docutils literal notranslate"><span class="pre">e2cnn.nn.R2Conv.train()</span></code></a>.</p>
-<p class="last">This behaviour can cause problems when storing the <a class="reference external" href="https://pytorch.org/docs/master/generated/torch.nn.Module.html#torch.nn.Module.state_dict" title="(in PyTorch vmaster (1.6.0a0+324dc16 ))"><code class="xref py py-meth docutils literal notranslate"><span class="pre">state_dict()</span></code></a> of a model while in
+<p class="last">This behaviour can cause problems when storing the <a class="reference external" href="https://pytorch.org/docs/master/generated/torch.nn.Module.html#torch.nn.Module.state_dict" title="(in PyTorch vmaster (1.6.0a0+176174a ))"><code class="xref py py-meth docutils literal notranslate"><span class="pre">state_dict()</span></code></a> of a model while in
 a mode and lately loading it in a model with a different mode, as the attributes of the class change.
 To avoid this issue, we recommend converting the model to eval mode before storing or loading the state
 dictionary.</p>
@@ -1043,11 +1162,11 @@ the basis element. By default (<code class="docutils literal notranslate"><span 
 </td>
 </tr>
 <tr class="field-even field"><th class="field-name">Variables:</th><td class="field-body"><ul class="first last simple">
-<li><strong>weights</strong> (<a class="reference external" href="https://pytorch.org/docs/master/tensors.html#torch.Tensor" title="(in PyTorch vmaster (1.6.0a0+324dc16 ))"><em>torch.Tensor</em></a>) – the learnable parameters which are used to expand the kernel</li>
-<li><strong>filter</strong> (<a class="reference external" href="https://pytorch.org/docs/master/tensors.html#torch.Tensor" title="(in PyTorch vmaster (1.6.0a0+324dc16 ))"><em>torch.Tensor</em></a>) – the convolutional kernel obtained by expanding the parameters
+<li><strong>weights</strong> (<a class="reference external" href="https://pytorch.org/docs/master/tensors.html#torch.Tensor" title="(in PyTorch vmaster (1.6.0a0+176174a ))"><em>torch.Tensor</em></a>) – the learnable parameters which are used to expand the kernel</li>
+<li><strong>filter</strong> (<a class="reference external" href="https://pytorch.org/docs/master/tensors.html#torch.Tensor" title="(in PyTorch vmaster (1.6.0a0+176174a ))"><em>torch.Tensor</em></a>) – the convolutional kernel obtained by expanding the parameters
 in <code class="xref py py-attr docutils literal notranslate"><span class="pre">weights</span></code></li>
-<li><strong>bias</strong> (<a class="reference external" href="https://pytorch.org/docs/master/tensors.html#torch.Tensor" title="(in PyTorch vmaster (1.6.0a0+324dc16 ))"><em>torch.Tensor</em></a>) – the learnable parameters which are used to expand the bias, if <code class="docutils literal notranslate"><span class="pre">bias=True</span></code></li>
-<li><strong>expanded_bias</strong> (<a class="reference external" href="https://pytorch.org/docs/master/tensors.html#torch.Tensor" title="(in PyTorch vmaster (1.6.0a0+324dc16 ))"><em>torch.Tensor</em></a>) – the equivariant bias which is summed to the output, obtained by expanding
+<li><strong>bias</strong> (<a class="reference external" href="https://pytorch.org/docs/master/tensors.html#torch.Tensor" title="(in PyTorch vmaster (1.6.0a0+176174a ))"><em>torch.Tensor</em></a>) – the learnable parameters which are used to expand the bias, if <code class="docutils literal notranslate"><span class="pre">bias=True</span></code></li>
+<li><strong>expanded_bias</strong> (<a class="reference external" href="https://pytorch.org/docs/master/tensors.html#torch.Tensor" title="(in PyTorch vmaster (1.6.0a0+176174a ))"><em>torch.Tensor</em></a>) – the equivariant bias which is summed to the output, obtained by expanding
 the parameters in <code class="xref py py-attr docutils literal notranslate"><span class="pre">bias</span></code></li>
 </ul>
 </td>
@@ -1105,7 +1224,7 @@ the current values of the trainable parameters and store them in <code class="xr
 <code class="xref py py-attr docutils literal notranslate"><span class="pre">expanded_bias</span></code> such that they are not recomputed at each forward pass.</p>
 <div class="admonition warning">
 <p class="first admonition-title">Warning</p>
-<p class="last">This behaviour can cause problems when storing the <a class="reference external" href="https://pytorch.org/docs/master/generated/torch.nn.Module.html#torch.nn.Module.state_dict" title="(in PyTorch vmaster (1.6.0a0+324dc16 ))"><code class="xref py py-meth docutils literal notranslate"><span class="pre">state_dict()</span></code></a> of a model while in
+<p class="last">This behaviour can cause problems when storing the <a class="reference external" href="https://pytorch.org/docs/master/generated/torch.nn.Module.html#torch.nn.Module.state_dict" title="(in PyTorch vmaster (1.6.0a0+176174a ))"><code class="xref py py-meth docutils literal notranslate"><span class="pre">state_dict()</span></code></a> of a model while in
 a mode and lately loading it in a model with a different mode, as the attributes of this class change.
 To avoid this issue, we recommend converting the model to eval mode before storing or loading the state
 dictionary.</p>
@@ -1182,7 +1301,7 @@ trivial irrep) or not. Default <code class="docutils literal notranslate"><span 
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>weights</strong> (<a class="reference external" href="https://pytorch.org/docs/master/tensors.html#torch.Tensor" title="(in PyTorch vmaster (1.6.0a0+324dc16 ))"><em>torch.Tensor</em></a>) – the learnable weights used to linearly combine the basis elements</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>weights</strong> (<a class="reference external" href="https://pytorch.org/docs/master/tensors.html#torch.Tensor" title="(in PyTorch vmaster (1.6.0a0+176174a ))"><em>torch.Tensor</em></a>) – the learnable weights used to linearly combine the basis elements</td>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">the filter built</td>
 </tr>
@@ -1286,7 +1405,7 @@ element’s attributes and return whether to keep it or not.</li>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>weights</strong> (<a class="reference external" href="https://pytorch.org/docs/master/tensors.html#torch.Tensor" title="(in PyTorch vmaster (1.6.0a0+324dc16 ))"><em>torch.Tensor</em></a>) – the learnable weights used to linearly combine the basis filters</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>weights</strong> (<a class="reference external" href="https://pytorch.org/docs/master/tensors.html#torch.Tensor" title="(in PyTorch vmaster (1.6.0a0+176174a ))"><em>torch.Tensor</em></a>) – the learnable weights used to linearly combine the basis filters</td>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">the filter built</td>
 </tr>
@@ -1872,7 +1991,7 @@ which supports ‘norm’ non-linearities.</p>
 <p>Max-pooling based on the fields’ norms. In a given window of shape <code class="xref py py-attr docutils literal notranslate"><span class="pre">kernel_size</span></code>, for each
 group of channels belonging to the same field, the field with the highest norm (as the length of the vector)
 is preserved.</p>
-<p>Except <code class="xref py py-attr docutils literal notranslate"><span class="pre">in_type</span></code>, the other parameters correspond to the ones of <a class="reference external" href="https://pytorch.org/docs/master/generated/torch.nn.MaxPool2d.html#torch.nn.MaxPool2d" title="(in PyTorch vmaster (1.6.0a0+324dc16 ))"><code class="xref py py-class docutils literal notranslate"><span class="pre">torch.nn.MaxPool2d</span></code></a>.</p>
+<p>Except <code class="xref py py-attr docutils literal notranslate"><span class="pre">in_type</span></code>, the other parameters correspond to the ones of <a class="reference external" href="https://pytorch.org/docs/master/generated/torch.nn.MaxPool2d.html#torch.nn.MaxPool2d" title="(in PyTorch vmaster (1.6.0a0+176174a ))"><code class="xref py py-class docutils literal notranslate"><span class="pre">torch.nn.MaxPool2d</span></code></a>.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -2424,7 +2543,7 @@ of single channels.</p>
 <em class="property">class </em><code class="descname">PointwiseDropout</code><span class="sig-paren">(</span><em>in_type</em>, <em>p=0.5</em>, <em>inplace=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/e2cnn/nn/modules/dropout/pointwise.html#PointwiseDropout"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#e2cnn.nn.PointwiseDropout" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">e2cnn.nn.modules.equivariant_module.EquivariantModule</span></code></p>
 <p>Applies dropout to individual <em>channels</em> independently.</p>
-<p>This class is just a wrapper for <a class="reference external" href="https://pytorch.org/docs/master/nn.functional.html#torch.nn.functional.dropout" title="(in PyTorch vmaster (1.6.0a0+324dc16 ))"><code class="xref py py-func docutils literal notranslate"><span class="pre">torch.nn.functional.dropout()</span></code></a> in an <a class="reference internal" href="#e2cnn.nn.EquivariantModule" title="e2cnn.nn.EquivariantModule"><code class="xref py py-class docutils literal notranslate"><span class="pre">EquivariantModule</span></code></a>.</p>
+<p>This class is just a wrapper for <a class="reference external" href="https://pytorch.org/docs/master/nn.functional.html#torch.nn.functional.dropout" title="(in PyTorch vmaster (1.6.0a0+176174a ))"><code class="xref py py-func docutils literal notranslate"><span class="pre">torch.nn.functional.dropout()</span></code></a> in an <a class="reference internal" href="#e2cnn.nn.EquivariantModule" title="e2cnn.nn.EquivariantModule"><code class="xref py py-class docutils literal notranslate"><span class="pre">EquivariantModule</span></code></a>.</p>
 <p>Only representations supporting pointwise non-linearities are accepted as input field type.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -2466,7 +2585,7 @@ of single channels.</p>
 <dt id="e2cnn.nn.SequentialModule">
 <em class="property">class </em><code class="descname">SequentialModule</code><span class="sig-paren">(</span><em>*args</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/e2cnn/nn/modules/sequential_module.html#SequentialModule"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#e2cnn.nn.SequentialModule" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">e2cnn.nn.modules.equivariant_module.EquivariantModule</span></code></p>
-<p>A sequential container similar to <a class="reference external" href="https://pytorch.org/docs/master/generated/torch.nn.Sequential.html#torch.nn.Sequential" title="(in PyTorch vmaster (1.6.0a0+324dc16 ))"><code class="xref py py-class docutils literal notranslate"><span class="pre">torch.nn.Sequential</span></code></a>.</p>
+<p>A sequential container similar to <a class="reference external" href="https://pytorch.org/docs/master/generated/torch.nn.Sequential.html#torch.nn.Sequential" title="(in PyTorch vmaster (1.6.0a0+176174a ))"><code class="xref py py-class docutils literal notranslate"><span class="pre">torch.nn.Sequential</span></code></a>.</p>
 <p>The constructor accepts both a list or an ordered dict of <a class="reference internal" href="#e2cnn.nn.EquivariantModule" title="e2cnn.nn.EquivariantModule"><code class="xref py py-class docutils literal notranslate"><span class="pre">EquivariantModule</span></code></a> instances.</p>
 <p>Example:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Example of SequentialModule</span>
@@ -2521,7 +2640,7 @@ of single channels.</p>
 <em class="property">class </em><code class="descname">RestrictionModule</code><span class="sig-paren">(</span><em>in_type</em>, <em>id</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/e2cnn/nn/modules/restriction_module.html#RestrictionModule"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#e2cnn.nn.RestrictionModule" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">e2cnn.nn.modules.equivariant_module.EquivariantModule</span></code></p>
 <p>Restricts the type of the input to the subgroup identified by <code class="docutils literal notranslate"><span class="pre">id</span></code>.</p>
-<p>It computes the output type in the constructor and wraps the underlying tensor (<a class="reference external" href="https://pytorch.org/docs/master/tensors.html#torch.Tensor" title="(in PyTorch vmaster (1.6.0a0+324dc16 ))"><code class="xref py py-class docutils literal notranslate"><span class="pre">torch.Tensor</span></code></a>) in input
+<p>It computes the output type in the constructor and wraps the underlying tensor (<a class="reference external" href="https://pytorch.org/docs/master/tensors.html#torch.Tensor" title="(in PyTorch vmaster (1.6.0a0+176174a ))"><code class="xref py py-class docutils literal notranslate"><span class="pre">torch.Tensor</span></code></a>) in input
 with the output type during the forward pass.</p>
 <p>This module only acts as a wrapper for <a class="reference internal" href="#e2cnn.nn.FieldType.restrict" title="e2cnn.nn.FieldType.restrict"><code class="xref py py-meth docutils literal notranslate"><span class="pre">e2cnn.nn.FieldType.restrict()</span></code></a>
 (or <a class="reference internal" href="#e2cnn.nn.GeometricTensor.restrict" title="e2cnn.nn.GeometricTensor.restrict"><code class="xref py py-meth docutils literal notranslate"><span class="pre">e2cnn.nn.GeometricTensor.restrict()</span></code></a>).
@@ -2578,7 +2697,7 @@ to its representation.</p>
 <dt id="e2cnn.nn.R2Upsampling">
 <em class="property">class </em><code class="descname">R2Upsampling</code><span class="sig-paren">(</span><em>in_type</em>, <em>scale_factor</em>, <em>mode='bilinear'</em>, <em>align_corners=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/e2cnn/nn/modules/r2upsampling.html#R2Upsampling"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#e2cnn.nn.R2Upsampling" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">e2cnn.nn.modules.equivariant_module.EquivariantModule</span></code></p>
-<p>Wrapper for <a class="reference external" href="https://pytorch.org/docs/master/nn.functional.html#torch.nn.functional.interpolate" title="(in PyTorch vmaster (1.6.0a0+324dc16 ))"><code class="xref py py-func docutils literal notranslate"><span class="pre">torch.nn.functional.interpolate()</span></code></a>. Check its documentation for further details.</p>
+<p>Wrapper for <a class="reference external" href="https://pytorch.org/docs/master/nn.functional.html#torch.nn.functional.interpolate" title="(in PyTorch vmaster (1.6.0a0+176174a ))"><code class="xref py py-func docutils literal notranslate"><span class="pre">torch.nn.functional.interpolate()</span></code></a>. Check its documentation for further details.</p>
 <p>Only <code class="docutils literal notranslate"><span class="pre">&quot;bilinear&quot;</span></code> and <code class="docutils literal notranslate"><span class="pre">&quot;nearest&quot;</span></code> methods are supported.
 However, <code class="docutils literal notranslate"><span class="pre">&quot;nearest&quot;</span></code> is not equivariant; using this method may result in broken equivariance.
 For this reason, we suggest to use <code class="docutils literal notranslate"><span class="pre">&quot;bilinear&quot;</span></code> (default value).</p>
@@ -2605,7 +2724,7 @@ Default: <code class="docutils literal notranslate"><span class="pre">False</spa
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>input</strong> (<a class="reference external" href="https://pytorch.org/docs/master/tensors.html#torch.Tensor" title="(in PyTorch vmaster (1.6.0a0+324dc16 ))"><em>torch.Tensor</em></a>) – input feature map</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>input</strong> (<a class="reference external" href="https://pytorch.org/docs/master/tensors.html#torch.Tensor" title="(in PyTorch vmaster (1.6.0a0+176174a ))"><em>torch.Tensor</em></a>) – input feature map</td>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">the result of the convolution</td>
 </tr>
@@ -2783,7 +2902,7 @@ Then, input tensors must have shape <code class="docutils literal notranslate"><
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>tensor</strong> (<a class="reference external" href="https://pytorch.org/docs/master/tensors.html#torch.Tensor" title="(in PyTorch vmaster (1.6.0a0+324dc16 ))"><em>torch.Tensor</em></a>) – the tensor containing the weights</li>
+<li><strong>tensor</strong> (<a class="reference external" href="https://pytorch.org/docs/master/tensors.html#torch.Tensor" title="(in PyTorch vmaster (1.6.0a0+176174a ))"><em>torch.Tensor</em></a>) – the tensor containing the weights</li>
 <li><strong>basisexpansion</strong> (<a class="reference internal" href="#e2cnn.nn.modules.r2_conv.BasisExpansion" title="e2cnn.nn.modules.r2_conv.BasisExpansion"><em>BasisExpansion</em></a>) – the basis expansion method</li>
 </ul>
 </td>
@@ -2801,7 +2920,7 @@ Then, input tensors must have shape <code class="docutils literal notranslate"><
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>tensor</strong> (<a class="reference external" href="https://pytorch.org/docs/master/tensors.html#torch.Tensor" title="(in PyTorch vmaster (1.6.0a0+324dc16 ))"><em>torch.Tensor</em></a>) – the tensor containing the weights</li>
+<li><strong>tensor</strong> (<a class="reference external" href="https://pytorch.org/docs/master/tensors.html#torch.Tensor" title="(in PyTorch vmaster (1.6.0a0+176174a ))"><em>torch.Tensor</em></a>) – the tensor containing the weights</li>
 <li><strong>basisexpansion</strong> (<a class="reference internal" href="#e2cnn.nn.modules.r2_conv.BasisExpansion" title="e2cnn.nn.modules.r2_conv.BasisExpansion"><em>BasisExpansion</em></a>) – the basis expansion method</li>
 </ul>
 </td>

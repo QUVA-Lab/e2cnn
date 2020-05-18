@@ -86,6 +86,9 @@ class FieldType:
         
         self._representation = None
         
+        self._field_start = None
+        self._field_end = None
+
         self._hash = hash(self.gspace.name + ': {' + ', '.join([r.name for r in self.representations]) + '}')
 
     @property
@@ -354,7 +357,45 @@ class FieldType:
         # retrieve the fields in the input representation to build the output representation
         representations = [self.representations[i] for i in index]
         return FieldType(self.gspace, representations)
+
+    @property
+    def fields_end(self) -> np.ndarray:
+        r"""
+        
+            Array containing the index of the first channel following each field.
+            More precisely, the integer in the :math:`i`-th position is equal to the index of the last channel of
+            the :math:`i`-th field plus :math:`1`.
+        
+        """
+        if self._field_end is None:
+            field_idx = []
+            p = 0
+            for r in self.representations:
+                p += r.size
+                field_idx.append(p)
+            self._field_end = np.array(field_idx, dtype=np.uint64)
     
+        return self._field_end
+
+    @property
+    def fields_start(self) -> np.ndarray:
+        r"""
+
+            Array containing the index of the first channel of each field.
+            More precisely, the integer in the :math:`i`-th position is equal to the index of the first channel of
+            the :math:`i`-th field.
+
+        """
+        if self._field_start is None:
+            field_idx = []
+            p = 0
+            for r in self.representations:
+                field_idx.append(p)
+                p += r.size
+            self._field_start = np.array(field_idx, dtype=np.uint64)
+            
+        return self._field_start
+
     def group_by_labels(self, labels: List[str]) -> Dict[str, 'FieldType']:
         r"""
         

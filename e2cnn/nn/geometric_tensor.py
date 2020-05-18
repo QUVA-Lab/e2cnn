@@ -35,7 +35,7 @@ class GeometricTensor:
         (or channel) dimension, which is associated with a group representation by the field type. The following
         dimensions are the spatial dimensions (like in a conventional CNN).
         
-        The operations of **addition** and **scalar product** are supported.
+        The operations of **addition** and **scalar multiplication** are supported.
         For example::
         
             gs = e2cnn.gspaces.Rot2dOnR2(8)
@@ -62,9 +62,9 @@ class GeometricTensor:
             
         A GeometricTensor supports **slicing** in a similar way to PyTorch's :class:`torch.Tensor`.
         More precisely, slicing along the batch (1st) and the spatial (3rd, 4th, ...) dimensions works as usual.
-        However, slicing the fiber (2nd) dimension would break equivariance when splitting the channels
-        belonging to the same field.
-        For this reason, on the second dimension, it is defined over *fields* instead of channels.
+        However, slicing the fiber (2nd) dimension would break equivariance when splitting channels belonging to
+        the same field.
+        To prevent this, slicing on the second dimension is defined over *fields* instead of channels.
         
         .. warning ::
             
@@ -72,12 +72,12 @@ class GeometricTensor:
             documentation about
             `indexing <https://docs.scipy.org/doc/numpy/reference/arrays.indexing.html#basic-slicing-and-indexing>`_
             for more details).
-            Moreover, with respect to NumPy and PyTorch, an index containing a single integer value **does not** reduce
+            Moreover, in contrast to NumPy and PyTorch, an index containing a single integer value **does not** reduce
             the dimensionality of the tensor.
             In this way, the resulting tensor can always be interpreted as a GeometricTensor.
             
         
-        A few examples can make the behavior clearer::
+        We give few examples to illustrate this behavior::
         
             # Example of GeometricTensor slicing
             space = e2cnn.gspaces.Rot2dOnR2(4)
@@ -131,8 +131,8 @@ class GeometricTensor:
         
         .. warning ::
         
-            *Slicing* over the fiber (2nd) dimension with ``step > 1`` or with a negative step needs to be converted
-            into an *index* over the channels.
+            *Slicing* over the fiber (2nd) dimension with ``step > 1`` or with a negative step is converted
+            into *indexing* over the channels.
             This means that, in these cases, slicing behaves like *advanced indexing* in PyTorch and NumPy
             **returning a copy instead of a view**.
             For more details, see the *note* `here <https://pytorch.org/docs/stable/tensor_view.html>`_ and

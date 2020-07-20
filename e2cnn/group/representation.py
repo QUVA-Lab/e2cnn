@@ -508,9 +508,9 @@ def disentangle(repr: Representation) -> Tuple[np.ndarray, List[Representation]]
     
     Indeed, in :math:`\Res{\C2}{\D3} \rho_\text{reg}^{\D3}(g)` the three pairs of entries (1, 4), (2, 6) and (3, 5)
     never mix with each other but only permute internally.
-    Moreover, each pair transform according to the regular representation of :math:`\C2`.
+    Moreover, each pair transforms according to the regular representation of :math:`\C2`.
     Through a permutation of the entries, it is possible to make all the entries belonging to the same pair contiguous.
-    This this reshuffled representation is then equal to
+    This reshuffled representation is then equal to
     :math:`\rho_\text{reg}^{\C2} \oplus \rho_\text{reg}^{\C2} \oplus \rho_\text{reg}^{\C2}`.
     Though theoretically equivalent, an implementation of this representation where the entries are contiguous is
     convenient when computing functions over single fields like batch normalization.

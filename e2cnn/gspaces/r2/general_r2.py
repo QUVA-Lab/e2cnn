@@ -1,4 +1,4 @@
-from __future__ import annotations
+# from __future__ import annotations
 
 from e2cnn.gspaces import GSpace
 from e2cnn import kernels

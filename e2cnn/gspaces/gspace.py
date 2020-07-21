@@ -1,5 +1,5 @@
 
-from __future__ import annotations
+# from __future__ import annotations
 
 import e2cnn.kernels
 import e2cnn.group
@@ -60,7 +60,7 @@ class GSpace(ABC):
         self.basespace = f"R^{self.dimensionality}"
 
     @abstractmethod
-    def restrict(self, id) -> Tuple[GSpace, Callable, Callable]:
+    def restrict(self, id) -> Tuple['GSpace', Callable, Callable]:
         r"""
 
         Build the :class:`~e2cnn.gspaces.GSpace` associated with the subgroup of the current fiber group identified by

@@ -1,5 +1,5 @@
 
-from __future__ import annotations
+# from __future__ import annotations
 
 from e2cnn import gspaces
 from e2cnn import kernels

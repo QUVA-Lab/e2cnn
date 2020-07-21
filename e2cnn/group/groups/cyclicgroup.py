@@ -1,4 +1,4 @@
-from __future__ import annotations
+# from __future__ import annotations
 
 
 from e2cnn.group import Group
@@ -226,10 +226,10 @@ class CyclicGroup(Group):
         #         self.quotient_representation(n)
     
     @property
-    def trivial_representation(self) -> Representation:
+    def trivial_representation(self) -> 'Representation':
         return self.representations['irrep_0']
 
-    def irrep(self, k: int) -> IrreducibleRepresentation:
+    def irrep(self, k: int) -> 'IrreducibleRepresentation':
         r"""
         Build the irrep of frequency ``k`` of the current cyclic group.
         The frequency has to be a non-negative integer in :math:`\{0, \dots, \left \lfloor N/2 \right \rfloor \}`,

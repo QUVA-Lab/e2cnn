@@ -70,6 +70,7 @@ class TestGeometricTensor(TestCase):
                     self.assertTrue(torch.allclose(out1, out2))
 
     def test_mul(self):
+        # only for PyTorch 1.4 or higher
         for N in [2, 4, 7, 16]:
             gs = Rot2dOnR2(N)
             for irr in gs.irreps.values():
@@ -535,6 +536,7 @@ class TestGeometricTensor(TestCase):
                         ],
                         gt[1, f, 3, 4].tensor,
                     ))
+
 
 if __name__ == '__main__':
     unittest.main()

@@ -1,6 +1,7 @@
-from __future__ import annotations
+# from __future__ import annotations
 
 import e2cnn.group
+from e2cnn.group import Group
 from e2cnn.group import Representation
 
 from typing import Callable, Any, List, Union, Dict
@@ -13,7 +14,7 @@ __all__ = ["IrreducibleRepresentation"]
 class IrreducibleRepresentation(Representation):
     
     def __init__(self,
-                 group: e2cnn.group.Group,
+                 group: Group,
                  name: str,
                  representation: Union[Dict[Any, np.ndarray], Callable[[Any], np.ndarray]],
                  size: int,

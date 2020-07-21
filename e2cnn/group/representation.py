@@ -1,4 +1,4 @@
-from __future__ import annotations
+# from __future__ import annotations
 
 import e2cnn.group
 from e2cnn.group import Group
@@ -272,7 +272,7 @@ class Representation:
                 return True
         return False
 
-    def restrict(self, id) -> e2cnn.group.Representation:
+    def restrict(self, id) -> 'Representation':
         r"""
         
         Restrict the current representation to the subgroup identified by ``id``.
@@ -308,7 +308,7 @@ class Representation:
         
         return self.representation(element)
 
-    def __add__(self, other: e2cnn.group.Representation) -> e2cnn.group.Representation:
+    def __add__(self, other: 'Representation') -> 'Representation':
         r"""
 
         Compute the *direct sum* of two representations of a group.
@@ -325,7 +325,7 @@ class Representation:
         
         return directsum([self, other])
     
-    def __eq__(self, other: e2cnn.group.Representation) -> bool:
+    def __eq__(self, other: 'Representation') -> bool:
         if not isinstance(other, Representation):
             return False
         
@@ -347,9 +347,9 @@ class Representation:
     
 def build_from_discrete_group_representation(representation: Dict[Any, np.array],
                                              name: str,
-                                             group: e2cnn.group.Group,
+                                             group: Group,
                                              supported_nonlinearities: List[str]
-                                             ) -> e2cnn.group.Representation:
+                                             ) -> 'Representation':
     r"""
     Given a representation of a finite group as a dictionary of matrices, the method decomposes it as a direct sum
     of the irreps of the group and computes the change-of-basis matrix. Then, a new instance of
@@ -397,10 +397,10 @@ def build_from_discrete_group_representation(representation: Dict[Any, np.array]
                           character=new_character)
 
 
-def directsum(reprs: List[e2cnn.group.Representation],
+def directsum(reprs: List['Representation'],
               change_of_basis: np.ndarray = None,
               name: str = None
-              ) -> e2cnn.group.Representation:
+              ) -> 'Representation':
     r"""
 
     Compute the *direct sum* of a list of representations of a group.
@@ -646,7 +646,7 @@ def change_basis(repr: Representation,
                           change_of_basis_inv=new_cob_inv)
 
 
-def build_regular_representation(group: e2cnn.group.Group) -> Tuple[List[e2cnn.group.IrreducibleRepresentation], np.ndarray, np.ndarray]:
+def build_regular_representation(group: Group) -> Tuple[List['IrreducibleRepresentation'], np.ndarray, np.ndarray]:
     r"""
     
     Build the regular representation of the input ``group``.
@@ -747,9 +747,9 @@ def build_regular_representation(group: e2cnn.group.Group) -> Tuple[List[e2cnn.g
     #                       change_of_basis_inv=change_of_basis_inv)
 
 
-def build_quotient_representation(group: e2cnn.group.Group,
+def build_quotient_representation(group: Group,
                                   subgroup_id
-                                  ) -> Tuple[List[e2cnn.group.IrreducibleRepresentation], np.ndarray, np.ndarray]:
+                                  ) -> Tuple[List['IrreducibleRepresentation'], np.ndarray, np.ndarray]:
     r"""
 
     Build the quotient representation of the input ``group`` with respect to the subgroup identified by ``subgroup_id``.
@@ -776,10 +776,10 @@ def build_quotient_representation(group: e2cnn.group.Group,
                                         subgroup.trivial_representation)
 
 
-def build_induced_representation(group: e2cnn.group.Group,
+def build_induced_representation(group: Group,
                                  subgroup_id,
-                                 repr: e2cnn.group.IrreducibleRepresentation,
-                                 ) -> Tuple[List[e2cnn.group.IrreducibleRepresentation], np.ndarray, np.ndarray]:
+                                 repr: 'IrreducibleRepresentation',
+                                 ) -> Tuple[List['IrreducibleRepresentation'], np.ndarray, np.ndarray]:
     r"""
 
     Build the induced representation of the input ``group`` from the representation ``repr`` of the subgroup
@@ -983,7 +983,7 @@ except ImportError:
     anp = None
 
 
-def direct_sum_factory(irreps: List[e2cnn.group.IrreducibleRepresentation],
+def direct_sum_factory(irreps: List['IrreducibleRepresentation'],
                        change_of_basis: np.ndarray,
                        change_of_basis_inv: np.ndarray = None
                        ) -> Callable[[Any], np.ndarray]:
@@ -1244,7 +1244,7 @@ def compute_change_of_basis(representation: Dict[Any, np.matrix],
 
 
 def decompose_representation(representation: Dict[Any, np.matrix],
-                             group: e2cnn.group.Group
+                             group: Group
                              ) -> Tuple[np.matrix, List[Tuple[str, int]]]:
     r"""
     Decompose the input ``representation`` in a direct sum of irreps of the input ``group``.

@@ -508,9 +508,9 @@ def disentangle(repr: Representation) -> Tuple[np.ndarray, List[Representation]]
     
     Indeed, in :math:`\Res{\C2}{\D3} \rho_\text{reg}^{\D3}(g)` the three pairs of entries (1, 4), (2, 6) and (3, 5)
     never mix with each other but only permute internally.
-    Moreover, each pair transform according to the regular representation of :math:`\C2`.
+    Moreover, each pair transforms according to the regular representation of :math:`\C2`.
     Through a permutation of the entries, it is possible to make all the entries belonging to the same pair contiguous.
-    This this reshuffled representation is then equal to
+    This reshuffled representation is then equal to
     :math:`\rho_\text{reg}^{\C2} \oplus \rho_\text{reg}^{\C2} \oplus \rho_\text{reg}^{\C2}`.
     Though theoretically equivalent, an implementation of this representation where the entries are contiguous is
     convenient when computing functions over single fields like batch normalization.
@@ -791,7 +791,7 @@ def build_induced_representation(group: e2cnn.group.Group,
 
     .. warning ::
         Only irreducible representations are supported as the subgroup representation.
-        
+
     .. warning ::
         Only finite groups are supported.
 
@@ -814,9 +814,12 @@ def build_induced_representation(group: e2cnn.group.Group,
     
     assert repr.group == subgroup
     
+    # compute the "index" of the subgroup H in the group G
     quotient_size = int(group.order() / subgroup.order())
+    
+    # the size of the induced representation
     size = repr.size * quotient_size
-
+    
     # the coset each element belongs to
     cosets = {}
     
@@ -833,10 +836,9 @@ def build_induced_representation(group: e2cnn.group.Group,
                 
                 representatives[e].append(eg)
     
-    # for r, coset in representatives.items():
-    #     print(r, coset)
-    
     index = {e: i for i, e in enumerate(representatives)}
+    
+    # compute the matrix and the character associated to each group element by the induced representation
     
     representation = {}
     character = {}
@@ -844,7 +846,6 @@ def build_induced_representation(group: e2cnn.group.Group,
     for g in group.elements:
         repr_g = np.zeros((size, size), dtype=np.float)
         for r in representatives:
-            
             gr = group.combine(g, r)
             
             g_r = cosets[gr]
@@ -857,15 +858,16 @@ def build_induced_representation(group: e2cnn.group.Group,
             h = child(hp)
             assert h is not None, (g, r, gr, g_r, group.inverse(g_r), hp)
             
-            repr_g[j*repr.size:(j+1)*repr.size, i*repr.size:(i+1)*repr.size] = repr(h)
+            repr_g[j * repr.size:(j + 1) * repr.size, i * repr.size:(i + 1) * repr.size] = repr(h)
         
         representation[g] = repr_g
         
         # the character maps an element to the trace of its representation
         character[g] = np.trace(repr_g)
     
-    # compute the multiplicities of the irreps from the dot product between
-    # their characters and the character of the representation
+    # compute the multiplicities of the G-irreps in the induced representation using the
+    # orthogonality theorem from Character Theory over the real field
+    
     irreps = []
     multiplicities = []
     for irrep_name, irrep in group.irreps.items():
@@ -876,86 +878,112 @@ def build_induced_representation(group: e2cnn.group.Group,
         for element, char in character.items():
             multiplicity += char * irrep.character(group.inverse(element))
         
+        # adapt the multiplicities in the case of a splitting field (e.g. the real numbers for SO(2))
         multiplicity /= len(character) * irrep.sum_of_squares_constituents
         
         # the result has to be an integer
         assert math.isclose(multiplicity, round(multiplicity), abs_tol=1e-9), \
             "Multiplicity of irrep %s is not an integer: %f" % (irrep_name, multiplicity)
-
-        multiplicity = int(round(multiplicity))
-        irreps += [irrep]*multiplicity
-        multiplicities += [(irrep, multiplicity)]
-        # if multiplicity > 0:
-        #     print(irrep_name, irrep.size, multiplicity)
-    
-    P = directsum(irreps, name="irreps")
-    
-    v = np.zeros((repr.size, size), dtype=np.float)
-
-    def build_commuting_matrix(rho, t):
-        X = np.zeros((rho.size, rho.size))
-        if rho.size == 1:
-            E = np.eye(1)
-        else:
-            E = np.array([[1, -1], [1, 1]])
-            if t % 2 == 0:
-                E = E.T
-
-        gr = rho.group
-        for h in gr.elements:
-            r = rho(h)
-            X += r.T @ E @ r
-        X /= gr.order()
         
-        X /= np.sqrt(np.sum(X@X.T)/rho.size)
-        return X
+        multiplicity = int(round(multiplicity))
+        irreps += [irrep] * multiplicity
+        multiplicities += [(irrep, multiplicity)]
+    
+    def build_commuting_matrix(rho: e2cnn.group.IrreducibleRepresentation, t):
+        # In a splitting field, the intertwiner between copies of the same irrep does not
+        # always need to be a multiple of the identity
+        
+        if rho.sum_of_squares_constituents == 1:
+            # In a non-splitting field, a basis for the intertwiners contains only the identity
+            E = np.eye(rho.size)
+        else:
+            # In a splitting field, there are more solutions
+            if t % 2 == 0:
+                E = np.eye(2)
+            else:
+                E = np.array([[0, -1], [1, 0]])
 
+        return E
+
+    P = directsum(irreps, name="irreps")
+
+    # rectangular matrix contained in one of the blocks (associated with the coset containing the trivial element)
+    # of the change of basis matrix
+    v = np.zeros((size, repr.size), dtype=np.float)
+
+    # position in the matrix
     p = 0
+    
+    # norm of the column vectors in the matrix `v`
+    norm_squared = 0
+    
+    # iterate over all G-irreps in the induced representation
     for irr, m in multiplicities:
         assert irr.size >= m
         
         if m > 0:
             restricted_irr = group.restrict_representation(subgroup_id, irr)
             
-            n_repetitions = len([name for name in restricted_irr.irreps if name == repr.name])
-            assert repr.size*n_repetitions >= m, (f"{group.name}\{subgroup.name}:{repr.name}", irr.name, m, n_repetitions)
+            # indices and positions of the subgroup irrep in the restricted irrep in the induced representation
+            J = []
+            x = 0
+            for j, name in enumerate(restricted_irr.irreps):
+                if name == repr.name:
+                    J.append((j, x))
+                x += subgroup.irreps[name].size
+                
+            # using Frobenius reciprocity for induced characters on the real field
+            assert repr.sum_of_squares_constituents * len(J) == m * irr.sum_of_squares_constituents, \
+                (f"{group.name}\{subgroup.name}:{repr.name}", irr.name, m, len(J), irr.sum_of_squares_constituents)
+            
+            # number of vectors from the basis to use
+            if m == len(J):
+                N = m
+                dn = 1
+                dr = 1
+            else:
+                N = repr.sum_of_squares_constituents * len(J)
+                dn = repr.sum_of_squares_constituents
+                dr = irr.sum_of_squares_constituents
             
             for shift in range(m):
-                commuting_matrix = build_commuting_matrix(repr, shift // n_repetitions)
-                x = p
-                i = 0
-                for r_irrep in restricted_irr.irreps:
-                    if r_irrep == repr.name:
-                        if i == shift % n_repetitions:
-                            v[:, x:x+repr.size] = commuting_matrix
-                        i += 1
-                    x += subgroup.irreps[r_irrep].size
+                for i in range(dr):
+                    idx = shift * irr.sum_of_squares_constituents + i
                     
-                v[:, p:p+irr.size] = v[:, p:p+irr.size] @ restricted_irr.change_of_basis_inv
-                v[:, p:p+irr.size] *= np.sqrt(irr.size)
+                    j, x = J[idx % len(J)]
+                    v[p+x:p+x + repr.size, :] = build_commuting_matrix(repr, idx // len(J))
+                    
+                v[p:p + irr.size, :] = restricted_irr.change_of_basis @ v[p:p + irr.size, :]
+                
+                # scale the vector to ensure the matrix is orthogonal
+                v[p:p + irr.size, :] *= np.sqrt(irr.size/irr.sum_of_squares_constituents)
                 
                 p += irr.size
-    
-    # np.set_printoptions(precision=4, threshold=10 * size ** 2, suppress=True, linewidth=25 * size + 5)
-    # Pr = group.restrict_representation(subgroup_id, P)
-    # v = v @ Pr.change_of_basis_inv
-    
-    # print(v)
-    
-    v /= np.sqrt(size)
-    
-    change_of_basis = np.zeros((size, size))
+                
+            # accumulate the square of norms of each subvector
+            norm_squared += N * irr.size/irr.sum_of_squares_constituents
+        
+    # normalize the column vectors to ensure the columns have unit length
+    v /= np.sqrt(norm_squared)
 
+    # build the complete change of basis
+    # fill the blocks associated with each coset by transforming the block `v` with the representative of the cosets
+    change_of_basis_inv = np.zeros((size, size))
     for r in representatives:
         i = index[r]
-        change_of_basis[i*repr.size:(i+1)*repr.size, :] = v @ P(group.inverse(r))
-    
-    change_of_basis_inv = change_of_basis.T
+        change_of_basis_inv[:, i * repr.size:(i + 1) * repr.size] = P(r) @ v
 
-    # for g, r in representation.items():
-    #     print(g, np.allclose(change_of_basis @ P(g) @ change_of_basis_inv, representation[g]))
-    #     ir = change_of_basis @ P(g) @ change_of_basis_inv
-    #     assert np.allclose(ir, representation[g]), f"{group.name}\{subgroup.name}:{repr.name} - {g}:\n{ir}\n{representation[g]}\n"
+    # invert the change of basis
+    
+    change_of_basis = change_of_basis_inv.T
+    # change_of_basis = linalg.inv(change_of_basis_inv)
+    
+    assert np.allclose(change_of_basis_inv @ change_of_basis, np.eye(size)), f"{group.name}\{subgroup.name}:{repr.name} - change of basis not orthonormal\n"
+    assert np.allclose(change_of_basis @ change_of_basis_inv, np.eye(size)), f"{group.name}\{subgroup.name}:{repr.name} - change of basis not orthonormal\n"
+
+    for g, r in representation.items():
+        ir = change_of_basis @ P(g) @ change_of_basis_inv
+        assert np.allclose(ir, representation[g]), f"{group.name}\{subgroup.name}:{repr.name} - {g}:\n{ir}\n{representation[g]}\n"
     
     return irreps, change_of_basis, change_of_basis_inv
 

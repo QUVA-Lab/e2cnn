@@ -32,6 +32,18 @@ class EquivariantModule(Module, ABC):
         :meth:`torch.nn.Module.to`, :meth:`torch.nn.Module.cuda`, :meth:`torch.nn.Module.train` or
         :meth:`torch.nn.Module.eval`)
         
+        Many equivariant modules implement a :meth:`~e2cnn.nn.EquivariantModule.export` method which converts the module
+        to *eval* mode and returns a pure PyTorch implementation of it.
+        This can be used after training to efficiently deploy the model without, for instance, the overhead of the
+        automatic type checking performed by all the modules in this library.
+        
+        .. warning ::
+            
+            Not all modules implement this feature yet.
+            If the :meth:`~e2cnn.nn.EquivariantModule.export` method is called in a module which does not implement it
+            yet, a :class:`NotImplementedError` is raised.
+            Check the documentation of each individual module to understand if the method is implemented.
+        
         Attributes:
             ~.in_type (FieldType): type of the :class:`~e2cnn.nn.GeometricTensor` expected as input
             ~.out_type (FieldType): type of the :class:`~e2cnn.nn.GeometricTensor` returned as output
@@ -109,8 +121,15 @@ class EquivariantModule(Module, ABC):
         r"""
         Export recursively each submodule to a normal PyTorch module and set to "eval" mode.
         
+        .. warning ::
+            
+            Not all modules implement this feature yet.
+            If the :meth:`~e2cnn.nn.EquivariantModule.export` method is called in a module which does not implement it
+            yet, a :class:`NotImplementedError` is raised.
+            Check the documentation of each individual module to understand if the method is implemented.
+            
         """
 
         raise NotImplementedError(
-            f'Conversion of equivariant module {self.__class__} into PyTorch module is not supported yet'
+            'Conversion of equivariant module {} into PyTorch module is not supported yet'.format(self.__class__)
         )

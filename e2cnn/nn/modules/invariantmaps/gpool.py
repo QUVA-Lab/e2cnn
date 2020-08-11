@@ -158,7 +158,7 @@ class GroupPooling(EquivariantModule):
 
     def export(self):
         r"""
-        Export this module to the pure PyTorch module :class:`~e2cnn.nn.modules.invariantmaps.gpool.MaxPoolChannels`
+        Export this module to the pure PyTorch module :class:`~e2cnn.nn.MaxPoolChannels`
         and set to "eval" mode.
         
         .. warning ::
@@ -171,14 +171,14 @@ class GroupPooling(EquivariantModule):
             Because there is no native PyTorch module performing this operation, it is not possible to export this
             module without any dependency with this library.
             Indeed, the resulting module is dependent on this library through the class
-            :class:`~e2cnn.nn.modules.invariantmaps.gpool.MaxPoolChannels`.
+            :class:`~e2cnn.nn.MaxPoolChannels`.
             In case PyTorch will introduce a similar module in a future release, we will update this method to remove
             this dependency.
             
-            Nevertheless, the :class:`~e2cnn.nn.modules.invariantmaps.gpool.MaxPoolChannels` module is slightly lighter
+            Nevertheless, the :class:`~e2cnn.nn.MaxPoolChannels` module is slightly lighter
             than :class:`~e2cnn.nn.GroupPooling` as it does not perform any automatic type checking and does not wrap
             each tensor in a :class:`~e2cnn.nn.GeometricTensor`.
-            Furthermore, the :class:`~e2cnn.nn.modules.invariantmaps.gpool.MaxPoolChannels` class is very simple and
+            Furthermore, the :class:`~e2cnn.nn.MaxPoolChannels` class is very simple and
             one can easily reimplement it to remove any dependency with this library after training the model.
             
         """

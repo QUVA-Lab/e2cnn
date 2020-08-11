@@ -36,6 +36,7 @@ __all__ = [
     "PointwiseAdaptiveAvgPool",
     "PointwiseAdaptiveMaxPool",
     "GroupPooling",
+    "MaxPoolChannels",
     "NormPool",
     "InducedNormPool",
     "InnerBatchNorm",

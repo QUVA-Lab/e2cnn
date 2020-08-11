@@ -103,12 +103,12 @@ class R2ConvTransposed(EquivariantModule):
             assert all(in_type.representations[i] == in_type.representations[i % in_size] for i in range(len(in_type)))
             assert all(out_type.representations[i] == out_type.representations[i % out_size] for i in range(len(out_type)))
             
-            # finally, retrieve the type associated to a single group in input.
+            # finally, retrieve the type associated to a single group in output.
             # this type will be used to build a smaller kernel basis and a smaller filter
-            # as in PyTorch, to build a filter for grouped convolution, we build a filter which maps from one input
-            # group to all output groups. Then, PyTorch's standard convolution routine interpret this filter as `groups`
+            # as in PyTorch, to build a filter for grouped convolution, we build a filter which maps from all input
+            # groups to one output group. Then, PyTorch's standard convolution routine interpret this filter as `groups`
             # different filters, each mapping an input group to an output group.
-            in_type = in_type.index_select(list(range(in_size)))
+            out_type = out_type.index_select(list(range(out_size)))
         
         if bias:
             # bias can be applied only to trivial irreps inside the representation
@@ -161,29 +161,29 @@ class R2ConvTransposed(EquivariantModule):
                                                                                    basis_filter)
         
         # BasisExpansion: submodule which takes care of building the filter
-        self.basisexpansion = None
+        self._basisexpansion = None
         
-        # notice that `in_type` is used instead of `self.in_type` such that it works also when `groups > 1`
+        # notice that `out_type` is used instead of `self.out_type` such that it works also when `groups > 1`
         if basisexpansion == 'blocks':
-            self.basisexpansion = BlocksBasisExpansion(in_type, out_type,
-                                                       grid,
-                                                       sigma=sigma,
-                                                       rings=rings,
-                                                       maximum_offset=maximum_offset,
-                                                       maximum_frequency=maximum_frequency,
-                                                       basis_filter=basis_filter,
-                                                       recompute=recompute)
+            self._basisexpansion = BlocksBasisExpansion(in_type, out_type,
+                                                        grid,
+                                                        sigma=sigma,
+                                                        rings=rings,
+                                                        maximum_offset=maximum_offset,
+                                                        maximum_frequency=maximum_frequency,
+                                                        basis_filter=basis_filter,
+                                                        recompute=recompute)
 
         else:
             raise ValueError('Basis Expansion algorithm "%s" not recognized' % basisexpansion)
         
         self.weights = Parameter(torch.zeros(self.basisexpansion.dimension()), requires_grad=True)
-        self.register_buffer("filter", torch.zeros(out_type.size, in_type.size, kernel_size, kernel_size))
+        self.register_buffer("filter", torch.zeros(in_type.size, out_type.size, kernel_size, kernel_size))
         
         if initialize:
             # by default, the weights are initialized with a generalized form of he's weight initialization
             init.generalized_he_init(self.weights.data, self.basisexpansion)
-
+        
     @property
     def basisexpansion(self) -> BasisExpansion:
         return self._basisexpansion
@@ -234,7 +234,7 @@ class R2ConvTransposed(EquivariantModule):
             # avoid re-computation of the filter and the bias on multiple consecutive calls of `.eval()`
     
             filter, bias = self.expand_parameters()
-    
+            
             self.register_buffer("filter", filter)
             if bias is not None:
                 self.register_buffer("expanded_bias", bias)
@@ -372,11 +372,11 @@ class R2ConvTransposed(EquivariantModule):
                                        dilation=self.dilation,
                                        groups=self.groups,
                                        bias=has_bias)
-    
+        
         # set the filter and the bias
-        conv.weight.data = filter.data
+        conv.weight.data[:] = filter.data
         if has_bias:
-            conv.bias.data = bias.data
+            conv.bias.data[:] = bias.data
     
         return conv
 

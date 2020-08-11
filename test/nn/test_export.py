@@ -288,6 +288,8 @@ class TestExport(TestCase):
                 )
 
                 self.check_exported(net, atol=1e-6, rtol=5e-4)
+                
+                self.check_state_dict(net)
 
     def test_Sequential_example(self):
     
@@ -311,32 +313,15 @@ class TestExport(TestCase):
         print(net.export())
         
         self.check_exported(net)
+        
+        self.check_state_dict(net)
 
     def check_exported(self, equivariant: EquivariantModule, atol=1e-8, rtol=1e-5):
+        
+        equivariant = train(equivariant)
     
         in_size = equivariant.in_type.size
 
-        equivariant.train()
-        
-        if len(list(equivariant.parameters())) > 0:
-            sgd = SGD(equivariant.parameters(), lr=1e-3)
-        else:
-            sgd = None
-        
-        for i in range(5):
-            x = torch.randn(5, in_size, 31, 31)
-            x = GeometricTensor(x, equivariant.in_type)
-            
-            if sgd is not None:
-                sgd.zero_grad()
-            
-            y = equivariant(x).tensor
-            y = ((y - 1.)**2).mean()
-            
-            if sgd is not None:
-                y.backward()
-                sgd.step()
-        
         conventional = equivariant.export()
         
         for _ in range(5):
@@ -348,6 +333,60 @@ class TestExport(TestCase):
             # print(torch.abs(ye-yc).max())
             
             self.assertTrue(torch.allclose(ye, yc, atol=atol, rtol=rtol))
+
+    def check_state_dict(self, equivariant: EquivariantModule, atol=1e-8, rtol=1e-5):
+    
+        equivariant = train(equivariant)
+        
+        conventional1 = equivariant.export()
+
+        equivariant = train(equivariant)
+
+        conventional2 = equivariant.export()
+        state_dict = conventional2.state_dict()
+        
+        conventional1.load_state_dict(state_dict)
+        
+        # check the two versions are equivalent
+        in_size = equivariant.in_type.size
+        for _ in range(20):
+            x = torch.randn(5, in_size, 31, 31)
+        
+            y1 = conventional1(x)
+            y2 = conventional2(x)
+        
+            # print(torch.abs(y1-y2).max())
+        
+            self.assertTrue(torch.allclose(y1, y2, atol=atol, rtol=rtol))
+
+
+def train(equivariant: EquivariantModule):
+
+    in_size = equivariant.in_type.size
+
+    equivariant.train()
+
+    if len(list(equivariant.parameters())) > 0:
+        sgd = SGD(equivariant.parameters(), lr=1e-3)
+    else:
+        sgd = None
+
+    for i in range(5):
+        x = torch.randn(5, in_size, 31, 31)
+        x = GeometricTensor(x, equivariant.in_type)
+    
+        if sgd is not None:
+            sgd.zero_grad()
+    
+        y = equivariant(x).tensor
+        y = ((y - 1.) ** 2).mean()
+    
+        if sgd is not None:
+            y.backward()
+            sgd.step()
+    
+    return equivariant
+
 
 
 if __name__ == '__main__':

@@ -6,6 +6,7 @@ from e2cnn.group import IrreducibleRepresentation, Representation
 from e2cnn.group import utils
 
 import numpy as np
+import math
 
 from typing import List, Tuple, Callable, Iterable
 
@@ -219,11 +220,15 @@ class CyclicGroup(Group):
         # build the regular representation
         self.representations['regular'] = self.regular_representation
         self.representations['regular'].supported_nonlinearities.add('vectorfield')
-        
-        # build all quotient representations
-        # for n in range(2, int(math.ceil(math.sqrt(self.order())))):
-        #     if self.order() % n == 0:
-        #         self.quotient_representation(n)
+
+    def _build_quotient_representations(self):
+        r"""
+        Build all the quotient representations for this group
+
+        """
+        for n in range(2, int(math.ceil(math.sqrt(self.order())))):
+            if self.order() % n == 0:
+                self.quotient_representation(n)
     
     @property
     def trivial_representation(self) -> Representation:

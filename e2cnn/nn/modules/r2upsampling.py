@@ -171,3 +171,24 @@ class R2Upsampling(EquivariantModule):
 
         return errors
 
+    def export(self):
+        r"""
+        Export this module to a normal PyTorch :class:`torch.nn.Upsample` module and set to "eval" mode.
+
+        """
+    
+        self.eval()
+        
+        if self._align_corners is not None:
+            upsample = torch.nn.Upsample(
+                scale_factor=self._scale_factor,
+                mode=self._mode,
+                align_corners=self._align_corners
+            )
+        else:
+            upsample = torch.nn.Upsample(
+                scale_factor=self._scale_factor,
+                mode=self._mode,
+            )
+        
+        return upsample.eval()

@@ -22,6 +22,7 @@ class InnerBatchNorm(EquivariantModule):
                  eps: float = 1e-05,
                  momentum: float = 0.1,
                  affine: bool = True,
+                 track_running_stats: bool = True,
                  ):
         r"""
         
@@ -38,6 +39,10 @@ class InnerBatchNorm(EquivariantModule):
             momentum (float, optional): the value used for the ``running_mean`` and ``running_var`` computation.
                     Can be set to ``None`` for cumulative moving average (i.e. simple average). Default: ``0.1``
             affine (bool, optional):  if ``True``, this module has learnable affine parameters. Default: ``True``
+            track_running_stats (bool, optional): when set to ``True``, the module tracks the running mean and variance;
+                                                  when set to ``False``, it does not track such statistics but uses
+                                                  batch statistics in both training and eval modes.
+                                                  Default: ``True``
             
         """
 
@@ -54,6 +59,9 @@ class InnerBatchNorm(EquivariantModule):
         self.out_type = in_type
         
         self.affine = affine
+        self.eps = eps
+        self.momentum = momentum
+        self.track_running_stats = track_running_stats
         
         # group fields by their size and
         #   - check if fields with the same size are contiguous
@@ -84,7 +92,13 @@ class InnerBatchNorm(EquivariantModule):
             self.register_buffer('indices_{}'.format(s), _indices[s])
         
         for s in _indices.keys():
-            _batchnorm = BatchNorm3d(self._nfields[s], eps, momentum, affine=self.affine)
+            _batchnorm = BatchNorm3d(
+                self._nfields[s],
+                self.eps,
+                self.momentum,
+                affine=self.affine,
+                track_running_stats=self.track_running_stats
+            )
             self.add_module('batch_norm_[{}]'.format(s), _batchnorm)
     
     def forward(self, input: GeometricTensor) -> GeometricTensor:
@@ -135,3 +149,78 @@ class InnerBatchNorm(EquivariantModule):
     def check_equivariance(self, atol: float = 1e-6, rtol: float = 1e-5) -> List[Tuple[Any, float]]:
         # return super(InnerBatchNorm, self).check_equivariance(atol=atol, rtol=rtol)
         pass
+
+    def export(self):
+        r"""
+        Export this module to a normal PyTorch :class:`torch.nn.BatchNorm2d` module and set to "eval" mode.
+
+        """
+
+        if not self.track_running_stats:
+            raise ValueError('''
+                Equivariant Batch Normalization can not be converted into conventional batch normalization when
+                "track_running_stats" is False because the statistics contained in a single batch are generally
+                not symmetric
+            ''')
+        
+        self.eval()
+        
+        batchnorm = torch.nn.BatchNorm2d(
+            self.in_type.size,
+            self.eps,
+            self.momentum,
+            affine=self.affine,
+            track_running_stats=self.track_running_stats
+        )
+        
+        num_batches_tracked = None
+        
+        for s, contiguous in self._contiguous.items():
+            if not contiguous:
+                raise NotImplementedError(
+                    '''Non-contiguous indices not supported yet when converting
+                    inner-batch normalization into conventional BatchNorm2d'''
+                )
+            
+            # indices = getattr(self, 'indices_{}'.format(s))
+            start, end = getattr(self, 'indices_{}'.format(s))
+            bn = getattr(self, 'batch_norm_[{}]'.format(s))
+            
+            n = self._nfields[s]
+            
+            batchnorm.running_var.data[start:end] = bn.running_var.data.view(n, 1).expand(n, s).reshape(-1)
+            batchnorm.running_mean.data[start:end] = bn.running_mean.data.view(n, 1).expand(n, s).reshape(-1)
+            batchnorm.num_batches_tracked.data = bn.num_batches_tracked.data
+
+            if num_batches_tracked is None:
+                num_batches_tracked = bn.num_batches_tracked.data
+            else:
+                assert num_batches_tracked == bn.num_batches_tracked.data
+            
+            if self.affine:
+                batchnorm.weight.data[start:end] = bn.weight.data.view(n, 1).expand(n, s).reshape(-1)
+                batchnorm.bias.data[start:end] = bn.bias.data.view(n, 1).expand(n, s).reshape(-1)
+
+        batchnorm.eval()
+
+        return batchnorm
+
+    def __repr__(self):
+        extra_lines = []
+        extra_repr = self.extra_repr()
+        if extra_repr:
+            extra_lines = extra_repr.split('\n')
+    
+        main_str = self._get_name() + '('
+        if len(extra_lines) == 1:
+            main_str += extra_lines[0]
+        else:
+            main_str += '\n  ' + '\n  '.join(extra_lines) + '\n'
+    
+        main_str += ')'
+        return main_str
+
+    def extra_repr(self):
+        return '{in_type}, eps={eps}, momentum={momentum}, affine={affine}, track_running_stats={track_running_stats}'\
+            .format(**self.__dict__)
+

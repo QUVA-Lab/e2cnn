@@ -224,22 +224,23 @@ class R2ConvTransposed(EquivariantModule):
     
     def train(self, mode=True):
         
-        if not mode:
+        if mode:
+            # TODO thoroughly check this is not causing problems
+            if hasattr(self, "filter"):
+                del self.filter
+            if hasattr(self, "expanded_bias"):
+                del self.expanded_bias
+        elif self.training:
+            # avoid re-computation of the filter and the bias on multiple consecutive calls of `.eval()`
+    
             filter, bias = self.expand_parameters()
-            
+    
             self.register_buffer("filter", filter)
             if bias is not None:
                 self.register_buffer("expanded_bias", bias)
             else:
                 self.expanded_bias = None
 
-        else:
-            # TODO thoroughly check this is not causing problems
-            if hasattr(self, "filter"):
-                del self.filter
-            if hasattr(self, "expanded_bias"):
-                del self.expanded_bias
-        
         return super(R2ConvTransposed, self).train(mode)
 
     def evaluate_output_shape(self, input_shape: Tuple[int, int, int, int]) -> Tuple[int, int, int, int]:
@@ -348,6 +349,65 @@ class R2ConvTransposed(EquivariantModule):
         # center = self.s // 2
         # filter = filter[..., center, center]
         # assert torch.allclose(torch.eye(filter.shape[1]), filter.t() @ filter, atol=3e-7)
+
+    def export(self):
+        r"""
+        Export this module to a normal PyTorch :class:`torch.nn.ConvTranspose2d` module and set to "eval" mode.
+
+        """
+    
+        # set to eval mode so the filter and the bias are updated with the current
+        # values of the weights
+        self.eval()
+        filter = self.filter
+        bias = self.expanded_bias
+    
+        # build the PyTorch Conv2d module
+        has_bias = self.bias is not None
+        conv = torch.nn.ConvTranspose2d(self.in_type.size,
+                                       self.out_type.size,
+                                       self.kernel_size,
+                                       padding=self.padding,
+                                       stride=self.stride,
+                                       dilation=self.dilation,
+                                       groups=self.groups,
+                                       bias=has_bias)
+    
+        # set the filter and the bias
+        conv.weight.data = filter.data
+        if has_bias:
+            conv.bias.data = bias.data
+    
+        return conv
+
+    def __repr__(self):
+        extra_lines = []
+        extra_repr = self.extra_repr()
+        if extra_repr:
+            extra_lines = extra_repr.split('\n')
+    
+        main_str = self._get_name() + '('
+        if len(extra_lines) == 1:
+            main_str += extra_lines[0]
+        else:
+            main_str += '\n  ' + '\n  '.join(extra_lines) + '\n'
+    
+        main_str += ')'
+        return main_str
+
+    def extra_repr(self):
+        s = ('{in_type}, {out_type}, kernel_size={kernel_size}, stride={stride}')
+        if self.padding != 0 and self.padding != (0, 0):
+            s += ', padding={padding}'
+        if self.output_padding != 0 and self.output_padding != (0, 0):
+            s += ', output_padding={output_padding}'
+        if self.dilation != 1 and self.dilation != (1, 1):
+            s += ', dilation={dilation}'
+        if self.groups != 1:
+            s += ', groups={groups}'
+        if self.bias is None:
+            s += ', bias=False'
+        return s.format(**self.__dict__)
 
 
 def bandlimiting_filter(frequency_cutoff: Union[float, Callable[[float], float]]) -> Callable[[dict], bool]:

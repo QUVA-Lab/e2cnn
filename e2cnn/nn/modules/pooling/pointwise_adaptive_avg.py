@@ -6,6 +6,7 @@ from e2cnn.nn import GeometricTensor
 
 from ..equivariant_module import EquivariantModule
 
+import torch
 import torch.nn.functional as F
 
 from typing import List, Tuple, Any, Union
@@ -83,3 +84,13 @@ class PointwiseAdaptiveAvgPool(EquivariantModule):
     
         # this kind of pooling is not really equivariant so we can not test equivariance
         pass
+
+    def export(self):
+        r"""
+        Export this module to a normal PyTorch :class:`torch.nn.AdaptiveAvgPool2d` module and set to "eval" mode.
+
+        """
+    
+        self.eval()
+    
+        return torch.nn.AdaptiveAvgPool2d(self.output_size).eval()

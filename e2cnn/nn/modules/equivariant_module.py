@@ -105,13 +105,12 @@ class EquivariantModule(Module, ABC):
         
         return errors
     
-    ## @abstractmethod
     def export(self):
         r"""
         Export recursively each submodule to a normal PyTorch module and set to "eval" mode.
         
-        .. todo ::
-            Implement this method
-        
         """
-        raise NotImplementedError()
+
+        raise NotImplementedError(
+            f'Conversion of equivariant module {self.__class__} into PyTorch module is not supported yet'
+        )

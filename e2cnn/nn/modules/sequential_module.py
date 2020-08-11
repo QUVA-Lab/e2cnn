@@ -2,6 +2,7 @@
 from e2cnn.nn import GeometricTensor
 from .equivariant_module import EquivariantModule
 
+import torch
 
 from typing import List, Tuple, Union, Any
 
@@ -113,3 +114,23 @@ class SequentialModule(EquivariantModule):
     def check_equivariance(self, atol: float = 2e-6, rtol: float = 1e-5) -> List[Tuple[Any, float]]:
         return super(SequentialModule, self).check_equivariance(atol=atol, rtol=rtol)
 
+    def export(self):
+        r"""
+        Export this module to a normal PyTorch :class:`torch.nn.Sequential` module and set to "eval" mode.
+
+        """
+    
+        self.eval()
+    
+        submodules = []
+        
+        # convert all the submodules if necessary
+        for name, module in self._modules.items():
+            if isinstance(module, EquivariantModule):
+                module = module.export()
+                
+            submodules.append(
+                (name, module)
+            )
+
+        return torch.nn.Sequential(OrderedDict(submodules))

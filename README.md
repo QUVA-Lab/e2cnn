@@ -128,8 +128,6 @@ Lines 12 and 13 generate a random minibatch of RGB images and wrap them into a `
 The equivariant modules process the geometric tensor in line 15.
 Each module is thereby checking whether the geometric tensor passed to them satisfies the expected transformation law.
 
-Once an equivariant model is trained, it can be converted into a pure PyTorch model such that no additional overhead is 
-
 Because the parameters do not need to be updated anymore at test time, after training, any equivariant network can be 
 converted into a pure PyTorch model with no additional computational overhead in comparison to conventional CNNs.
 The code currently supports the automatic conversion of a few commonly used modules through the `.export()` method; 

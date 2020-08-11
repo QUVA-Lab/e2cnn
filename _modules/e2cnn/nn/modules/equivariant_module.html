@@ -217,6 +217,18 @@
 <span class="sd">        :meth:`torch.nn.Module.to`, :meth:`torch.nn.Module.cuda`, :meth:`torch.nn.Module.train` or</span>
 <span class="sd">        :meth:`torch.nn.Module.eval`)</span>
 <span class="sd">        </span>
+<span class="sd">        Many equivariant modules implement a :meth:`~e2cnn.nn.EquivariantModule.export` method which converts the module</span>
+<span class="sd">        to *eval* mode and returns a pure PyTorch implementation of it.</span>
+<span class="sd">        This can be used after training to efficiently deploy the model without, for instance, the overhead of the</span>
+<span class="sd">        automatic type checking performed by all the modules in this library.</span>
+<span class="sd">        </span>
+<span class="sd">        .. warning ::</span>
+<span class="sd">            </span>
+<span class="sd">            Not all modules implement this feature yet.</span>
+<span class="sd">            If the :meth:`~e2cnn.nn.EquivariantModule.export` method is called in a module which does not implement it</span>
+<span class="sd">            yet, a :class:`NotImplementedError` is raised.</span>
+<span class="sd">            Check the documentation of each individual module to understand if the method is implemented.</span>
+<span class="sd">        </span>
 <span class="sd">        Attributes:</span>
 <span class="sd">            ~.in_type (FieldType): type of the :class:`~e2cnn.nn.GeometricTensor` expected as input</span>
 <span class="sd">            ~.out_type (FieldType): type of the :class:`~e2cnn.nn.GeometricTensor` returned as output</span>
@@ -290,16 +302,22 @@
         
         <span class="k">return</span> <span class="n">errors</span></div>
     
-    <span class="c1">## @abstractmethod</span>
 <div class="viewcode-block" id="EquivariantModule.export"><a class="viewcode-back" href="../../../../api/e2cnn.nn.html#e2cnn.nn.EquivariantModule.export">[docs]</a>    <span class="k">def</span> <span class="nf">export</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Export recursively each submodule to a normal PyTorch module and set to &quot;eval&quot; mode.</span>
 <span class="sd">        </span>
-<span class="sd">        .. todo ::</span>
-<span class="sd">            Implement this method</span>
-<span class="sd">        </span>
+<span class="sd">        .. warning ::</span>
+<span class="sd">            </span>
+<span class="sd">            Not all modules implement this feature yet.</span>
+<span class="sd">            If the :meth:`~e2cnn.nn.EquivariantModule.export` method is called in a module which does not implement it</span>
+<span class="sd">            yet, a :class:`NotImplementedError` is raised.</span>
+<span class="sd">            Check the documentation of each individual module to understand if the method is implemented.</span>
+<span class="sd">            </span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">()</span></div></div>
+
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span>
+            <span class="s1">&#39;Conversion of equivariant module </span><span class="si">{}</span><span class="s1"> into PyTorch module is not supported yet&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="p">)</span>
+        <span class="p">)</span></div></div>
 </pre></div>
 
            </div>

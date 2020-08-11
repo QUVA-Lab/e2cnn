@@ -202,7 +202,7 @@
 
 <div class="viewcode-block" id="ELU"><a class="viewcode-back" href="../../../../../api/e2cnn.nn.html#e2cnn.nn.ELU">[docs]</a><span class="k">class</span> <span class="nc">ELU</span><span class="p">(</span><span class="n">EquivariantModule</span><span class="p">):</span>
     
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">in_type</span><span class="p">:</span> <span class="n">FieldType</span><span class="p">,</span> <span class="n">inplace</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">in_type</span><span class="p">:</span> <span class="n">FieldType</span><span class="p">,</span> <span class="n">alpha</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">,</span> <span class="n">inplace</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">):</span>
         <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        </span>
 <span class="sd">        Module that implements a pointwise ELU to every channel independently.</span>
@@ -213,6 +213,7 @@
 <span class="sd">        </span>
 <span class="sd">        Args:</span>
 <span class="sd">            in_type (FieldType):  the input field type</span>
+<span class="sd">            alpha (float): the :math:`\alpha` value for the ELU formulation. Default: 1.0</span>
 <span class="sd">            inplace (bool, optional): can optionally do the operation in-place. Default: ``False``</span>
 <span class="sd">            </span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -227,6 +228,7 @@
         
         <span class="bp">self</span><span class="o">.</span><span class="n">space</span> <span class="o">=</span> <span class="n">in_type</span><span class="o">.</span><span class="n">gspace</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">in_type</span> <span class="o">=</span> <span class="n">in_type</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">alpha</span> <span class="o">=</span> <span class="n">alpha</span>
         
         <span class="c1"># the representation in input is preserved</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">out_type</span> <span class="o">=</span> <span class="n">in_type</span>
@@ -247,7 +249,7 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         
         <span class="k">assert</span> <span class="nb">input</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">in_type</span>
-        <span class="k">return</span> <span class="n">GeometricTensor</span><span class="p">(</span><span class="n">F</span><span class="o">.</span><span class="n">elu</span><span class="p">(</span><span class="nb">input</span><span class="o">.</span><span class="n">tensor</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_inplace</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">out_type</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="n">GeometricTensor</span><span class="p">(</span><span class="n">F</span><span class="o">.</span><span class="n">elu</span><span class="p">(</span><span class="nb">input</span><span class="o">.</span><span class="n">tensor</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">alpha</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_inplace</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">out_type</span><span class="p">)</span></div>
 
     <span class="k">def</span> <span class="nf">evaluate_output_shape</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">input_shape</span><span class="p">:</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]:</span>
         <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">input_shape</span><span class="p">)</span> <span class="o">==</span> <span class="mi">4</span>
@@ -281,7 +283,23 @@
             
             <span class="n">errors</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">el</span><span class="p">,</span> <span class="n">errs</span><span class="o">.</span><span class="n">mean</span><span class="p">()))</span>
         
-        <span class="k">return</span> <span class="n">errors</span></div>
+        <span class="k">return</span> <span class="n">errors</span>
+
+    <span class="k">def</span> <span class="nf">extra_repr</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s1">&#39;alpha=</span><span class="si">{}</span><span class="s1">, inplace=</span><span class="si">{}</span><span class="s1">, type=</span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">alpha</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_inplace</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">in_type</span>
+        <span class="p">)</span>
+
+<div class="viewcode-block" id="ELU.export"><a class="viewcode-back" href="../../../../../api/e2cnn.nn.html#e2cnn.nn.ELU.export">[docs]</a>    <span class="k">def</span> <span class="nf">export</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Export this module to a normal PyTorch :class:`torch.nn.ELU` module and set to &quot;eval&quot; mode.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+    
+        <span class="bp">self</span><span class="o">.</span><span class="n">eval</span><span class="p">()</span>
+    
+        <span class="k">return</span> <span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">ELU</span><span class="p">(</span><span class="n">alpha</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">alpha</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_inplace</span><span class="p">)</span></div></div>
+
 </pre></div>
 
            </div>

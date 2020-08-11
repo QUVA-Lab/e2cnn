@@ -1,0 +1,259 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Other modules &mdash; e2cnn 0.1 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script type="text/x-mathjax-config">MathJax.Hub.Config({"TeX": {"Macros": {"bold": ["{\\bf #1}", 1], "R": "{\\mathbb R}", "N": "{\\mathbb N}", "Z": "{\\mathbb Z}", "Ind": ["{\\operatorname{Ind}_{#1}^{#2}}", 2], "Res": ["{\\operatorname{Res}_{#1}^{#2}}", 2], "GL": ["{\\operatorname{GL}(#1)}", 1], "E": ["{\\operatorname{E}(#1)}", 1], "SE": ["{\\operatorname{SE}(#1)}", 1], "O": ["{\\operatorname{O}(#1)}", 1], "SO": ["{\\operatorname{SO}(#1)}", 1], "U": ["{\\operatorname{U}(#1)}", 1], "D": ["{\\operatorname{D}_{#1}}", 1], "C": ["{\\operatorname{C}_{#1}}", 1], "DN": "{\\operatorname{D}_{\\!N}}", "CN": "{\\operatorname{C}_{\\!N}}"}}})</script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="prev" title="e2cnn.nn" href="e2cnn.nn.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> e2cnn
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.1
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Package Reference</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="e2cnn.group.html">e2cnn.group</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="e2cnn.group.html#groups">Groups</a></li>
+<li class="toctree-l2"><a class="reference internal" href="e2cnn.group.html#representations">Representations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="e2cnn.group.html#utility-functions">Utility Functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="e2cnn.group.html#subpackages">Subpackages</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="e2cnn.kernels.html">e2cnn.kernels</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="e2cnn.kernels.html#abstract-classes">Abstract Classes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="e2cnn.kernels.html#kernel-bases">Kernel Bases</a></li>
+<li class="toctree-l2"><a class="reference internal" href="e2cnn.kernels.html#bases-for-group-actions-on-the-plane">Bases for Group Actions on the Plane</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="e2cnn.gspaces.html">e2cnn.gspaces</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="e2cnn.gspaces.html#abstract-group-space">Abstract Group Space</a></li>
+<li class="toctree-l2"><a class="reference internal" href="e2cnn.gspaces.html#group-actions-on-the-plane">Group Actions on the Plane</a></li>
+</ul>
+</li>
+<li class="toctree-l1 current"><a class="reference internal" href="e2cnn.nn.html">e2cnn.nn</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="e2cnn.nn.html#field-type">Field Type</a></li>
+<li class="toctree-l2"><a class="reference internal" href="e2cnn.nn.html#geometric-tensor">Geometric Tensor</a></li>
+<li class="toctree-l2"><a class="reference internal" href="e2cnn.nn.html#equivariant-module">Equivariant Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="e2cnn.nn.html#utils">Utils</a></li>
+<li class="toctree-l2"><a class="reference internal" href="e2cnn.nn.html#planar-convolution">Planar Convolution</a></li>
+<li class="toctree-l2"><a class="reference internal" href="e2cnn.nn.html#non-linearities">Non Linearities</a></li>
+<li class="toctree-l2"><a class="reference internal" href="e2cnn.nn.html#invariant-maps">Invariant Maps</a></li>
+<li class="toctree-l2"><a class="reference internal" href="e2cnn.nn.html#pooling">Pooling</a></li>
+<li class="toctree-l2"><a class="reference internal" href="e2cnn.nn.html#normalization">Normalization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="e2cnn.nn.html#dropout">Dropout</a></li>
+<li class="toctree-l2"><a class="reference internal" href="e2cnn.nn.html#other-modules">Other Modules</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="e2cnn.nn.html#module-e2cnn.nn.init">Weight Initialization</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">e2cnn</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="e2cnn.nn.html">e2cnn.nn</a> &raquo;</li>
+        
+      <li>Other modules</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/api/e2cnn.nn.others.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="other-modules">
+<h1>Other modules<a class="headerlink" href="#other-modules" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="maxpoolchannels">
+<h2>MaxPoolChannels<a class="headerlink" href="#maxpoolchannels" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="e2cnn.nn.MaxPoolChannels">
+<em class="property">class </em><code class="descname">MaxPoolChannels</code><span class="sig-paren">(</span><em>kernel_size</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/e2cnn/nn/modules/invariantmaps/gpool.html#MaxPoolChannels"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#e2cnn.nn.MaxPoolChannels" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">torch.nn.modules.module.Module</span></code></p>
+<p>Module that computes the maximum activation within each group of <code class="docutils literal notranslate"><span class="pre">kernel_size</span></code> consecutive channels.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>kernel_size</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><em>int</em></a>) – the size of the group of channels the max is computed over</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+      
+        <a href="e2cnn.nn.html" class="btn btn-neutral float-left" title="e2cnn.nn" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, Qualcomm Innovation Center, Inc. Developed by Gabriele Cesa, Maurice Weiler
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

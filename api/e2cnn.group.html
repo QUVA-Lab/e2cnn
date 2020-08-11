@@ -1359,7 +1359,7 @@ evaluating <code class="docutils literal notranslate"><span class="pre">represen
 <li><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><em>str</em></a>) – an identification name for this representation.</li>
 <li><strong>irreps</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.8)"><em>list</em></a>) – a list of strings. Each string represents the name of one of the <em>irreps</em> of the
 group (see <a class="reference internal" href="#e2cnn.group.Group.irreps" title="e2cnn.group.Group.irreps"><code class="xref py py-attr docutils literal notranslate"><span class="pre">e2cnn.group.Group.irreps</span></code></a>).</li>
-<li><strong>change_of_basis</strong> (<a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.17)"><em>ndarray</em></a>) – the matrix which transforms the direct sum of the irreps
+<li><strong>change_of_basis</strong> (<a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.19)"><em>ndarray</em></a>) – the matrix which transforms the direct sum of the irreps
 in this representation.</li>
 <li><strong>supported_nonlinearities</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.8)"><em>list</em></a><em> or </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#set" title="(in Python v3.8)"><em>set</em></a>) – a list or set of nonlinearity types supported by this
 representation.</li>
@@ -1367,7 +1367,7 @@ representation.</li>
 mapping each of the group’s elements to its representation.</li>
 <li><strong>character</strong> (<em>callable</em><em> or </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.8)"><em>dict</em></a><em>, </em><em>optional</em>) – a callable returning the character of this representation for an
 input element or a dictionary mapping each element to its character.</li>
-<li><strong>change_of_basis_inv</strong> (<a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.17)"><em>ndarray</em></a><em>, </em><em>optional</em>) – the inverse of the <code class="docutils literal notranslate"><span class="pre">change_of_basis</span></code> matrix; if not
+<li><strong>change_of_basis_inv</strong> (<a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.19)"><em>ndarray</em></a><em>, </em><em>optional</em>) – the inverse of the <code class="docutils literal notranslate"><span class="pre">change_of_basis</span></code> matrix; if not
 provided (<code class="docutils literal notranslate"><span class="pre">None</span></code>), it is computed from <code class="docutils literal notranslate"><span class="pre">change_of_basis</span></code>.</li>
 <li><strong>**kwargs</strong> – custom attributes the user can set and, then, access from the dictionary in
 <code class="xref py py-attr docutils literal notranslate"><span class="pre">e2cnn.group.Representation.attributes</span></code></li>
@@ -1379,8 +1379,8 @@ provided (<code class="docutils literal notranslate"><span class="pre">None</spa
 <li><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><em>str</em></a>) – A string identifying this representation.</li>
 <li><strong>size</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><em>int</em></a>) – Dimensionality of the vector space of this representation. In practice, this is the size of the
 matrices this representation maps the group elements to.</li>
-<li><strong>change_of_basis</strong> (<a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.17)"><em>ndarray</em></a>) – Change of basis matrix for the irreps decomposition.</li>
-<li><strong>change_of_basis_inv</strong> (<a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.17)"><em>ndarray</em></a>) – Inverse of the change of basis matrix for the irreps decomposition.</li>
+<li><strong>change_of_basis</strong> (<a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.19)"><em>ndarray</em></a>) – Change of basis matrix for the irreps decomposition.</li>
+<li><strong>change_of_basis_inv</strong> (<a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.19)"><em>ndarray</em></a>) – Inverse of the change of basis matrix for the irreps decomposition.</li>
 <li><strong>representation</strong> (<em>callable</em>) – Method implementing the map from group elements to their representation matrix.</li>
 <li><strong>supported_nonlinearities</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#set" title="(in Python v3.8)"><em>set</em></a>) – A set of strings identifying the non linearities types supported by this representation.</li>
 <li><strong>irreps</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.8)"><em>list</em></a>) – List of irreps into which this representation decomposes.</li>
@@ -1559,7 +1559,7 @@ resulting representation will evaluate to <span class="math notranslate nohighli
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>repr</strong> (<a class="reference internal" href="#e2cnn.group.Representation" title="e2cnn.group.Representation"><em>Representation</em></a>) – the input representation</li>
-<li><strong>change_of_basis</strong> (<a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.17)"><em>ndarray</em></a>) – the change of basis to apply</li>
+<li><strong>change_of_basis</strong> (<a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.19)"><em>ndarray</em></a>) – the change of basis to apply</li>
 <li><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><em>str</em></a><em>, </em><em>optional</em>) – the name to use to identify the new representation</li>
 <li><strong>supported_nonlinearities</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.8)"><em>list</em></a><em>, </em><em>optional</em>) – a list containing the ids of the supported non-linearities
 for the new representation</li>
@@ -1598,7 +1598,7 @@ for the new representation</li>
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>reprs</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.8)"><em>list</em></a>) – the list of representations to sum.</li>
-<li><strong>change_of_basis</strong> (<a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.17)"><em>ndarray</em></a><em>, </em><em>optional</em>) – an invertible square matrix to use as change of basis after computing the direct sum.
+<li><strong>change_of_basis</strong> (<a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.19)"><em>ndarray</em></a><em>, </em><em>optional</em>) – an invertible square matrix to use as change of basis after computing the direct sum.
 By default (<code class="docutils literal notranslate"><span class="pre">None</span></code>), an identity matrix is used, such that only the direct sum is evaluated.</li>
 <li><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><em>str</em></a><em>, </em><em>optional</em>) – a name for the new representation.</li>
 </ul>
@@ -1683,9 +1683,9 @@ block-diagonal and, so, the subgroup’s regular representations might not be cl
 </table>
 <p>Indeed, in <span class="math notranslate nohighlight">\(\Res{\C2}{\D3} \rho_\text{reg}^{\D3}(g)\)</span> the three pairs of entries (1, 4), (2, 6) and (3, 5)
 never mix with each other but only permute internally.
-Moreover, each pair transform according to the regular representation of <span class="math notranslate nohighlight">\(\C2\)</span>.
+Moreover, each pair transforms according to the regular representation of <span class="math notranslate nohighlight">\(\C2\)</span>.
 Through a permutation of the entries, it is possible to make all the entries belonging to the same pair contiguous.
-This this reshuffled representation is then equal to
+This reshuffled representation is then equal to
 <span class="math notranslate nohighlight">\(\rho_\text{reg}^{\C2} \oplus \rho_\text{reg}^{\C2} \oplus \rho_\text{reg}^{\C2}\)</span>.
 Though theoretically equivalent, an implementation of this representation where the entries are contiguous is
 convenient when computing functions over single fields like batch normalization.</p>

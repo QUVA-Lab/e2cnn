@@ -281,7 +281,22 @@
             
             <span class="n">errors</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">el</span><span class="p">,</span> <span class="n">errs</span><span class="o">.</span><span class="n">mean</span><span class="p">()))</span>
         
-        <span class="k">return</span> <span class="n">errors</span></div>
+        <span class="k">return</span> <span class="n">errors</span>
+
+    <span class="k">def</span> <span class="nf">extra_repr</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s1">&#39;inplace=</span><span class="si">{}</span><span class="s1">, type=</span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_inplace</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">in_type</span>
+        <span class="p">)</span>
+    
+<div class="viewcode-block" id="ReLU.export"><a class="viewcode-back" href="../../../../../api/e2cnn.nn.html#e2cnn.nn.ReLU.export">[docs]</a>    <span class="k">def</span> <span class="nf">export</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Export this module to a normal PyTorch :class:`torch.nn.ReLU` module and set to &quot;eval&quot; mode.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+    
+        <span class="bp">self</span><span class="o">.</span><span class="n">eval</span><span class="p">()</span>
+    
+        <span class="k">return</span> <span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">ReLU</span><span class="p">(</span><span class="n">inplace</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_inplace</span><span class="p">)</span></div></div>
 </pre></div>
 
            </div>

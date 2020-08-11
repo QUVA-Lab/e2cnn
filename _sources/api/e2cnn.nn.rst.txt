@@ -16,6 +16,77 @@ specified behavior of their output fields given a transformation of their input 
 This subpackage depends on :doc:`e2cnn.group` and :doc:`e2cnn.gspaces`.
 
 
+To enable efficient deployment of equivariant networks, many :class:`~e2cnn.nn.EquivariantModule` s implement a
+:meth:`~e2cnn.nn.EquivariantModule.export` method which converts a *trained* equivariant module into a pure PyTorch
+module, with few or no dependencies with **e2cnn**.
+Not all modules support this feature yet, so read each module's documentation to check whether it implements this method
+or not.
+We provide a simple example::
+
+    # build a simple equivariant model using a SequentialModule
+
+    s = e2cnn.gspaces.Rot2dOnR2(8)
+    c_in = e2cnn.nn.FieldType(s, [s.trivial_repr]*3)
+    c_hid = e2cnn.nn.FieldType(s, [s.regular_repr]*3)
+    c_out = e2cnn.nn.FieldType(s, [s.regular_repr]*1)
+
+    net = SequentialModule(
+        R2Conv(c_in, c_hid, 5, bias=False),
+        InnerBatchNorm(c_hid),
+        ReLU(c_hid, inplace=True),
+        PointwiseMaxPool(c_hid, kernel_size=3, stride=2, padding=1),
+        R2Conv(c_hid, c_out, 3, bias=False),
+        InnerBatchNorm(c_out),
+        ELU(c_out, inplace=True),
+        GroupPooling(c_out)
+    )
+
+    # train the model
+    # ...
+
+    # export the model
+
+    net.eval()
+    net_exported = net.export()
+
+    print(net)
+    > SequentialModule(
+    >   (0): R2Conv([8-Rotations: {irrep_0, irrep_0, irrep_0}], [8-Rotations: {regular, regular, regular}], kernel_size=5, stride=1, bias=False)
+    >   (1): InnerBatchNorm([8-Rotations: {regular, regular, regular}], eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    >   (2): ReLU(inplace=True, type=[8-Rotations: {regular, regular, regular}])
+    >   (3): PointwiseMaxPool()
+    >   (4): R2Conv([8-Rotations: {regular, regular, regular}], [8-Rotations: {regular}], kernel_size=3, stride=1, bias=False)
+    >   (5): InnerBatchNorm([8-Rotations: {regular}], eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    >   (6): ELU(alpha=1.0, inplace=True, type=[8-Rotations: {regular}])
+    >   (7): GroupPooling([8-Rotations: {regular}])
+    > )
+
+    print(net_exported)
+    > Sequential(
+    >   (0): Conv2d(3, 24, kernel_size=(5, 5), stride=(1, 1), bias=False)
+    >   (1): BatchNorm2d(24, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    >   (2): ReLU(inplace=True)
+    >   (3): MaxPool2d(kernel_size=(3, 3), stride=(2, 2), padding=(1, 1), dilation=(1, 1), ceil_mode=False)
+    >   (4): Conv2d(24, 8, kernel_size=(3, 3), stride=(1, 1), bias=False)
+    >   (5): BatchNorm2d(8, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    >   (6): ELU(alpha=1.0, inplace=True)
+    >   (7): MaxPoolChannels(kernel_size=8)
+    > )
+
+
+    # check that the two models are equivalent
+
+    x = torch.randn(10, c_in.size, 31, 31)
+    x = GeometricTensor(x, c_in)
+
+    y1 = net(x).tensor
+    y2 = net_exported(x.tensor)
+
+    assert torch.allclose(y1, y2)
+
+|
+
+
 .. contents:: Contents
     :local:
     :backlinks: top
@@ -323,6 +394,15 @@ Weight Initialization
 
 .. automodule:: e2cnn.nn.init
    :members:
+
+
+.. toctree::
+   :glob:
+   :maxdepth: 1
+   :hidden:
+
+   e2cnn.nn.others
+
 
 
 

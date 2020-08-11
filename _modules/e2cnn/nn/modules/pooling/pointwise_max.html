@@ -312,7 +312,17 @@
     <span class="k">def</span> <span class="nf">check_equivariance</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">atol</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1e-6</span><span class="p">,</span> <span class="n">rtol</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1e-5</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">Tuple</span><span class="p">[</span><span class="n">Any</span><span class="p">,</span> <span class="nb">float</span><span class="p">]]:</span>
     
         <span class="c1"># this kind of pooling is not really equivariant so we can not test equivariance</span>
-        <span class="k">pass</span></div>
+        <span class="k">pass</span>
+
+<div class="viewcode-block" id="PointwiseMaxPool.export"><a class="viewcode-back" href="../../../../../api/e2cnn.nn.html#e2cnn.nn.PointwiseMaxPool.export">[docs]</a>    <span class="k">def</span> <span class="nf">export</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Export this module to a normal PyTorch :class:`torch.nn.MaxPool2d` module and set to &quot;eval&quot; mode.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+    
+        <span class="bp">self</span><span class="o">.</span><span class="n">eval</span><span class="p">()</span>
+    
+        <span class="k">return</span> <span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">MaxPool2d</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">kernel_size</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">stride</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">padding</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">dilation</span><span class="p">)</span><span class="o">.</span><span class="n">eval</span><span class="p">()</span></div></div>
 
 
 <div class="viewcode-block" id="PointwiseMaxPoolAntialiased"><a class="viewcode-back" href="../../../../../api/e2cnn.nn.html#e2cnn.nn.PointwiseMaxPoolAntialiased">[docs]</a><span class="k">class</span> <span class="nc">PointwiseMaxPoolAntialiased</span><span class="p">(</span><span class="n">PointwiseMaxPool</span><span class="p">):</span>

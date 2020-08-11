@@ -186,6 +186,7 @@
 <span></span><span class="kn">from</span> <span class="nn">e2cnn.nn</span> <span class="k">import</span> <span class="n">GeometricTensor</span>
 <span class="kn">from</span> <span class="nn">e2cnn.nn</span> <span class="k">import</span> <span class="n">FieldType</span>
 <span class="kn">from</span> <span class="nn">.equivariant_module</span> <span class="k">import</span> <span class="n">EquivariantModule</span>
+<span class="kn">import</span> <span class="nn">torch</span>
 
 <span class="kn">from</span> <span class="nn">typing</span> <span class="k">import</span> <span class="n">List</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">,</span> <span class="n">Union</span><span class="p">,</span> <span class="n">Any</span>
 
@@ -235,7 +236,18 @@
         <span class="k">return</span> <span class="n">input_shape</span>
 
     <span class="k">def</span> <span class="nf">check_equivariance</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">atol</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">2e-6</span><span class="p">,</span> <span class="n">rtol</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1e-5</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">Tuple</span><span class="p">[</span><span class="n">Any</span><span class="p">,</span> <span class="nb">float</span><span class="p">]]:</span>
-        <span class="k">return</span> <span class="nb">super</span><span class="p">(</span><span class="n">IdentityModule</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">check_equivariance</span><span class="p">(</span><span class="n">atol</span><span class="o">=</span><span class="n">atol</span><span class="p">,</span> <span class="n">rtol</span><span class="o">=</span><span class="n">rtol</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="nb">super</span><span class="p">(</span><span class="n">IdentityModule</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">check_equivariance</span><span class="p">(</span><span class="n">atol</span><span class="o">=</span><span class="n">atol</span><span class="p">,</span> <span class="n">rtol</span><span class="o">=</span><span class="n">rtol</span><span class="p">)</span>
+
+<div class="viewcode-block" id="IdentityModule.export"><a class="viewcode-back" href="../../../../api/e2cnn.nn.html#e2cnn.nn.IdentityModule.export">[docs]</a>    <span class="k">def</span> <span class="nf">export</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Export this module to a normal PyTorch :class:`torch.nn.Identity` module and set to &quot;eval&quot; mode.</span>
+<span class="sd">        </span>
+<span class="sd">        .. warning ::</span>
+<span class="sd">            Only working with PyTorch &gt;= 1.2</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">eval</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">Identity</span><span class="p">()</span></div></div>
 
 </pre></div>
 

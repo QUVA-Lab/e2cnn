@@ -191,6 +191,7 @@
 <span class="kn">from</span> <span class="nn">e2cnn.group</span> <span class="k">import</span> <span class="n">utils</span>
 
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">math</span>
 
 <span class="kn">from</span> <span class="nn">typing</span> <span class="k">import</span> <span class="n">List</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">,</span> <span class="n">Callable</span><span class="p">,</span> <span class="n">Iterable</span>
 
@@ -526,12 +527,16 @@
         <span class="c1"># N.B.: it represents the LEFT-ACTION of the elements</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">representations</span><span class="p">[</span><span class="s1">&#39;regular&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">regular_representation</span>
 
-        <span class="c1"># add all quotient representations</span>
-        <span class="c1"># for n in range(2, int(math.ceil(math.sqrt(self.rotation_order)))):</span>
-        <span class="c1">#     if self.rotation_order % n == 0:</span>
-        <span class="c1">#         for f in range(2):</span>
-        <span class="c1">#             sg_id = (f, n)</span>
-        <span class="c1">#             self.quotient_representation(sg_id)</span>
+    <span class="k">def</span> <span class="nf">_build_quotient_representations</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Build all the quotient representations for this group</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="nb">int</span><span class="p">(</span><span class="n">math</span><span class="o">.</span><span class="n">ceil</span><span class="p">(</span><span class="n">math</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">rotation_order</span><span class="p">)))):</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">rotation_order</span> <span class="o">%</span> <span class="n">n</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">):</span>
+                    <span class="n">sg_id</span> <span class="o">=</span> <span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">n</span><span class="p">)</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">quotient_representation</span><span class="p">(</span><span class="n">sg_id</span><span class="p">)</span>
         
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">trivial_representation</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Representation</span><span class="p">:</span>

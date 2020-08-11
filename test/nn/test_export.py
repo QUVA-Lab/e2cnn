@@ -287,12 +287,32 @@ class TestExport(TestCase):
                     GroupPooling(f_out),
                 )
 
-                print(net)
-                print(net.export())
+                self.check_exported(net, atol=1e-6, rtol=5e-4)
 
-                self.check_exported(net)
+    def test_Sequential_example(self):
+    
+        s = Rot2dOnR2(8)
+        c_in = FieldType(s, [s.trivial_repr] * 3)
+        c_hid = FieldType(s, [s.regular_repr] * 3)
+        c_out = FieldType(s, [s.regular_repr] * 1)
+    
+        net = SequentialModule(
+            R2Conv(c_in, c_hid, 5, bias=False),
+            InnerBatchNorm(c_hid),
+            ReLU(c_hid, inplace=True),
+            PointwiseMaxPool(c_hid, kernel_size=3, stride=2, padding=1),
+            R2Conv(c_hid, c_out, 3, bias=False),
+            InnerBatchNorm(c_out),
+            ELU(c_out, inplace=True),
+            GroupPooling(c_out)
+        )
+    
+        print(net)
+        print(net.export())
+        
+        self.check_exported(net)
 
-    def check_exported(self, equivariant: EquivariantModule):
+    def check_exported(self, equivariant: EquivariantModule, atol=1e-8, rtol=1e-5):
     
         in_size = equivariant.in_type.size
 
@@ -327,7 +347,7 @@ class TestExport(TestCase):
             
             # print(torch.abs(ye-yc).max())
             
-            self.assertTrue(torch.allclose(ye, yc, atol=5e-7, rtol=5e-4))
+            self.assertTrue(torch.allclose(ye, yc, atol=atol, rtol=rtol))
 
 
 if __name__ == '__main__':

@@ -1,6 +1,7 @@
 from e2cnn.nn import GeometricTensor
 from e2cnn.nn import FieldType
 from .equivariant_module import EquivariantModule
+import torch
 
 from typing import List, Tuple, Union, Any
 
@@ -51,4 +52,15 @@ class IdentityModule(EquivariantModule):
 
     def check_equivariance(self, atol: float = 2e-6, rtol: float = 1e-5) -> List[Tuple[Any, float]]:
         return super(IdentityModule, self).check_equivariance(atol=atol, rtol=rtol)
+
+    def export(self):
+        r"""
+        Export this module to a normal PyTorch :class:`torch.nn.Identity` module and set to "eval" mode.
+        
+        .. warning ::
+            Only working with PyTorch >= 1.2
+
+        """
+        self.eval()
+        return torch.nn.Identity()
 

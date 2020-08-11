@@ -17,7 +17,7 @@ __all__ = ["ELU"]
 
 class ELU(EquivariantModule):
     
-    def __init__(self, in_type: FieldType, inplace: bool = False):
+    def __init__(self, in_type: FieldType, alpha: float = 1.0, inplace: bool = False):
         r"""
         
         Module that implements a pointwise ELU to every channel independently.
@@ -28,6 +28,7 @@ class ELU(EquivariantModule):
         
         Args:
             in_type (FieldType):  the input field type
+            alpha (float): the :math:`\alpha` value for the ELU formulation. Default: 1.0
             inplace (bool, optional): can optionally do the operation in-place. Default: ``False``
             
         """
@@ -42,6 +43,7 @@ class ELU(EquivariantModule):
         
         self.space = in_type.gspace
         self.in_type = in_type
+        self.alpha = alpha
         
         # the representation in input is preserved
         self.out_type = in_type
@@ -62,7 +64,7 @@ class ELU(EquivariantModule):
         """
         
         assert input.type == self.in_type
-        return GeometricTensor(F.elu(input.tensor, inplace=self._inplace), self.out_type)
+        return GeometricTensor(F.elu(input.tensor, alpha=self.alpha, inplace=self._inplace), self.out_type)
 
     def evaluate_output_shape(self, input_shape: Tuple[int, int, int, int]) -> Tuple[int, int, int, int]:
         assert len(input_shape) == 4
@@ -97,3 +99,19 @@ class ELU(EquivariantModule):
             errors.append((el, errs.mean()))
         
         return errors
+
+    def extra_repr(self):
+        return 'alpha={}, inplace={}, type={}'.format(
+            self.alpha, self._inplace, self.in_type
+        )
+
+    def export(self):
+        r"""
+        Export this module to a normal PyTorch :class:`torch.nn.ELU` module and set to "eval" mode.
+
+        """
+    
+        self.eval()
+    
+        return torch.nn.ELU(alpha=self.alpha, inplace=self._inplace)
+

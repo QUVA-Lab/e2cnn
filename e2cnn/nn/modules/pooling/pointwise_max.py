@@ -129,6 +129,16 @@ class PointwiseMaxPool(EquivariantModule):
         # this kind of pooling is not really equivariant so we can not test equivariance
         pass
 
+    def export(self):
+        r"""
+        Export this module to a normal PyTorch :class:`torch.nn.MaxPool2d` module and set to "eval" mode.
+
+        """
+    
+        self.eval()
+    
+        return torch.nn.MaxPool2d(self.kernel_size, self.stride, self.padding, self.dilation).eval()
+
 
 class PointwiseMaxPoolAntialiased(PointwiseMaxPool):
     

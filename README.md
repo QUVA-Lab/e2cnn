@@ -128,6 +128,13 @@ Lines 12 and 13 generate a random minibatch of RGB images and wrap them into a `
 The equivariant modules process the geometric tensor in line 15.
 Each module is thereby checking whether the geometric tensor passed to them satisfies the expected transformation law.
 
+Once an equivariant model is trained, it can be converted into a pure PyTorch model such that no additional overhead is 
+
+Because the parameters do not need to be updated anymore at test time, after training, any equivariant network can be 
+converted into a pure PyTorch model with no additional computational overhead in comparison to conventional CNNs.
+The code currently supports the automatic conversion of a few commonly used modules through the `.export()` method; 
+check the [documentation](https://quva-lab.github.io/e2cnn/api/e2cnn.nn.html) for more details.
+
 A hands-on tutorial, introducing the basic functionality of *e2cnn*, is provided in [introduction.ipynb](./examples/introduction.ipynb).
 Code for training and evaluating a simple model on the [*rotated MNIST*](https://sites.google.com/a/lisa.iro.umontreal.ca/public_static_twiki/variations-on-the-mnist-digits) dataset is given in [model.ipynb](./examples/model.ipynb).
 

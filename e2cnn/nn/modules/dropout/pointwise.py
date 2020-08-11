@@ -6,6 +6,7 @@ from e2cnn.nn import GeometricTensor
 from ..equivariant_module import EquivariantModule
 
 import torch.nn.functional as F
+import torch
 from typing import List, Tuple, Any
 
 __all__ = ["PointwiseDropout"]
@@ -76,3 +77,14 @@ class PointwiseDropout(EquivariantModule):
     def check_equivariance(self, atol: float = 1e-6, rtol: float = 1e-5) -> List[Tuple[Any, float]]:
         # return super(InnerBatchNorm, self).check_equivariance(atol=atol, rtol=rtol)
         pass
+
+    def export(self):
+        r"""
+        Export this module to a normal PyTorch :class:`torch.nn.Dropout` module and set to "eval" mode.
+
+        """
+    
+        self.eval()
+        
+        return torch.nn.Dropout(self.p, self.inplace).eval()
+

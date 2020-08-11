@@ -31,6 +31,7 @@ from .pooling import PointwiseAdaptiveAvgPool
 from .pooling import PointwiseAdaptiveMaxPool
 
 from .invariantmaps import GroupPooling
+from .invariantmaps import MaxPoolChannels
 from .invariantmaps import NormPool
 from .invariantmaps import InducedNormPool
 
@@ -77,6 +78,7 @@ __all__ = [
     "PointwiseAdaptiveAvgPool",
     "PointwiseAdaptiveMaxPool",
     "GroupPooling",
+    "MaxPoolChannels",
     "NormPool",
     "InducedNormPool",
     "InnerBatchNorm",

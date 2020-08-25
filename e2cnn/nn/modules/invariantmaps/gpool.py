@@ -7,12 +7,14 @@ from e2cnn.nn.modules.equivariant_module import EquivariantModule
 from e2cnn.nn.modules.utils import indexes_from_labels
 
 import torch
+from torch import nn
 
 from typing import List, Tuple, Any
 from collections import defaultdict
 import numpy as np
 
-__all__ = ["GroupPooling"]
+
+__all__ = ["GroupPooling", "MaxPoolChannels"]
 
 
 class GroupPooling(EquivariantModule):
@@ -80,7 +82,7 @@ class GroupPooling(EquivariantModule):
     def forward(self, input: GeometricTensor) -> GeometricTensor:
         r"""
         
-        Apply the Orientation Pooling to the input feature map.
+        Apply Group Pooling to the input feature map.
         
         Args:
             input (GeometricTensor): the input feature map
@@ -99,8 +101,8 @@ class GroupPooling(EquivariantModule):
         
         for s, contiguous in self._contiguous.items():
             
-            in_indices = getattr(self, f"in_indices_{s}")
-            out_indices = getattr(self, f"out_indices_{s}")
+            in_indices = getattr(self, "in_indices_{}".format(s))
+            out_indices = getattr(self, "out_indices_{}".format(s))
             
             if contiguous:
                 fm = input[:, in_indices[0]:in_indices[1], ...]
@@ -154,4 +156,76 @@ class GroupPooling(EquivariantModule):
     
         return errors
 
+    def export(self):
+        r"""
+        Export this module to the pure PyTorch module :class:`~e2cnn.nn.MaxPoolChannels`
+        and set to "eval" mode.
+        
+        .. warning ::
+        
+                Currently, this method only supports group pooling with feature types containing only representations
+                of the same size.
+        
+        .. note ::
+            
+            Because there is no native PyTorch module performing this operation, it is not possible to export this
+            module without any dependency with this library.
+            Indeed, the resulting module is dependent on this library through the class
+            :class:`~e2cnn.nn.MaxPoolChannels`.
+            In case PyTorch will introduce a similar module in a future release, we will update this method to remove
+            this dependency.
+            
+            Nevertheless, the :class:`~e2cnn.nn.MaxPoolChannels` module is slightly lighter
+            than :class:`~e2cnn.nn.GroupPooling` as it does not perform any automatic type checking and does not wrap
+            each tensor in a :class:`~e2cnn.nn.GeometricTensor`.
+            Furthermore, the :class:`~e2cnn.nn.MaxPoolChannels` class is very simple and
+            one can easily reimplement it to remove any dependency with this library after training the model.
+            
+        """
+        
+        if len(self._contiguous) > 1:
+            raise NotImplementedError("""
+                Group pooling with feature types containing representations of different sizes is not supported yet.
+            """)
+    
+        self.eval()
 
+        size = int(list(self._contiguous.keys())[0])
+        gpool = MaxPoolChannels(size)
+        
+        return gpool.eval()
+    
+    def extra_repr(self):
+        return '{in_type}'.format(**self.__dict__)
+
+
+class MaxPoolChannels(nn.Module):
+    
+    def __init__(self, kernel_size: int):
+        r"""
+        
+        Module that computes the maximum activation within each group of ``kernel_size`` consecutive channels.
+        
+        Args:
+            kernel_size (int): the size of the group of channels the max is computed over
+            
+        """
+        super(MaxPoolChannels, self).__init__()
+        self.kernel_size = kernel_size
+        
+    def forward(self, input: torch.Tensor) -> torch.Tensor:
+        
+        assert input.shape[1] % self.kernel_size == 0, '''
+            Error! The input number of channels ({}) is not divisible by the max pooling kernel size ({})
+        '''.format(input.shape[1], self.kernel_size)
+        
+        b = input.shape[0]
+        c = input.shape[1] // self.kernel_size
+        s = input.shape[2:]
+        
+        shape = (b, c, self.kernel_size) + s
+        
+        return input.view(shape).max(2)[0]
+
+    def extra_repr(self):
+        return 'kernel_size={kernel_size}'.format(**self.__dict__)

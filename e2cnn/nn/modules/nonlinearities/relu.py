@@ -97,3 +97,18 @@ class ReLU(EquivariantModule):
             errors.append((el, errs.mean()))
         
         return errors
+
+    def extra_repr(self):
+        return 'inplace={}, type={}'.format(
+            self._inplace, self.in_type
+        )
+    
+    def export(self):
+        r"""
+        Export this module to a normal PyTorch :class:`torch.nn.ReLU` module and set to "eval" mode.
+
+        """
+    
+        self.eval()
+    
+        return torch.nn.ReLU(inplace=self._inplace)

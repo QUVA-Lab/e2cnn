@@ -103,12 +103,12 @@ class R2ConvTransposed(EquivariantModule):
             assert all(in_type.representations[i] == in_type.representations[i % in_size] for i in range(len(in_type)))
             assert all(out_type.representations[i] == out_type.representations[i % out_size] for i in range(len(out_type)))
             
-            # finally, retrieve the type associated to a single group in input.
+            # finally, retrieve the type associated to a single group in output.
             # this type will be used to build a smaller kernel basis and a smaller filter
-            # as in PyTorch, to build a filter for grouped convolution, we build a filter which maps from one input
-            # group to all output groups. Then, PyTorch's standard convolution routine interpret this filter as `groups`
+            # as in PyTorch, to build a filter for grouped convolution, we build a filter which maps from all input
+            # groups to one output group. Then, PyTorch's standard convolution routine interpret this filter as `groups`
             # different filters, each mapping an input group to an output group.
-            in_type = in_type.index_select(list(range(in_size)))
+            out_type = out_type.index_select(list(range(out_size)))
         
         if bias:
             # bias can be applied only to trivial irreps inside the representation
@@ -161,29 +161,29 @@ class R2ConvTransposed(EquivariantModule):
                                                                                    basis_filter)
         
         # BasisExpansion: submodule which takes care of building the filter
-        self.basisexpansion = None
+        self._basisexpansion = None
         
-        # notice that `in_type` is used instead of `self.in_type` such that it works also when `groups > 1`
+        # notice that `out_type` is used instead of `self.out_type` such that it works also when `groups > 1`
         if basisexpansion == 'blocks':
-            self.basisexpansion = BlocksBasisExpansion(in_type, out_type,
-                                                       grid,
-                                                       sigma=sigma,
-                                                       rings=rings,
-                                                       maximum_offset=maximum_offset,
-                                                       maximum_frequency=maximum_frequency,
-                                                       basis_filter=basis_filter,
-                                                       recompute=recompute)
+            self._basisexpansion = BlocksBasisExpansion(in_type, out_type,
+                                                        grid,
+                                                        sigma=sigma,
+                                                        rings=rings,
+                                                        maximum_offset=maximum_offset,
+                                                        maximum_frequency=maximum_frequency,
+                                                        basis_filter=basis_filter,
+                                                        recompute=recompute)
 
         else:
             raise ValueError('Basis Expansion algorithm "%s" not recognized' % basisexpansion)
         
         self.weights = Parameter(torch.zeros(self.basisexpansion.dimension()), requires_grad=True)
-        self.register_buffer("filter", torch.zeros(out_type.size, in_type.size, kernel_size, kernel_size))
+        self.register_buffer("filter", torch.zeros(in_type.size, out_type.size, kernel_size, kernel_size))
         
         if initialize:
             # by default, the weights are initialized with a generalized form of he's weight initialization
             init.generalized_he_init(self.weights.data, self.basisexpansion)
-
+        
     @property
     def basisexpansion(self) -> BasisExpansion:
         return self._basisexpansion
@@ -224,7 +224,15 @@ class R2ConvTransposed(EquivariantModule):
     
     def train(self, mode=True):
         
-        if not mode:
+        if mode:
+            # TODO thoroughly check this is not causing problems
+            if hasattr(self, "filter"):
+                del self.filter
+            if hasattr(self, "expanded_bias"):
+                del self.expanded_bias
+        elif self.training:
+            # avoid re-computation of the filter and the bias on multiple consecutive calls of `.eval()`
+    
             filter, bias = self.expand_parameters()
             
             self.register_buffer("filter", filter)
@@ -233,13 +241,6 @@ class R2ConvTransposed(EquivariantModule):
             else:
                 self.expanded_bias = None
 
-        else:
-            # TODO thoroughly check this is not causing problems
-            if hasattr(self, "filter"):
-                del self.filter
-            if hasattr(self, "expanded_bias"):
-                del self.expanded_bias
-        
         return super(R2ConvTransposed, self).train(mode)
 
     def evaluate_output_shape(self, input_shape: Tuple[int, int, int, int]) -> Tuple[int, int, int, int]:
@@ -348,6 +349,65 @@ class R2ConvTransposed(EquivariantModule):
         # center = self.s // 2
         # filter = filter[..., center, center]
         # assert torch.allclose(torch.eye(filter.shape[1]), filter.t() @ filter, atol=3e-7)
+
+    def export(self):
+        r"""
+        Export this module to a normal PyTorch :class:`torch.nn.ConvTranspose2d` module and set to "eval" mode.
+
+        """
+    
+        # set to eval mode so the filter and the bias are updated with the current
+        # values of the weights
+        self.eval()
+        filter = self.filter
+        bias = self.expanded_bias
+    
+        # build the PyTorch Conv2d module
+        has_bias = self.bias is not None
+        conv = torch.nn.ConvTranspose2d(self.in_type.size,
+                                       self.out_type.size,
+                                       self.kernel_size,
+                                       padding=self.padding,
+                                       stride=self.stride,
+                                       dilation=self.dilation,
+                                       groups=self.groups,
+                                       bias=has_bias)
+        
+        # set the filter and the bias
+        conv.weight.data[:] = filter.data
+        if has_bias:
+            conv.bias.data[:] = bias.data
+    
+        return conv
+
+    def __repr__(self):
+        extra_lines = []
+        extra_repr = self.extra_repr()
+        if extra_repr:
+            extra_lines = extra_repr.split('\n')
+    
+        main_str = self._get_name() + '('
+        if len(extra_lines) == 1:
+            main_str += extra_lines[0]
+        else:
+            main_str += '\n  ' + '\n  '.join(extra_lines) + '\n'
+    
+        main_str += ')'
+        return main_str
+
+    def extra_repr(self):
+        s = ('{in_type}, {out_type}, kernel_size={kernel_size}, stride={stride}')
+        if self.padding != 0 and self.padding != (0, 0):
+            s += ', padding={padding}'
+        if self.output_padding != 0 and self.output_padding != (0, 0):
+            s += ', output_padding={output_padding}'
+        if self.dilation != 1 and self.dilation != (1, 1):
+            s += ', dilation={dilation}'
+        if self.groups != 1:
+            s += ', groups={groups}'
+        if self.bias is None:
+            s += ', bias=False'
+        return s.format(**self.__dict__)
 
 
 def bandlimiting_filter(frequency_cutoff: Union[float, Callable[[float], float]]) -> Callable[[dict], bool]:

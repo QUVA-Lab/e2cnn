@@ -446,7 +446,7 @@ class FieldType:
         return self._hash
     
     def __repr__(self):
-        return self.gspace.name + ': {' + ', '.join([r.name for r in self.representations]) + '}'
+        return '[' + self.gspace.name + ': {' + ', '.join([r.name for r in self.representations]) + '}]'
 
     @property
     def testing_elements(self):

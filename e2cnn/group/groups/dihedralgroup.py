@@ -6,6 +6,7 @@ from e2cnn.group import IrreducibleRepresentation, Representation
 from e2cnn.group import utils
 
 import numpy as np
+import math
 
 from typing import List, Tuple, Callable, Iterable
 
@@ -341,12 +342,16 @@ class DihedralGroup(Group):
         # N.B.: it represents the LEFT-ACTION of the elements
         self.representations['regular'] = self.regular_representation
 
-        # add all quotient representations
-        # for n in range(2, int(math.ceil(math.sqrt(self.rotation_order)))):
-        #     if self.rotation_order % n == 0:
-        #         for f in range(2):
-        #             sg_id = (f, n)
-        #             self.quotient_representation(sg_id)
+    def _build_quotient_representations(self):
+        r"""
+        Build all the quotient representations for this group
+
+        """
+        for n in range(2, int(math.ceil(math.sqrt(self.rotation_order)))):
+            if self.rotation_order % n == 0:
+                for f in range(2):
+                    sg_id = (f, n)
+                    self.quotient_representation(sg_id)
         
     @property
     def trivial_representation(self) -> Representation:

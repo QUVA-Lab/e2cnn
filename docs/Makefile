@@ -19,7 +19,7 @@ api:
 
 github:
 	@make html
-	@cp -a build/html/. ../docs
+	@cp -a build/html/. ../e2cnn-docs
 
 
 # Catch-all target: route all unknown targets to Sphinx using the new

@@ -8,6 +8,7 @@ from e2cnn.nn import GeometricTensor
 from e2cnn.nn import FieldType
 from e2cnn.gspaces import *
 
+import torch
 from typing import List, Tuple, Any
 
 __all__ = ["RestrictionModule"]
@@ -85,5 +86,16 @@ class RestrictionModule(EquivariantModule):
             errors.append((el, errs.mean()))
     
         return errors
+
+    def export(self):
+        r"""
+        Export this module to a normal PyTorch :class:`torch.nn.Identity` module and set to "eval" mode.
+
+        .. warning ::
+            Only working with PyTorch >= 1.2
+
+        """
+        self.eval()
+        return torch.nn.Identity()
 
 

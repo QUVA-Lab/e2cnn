@@ -13,7 +13,32 @@ import torch.nn.functional as F
 from torch.nn import Parameter
 from typing import List, Tuple, Any
 
+
 __all__ = ["FieldDropout"]
+
+
+def dropout_field(input: torch.Tensor, p: float, training: bool, inplace: bool):
+    
+    if training:
+        shape = list(input.size())
+        shape[2] = 1
+        
+        if input.device == torch.device('cpu'):
+            mask = torch.FloatTensor(*shape)
+        else:
+            device = input.device
+            mask = torch.cuda.FloatTensor(*shape, device=device)
+        
+        mask = mask.uniform_() > p
+        mask = mask.to(torch.float)
+        
+        if inplace:
+            input *= mask / (1. - p)
+            return input
+        else:
+            return input * mask / (1. - p)
+    else:
+        return input
 
 
 class FieldDropout(EquivariantModule):
@@ -89,7 +114,7 @@ class FieldDropout(EquivariantModule):
                 _indices[s] = torch.LongTensor(_indices[s])
                 
             # register the indices tensors as parameters of this module
-            self.register_parameter('indices_{}'.format(s), _indices[s])
+            self.register_buffer('indices_{}'.format(s), _indices[s])
         
         self._order = list(self._contiguous.keys())
         
@@ -118,16 +143,21 @@ class FieldDropout(EquivariantModule):
         for s in self._order:
             
             indices = getattr(self, f"indices_{s}")
+            
+            shape = input.shape[:1] + (self._nfields[s], s) + input.shape[2:]
+            
             if self._contiguous[s]:
                 # if the fields are contiguous, we can use slicing
-                out = F.dropout(input[:, indices[0]:indices[1], ...], self.p, self.training, self.inplace)
+                out = dropout_field(input[:, indices[0]:indices[1], ...].view(shape), self.p, self.training, self.inplace)
                 if not self.inplace:
-                    output[:, indices[0]:indices[1], ...] = out
+                    shape = input.shape[:1] + (self._nfields[s] * s, ) + input.shape[2:]
+                    output[:, indices[0]:indices[1], ...] = out.view(shape)
             else:
                 # otherwise we have to use indexing
-                out = F.dropout(input[:, indices[0], ...], self.p, self.training, self.inplace)
+                out = dropout_field(input[:, indices, ...].view(shape), self.p, self.training, self.inplace)
                 if not self.inplace:
-                    output[:, indices[0], ...] = out
+                    shape = input.shape[:1] + (self._nfields[s] * s, ) + input.shape[2:]
+                    output[:, indices, ...] = out.view(shape)
             
         if self.inplace:
             output = input

@@ -166,6 +166,8 @@ pymanopt
 autograd
 ```
 
+Check the branch [legacy_py3.6](https://github.com/QUVA-Lab/e2cnn/tree/legacy_py3.6) for a Python 3.6 compatible version of the library.
+
 ## Installation
 
 ```

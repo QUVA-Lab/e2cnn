@@ -63,7 +63,7 @@ class TestGeneralizedHeInit(TestCase):
             init.generalized_he_init(cl.weights.data, cl.basisexpansion)
             cl.eval()
             
-            x = torch.randn(5, r1.size, s, s)
+            x = torch.randn(10, r1.size, s, s)
             
             xg = GeometricTensor(x, r1)
             y = cl(xg).tensor
@@ -80,8 +80,8 @@ class TestGeneralizedHeInit(TestCase):
         print(mean)
         print(std)
         
-        self.assertTrue(torch.allclose(torch.zeros_like(mean), mean, rtol=2e-2, atol=3e-2))
-        self.assertTrue(torch.allclose(torch.ones_like(std), std, rtol=2e-2, atol=3e-2))
+        self.assertTrue(torch.allclose(torch.zeros_like(mean), mean, rtol=2e-2, atol=5e-2))
+        self.assertTrue(torch.allclose(torch.ones_like(std), std, rtol=1e-1, atol=6e-2))
 
 
 if __name__ == '__main__':

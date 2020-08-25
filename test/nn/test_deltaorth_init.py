@@ -56,7 +56,7 @@ class TestDeltaOrth(TestCase):
             init.deltaorthonormal_init(cl.weights.data, cl.basisexpansion)
             # init.generalized_he_init(cl.weights.data, cl.basisexpansion)
             
-            filter, _ = cl.expand_weights()
+            filter, _ = cl.expand_parameters()
             
             center = filter[..., c, c]
             

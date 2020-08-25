@@ -28,7 +28,7 @@ setup(
     license=about['__license__'],
     long_description=long_description,
     packages=find_packages(),
-    python_requires='>3.7',
+    python_requires='>3.6',
     keywords=[
         'pytorch',
         'cnn',

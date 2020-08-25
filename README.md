@@ -3,6 +3,8 @@ General E(2)-Equivariant Steerable CNNs
 --------------------------------------------------------------------------------
 **[Documentation](https://quva-lab.github.io/e2cnn/)** | **[Paper](https://arxiv.org/abs/1911.08251)**
 
+## NOTE: this is a *Python 3.6* compatible version of [e2cnn](https://github.com/QUVA-Lab/e2cnn) (which requires *Python 3.7*)
+
 *e2cnn* is a [PyTorch](https://pytorch.org/) extension for equivariant deep learning.
 
 *Equivariant neural networks* guarantee a specified transformation behavior of their feature spaces under transformations of their input.
@@ -150,7 +152,8 @@ python e2wrn.py --rot90
 
 ## Dependencies
 
-The library is based on Python3.7
+While the [original library](https://github.com/QUVA-Lab/e2cnn) requires Python3.7, this version works with Python 3.6 but does not use ```from __future__ import annotations``` 
+(see what it means [here](https://www.python.org/dev/peps/pep-0563/#rationale-and-goals)).
 
 ```
 torch>=1.1

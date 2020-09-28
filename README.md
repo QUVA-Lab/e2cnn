@@ -16,7 +16,7 @@ In contrast to conventional CNNs, E(2)-equivariant models are guaranteed to gene
 The feature spaces of E(2)-Equivariant Steerable CNNs are defined as spaces of *feature fields*, being characterized by their transformation law under rotations and reflections.
 Typical examples are scalar fields (e.g. gray-scale images or temperature fields) or vector fields (e.g. optical flow or electromagnetic fields).
 
-![feature field examples](./visualizations/feature_fields.png)
+![feature field examples](https://github.com/QUVA-Lab/e2cnn/raw/master/visualizations/feature_fields.png)
 
 Instead of a number of channels, the user has to specify the field *types* and their *multiplicities* in order to define a feature space.
 Given a specified input- and output feature space, our ``R2conv`` module instantiates the *most general* convolutional mapping between them.
@@ -40,14 +40,13 @@ For more details we refer to our NeurIPS 2019 paper [General E(2)-Equivariant St
 
 The library is structured into four subpackages with different high-level features:
 
-| Component                                        | Description                                                      |
-| ------------------------------------------------ | ---------------------------------------------------------------- |
-| [**e2cnn.group**](./e2cnn/group/)                | implements basic concepts of *group* and *representation* theory |
-| [**e2cnn.kernels**](./e2cnn/kernels/)            | solves for spaces of equivariant convolution kernels             |
-| [**e2cnn.gspaces**](e2cnn/gspaces/)              | defines the image plane and its symmetries                       |
-| [**e2cnn.nn**](./e2cnn/nn/)                      | contains equivariant modules to build deep neural networks       |
-
---------------------------------------------------------------------------------
+| Component                                                                  | Description                                                      |
+| ---------------------------------------------------------------------------| ---------------------------------------------------------------- |
+| [**e2cnn.group**](https://github.com/QUVA-Lab/e2cnn/blob/master/group/)                | implements basic concepts of *group* and *representation* theory |
+| [**e2cnn.kernels**](https://github.com/QUVA-Lab/e2cnn/blob/master/kernels/)            | solves for spaces of equivariant convolution kernels             |
+| [**e2cnn.gspaces**](https://github.com/QUVA-Lab/e2cnn/blob/master/gspaces/)            | defines the image plane and its symmetries                       |
+| [**e2cnn.nn**](https://github.com/QUVA-Lab/e2cnn/blob/master/nn/)                      | contains equivariant modules to build deep neural networks       |
+-------------------------------------------------------------------------------------------------------------------------------------------------
 
 ## Demo
 
@@ -56,7 +55,7 @@ The visualization below demonstrates this claim by feeding rotated images into a
 The middle plot shows the equivariant transformation of a feature space, consisting of one scalar field (color-coded) and one vector field (arrows), after a few layers.
 In the right plot we transform the feature space into a comoving reference frame by rotating the response fields back (stabilized view).
 
-![Equivariant CNN output](visualizations/vectorfield.gif)
+![Equivariant CNN output](https://github.com/QUVA-Lab/e2cnn/raw/master/visualizations/vectorfield.gif)
 
 The invariance of the features in the comoving frame validates the rotational equivariance of E(2)-steerable CNNs empirically.
 Note that the fluctuations of responses are discretization artifacts due to the sampling of the image on a pixel grid, which does not allow for exact continuous rotations.
@@ -64,7 +63,7 @@ Note that the fluctuations of responses are discretization artifacts due to the 
 
 For comparison, we show a feature map response of a conventional CNN for different image orientations below.
 
-![Conventional CNN output](visualizations/conventional_cnn.gif)
+![Conventional CNN output](https://github.com/QUVA-Lab/e2cnn/raw/master/visualizations/conventional_cnn.gif)
 
 Since conventional CNNs are not equivariant under rotations, the response varies randomly with the image orientation.
 This prevents CNNs from automatically generalizing learned patterns between different reference frames.
@@ -133,10 +132,10 @@ converted into a pure PyTorch model with no additional computational overhead in
 The code currently supports the automatic conversion of a few commonly used modules through the `.export()` method; 
 check the [documentation](https://quva-lab.github.io/e2cnn/api/e2cnn.nn.html) for more details.
 
-A hands-on tutorial, introducing the basic functionality of *e2cnn*, is provided in [introduction.ipynb](./examples/introduction.ipynb).
-Code for training and evaluating a simple model on the [*rotated MNIST*](https://sites.google.com/a/lisa.iro.umontreal.ca/public_static_twiki/variations-on-the-mnist-digits) dataset is given in [model.ipynb](./examples/model.ipynb).
+A hands-on tutorial, introducing the basic functionality of *e2cnn*, is provided in [introduction.ipynb](https://github.com/QUVA-Lab/e2cnn/blob/master/examples/introduction.ipynb).
+Code for training and evaluating a simple model on the [*rotated MNIST*](https://sites.google.com/a/lisa.iro.umontreal.ca/public_static_twiki/variations-on-the-mnist-digits) dataset is given in [model.ipynb](https://github.com/QUVA-Lab/e2cnn/blob/master/examples/model.ipynb).
 
-More complex equivariant *Wide Resnet* models are implemented in [e2wrn.py](./examples/e2wrn.py).
+More complex equivariant *Wide Resnet* models are implemented in [e2wrn.py](https://github.com/QUVA-Lab/e2cnn/blob/master/examples/e2wrn.py).
 To try a model which is equivariant under reflections call:
 ```
 cd examples
@@ -167,7 +166,16 @@ Check the branch [legacy_py3.6](https://github.com/QUVA-Lab/e2cnn/tree/legacy_py
 
 ## Installation
 
+You can install the latest [release](https://github.com/QUVA-Lab/e2cnn/releases) as
+
 ```
+pip install e2cnn
+```
+
+or you can clone this repository and manually install it with
+```
+git clone https://github.com/QUVA-Lab/e2cnn
+cd e2cnn
 pip install .
 ```
 

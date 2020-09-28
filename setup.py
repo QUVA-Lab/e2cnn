@@ -18,6 +18,8 @@ tests_require = ['scikit-learn', 'scikit-image']
 with open("README.md", 'r') as f:
     long_description = f.read()
 
+download_url = 'https://github.com/QUVA-Lab/e2cnn/archive/v{}.tar.gz'.format(about['__version__'])
+
 setup(
     name=about['__title__'],
     version=about['__version__'],
@@ -25,8 +27,10 @@ setup(
     author=about['__author__'],
     author_email=about['__email__'],
     url=about['__url__'],
+    download_url=download_url,
     license=about['__license__'],
     long_description=long_description,
+    long_description_content_type="text/markdown",
     packages=find_packages(),
     python_requires='>3.7',
     keywords=[

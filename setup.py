@@ -30,6 +30,7 @@ setup(
     download_url=download_url,
     license=about['__license__'],
     long_description=long_description,
+    long_description_content_type="text/markdown",
     packages=find_packages(),
     python_requires='>3.7',
     keywords=[

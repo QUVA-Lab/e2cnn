@@ -31,7 +31,7 @@ setup(
     license=about['__license__'],
     long_description=long_description,
     long_description_content_type="text/markdown",
-    packages=find_packages(),
+    packages=find_packages(include=['e2cnn']),
     python_requires='>3.7',
     keywords=[
         'pytorch',

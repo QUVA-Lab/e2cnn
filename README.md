@@ -174,9 +174,7 @@ pip install e2cnn
 
 or you can clone this repository and manually install it with
 ```
-git clone https://github.com/QUVA-Lab/e2cnn
-cd e2cnn
-pip install .
+pip install git+https://github.com/QUVA-Lab/e2cnn
 ```
 
 

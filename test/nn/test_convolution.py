@@ -150,6 +150,36 @@ class TestConvolution(TestCase):
             cl.eval()
             cl.check_equivariance()
 
+    def test_padding_mode_reflect(self):
+        g = Flip2dOnR2(axis=np.pi / 2)
+    
+        r1 = FieldType(g, [g.trivial_repr])
+        r2 = FieldType(g, [g.regular_repr])
+    
+        s = 3
+        cl = R2Conv(r1, r2, s, bias=True, padding=1, padding_mode='reflect', initialize=False)
+    
+        for _ in range(32):
+            init.generalized_he_init(cl.weights.data, cl.basisexpansion)
+            cl.eval()
+            cl.check_equivariance()
+
+    def test_padding_mode_circular(self):
+        g = FlipRot2dOnR2(4, axis=np.pi / 2)
+    
+        r1 = FieldType(g, [g.trivial_repr])
+        r2 = FieldType(g, [g.regular_repr])
+    
+        for mode in ['circular', 'reflect', 'replicate']:
+            for s in [3, 5, 7]:
+                padding = s // 2
+                cl = R2Conv(r1, r2, s, bias=True, padding=padding, padding_mode=mode, initialize=False)
+            
+                for _ in range(10):
+                    init.generalized_he_init(cl.weights.data, cl.basisexpansion)
+                    cl.eval()
+                    cl.check_equivariance()
+
 
 if __name__ == '__main__':
     unittest.main()

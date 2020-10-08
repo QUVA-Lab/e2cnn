@@ -169,9 +169,7 @@ autograd
 
 To install the Python 3.6 compatible version, you can clone this repository and manually install it with
 ```
-git clone https://github.com/QUVA-Lab/e2cnn/tree/legacy_py3.6 
-cd e2cnn
-pip install .
+pip install git+https://github.com/QUVA-Lab/e2cnn@legacy_py3.6 
 ```
 
 You can install the latest Python3.7 [release](https://github.com/QUVA-Lab/e2cnn/releases) as

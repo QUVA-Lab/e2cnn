@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>e2cnn.kernels &mdash; e2cnn 0.1 documentation</title>
+  <title>e2cnn.kernels &mdash; e2cnn 0.1.1 documentation</title>
   
 
   
@@ -63,7 +63,7 @@
             
             
               <div class="version">
-                0.1
+                0.1.1
               </div>
             
           
@@ -231,14 +231,14 @@ For instance, for planar images <span class="math notranslate nohighlight">\(X =
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>dim</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><em>int</em></a>) – the dimensionality of the basis <span class="math notranslate nohighlight">\(|\mathcal{K}|\)</span> (number of elements)</li>
-<li><strong>shape</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.8)"><em>tuple</em></a>) – a tuple containing <span class="math notranslate nohighlight">\(c_\text{out}\)</span> and <span class="math notranslate nohighlight">\(c_\text{in}\)</span></li>
+<li><strong>dim</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)"><em>int</em></a>) – the dimensionality of the basis <span class="math notranslate nohighlight">\(|\mathcal{K}|\)</span> (number of elements)</li>
+<li><strong>shape</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.9)"><em>tuple</em></a>) – a tuple containing <span class="math notranslate nohighlight">\(c_\text{out}\)</span> and <span class="math notranslate nohighlight">\(c_\text{in}\)</span></li>
 </ul>
 </td>
 </tr>
 <tr class="field-even field"><th class="field-name">Variables:</th><td class="field-body"><ul class="first last simple">
-<li><strong>dim</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><em>int</em></a>) – the dimensionality of the basis <span class="math notranslate nohighlight">\(|\mathcal{K}|\)</span> (number of elements)</li>
-<li><strong>shape</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.8)"><em>tuple</em></a>) – a tuple containing <span class="math notranslate nohighlight">\(c_\text{out}\)</span> and <span class="math notranslate nohighlight">\(c_\text{in}\)</span></li>
+<li><strong>dim</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)"><em>int</em></a>) – the dimensionality of the basis <span class="math notranslate nohighlight">\(|\mathcal{K}|\)</span> (number of elements)</li>
+<li><strong>shape</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.9)"><em>tuple</em></a>) – a tuple containing <span class="math notranslate nohighlight">\(c_\text{out}\)</span> and <span class="math notranslate nohighlight">\(c_\text{in}\)</span></li>
 </ul>
 </td>
 </tr>
@@ -355,9 +355,9 @@ angular profile through <a class="reference internal" href="#e2cnn.kernels.Polar
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>radii</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.8)"><em>list</em></a>) – centers of each basis element. They should be different and spread to cover all
+<li><strong>radii</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.9)"><em>list</em></a>) – centers of each basis element. They should be different and spread to cover all
 domain of interest</li>
-<li><strong>sigma</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.8)"><em>list</em></a><em> or </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.8)"><em>float</em></a>) – widths of each element. Can potentially be different.</li>
+<li><strong>sigma</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.9)"><em>list</em></a><em> or </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.9)"><em>float</em></a>) – widths of each element. Can potentially be different.</li>
 </ul>
 </td>
 </tr>
@@ -499,9 +499,9 @@ However, a choice of this axis is required to align the basis with respect to th
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
 <li><strong>in_repr</strong> (<a class="reference internal" href="e2cnn.group.html#e2cnn.group.Representation" title="e2cnn.group.Representation"><em>Representation</em></a>) – the representation specifying the transformation of the input feature field</li>
 <li><strong>out_repr</strong> (<a class="reference internal" href="e2cnn.group.html#e2cnn.group.Representation" title="e2cnn.group.Representation"><em>Representation</em></a>) – the representation specifying the transformation of the output feature field</li>
-<li><strong>radii</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.8)"><em>list</em></a>) – radii of the rings defining the basis for the radial profile</li>
-<li><strong>sigma</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.8)"><em>list</em></a><em> or </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.8)"><em>float</em></a>) – widths of the rings defining the basis for the radial profile</li>
-<li><strong>axis</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.8)"><em>float</em></a><em>, </em><em>optional</em>) – angle of the axis of the reflection element</li>
+<li><strong>radii</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.9)"><em>list</em></a>) – radii of the rings defining the basis for the radial profile</li>
+<li><strong>sigma</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.9)"><em>list</em></a><em> or </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.9)"><em>float</em></a>) – widths of the rings defining the basis for the radial profile</li>
+<li><strong>axis</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.9)"><em>float</em></a><em>, </em><em>optional</em>) – angle of the axis of the reflection element</li>
 </ul>
 </td>
 </tr>
@@ -529,8 +529,8 @@ of these rings (see <a class="reference internal" href="#e2cnn.kernels.GaussianR
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
 <li><strong>in_repr</strong> (<a class="reference internal" href="e2cnn.group.html#e2cnn.group.Representation" title="e2cnn.group.Representation"><em>Representation</em></a>) – the representation specifying the transformation of the input feature field</li>
 <li><strong>out_repr</strong> (<a class="reference internal" href="e2cnn.group.html#e2cnn.group.Representation" title="e2cnn.group.Representation"><em>Representation</em></a>) – the representation specifying the transformation of the output feature field</li>
-<li><strong>radii</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.8)"><em>list</em></a>) – radii of the rings defining the basis for the radial profile</li>
-<li><strong>sigma</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.8)"><em>list</em></a><em> or </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.8)"><em>float</em></a>) – widths of the rings defining the basis for the radial profile</li>
+<li><strong>radii</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.9)"><em>list</em></a>) – radii of the rings defining the basis for the radial profile</li>
+<li><strong>sigma</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.9)"><em>list</em></a><em> or </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.9)"><em>float</em></a>) – widths of the rings defining the basis for the radial profile</li>
 </ul>
 </td>
 </tr>
@@ -567,11 +567,11 @@ parameter <span class="math notranslate nohighlight">\(t\)</span> or <span class
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
 <li><strong>in_repr</strong> (<a class="reference internal" href="e2cnn.group.html#e2cnn.group.Representation" title="e2cnn.group.Representation"><em>Representation</em></a>) – the representation specifying the transformation of the input feature field</li>
 <li><strong>out_repr</strong> (<a class="reference internal" href="e2cnn.group.html#e2cnn.group.Representation" title="e2cnn.group.Representation"><em>Representation</em></a>) – the representation specifying the transformation of the output feature field</li>
-<li><strong>radii</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.8)"><em>list</em></a>) – radii of the rings defining the basis for the radial profile</li>
-<li><strong>sigma</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.8)"><em>list</em></a><em> or </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.8)"><em>float</em></a>) – widths of the rings defining the basis for the radial profile</li>
-<li><strong>max_frequency</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><em>int</em></a>) – maximum frequency of the basis</li>
-<li><strong>max_offset</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><em>int</em></a>) – maximum offset in the frequencies of the basis</li>
-<li><strong>axis</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.8)"><em>float</em></a>) – angle defining the reflection axis</li>
+<li><strong>radii</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.9)"><em>list</em></a>) – radii of the rings defining the basis for the radial profile</li>
+<li><strong>sigma</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.9)"><em>list</em></a><em> or </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.9)"><em>float</em></a>) – widths of the rings defining the basis for the radial profile</li>
+<li><strong>max_frequency</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)"><em>int</em></a>) – maximum frequency of the basis</li>
+<li><strong>max_offset</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)"><em>int</em></a>) – maximum offset in the frequencies of the basis</li>
+<li><strong>axis</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.9)"><em>float</em></a>) – angle defining the reflection axis</li>
 </ul>
 </td>
 </tr>
@@ -610,10 +610,10 @@ parameter <span class="math notranslate nohighlight">\(t\)</span> or <span class
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
 <li><strong>in_repr</strong> (<a class="reference internal" href="e2cnn.group.html#e2cnn.group.Representation" title="e2cnn.group.Representation"><em>Representation</em></a>) – the representation specifying the transformation of the input feature field</li>
 <li><strong>out_repr</strong> (<a class="reference internal" href="e2cnn.group.html#e2cnn.group.Representation" title="e2cnn.group.Representation"><em>Representation</em></a>) – the representation specifying the transformation of the output feature field</li>
-<li><strong>radii</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.8)"><em>list</em></a>) – radii of the rings defining the basis for the radial profile</li>
-<li><strong>sigma</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.8)"><em>list</em></a><em> or </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.8)"><em>float</em></a>) – widths of the rings defining the basis for the radial profile</li>
-<li><strong>max_frequency</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><em>int</em></a>) – maximum frequency of the basis</li>
-<li><strong>max_offset</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><em>int</em></a>) – maximum offset in the frequencies of the basis</li>
+<li><strong>radii</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.9)"><em>list</em></a>) – radii of the rings defining the basis for the radial profile</li>
+<li><strong>sigma</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.9)"><em>list</em></a><em> or </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.9)"><em>float</em></a>) – widths of the rings defining the basis for the radial profile</li>
+<li><strong>max_frequency</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)"><em>int</em></a>) – maximum frequency of the basis</li>
+<li><strong>max_offset</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)"><em>int</em></a>) – maximum offset in the frequencies of the basis</li>
 </ul>
 </td>
 </tr>
@@ -651,11 +651,11 @@ See <a class="reference internal" href="#e2cnn.kernels.kernels_CN_act_R2" title=
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
 <li><strong>in_repr</strong> (<a class="reference internal" href="e2cnn.group.html#e2cnn.group.Representation" title="e2cnn.group.Representation"><em>Representation</em></a>) – the representation specifying the transformation of the input feature field</li>
 <li><strong>out_repr</strong> (<a class="reference internal" href="e2cnn.group.html#e2cnn.group.Representation" title="e2cnn.group.Representation"><em>Representation</em></a>) – the representation specifying the transformation of the output feature field</li>
-<li><strong>radii</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.8)"><em>list</em></a>) – radii of the rings defining the basis for the radial profile</li>
-<li><strong>sigma</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.8)"><em>list</em></a><em> or </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.8)"><em>float</em></a>) – widths of the rings defining the basis for the radial profile</li>
-<li><strong>axis</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.8)"><em>float</em></a>) – angle defining the reflection axis</li>
-<li><strong>max_frequency</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><em>int</em></a>) – maximum frequency of the basis</li>
-<li><strong>max_offset</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><em>int</em></a>) – maximum offset in the frequencies of the basis</li>
+<li><strong>radii</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.9)"><em>list</em></a>) – radii of the rings defining the basis for the radial profile</li>
+<li><strong>sigma</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.9)"><em>list</em></a><em> or </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.9)"><em>float</em></a>) – widths of the rings defining the basis for the radial profile</li>
+<li><strong>axis</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.9)"><em>float</em></a>) – angle defining the reflection axis</li>
+<li><strong>max_frequency</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)"><em>int</em></a>) – maximum frequency of the basis</li>
+<li><strong>max_offset</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)"><em>int</em></a>) – maximum offset in the frequencies of the basis</li>
 </ul>
 </td>
 </tr>
@@ -693,11 +693,11 @@ See <a class="reference internal" href="#e2cnn.kernels.kernels_CN_act_R2" title=
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
 <li><strong>in_repr</strong> (<a class="reference internal" href="e2cnn.group.html#e2cnn.group.Representation" title="e2cnn.group.Representation"><em>Representation</em></a>) – the representation specifying the transformation of the input feature field</li>
 <li><strong>out_repr</strong> (<a class="reference internal" href="e2cnn.group.html#e2cnn.group.Representation" title="e2cnn.group.Representation"><em>Representation</em></a>) – the representation specifying the transformation of the output feature field</li>
-<li><strong>radii</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.8)"><em>list</em></a>) – radii of the rings defining the basis for the radial profile</li>
-<li><strong>sigma</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.8)"><em>list</em></a><em> or </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.8)"><em>float</em></a>) – widths of the rings defining the basis for the radial profile</li>
-<li><strong>axis</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.8)"><em>float</em></a>) – angle defining the reflection axis</li>
-<li><strong>max_frequency</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><em>int</em></a>) – maximum frequency of the basis</li>
-<li><strong>max_offset</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><em>int</em></a>) – maximum offset in the frequencies of the basis</li>
+<li><strong>radii</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.9)"><em>list</em></a>) – radii of the rings defining the basis for the radial profile</li>
+<li><strong>sigma</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.9)"><em>list</em></a><em> or </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.9)"><em>float</em></a>) – widths of the rings defining the basis for the radial profile</li>
+<li><strong>axis</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.9)"><em>float</em></a>) – angle defining the reflection axis</li>
+<li><strong>max_frequency</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)"><em>int</em></a>) – maximum frequency of the basis</li>
+<li><strong>max_offset</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)"><em>int</em></a>) – maximum offset in the frequencies of the basis</li>
 </ul>
 </td>
 </tr>

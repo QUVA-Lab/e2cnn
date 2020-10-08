@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>e2cnn.nn.modules.r2_conv.r2convolution &mdash; e2cnn 0.1 documentation</title>
+  <title>e2cnn.nn.modules.r2_conv.r2convolution &mdash; e2cnn 0.1.1 documentation</title>
   
 
   
@@ -61,7 +61,7 @@
             
             
               <div class="version">
-                0.1
+                0.1.1
               </div>
             
           
@@ -184,7 +184,7 @@
             
   <h1>Source code for e2cnn.nn.modules.r2_conv.r2convolution</h1><div class="highlight"><pre>
 <span></span>
-<span class="kn">from</span> <span class="nn">torch.nn.functional</span> <span class="k">import</span> <span class="n">conv2d</span>
+<span class="kn">from</span> <span class="nn">torch.nn.functional</span> <span class="k">import</span> <span class="n">conv2d</span><span class="p">,</span> <span class="n">pad</span>
 
 <span class="kn">from</span> <span class="nn">e2cnn.nn</span> <span class="k">import</span> <span class="n">init</span>
 <span class="kn">from</span> <span class="nn">e2cnn.nn</span> <span class="k">import</span> <span class="n">FieldType</span>
@@ -216,6 +216,7 @@
                  <span class="n">padding</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>
                  <span class="n">stride</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>
                  <span class="n">dilation</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>
+                 <span class="n">padding_mode</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;zeros&#39;</span><span class="p">,</span>
                  <span class="n">groups</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>
                  <span class="n">bias</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
                  <span class="n">basisexpansion</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;blocks&#39;</span><span class="p">,</span>
@@ -295,9 +296,10 @@
 <span class="sd">            in_type (FieldType): the type of the input field, specifying its transformation law</span>
 <span class="sd">            out_type (FieldType): the type of the output field, specifying its transformation law</span>
 <span class="sd">            kernel_size (int): the size of the (square) filter</span>
-<span class="sd">            padding(int, optional): implicit zero paddings on both sides of the input. Default: ``0``</span>
-<span class="sd">            stride(int, optional): the stride of the kernel. Default: ``1``</span>
-<span class="sd">            dilation(int, optional): the spacing between kernel elements. Default: ``1``</span>
+<span class="sd">            padding (int, optional): implicit zero paddings on both sides of the input. Default: ``0``</span>
+<span class="sd">            padding_mode(str, optional): ``zeros``, ``reflect``, ``replicate`` or ``circular``. Default: ``zeros``</span>
+<span class="sd">            stride (int, optional): the stride of the kernel. Default: ``1``</span>
+<span class="sd">            dilation (int, optional): the spacing between kernel elements. Default: ``1``</span>
 <span class="sd">            groups (int, optional): number of blocked connections from input channels to output channels.</span>
 <span class="sd">                                    It allows depthwise convolution. When used, the input and output types need to be</span>
 <span class="sd">                                    divisible in ``groups`` groups, all equal to each other.</span>
@@ -345,8 +347,21 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">stride</span> <span class="o">=</span> <span class="n">stride</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">dilation</span> <span class="o">=</span> <span class="n">dilation</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">padding</span> <span class="o">=</span> <span class="n">padding</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">padding_mode</span> <span class="o">=</span> <span class="n">padding_mode</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">groups</span> <span class="o">=</span> <span class="n">groups</span>
 
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">padding</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">)</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">padding</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+            <span class="n">_padding</span> <span class="o">=</span> <span class="n">padding</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">padding</span><span class="p">,</span> <span class="nb">int</span><span class="p">):</span>
+            <span class="n">_padding</span> <span class="o">=</span> <span class="p">(</span><span class="n">padding</span><span class="p">,</span> <span class="n">padding</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;padding needs to be either an integer or a tuple containing two integers but </span><span class="si">{}</span><span class="s1"> found&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">padding</span><span class="p">))</span>
+        
+        <span class="n">padding_modes</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;zeros&#39;</span><span class="p">,</span> <span class="s1">&#39;reflect&#39;</span><span class="p">,</span> <span class="s1">&#39;replicate&#39;</span><span class="p">,</span> <span class="s1">&#39;circular&#39;</span><span class="p">}</span>
+        <span class="k">if</span> <span class="n">padding_mode</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">padding_modes</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;padding_mode must be one of [</span><span class="si">{}</span><span class="s2">], but got padding_mode=&#39;</span><span class="si">{}</span><span class="s2">&#39;&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">padding_modes</span><span class="p">,</span> <span class="n">padding_mode</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_reversed_padding_repeated_twice</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">reversed</span><span class="p">(</span><span class="n">_padding</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">))</span>
+        
         <span class="k">if</span> <span class="n">groups</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
             <span class="c1"># Check the input and output classes can be split in `groups` groups, all equal to each other</span>
             <span class="c1"># first, check that the number of fields is divisible by `groups`</span>
@@ -495,13 +510,23 @@
             <span class="nb">filter</span><span class="p">,</span> <span class="n">bias</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">expand_parameters</span><span class="p">()</span>
         
         <span class="c1"># use it for convolution and return the result</span>
-        <span class="n">output</span> <span class="o">=</span> <span class="n">conv2d</span><span class="p">(</span><span class="nb">input</span><span class="o">.</span><span class="n">tensor</span><span class="p">,</span> <span class="nb">filter</span><span class="p">,</span>
-                        <span class="n">padding</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">padding</span><span class="p">,</span>
-                        <span class="n">stride</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">stride</span><span class="p">,</span>
-                        <span class="n">dilation</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">dilation</span><span class="p">,</span>
-                        <span class="n">groups</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">groups</span><span class="p">,</span>
-                        <span class="n">bias</span><span class="o">=</span><span class="n">bias</span><span class="p">)</span>
         
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">padding_mode</span> <span class="o">!=</span> <span class="s1">&#39;zeros&#39;</span><span class="p">:</span>
+            <span class="n">output</span> <span class="o">=</span> <span class="n">conv2d</span><span class="p">(</span><span class="nb">input</span><span class="o">.</span><span class="n">tensor</span><span class="p">,</span> <span class="nb">filter</span><span class="p">,</span>
+                            <span class="n">stride</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">stride</span><span class="p">,</span>
+                            <span class="n">padding</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">padding</span><span class="p">,</span>
+                            <span class="n">dilation</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">dilation</span><span class="p">,</span>
+                            <span class="n">groups</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">groups</span><span class="p">,</span>
+                            <span class="n">bias</span><span class="o">=</span><span class="n">bias</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">output</span> <span class="o">=</span> <span class="n">conv2d</span><span class="p">(</span><span class="n">pad</span><span class="p">(</span><span class="nb">input</span><span class="o">.</span><span class="n">tensor</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_reversed_padding_repeated_twice</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">padding_mode</span><span class="p">),</span>
+                            <span class="nb">filter</span><span class="p">,</span>
+                            <span class="n">stride</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">stride</span><span class="p">,</span>
+                            <span class="n">padding</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">padding</span><span class="p">,</span>
+                            <span class="n">dilation</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">dilation</span><span class="p">,</span>
+                            <span class="n">groups</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">groups</span><span class="p">,</span>
+                            <span class="n">bias</span><span class="o">=</span><span class="n">bias</span><span class="p">)</span>
+
         <span class="k">return</span> <span class="n">GeometricTensor</span><span class="p">(</span><span class="n">output</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">out_type</span><span class="p">)</span></div>
     
 <div class="viewcode-block" id="R2Conv.train"><a class="viewcode-back" href="../../../../../api/e2cnn.nn.html#e2cnn.nn.R2Conv.train">[docs]</a>    <span class="k">def</span> <span class="nf">train</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>

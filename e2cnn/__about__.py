@@ -9,10 +9,10 @@ __all__ = [
     "__license__",
 ]
 
-__title__ = "e2cnn-py3.6"
+__title__ = "e2cnn-py36"
 __summary__ = "E(2)-Equivariant CNNs Library for PyTorch"
 __url__ = 'https://github.com/QUVA-Lab/e2cnn/tree/legacy_py3.6'
-__version__ = "0.1"
+__version__ = "0.1.1"
 __author__ = "Gabriele Cesa, Maurice Weiler"
 __email__ = "cesa.gabriele@gmail.com"
 __license__ = "BSD 3-Clause Clear"

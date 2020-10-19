@@ -326,7 +326,7 @@ class R2Conv(EquivariantModule):
         
         # use it for convolution and return the result
         
-        if self.padding_mode != 'zeros':
+        if self.padding_mode == 'zeros':
             output = conv2d(input.tensor, filter,
                             stride=self.stride,
                             padding=self.padding,

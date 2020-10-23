@@ -511,7 +511,7 @@
         
         <span class="c1"># use it for convolution and return the result</span>
         
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">padding_mode</span> <span class="o">!=</span> <span class="s1">&#39;zeros&#39;</span><span class="p">:</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">padding_mode</span> <span class="o">==</span> <span class="s1">&#39;zeros&#39;</span><span class="p">:</span>
             <span class="n">output</span> <span class="o">=</span> <span class="n">conv2d</span><span class="p">(</span><span class="nb">input</span><span class="o">.</span><span class="n">tensor</span><span class="p">,</span> <span class="nb">filter</span><span class="p">,</span>
                             <span class="n">stride</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">stride</span><span class="p">,</span>
                             <span class="n">padding</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">padding</span><span class="p">,</span>
@@ -793,7 +793,7 @@
     <span class="c1"># compute the coordinates of the centers of the cells in the grid where the filter is sampled</span>
     <span class="n">grid</span> <span class="o">=</span> <span class="n">get_grid_coords</span><span class="p">(</span><span class="n">kernel_size</span><span class="p">,</span> <span class="n">dilation</span><span class="p">)</span>
     
-    <span class="n">max_radius</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">((</span><span class="n">grid</span> <span class="o">**</span><span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="mi">1</span><span class="p">))</span><span class="o">.</span><span class="n">max</span><span class="p">()</span>
+    <span class="n">max_radius</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">((</span><span class="n">grid</span> <span class="o">**</span><span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="mi">0</span><span class="p">))</span><span class="o">.</span><span class="n">max</span><span class="p">()</span>
     <span class="c1"># max_radius = kernel_size // 2</span>
     
     <span class="c1"># by default, the number of rings equals half of the filter size</span>

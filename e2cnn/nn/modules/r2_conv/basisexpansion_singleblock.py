@@ -57,7 +57,7 @@ class SingleBlockBasisExpansion(BasisExpansion):
         # Hence, for the moment we use ByteTensor
         mask = torch.tensor(mask.astype(np.uint8))
 
-        # filter out the basis elements discarder by the filter
+        # filter out the basis elements discarded by the filter
         sampled_basis = sampled_basis[mask, ...]
         
         # normalize the basis

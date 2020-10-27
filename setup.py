@@ -15,7 +15,7 @@ install_requires = [
 setup_requires = []
 tests_require = ['scikit-learn', 'scikit-image']
 
-with open("README.md", 'r') as f:
+with open("README.md", 'r', encoding='utf-8') as f:
     long_description = f.read()
 
 setup(

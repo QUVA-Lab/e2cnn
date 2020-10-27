@@ -326,7 +326,7 @@ class R2Conv(EquivariantModule):
         
         # use it for convolution and return the result
         
-        if self.padding_mode != 'zeros':
+        if self.padding_mode == 'zeros':
             output = conv2d(input.tensor, filter,
                             stride=self.stride,
                             padding=self.padding,
@@ -608,7 +608,7 @@ def compute_basis_params(kernel_size: int,
     # compute the coordinates of the centers of the cells in the grid where the filter is sampled
     grid = get_grid_coords(kernel_size, dilation)
     
-    max_radius = np.sqrt((grid **2).sum(1)).max()
+    max_radius = np.sqrt((grid **2).sum(0)).max()
     # max_radius = kernel_size // 2
     
     # by default, the number of rings equals half of the filter size

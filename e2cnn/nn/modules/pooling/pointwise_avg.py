@@ -188,15 +188,15 @@ class PointwiseAvgPoolAntialiased(EquivariantModule):
         r = -torch.sum((grid - mean) ** 2., dim=-1, dtype=torch.get_default_dtype())
 
         # Build the gaussian kernel
-        filter = torch.exp(r / (2 * variance))
+        _filter = torch.exp(r / (2 * variance))
 
         # Normalize
-        filter /= torch.sum(filter)
+        _filter /= torch.sum(_filter)
 
         # The filter needs to be reshaped to be used in 2d depthwise convolution
-        filter = filter.view(1, 1, filter_size, filter_size).repeat((in_type.size, 1, 1, 1))
+        _filter = _filter.view(1, 1, filter_size, filter_size).repeat((in_type.size, 1, 1, 1))
 
-        self.register_buffer('filter', filter)
+        self.register_buffer('filter', _filter)
         
         ################################################################################################################
     

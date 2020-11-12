@@ -337,7 +337,6 @@ class R2Conv(EquivariantModule):
             output = conv2d(pad(input.tensor, self._reversed_padding_repeated_twice, self.padding_mode),
                             _filter,
                             stride=self.stride,
-                            padding=self.padding,
                             dilation=self.dilation,
                             groups=self.groups,
                             bias=_bias)

@@ -1,7 +1,7 @@
 
 General E(2)-Equivariant Steerable CNNs
 --------------------------------------------------------------------------------
-**[Documentation](https://quva-lab.github.io/e2cnn/)** | **[Paper](https://arxiv.org/abs/1911.08251)**
+**[Documentation](https://quva-lab.github.io/e2cnn/)** | **[Paper](https://arxiv.org/abs/1911.08251)** | **[Thesis](https://gabri95.github.io/Thesis/thesis.pdf)**
 
 *e2cnn* is a [PyTorch](https://pytorch.org/) extension for equivariant deep learning.
 

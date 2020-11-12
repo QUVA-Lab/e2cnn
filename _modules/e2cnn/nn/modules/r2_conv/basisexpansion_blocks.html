@@ -275,6 +275,9 @@
                 <span class="k">except</span> <span class="n">EmptyBasisException</span><span class="p">:</span>
                     <span class="c1"># print(f&quot;Empty basis at {reprs_names}&quot;)</span>
                     <span class="k">pass</span>
+        
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">_block_expansion_modules</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;WARNING! The basis for the block expansion of the filter is empty!&#39;</span><span class="p">)</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">_n_pairs</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">in_type</span><span class="o">.</span><span class="n">_unique_representations</span><span class="p">)</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">out_type</span><span class="o">.</span><span class="n">_unique_representations</span><span class="p">)</span>
 
@@ -480,17 +483,18 @@
         <span class="n">coefficients</span> <span class="o">=</span> <span class="n">coefficients</span><span class="o">.</span><span class="n">view</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">block_expansion</span><span class="o">.</span><span class="n">dimension</span><span class="p">())</span>
         
         <span class="c1"># expand the current subset of basis vectors and set the result in the appropriate place in the filter</span>
-        <span class="nb">filter</span> <span class="o">=</span> <span class="n">block_expansion</span><span class="p">(</span><span class="n">coefficients</span><span class="p">)</span>
-        <span class="n">k</span><span class="p">,</span> <span class="n">o</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">p</span> <span class="o">=</span> <span class="nb">filter</span><span class="o">.</span><span class="n">shape</span>
+        <span class="n">_filter</span> <span class="o">=</span> <span class="n">block_expansion</span><span class="p">(</span><span class="n">coefficients</span><span class="p">)</span>
+        <span class="n">k</span><span class="p">,</span> <span class="n">o</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">p</span> <span class="o">=</span> <span class="n">_filter</span><span class="o">.</span><span class="n">shape</span>
         
-        <span class="nb">filter</span> <span class="o">=</span> <span class="nb">filter</span><span class="o">.</span><span class="n">view</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_out_count</span><span class="p">[</span><span class="n">io_pair</span><span class="p">[</span><span class="mi">1</span><span class="p">]],</span>
-                             <span class="bp">self</span><span class="o">.</span><span class="n">_in_count</span><span class="p">[</span><span class="n">io_pair</span><span class="p">[</span><span class="mi">0</span><span class="p">]],</span>
-                             <span class="n">o</span><span class="p">,</span>
-                             <span class="n">i</span><span class="p">,</span>
-                             <span class="bp">self</span><span class="o">.</span><span class="n">S</span><span class="p">,</span>
-                             <span class="p">)</span>
-        <span class="nb">filter</span> <span class="o">=</span> <span class="nb">filter</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
-        <span class="k">return</span> <span class="nb">filter</span>
+        <span class="n">_filter</span> <span class="o">=</span> <span class="n">_filter</span><span class="o">.</span><span class="n">view</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_out_count</span><span class="p">[</span><span class="n">io_pair</span><span class="p">[</span><span class="mi">1</span><span class="p">]],</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_in_count</span><span class="p">[</span><span class="n">io_pair</span><span class="p">[</span><span class="mi">0</span><span class="p">]],</span>
+            <span class="n">o</span><span class="p">,</span>
+            <span class="n">i</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">S</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="n">_filter</span> <span class="o">=</span> <span class="n">_filter</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">_filter</span>
     
 <div class="viewcode-block" id="BlocksBasisExpansion.forward"><a class="viewcode-back" href="../../../../../api/e2cnn.nn.html#e2cnn.nn.modules.r2_conv.BlocksBasisExpansion.forward">[docs]</a>    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">weights</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -512,12 +516,12 @@
             <span class="n">io_pair</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_representations_pairs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
             <span class="n">in_indices</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">f</span><span class="s2">&quot;in_indices_</span><span class="si">{io_pair}</span><span class="s2">&quot;</span><span class="p">)</span>
             <span class="n">out_indices</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">f</span><span class="s2">&quot;out_indices_</span><span class="si">{io_pair}</span><span class="s2">&quot;</span><span class="p">)</span>
-            <span class="nb">filter</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_expand_block</span><span class="p">(</span><span class="n">weights</span><span class="p">,</span> <span class="n">io_pair</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">out_indices</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">in_indices</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">S</span><span class="p">)</span>
+            <span class="n">_filter</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_expand_block</span><span class="p">(</span><span class="n">weights</span><span class="p">,</span> <span class="n">io_pair</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">out_indices</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">in_indices</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">S</span><span class="p">)</span>
             
         <span class="k">else</span><span class="p">:</span>
         
             <span class="c1"># build the tensor which will contain te filter</span>
-            <span class="nb">filter</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_output_size</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_input_size</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">S</span><span class="p">,</span> <span class="n">device</span><span class="o">=</span><span class="n">weights</span><span class="o">.</span><span class="n">device</span><span class="p">)</span>
+            <span class="n">_filter</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_output_size</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_input_size</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">S</span><span class="p">,</span> <span class="n">device</span><span class="o">=</span><span class="n">weights</span><span class="o">.</span><span class="n">device</span><span class="p">)</span>
 
             <span class="c1"># iterate through all input-output field representations pairs</span>
             <span class="k">for</span> <span class="n">io_pair</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_representations_pairs</span><span class="p">:</span>
@@ -530,20 +534,20 @@
                 <span class="n">expanded</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_expand_block</span><span class="p">(</span><span class="n">weights</span><span class="p">,</span> <span class="n">io_pair</span><span class="p">)</span>
                 
                 <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_contiguous</span><span class="p">[</span><span class="n">io_pair</span><span class="p">]:</span>
-                    <span class="nb">filter</span><span class="p">[</span>
+                    <span class="n">_filter</span><span class="p">[</span>
                         <span class="n">out_indices</span><span class="p">[</span><span class="mi">0</span><span class="p">]:</span><span class="n">out_indices</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span>
                         <span class="n">in_indices</span><span class="p">[</span><span class="mi">0</span><span class="p">]:</span><span class="n">in_indices</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span>
                         <span class="p">:,</span>
                     <span class="p">]</span> <span class="o">=</span> <span class="n">expanded</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">out_indices</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">in_indices</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">S</span><span class="p">)</span>
                 <span class="k">else</span><span class="p">:</span>
-                    <span class="nb">filter</span><span class="p">[</span>
+                    <span class="n">_filter</span><span class="p">[</span>
                         <span class="n">out_indices</span><span class="p">,</span>
                         <span class="n">in_indices</span><span class="p">,</span>
                         <span class="p">:,</span>
                     <span class="p">]</span> <span class="o">=</span> <span class="n">expanded</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">S</span><span class="p">)</span>
 
         <span class="c1"># return the new filter</span>
-        <span class="k">return</span> <span class="nb">filter</span></div></div>
+        <span class="k">return</span> <span class="n">_filter</span></div></div>
 
 
 <span class="k">def</span> <span class="nf">_retrieve_indices</span><span class="p">(</span><span class="nb">type</span><span class="p">:</span> <span class="n">FieldType</span><span class="p">):</span>

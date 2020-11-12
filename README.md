@@ -1,7 +1,7 @@
 
 General E(2)-Equivariant Steerable CNNs
 --------------------------------------------------------------------------------
-**[Documentation](https://quva-lab.github.io/e2cnn/)** | **[Paper](https://arxiv.org/abs/1911.08251)**
+**[Documentation](https://quva-lab.github.io/e2cnn/)** | **[Paper](https://arxiv.org/abs/1911.08251)** | **[Thesis](https://gabri95.github.io/Thesis/thesis.pdf)**
 
 ## NOTE: this is a *Python 3.6* compatible version of [e2cnn](https://github.com/QUVA-Lab/e2cnn) (which requires *Python 3.7*)
 

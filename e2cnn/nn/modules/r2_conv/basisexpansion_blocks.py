@@ -90,6 +90,9 @@ class BlocksBasisExpansion(BasisExpansion):
                 except EmptyBasisException:
                     # print(f"Empty basis at {reprs_names}")
                     pass
+        
+        if len(_block_expansion_modules) == 0:
+            print('WARNING! The basis for the block expansion of the filter is empty!')
 
         self._n_pairs = len(in_type._unique_representations) * len(out_type._unique_representations)
 

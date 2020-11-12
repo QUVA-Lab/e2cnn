@@ -263,6 +263,13 @@ class R2Conv(EquivariantModule):
         else:
             raise ValueError('Basis Expansion algorithm "%s" not recognized' % basisexpansion)
         
+        if self.basisexpansion.dimension() == 0:
+            raise ValueError('''
+                The basis for the steerable filter is empty!
+                Tune the `frequencies_cutoff`, `kernel_size`, `rings`, `sigma` or `basis_filter` parameters to allow
+                for a larger basis.
+            ''')
+
         self.weights = Parameter(torch.zeros(self.basisexpansion.dimension()), requires_grad=True)
         self.register_buffer("filter", torch.zeros(out_type.size, in_type.size, kernel_size, kernel_size))
         

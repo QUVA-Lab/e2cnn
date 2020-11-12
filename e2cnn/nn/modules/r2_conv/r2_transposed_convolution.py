@@ -189,36 +189,36 @@ class R2ConvTransposed(EquivariantModule):
         return self._basisexpansion
 
     def expand_parameters(self) -> Tuple[torch.Tensor, torch.Tensor]:
-        filter = self.basisexpansion(self.weights)
-        filter = filter.reshape(filter.shape[0], filter.shape[1], self.kernel_size, self.kernel_size)
-        filter = filter.transpose(0, 1)
+        _filter = self.basisexpansion(self.weights)
+        _filter = _filter.reshape(_filter.shape[0], _filter.shape[1], self.kernel_size, self.kernel_size)
+        _filter = _filter.transpose(0, 1)
         
         if self.bias is None:
-            bias = None
+            _bias = None
         else:
-            bias = self.bias_expansion @ self.bias
+            _bias = self.bias_expansion @ self.bias
             
-        return filter, bias
+        return _filter, _bias
 
     def forward(self, input: GeometricTensor):
         assert input.type == self.in_type
 
         if not self.training:
-            filter = self.filter
-            bias = self.expanded_bias
+            _filter = self.filter
+            _bias = self.expanded_bias
         else:
             # retrieve the filter and the bias
-            filter, bias = self.expand_parameters()
+            _filter, _bias = self.expand_parameters()
         
         # use it for convolution and return the result
         output = conv_transpose2d(
-                        input.tensor, filter,
+                        input.tensor, _filter,
                         padding=self.padding,
                         output_padding=self.output_padding,
                         stride=self.stride,
                         dilation=self.dilation,
                         groups=self.groups,
-                        bias=bias)
+                        bias=_bias)
         
         return GeometricTensor(output, self.out_type)
     
@@ -233,11 +233,11 @@ class R2ConvTransposed(EquivariantModule):
         elif self.training:
             # avoid re-computation of the filter and the bias on multiple consecutive calls of `.eval()`
     
-            filter, bias = self.expand_parameters()
+            _filter, _bias = self.expand_parameters()
             
-            self.register_buffer("filter", filter)
-            if bias is not None:
-                self.register_buffer("expanded_bias", bias)
+            self.register_buffer("filter", _filter)
+            if _bias is not None:
+                self.register_buffer("expanded_bias", _bias)
             else:
                 self.expanded_bias = None
 
@@ -271,9 +271,9 @@ class R2ConvTransposed(EquivariantModule):
         import matplotlib.image as mpimg
         from skimage.measure import block_reduce
         from skimage.transform import resize
-        
-        x = mpimg.imread('../test/group/testimage.jpeg').transpose((2, 0, 1))[np.newaxis, 0:c, :, :]
-        
+
+        x = mpimg.imread('../group/testimage.jpeg').transpose((2, 0, 1))[np.newaxis, 0:c, :, :]
+
         x = resize(
             x,
             (x.shape[0], x.shape[1], initial_size, initial_size),
@@ -359,8 +359,8 @@ class R2ConvTransposed(EquivariantModule):
         # set to eval mode so the filter and the bias are updated with the current
         # values of the weights
         self.eval()
-        filter = self.filter
-        bias = self.expanded_bias
+        _filter = self.filter
+        _bias = self.expanded_bias
     
         # build the PyTorch Conv2d module
         has_bias = self.bias is not None
@@ -374,9 +374,9 @@ class R2ConvTransposed(EquivariantModule):
                                        bias=has_bias)
         
         # set the filter and the bias
-        conv.weight.data[:] = filter.data
+        conv.weight.data[:] = _filter.data
         if has_bias:
-            conv.bias.data[:] = bias.data
+            conv.bias.data[:] = _bias.data
     
         return conv
 
@@ -434,10 +434,10 @@ def bandlimiting_filter(frequency_cutoff: Union[float, Callable[[float], float]]
     if isinstance(frequency_cutoff, float):
         frequency_cutoff = lambda r, fco=frequency_cutoff: r * frequency_cutoff
     
-    def filter(attributes: dict) -> bool:
+    def bl_filter(attributes: dict) -> bool:
         return math.fabs(attributes["frequency"]) <= frequency_cutoff(attributes["radius"])
     
-    return filter
+    return bl_filter
 
 
 def get_grid_coords(kernel_size: int, dilation: int = 1):
@@ -546,11 +546,11 @@ def _manual_fco3(max_radius: float) -> Callable[[float], float]:
 
     """
     
-    def filter(r: float) -> float:
+    def bl_filter(r: float) -> float:
         max_freq = 0 if r == 0. else 1 if r == max_radius else 2
         return max_freq
     
-    return filter
+    return bl_filter
 
 
 def _manual_fco2(max_radius: float) -> Callable[[float], float]:
@@ -567,11 +567,11 @@ def _manual_fco2(max_radius: float) -> Callable[[float], float]:
 
     """
     
-    def filter(r: float) -> float:
+    def bl_filter(r: float) -> float:
         max_freq = 0 if r == 0. else min(2 * r, 1 if r == max_radius else 2 * r - (r + 1) % 2)
         return max_freq
     
-    return filter
+    return bl_filter
 
 
 def _manual_fco1(max_radius: float) -> Callable[[float], float]:
@@ -588,11 +588,11 @@ def _manual_fco1(max_radius: float) -> Callable[[float], float]:
 
     """
     
-    def filter(r: float) -> float:
+    def bl_filter(r: float) -> float:
         max_freq = 0 if r == 0. else min(2 * r, 2 if r == max_radius else 2 * r - (r + 1) % 2)
         return max_freq
     
-    return filter
+    return bl_filter
 
 
 

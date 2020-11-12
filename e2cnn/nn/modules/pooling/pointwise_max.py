@@ -176,7 +176,7 @@ class PointwiseMaxPoolAntialiased(PointwiseMaxPool):
         """
         
         if dilation != 1:
-            raise NotImplementedError("Diltation larger than 1 is not supported yet")
+            raise NotImplementedError("Dilation larger than 1 is not supported yet")
         
         super(PointwiseMaxPoolAntialiased, self).__init__(in_type, kernel_size, stride, padding, dilation, ceil_mode)
         
@@ -197,15 +197,15 @@ class PointwiseMaxPoolAntialiased(PointwiseMaxPool):
         r = -torch.sum((grid - mean) ** 2., dim=-1, dtype=torch.get_default_dtype())
         
         # Build the gaussian kernel
-        filter = torch.exp(r / (2 * variance))
+        _filter = torch.exp(r / (2 * variance))
         
         # Normalize
-        filter /= torch.sum(filter)
+        _filter /= torch.sum(_filter)
 
         # The filter needs to be reshaped to be used in 2d depthwise convolution
-        filter = filter.view(1, 1, filter_size, filter_size).repeat((in_type.size, 1, 1, 1))
+        _filter = _filter.view(1, 1, filter_size, filter_size).repeat((in_type.size, 1, 1, 1))
 
-        self.register_buffer('filter', filter)
+        self.register_buffer('filter', _filter)
         self._pad = tuple(p + int((filter_size-1)//2) for p in self.padding)
 
     def forward(self, input: GeometricTensor) -> GeometricTensor:

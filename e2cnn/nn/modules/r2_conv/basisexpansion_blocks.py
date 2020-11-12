@@ -90,6 +90,9 @@ class BlocksBasisExpansion(BasisExpansion):
                 except EmptyBasisException:
                     # print(f"Empty basis at {reprs_names}")
                     pass
+        
+        if len(_block_expansion_modules) == 0:
+            print('WARNING! The basis for the block expansion of the filter is empty!')
 
         self._n_pairs = len(in_type._unique_representations) * len(out_type._unique_representations)
 
@@ -295,17 +298,18 @@ class BlocksBasisExpansion(BasisExpansion):
         coefficients = coefficients.view(-1, block_expansion.dimension())
         
         # expand the current subset of basis vectors and set the result in the appropriate place in the filter
-        filter = block_expansion(coefficients)
-        k, o, i, p = filter.shape
+        _filter = block_expansion(coefficients)
+        k, o, i, p = _filter.shape
         
-        filter = filter.view(self._out_count[io_pair[1]],
-                             self._in_count[io_pair[0]],
-                             o,
-                             i,
-                             self.S,
-                             )
-        filter = filter.transpose(1, 2)
-        return filter
+        _filter = _filter.view(
+            self._out_count[io_pair[1]],
+            self._in_count[io_pair[0]],
+            o,
+            i,
+            self.S,
+        )
+        _filter = _filter.transpose(1, 2)
+        return _filter
     
     def forward(self, weights: torch.Tensor) -> torch.Tensor:
         """
@@ -327,12 +331,12 @@ class BlocksBasisExpansion(BasisExpansion):
             io_pair = self._representations_pairs[0]
             in_indices = getattr(self, f"in_indices_{io_pair}")
             out_indices = getattr(self, f"out_indices_{io_pair}")
-            filter = self._expand_block(weights, io_pair).reshape(out_indices[2], in_indices[2], self.S)
+            _filter = self._expand_block(weights, io_pair).reshape(out_indices[2], in_indices[2], self.S)
             
         else:
         
             # build the tensor which will contain te filter
-            filter = torch.zeros(self._output_size, self._input_size, self.S, device=weights.device)
+            _filter = torch.zeros(self._output_size, self._input_size, self.S, device=weights.device)
 
             # iterate through all input-output field representations pairs
             for io_pair in self._representations_pairs:
@@ -345,20 +349,20 @@ class BlocksBasisExpansion(BasisExpansion):
                 expanded = self._expand_block(weights, io_pair)
                 
                 if self._contiguous[io_pair]:
-                    filter[
+                    _filter[
                         out_indices[0]:out_indices[1],
                         in_indices[0]:in_indices[1],
                         :,
                     ] = expanded.reshape(out_indices[2], in_indices[2], self.S)
                 else:
-                    filter[
+                    _filter[
                         out_indices,
                         in_indices,
                         :,
                     ] = expanded.reshape(-1, self.S)
 
         # return the new filter
-        return filter
+        return _filter
 
 
 def _retrieve_indices(type: FieldType):

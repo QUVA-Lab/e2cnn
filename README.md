@@ -193,7 +193,7 @@ Please cite this work if you use our code:
 }
 ```
 
-Feel free to [contact us](mailto:cesa.gabriele@gmail.com,m.weiler@uva.nl).
+Feel free to [contact us](mailto:cesa.gabriele@gmail.com,m.weiler.ml@gmail.com).
 
 ## License
 

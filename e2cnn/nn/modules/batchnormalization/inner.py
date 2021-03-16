@@ -100,6 +100,16 @@ class InnerBatchNorm(EquivariantModule):
                 track_running_stats=self.track_running_stats
             )
             self.add_module('batch_norm_[{}]'.format(s), _batchnorm)
+
+    def reset_running_stats(self):
+        for s, contiguous in self._contiguous.items():
+            batchnorm = getattr(self, f'batch_norm_[{s}]')
+            batchnorm.reset_running_stats()
+
+    def reset_parameters(self):
+        for s, contiguous in self._contiguous.items():
+            batchnorm = getattr(self, f'batch_norm_[{s}]')
+            batchnorm.reset_parameters()
     
     def forward(self, input: GeometricTensor) -> GeometricTensor:
         r"""

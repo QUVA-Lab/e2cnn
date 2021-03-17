@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>e2cnn.kernels.basis &mdash; e2cnn 0.1.5 documentation</title>
+  <title>e2cnn.kernels.basis &mdash; e2cnn 0.1.6 documentation</title>
   
 
   
@@ -61,7 +61,7 @@
             
             
               <div class="version">
-                0.1.5
+                0.1.6
               </div>
             
           
@@ -357,7 +357,7 @@
             <span class="k">return</span> <span class="kc">False</span>
     
     <span class="k">def</span> <span class="nf">__hash__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="nb">hash</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">radii</span><span class="o">.</span><span class="n">tostring</span><span class="p">())</span> <span class="o">+</span> <span class="nb">hash</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">sigma</span><span class="o">.</span><span class="n">tostring</span><span class="p">())</span></div>
+        <span class="k">return</span> <span class="nb">hash</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">radii</span><span class="o">.</span><span class="n">tobytes</span><span class="p">())</span> <span class="o">+</span> <span class="nb">hash</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">sigma</span><span class="o">.</span><span class="n">tobytes</span><span class="p">())</span></div>
     
 
 <div class="viewcode-block" id="PolarBasis"><a class="viewcode-back" href="../../../api/e2cnn.kernels.html#e2cnn.kernels.PolarBasis">[docs]</a><span class="k">class</span> <span class="nc">PolarBasis</span><span class="p">(</span><span class="n">KernelBasis</span><span class="p">):</span>

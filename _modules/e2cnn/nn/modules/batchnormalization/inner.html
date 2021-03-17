@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>e2cnn.nn.modules.batchnormalization.inner &mdash; e2cnn 0.1.5 documentation</title>
+  <title>e2cnn.nn.modules.batchnormalization.inner &mdash; e2cnn 0.1.6 documentation</title>
   
 
   
@@ -61,7 +61,7 @@
             
             
               <div class="version">
-                0.1.5
+                0.1.6
               </div>
             
           
@@ -285,6 +285,16 @@
                 <span class="n">track_running_stats</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">track_running_stats</span>
             <span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">add_module</span><span class="p">(</span><span class="s1">&#39;batch_norm_[</span><span class="si">{}</span><span class="s1">]&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">s</span><span class="p">),</span> <span class="n">_batchnorm</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">reset_running_stats</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">s</span><span class="p">,</span> <span class="n">contiguous</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_contiguous</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="n">batchnorm</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">f</span><span class="s1">&#39;batch_norm_[</span><span class="si">{s}</span><span class="s1">]&#39;</span><span class="p">)</span>
+            <span class="n">batchnorm</span><span class="o">.</span><span class="n">reset_running_stats</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">reset_parameters</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">s</span><span class="p">,</span> <span class="n">contiguous</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_contiguous</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="n">batchnorm</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">f</span><span class="s1">&#39;batch_norm_[</span><span class="si">{s}</span><span class="s1">]&#39;</span><span class="p">)</span>
+            <span class="n">batchnorm</span><span class="o">.</span><span class="n">reset_parameters</span><span class="p">()</span>
     
 <div class="viewcode-block" id="InnerBatchNorm.forward"><a class="viewcode-back" href="../../../../../api/e2cnn.nn.html#e2cnn.nn.InnerBatchNorm.forward">[docs]</a>    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">input</span><span class="p">:</span> <span class="n">GeometricTensor</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">GeometricTensor</span><span class="p">:</span>
         <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>

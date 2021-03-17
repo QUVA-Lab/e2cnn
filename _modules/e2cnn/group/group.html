@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>e2cnn.group.group &mdash; e2cnn 0.1.5 documentation</title>
+  <title>e2cnn.group.group &mdash; e2cnn 0.1.6 documentation</title>
   
 
   
@@ -61,7 +61,7 @@
             
             
               <div class="version">
-                0.1.5
+                0.1.6
               </div>
             
           
@@ -336,7 +336,7 @@
         <span class="k">pass</span></div>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">irreps</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="n">e2cnn</span><span class="o">.</span><span class="n">group</span><span class="o">.</span><span class="n">IrreducibleRepresentation</span><span class="p">]:</span>
+    <span class="k">def</span> <span class="nf">irreps</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">e2cnn</span><span class="o">.</span><span class="n">group</span><span class="o">.</span><span class="n">IrreducibleRepresentation</span><span class="p">]:</span>
         <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Dictionary containing all irreducible representations (:class:`~e2cnn.group.IrreducibleRepresentation`)</span>
 <span class="sd">        instantiated for this group.</span>
@@ -348,7 +348,7 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_irreps</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">representations</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="n">e2cnn</span><span class="o">.</span><span class="n">group</span><span class="o">.</span><span class="n">Representation</span><span class="p">]:</span>
+    <span class="k">def</span> <span class="nf">representations</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">e2cnn</span><span class="o">.</span><span class="n">group</span><span class="o">.</span><span class="n">Representation</span><span class="p">]:</span>
         <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Dictionary containing all representations (:class:`~e2cnn.group.Representation`)</span>
 <span class="sd">        instantiated for this group.</span>
@@ -361,7 +361,7 @@
 
     <span class="nd">@property</span>
     <span class="nd">@abstractmethod</span>
-    <span class="k">def</span> <span class="nf">trivial_representation</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">e2cnn</span><span class="o">.</span><span class="n">group</span><span class="o">.</span><span class="n">Representation</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">trivial_representation</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">e2cnn</span><span class="o">.</span><span class="n">group</span><span class="o">.</span><span class="n">IrreducibleRepresentation</span><span class="p">:</span>
         <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Builds the trivial representation of the group.</span>
 <span class="sd">        The trivial representation is a 1-dimensional representation which maps any element to 1,</span>

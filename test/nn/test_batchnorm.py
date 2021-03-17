@@ -56,6 +56,23 @@ class TestBatchnorms(TestCase):
     
         self.check_bn(bn)
 
+    def test_dihedral_inner_norm(self):
+        N = 8
+        g = FlipRot2dOnR2(N)
+    
+        g.fibergroup._build_quotient_representations()
+    
+        reprs = []
+        for r in g.representations.values():
+            if 'pointwise' in r.supported_nonlinearities:
+                reprs.append(r)
+    
+        r = FieldType(g, reprs)
+    
+        bn = InnerBatchNorm(r, affine=False, momentum=1.)
+    
+        self.check_bn(bn)
+        
     def check_bn(self, bn: EquivariantModule):
         
         x = 10*torch.randn(300, bn.in_type.size, 1, 1) + 20

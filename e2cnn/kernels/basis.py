@@ -172,7 +172,7 @@ class GaussianRadialProfile(KernelBasis):
             return False
     
     def __hash__(self):
-        return hash(self.radii.tostring()) + hash(self.sigma.tostring())
+        return hash(self.radii.tobytes()) + hash(self.sigma.tobytes())
     
 
 class PolarBasis(KernelBasis):

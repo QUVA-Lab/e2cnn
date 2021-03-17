@@ -59,7 +59,7 @@ class GNormBatchNorm(EquivariantModule):
         # number of fields of each type
         self._nfields = defaultdict(int)
         
-        # indices of the channeles corresponding to fields belonging to each group
+        # indices of the channels corresponding to fields belonging to each group
         _indices = defaultdict(lambda: [])
         
         # whether each group of fields is contiguous or not
@@ -127,7 +127,7 @@ class GNormBatchNorm(EquivariantModule):
             
             name = r.name
             
-            self._trivial_idxs[name] = trivials
+            self._trivial_idxs[name] = torch.tensor(trivials, dtype=torch.long)
             self._irreps_sizes[name] = [(s, idxs) for s, idxs in irreps.items()]
             self._sizes.append((name, r.size))
             
@@ -138,14 +138,14 @@ class GNormBatchNorm(EquivariantModule):
             self.register_buffer(f'vars_aggregator_{name}', aggregator)
             self.register_buffer(f'vars_propagator_{name}', propagator)
         
-            running_var = torch.ones((1, self._nfields[r.name], len(r.irreps), 1, 1), dtype=torch.float)
-            running_mean = torch.zeros((1, self._nfields[r.name], len(trivials), 1, 1), dtype=torch.float)
+            running_var = torch.ones((self._nfields[r.name], len(r.irreps)), dtype=torch.float)
+            running_mean = torch.zeros((self._nfields[r.name], len(trivials)), dtype=torch.float)
             self.register_buffer(f'{name}_running_var', running_var)
             self.register_buffer(f'{name}_running_mean', running_mean)
             
             if self.affine:
-                weight = Parameter(torch.ones((1, self._nfields[r.name], len(r.irreps), 1, 1)), requires_grad=True)
-                bias = Parameter(torch.zeros((1, self._nfields[r.name], len(trivials), 1, 1)), requires_grad=True)
+                weight = Parameter(torch.ones((self._nfields[r.name], len(r.irreps))), requires_grad=True)
+                bias = Parameter(torch.zeros((self._nfields[r.name], len(trivials))), requires_grad=True)
                 self.register_parameter(f'{name}_weight', weight)
                 self.register_parameter(f'{name}_bias', bias)
             
@@ -254,12 +254,12 @@ class GNormBatchNorm(EquivariantModule):
             
             if hasattr(self, f"{name}_change_of_basis"):
                 cob = getattr(self, f"{name}_change_of_basis")
-                slice = torch.einsum("ds,bcsxy->bcdxy", (cob, normalized))
+                normalized = torch.einsum("ds,bcsxy->bcdxy", (cob, normalized))
                 
             if not self._contiguous[name]:
-                output[:, indices, ...] = slice.view(b, -1, h, w)
+                output[:, indices, ...] = normalized.view(b, -1, h, w)
             else:
-                output[:, indices[0]:indices[1], ...] = slice.view(b, -1, h, w)
+                output[:, indices[0]:indices[1], ...] = normalized.view(b, -1, h, w)
 
             # if self._contiguous[name]:
             #     slice2 = output[:, indices[0]:indices[1], ...]
@@ -289,24 +289,24 @@ class GNormBatchNorm(EquivariantModule):
         
         b, c, s, x, y = t.shape
         
-        l = len(trivial_idxs)
+        l = trivial_idxs.numel()
         
         # number of samples in the tensor used to estimate the statistics
         N = b * x * y
         
         # compute the mean of the trivial fields
-        trivial_means = t[:, :, trivial_idxs, ...].view(b, c, l, x, y).sum(dim=(0, 3, 4), keepdim=True).detach() / N
+        trivial_means = t[:, :, trivial_idxs, ...].view(b, c, l, x, y).sum(dim=(0, 3, 4), keepdim=False).detach() / N
         
         # compute the mean of squares of all channels
-        vars = (t ** 2).view(b, c, s, x, y).sum(dim=(0, 3, 4), keepdim=True).detach() / N
+        vars = (t ** 2).view(b, c, s, x, y).sum(dim=(0, 3, 4), keepdim=False).detach() / N
         
         # For the non-trivial fields the mean of the fields is 0, so we can compute the variance as the mean of the
         # norms squared.
         # For trivial channels, we need to subtract the squared mean
-        vars[:, :, trivial_idxs, ...] -= trivial_means**2
+        vars[:, trivial_idxs] -= trivial_means**2
         
         # aggregate the squared means of the channels which belong to the same irrep
-        vars = torch.einsum("io,bcixy->bcoxy", (vars_aggregator, vars))
+        vars = torch.einsum("io,ci->co", (vars_aggregator, vars))
 
         # Correct the estimation of the variance with Bessel's correction
         correction = N/(N-1) if N > 1 else 1.
@@ -321,21 +321,25 @@ class GNormBatchNorm(EquivariantModule):
         
         vars_aggregator = getattr(self, f"vars_propagator_{name}")
         
+        ndims = len(t.shape[3:])
+        scale_shape = (1, scales.shape[0], vars_aggregator.shape[0]) + (1,)*ndims
         # scale all fields
-        out[...] = t * torch.einsum("oi,bcixy->bcoxy", (vars_aggregator, scales))
-        
-        # assert torch.allclose(t, out)
+        out[...] = t * torch.einsum("oi,ci->co", (vars_aggregator, scales)).reshape(scale_shape)
         
         return out
     
     def _shift(self, t: torch.Tensor, trivial_bias: torch.Tensor, name: str, out: torch.Tensor = None):
     
         if out is None:
-            out = torch.zeros_like(t)
-
+            out = t.clone()
+        else:
+            out[:] = t
+            
         trivial_idxs = self._trivial_idxs[name]
         
+        bias_shape = (1,) + trivial_bias.shape + (1,)*(len(t.shape) - 3)
+        
         # add bias to the trivial fields
-        out[:, :, trivial_idxs, ...] = t[:, :, trivial_idxs, ...] + trivial_bias
-    
+        out[:, :, trivial_idxs, ...] += trivial_bias.view(bias_shape)
+
         return out

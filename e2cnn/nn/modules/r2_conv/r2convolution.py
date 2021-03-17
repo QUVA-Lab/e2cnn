@@ -345,6 +345,7 @@ class R2Conv(EquivariantModule):
                             _filter,
                             stride=self.stride,
                             dilation=self.dilation,
+                            padding=(0,0),
                             groups=self.groups,
                             bias=_bias)
 
@@ -507,12 +508,30 @@ class R2Conv(EquivariantModule):
         _filter = self.filter
         _bias = self.expanded_bias
 
+        if self.padding_mode not in ['zeros']:
+            x, y = torch.__version__.split('.')[:2]
+            if int(x) < 1 or int(y) < 5:
+                if self.padding_mode == 'circular':
+                    raise ImportError(
+                        "'{}' padding mode had some issues in old `torch` versions. Therefore, we only support conversion from version 1.5 but only version {} is installed.".format(
+                            self.padding_mode, torch.__version__
+                        )
+                    )
+
+                else:
+                    raise ImportError(
+                        "`torch` supports '{}' padding mode only from version 1.5 but only version {} is installed.".format(
+                            self.padding_mode, torch.__version__
+                        )
+                    )
+
         # build the PyTorch Conv2d module
         has_bias = self.bias is not None
         conv = torch.nn.Conv2d(self.in_type.size,
                                self.out_type.size,
                                self.kernel_size,
                                padding=self.padding,
+                               padding_mode=self.padding_mode,
                                stride=self.stride,
                                dilation=self.dilation,
                                groups=self.groups,

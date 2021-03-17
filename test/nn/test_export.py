@@ -22,28 +22,30 @@ class TestExport(TestCase):
                     for st in [1, 2]:
                         for d in [1, 3]:
                             for gr in [1, 3]:
-                                for i in range(2):
+                                for mode in ['zeros', 'reflect', 'replicate', 'circular']:
+                                    for i in range(2):
                                 
-                                    c_in = 1 + np.random.randint(4)
-                                    c_out = 1 + np.random.randint(4)
-                                    
-                                    c_in *= gr
-                                    c_out *= gr
+                                        c_in = 1 + np.random.randint(4)
+                                        c_out = 1 + np.random.randint(4)
+                                        
+                                        c_in *= gr
+                                        c_out *= gr
 
-                                    f_in = FieldType(gs, [gs.regular_repr]*c_in)
-                                    f_out = FieldType(gs, [gs.regular_repr]*c_out)
-                                    
-                                    conv = R2Conv(
-                                        f_in, f_out,
-                                        kernel_size=ks,
-                                        padding=pd,
-                                        stride=st,
-                                        dilation=d,
-                                        groups=gr,
-                                        bias=True,
-                                    )
-                                    
-                                    self.check_exported(conv)
+                                        f_in = FieldType(gs, [gs.regular_repr]*c_in)
+                                        f_out = FieldType(gs, [gs.regular_repr]*c_out)
+                                        
+                                        conv = R2Conv(
+                                            f_in, f_out,
+                                            kernel_size=ks,
+                                            padding=pd,
+                                            padding_mode=mode,
+                                            stride=st,
+                                            dilation=d,
+                                            groups=gr,
+                                            bias=True,
+                                        )
+                                        
+                                        self.check_exported(conv)
 
     def test_R2Conv_mix(self):
     

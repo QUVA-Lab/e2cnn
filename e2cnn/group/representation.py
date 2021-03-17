@@ -844,7 +844,7 @@ def build_induced_representation(group: Group,
     character = {}
     
     for g in group.elements:
-        repr_g = np.zeros((size, size), dtype=np.float)
+        repr_g = np.zeros((size, size), dtype=float)
         for r in representatives:
             gr = group.combine(g, r)
             
@@ -909,7 +909,7 @@ def build_induced_representation(group: Group,
 
     # rectangular matrix contained in one of the blocks (associated with the coset containing the trivial element)
     # of the change of basis matrix
-    v = np.zeros((size, repr.size), dtype=np.float)
+    v = np.zeros((size, repr.size), dtype=float)
 
     # position in the matrix
     p = 0
@@ -1096,8 +1096,8 @@ def null(A: Union[np.matrix, sparse.linalg.LinearOperator],
     
     # print(u.shape, s.shape, vh.shape)
     # print(min(s))
-    null_space = sp.compress((s <= eps), vh, axis=0)
-    return sp.transpose(null_space)
+    null_space = np.compress((s <= eps), vh, axis=0)
+    return np.transpose(null_space)
 
 
 def find_orthogonal_matrix(basis: np.ndarray, shape):

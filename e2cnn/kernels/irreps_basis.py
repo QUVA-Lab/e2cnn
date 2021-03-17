@@ -442,7 +442,7 @@ class R2DiscreteRotationsSolution(IrrepBasis):
             return np.allclose(self.mu, other.mu) and np.allclose(self.gamma, other.gamma)
 
     def __hash__(self):
-        return hash(self.in_irrep) + hash(self.out_irrep) + hash(self.mu.tostring()) + hash(self.gamma.tostring())
+        return hash(self.in_irrep) + hash(self.out_irrep) + hash(self.mu.tobytes()) + hash(self.gamma.tobytes())
 
 
 class R2ContinuousRotationsSolution(IrrepBasis):

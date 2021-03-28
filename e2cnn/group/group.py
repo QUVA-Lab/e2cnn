@@ -151,7 +151,7 @@ class Group(ABC):
         pass
 
     @property
-    def irreps(self) -> Dict[str, e2cnn.group.IrreducibleRepresentation]:
+    def irreps(self) -> Dict[str, "IrreducibleRepresentation"]:
         r"""
         Dictionary containing all irreducible representations (:class:`~e2cnn.group.IrreducibleRepresentation`)
         instantiated for this group.
@@ -163,7 +163,7 @@ class Group(ABC):
         return self._irreps
 
     @property
-    def representations(self) -> Dict[str, e2cnn.group.Representation]:
+    def representations(self) -> Dict[str, "Representation"]:
         r"""
         Dictionary containing all representations (:class:`~e2cnn.group.Representation`)
         instantiated for this group.
@@ -176,7 +176,7 @@ class Group(ABC):
 
     @property
     @abstractmethod
-    def trivial_representation(self) -> e2cnn.group.IrreducibleRepresentation:
+    def trivial_representation(self) -> "IrreducibleRepresentation":
         r"""
         Builds the trivial representation of the group.
         The trivial representation is a 1-dimensional representation which maps any element to 1,

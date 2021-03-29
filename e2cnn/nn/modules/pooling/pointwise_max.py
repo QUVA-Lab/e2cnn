@@ -246,17 +246,18 @@ class PointwiseMaxPoolAntialiased(PointwiseMaxPool):
                                         padding=self.padding, dilation=self.dilation,
                                         ceil_mode=self.ceil_mode).eval()
 
-        class FixedConv2D(torch.nn.Module):
-            def __init__(self, filter:torch.Tensor, stride, _pad):
-                super(FixedConv2D, self).__init__()
-                self._filter = filter
-                self._stride = stride
-                self._pad = _pad
-
-            def forward(self, input: torch.Tensor) -> torch.Tensor:
-                return F.conv2d(input, self._filter, stride=self._stride, padding=self._pad, groups=input.shape[1])
-
         conver = FixedConv2D(self.filter, self.stride, self._pad).eval()
 
         return torch.nn.Sequential(max_pooler, conver)
+
+
+class FixedConv2D(torch.nn.Module):
+    def __init__(self, filter:torch.Tensor, stride, _pad):
+        super(FixedConv2D, self).__init__()
+        self._filter = filter
+        self._stride = stride
+        self._pad = _pad
+
+    def forward(self, input: torch.Tensor) -> torch.Tensor:
+        return F.conv2d(input, self._filter, stride=self._stride, padding=self._pad, groups=input.shape[1])
 

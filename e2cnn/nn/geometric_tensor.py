@@ -212,12 +212,19 @@ class GeometricTensor:
         Split this tensor on the channel dimension in a list of smaller tensors.
         The original tensor is split at the *fields* specified by the index list ``breaks``.
         
-        If the tensor is associated with the list of fields :math:`\{\rho_i\}_i`
-        (see :attr:`e2cnn.nn.FieldType.representations`), the :math:`j`-th output tensor will contain the fields
-        :math:`\rho_{\text{breaks}[j-1]}, \dots, \rho_{\text{breaks}[j]-1}` of the original tensor.
+        If the tensor is associated with the list of fields :math:`\{\rho_i\}_{i=0}^{L-1}`
+        (where :math:`L` equals `len(self.type)`;
+        see also :attr:`e2cnn.nn.FieldType.representations`),
+        the :math:`j`-th output tensor (:math:`j>0`) will contain
+        the fields :math:`\rho_{\text{breaks}[j-1]}, \dots, \rho_{\text{breaks}[j]-1}` of the original tensor.
+        The :math:`j=0`-th tensor contains the fields :math:`\rho_{0}, \dots, \rho_{\text{breaks}[0]-1}` while the last
+        tensor (:math:`j = len(breaks)`) contains the last fields :math:`\rho_{\text{breaks}[-1]}, \dots, \rho_{L-1}`.
+        
+        .. note ::
+            `breaks` must  be *sorted* list of integers greater than `0` and smaller than `len(self.type) - 1`.
         
         If `breaks = None`, the tensor is split at each field.
-        This is equivalent to using `breaks = list(range(len(self.type)))`.
+        This is equivalent to using `breaks = list(range(1, len(self.type)))`.
         
         Example ::
         
@@ -241,22 +248,22 @@ class GeometricTensor:
             >> torch.Size([10, 15, 7, 7])
             
             # split the tensor in 3 parts
-            len(geom_tensor.split([0, 4, 6]))
+            len(geom_tensor.split([4, 6]))
             >> 3
             
             # the first contains
             # - the first 2 regular fields (2*4 = 8 channels)
             # - 2 vector fields (irrep(1)) (2*2 = 4 channels)
             # and, therefore, contains 12 channels
-            geom_tensor.split([0, 4, 6])[0].shape
+            geom_tensor.split([4, 6])[0].shape
             >> torch.Size([10, 12, 7, 7])
             
             # the second contains only 2 scalar (trivial) fields (2*1 = 2 channels)
-            geom_tensor.split([0, 4, 6])[1].shape
+            geom_tensor.split([4, 6])[1].shape
             >> torch.Size([10, 2, 7, 7])
             
             # the last contains only 1 scalar (trivial) field (1*1 = 1 channels)
-            geom_tensor.split([0, 4, 6])[2].shape
+            geom_tensor.split([4, 6])[2].shape
             >> torch.Size([10, 1, 7, 7])
             
         
@@ -268,7 +275,7 @@ class GeometricTensor:
             
         """
         if breaks is None:
-            breaks = list(range(len(self.type)))
+            breaks = list(range(1, len(self.type)))
             
         breaks.append(len(self.type))
         
@@ -289,7 +296,7 @@ class GeometricTensor:
             assert b > last_field, 'Error! "breaks" must be an increasing list of positive indexes'
             
             # compute the sub-class of the new sub-tensor
-            repr = FieldType(self.type.gspace, self.type.representations[last_field: b])
+            repr = FieldType(self.type.gspace, self.type.representations[last_field:b])
             
             # retrieve the sub-tensor
             data = self.tensor[:, positions[last_field]:positions[b], ...]

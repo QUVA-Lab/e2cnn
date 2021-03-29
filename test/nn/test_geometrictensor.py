@@ -9,6 +9,43 @@ import random
 
 class TestGeometricTensor(TestCase):
     
+    def test_split(self):
+    
+        space = Rot2dOnR2(4)
+        type = FieldType(space, [
+            space.regular_repr,  # size = 4
+            space.regular_repr,  # size = 4
+            space.irrep(1),  # size = 2
+            space.irrep(1),  # size = 2
+            space.trivial_repr,  # size = 1
+            space.trivial_repr,  # size = 1
+            space.trivial_repr,  # size = 1
+        ])  # sum = 15
+    
+        self.assertEqual(type.size, 15)
+    
+        geom_tensor = GeometricTensor(torch.randn(10, type.size, 7, 7), type)
+
+        self.assertEqual(geom_tensor.shape, torch.Size([10, 15, 7, 7]))
+    
+        # split the tensor in 3 parts
+        self.assertEqual(len(geom_tensor.split([4, 6])), 3)
+    
+        # the first contains
+        # - the first 2 regular fields (2*4 = 8 channels)
+        # - 2 vector fields (irrep(1)) (2*2 = 4 channels)
+        # and, therefore, contains 12 channels
+        self.assertEqual(geom_tensor.split([4, 6])[0].shape, torch.Size([10, 12, 7, 7]))
+        self.assertEqual(geom_tensor.split([4, 6])[0].type, geom_tensor.type.index_select(list(range(4))))
+
+        # the second contains only 2 scalar (trivial) fields (2*1 = 2 channels)
+        self.assertEqual(geom_tensor.split([4, 6])[1].shape, torch.Size([10, 2, 7, 7]))
+        self.assertEqual(geom_tensor.split([4, 6])[1].type, geom_tensor.type.index_select(list(range(4, 6))))
+
+        # the last contains only 1 scalar (trivial) field (1*1 = 1 channels)
+        self.assertEqual(geom_tensor.split([4, 6])[2].shape, torch.Size([10, 1, 7, 7]))
+        self.assertEqual(geom_tensor.split([4, 6])[2].type, geom_tensor.type.index_select(list(range(6, len(geom_tensor.type)))))
+
     def test_sum(self):
         for N in [2, 4, 7, 16]:
             gs = Rot2dOnR2(N)
@@ -17,11 +54,11 @@ class TestGeometricTensor(TestCase):
                 for i in range(3):
                     t1 = GeometricTensor(torch.randn(10, type.size, 11, 11), type)
                     t2 = GeometricTensor(torch.randn(10, type.size, 11, 11), type)
-                    
+                
                     out1 = t1.tensor + t2.tensor
                     out2 = (t1 + t2).tensor
                     out3 = (t2 + t1).tensor
-                    
+                
                     self.assertTrue(torch.allclose(out1, out2))
                     self.assertTrue(torch.allclose(out3, out2))
     

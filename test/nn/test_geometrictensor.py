@@ -46,6 +46,13 @@ class TestGeometricTensor(TestCase):
         self.assertEqual(geom_tensor.split([4, 6])[2].shape, torch.Size([10, 1, 7, 7]))
         self.assertEqual(geom_tensor.split([4, 6])[2].type, geom_tensor.type.index_select(list(range(6, len(geom_tensor.type)))))
 
+        l1 = geom_tensor.split(list(range(1, len(geom_tensor.type))))
+        l2 = geom_tensor.split(None)
+        self.assertEqual(len(l1), len(l2))
+        for t1, t2 in zip(l1, l2):
+            self.assertEqual(t1.type, t2.type)
+            self.assertTrue(torch.allclose(t1.tensor, t2.tensor))
+
     def test_sum(self):
         for N in [2, 4, 7, 16]:
             gs = Rot2dOnR2(N)

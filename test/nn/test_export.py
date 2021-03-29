@@ -231,8 +231,29 @@ class TestExport(TestCase):
                                 )
                                 self.check_exported(maxpool)
 
+    def test_PointwiseMaxPoolAntiAliased(self):
+
+        for gs in [Rot2dOnR2(9), FlipRot2dOnR2(7), Flip2dOnR2(), TrivialOnR2()]:
+            for ks in [2, 3, 5]:
+                for pd in range(min(ks-1, 2)):
+                    for st in [1, 2]:
+                        for d in [1,]:
+                            for i in range(3):
+                                c_in = 1 + np.random.randint(4)
+
+                                f_in = FieldType(gs, [gs.regular_repr] * c_in)
+
+                                maxpool = PointwiseMaxPoolAntialiased(
+                                    f_in,
+                                    kernel_size=ks,
+                                    stride=st,
+                                    padding=pd,
+                                    dilation=d
+                                )
+                                self.check_exported(maxpool)
+
     def test_ReLU(self):
-    
+
         for gs in [Rot2dOnR2(9), FlipRot2dOnR2(7), Flip2dOnR2(), TrivialOnR2()]:
             for i in range(4):
                 c_in = 1 + np.random.randint(4)
@@ -332,8 +353,7 @@ class TestExport(TestCase):
             ye = equivariant(GeometricTensor(x, equivariant.in_type)).tensor
             yc = conventional(x)
             
-            # print(torch.abs(ye-yc).max())
-            
+            self.assertEqual(ye.shape, yc.shape, f"Tensor from the equivariant was shape {ye.shape}, but the tensor from the exported module was {yc.shape}")
             self.assertTrue(torch.allclose(ye, yc, atol=atol, rtol=rtol))
 
     def check_state_dict(self, equivariant: EquivariantModule, atol=1e-8, rtol=1e-5):

@@ -1,3 +1,4 @@
+from torch.nn import Parameter
 
 from e2cnn.gspaces import *
 from e2cnn.nn import FieldType
@@ -220,7 +221,7 @@ class PointwiseMaxPoolAntialiased(PointwiseMaxPool):
         """
         
         assert input.type == self.in_type
-        
+
         # evaluate the max operation densely (stride = 1)
         output = F.max_pool2d(input.tensor,
                               self.kernel_size,
@@ -228,8 +229,35 @@ class PointwiseMaxPoolAntialiased(PointwiseMaxPool):
                               self.padding,
                               self.dilation,
                               self.ceil_mode)
-        
+
         output = F.conv2d(output, self.filter, stride=self.stride, padding=self._pad, groups=output.shape[1])
-        
+
         # wrap the result in a GeometricTensor
         return GeometricTensor(output, self.out_type)
+
+    def export(self):
+        r"""
+        Export this module to a normal PyTorch :class:`torch.nn.MaxPool2d` module and set to "eval" mode.
+
+        """
+        self.eval()
+        # evaluate the max operation densely (stride = 1)
+        max_pooler = torch.nn.MaxPool2d(kernel_size=self.kernel_size, stride=1,
+                                        padding=self.padding, dilation=self.dilation,
+                                        ceil_mode=self.ceil_mode).eval()
+
+        conver = FixedConv2D(self.filter, self.stride, self._pad).eval()
+
+        return torch.nn.Sequential(max_pooler, conver)
+
+
+class FixedConv2D(torch.nn.Module):
+    def __init__(self, filter:torch.Tensor, stride, _pad):
+        super(FixedConv2D, self).__init__()
+        self._filter = filter
+        self._stride = stride
+        self._pad = _pad
+
+    def forward(self, input: torch.Tensor) -> torch.Tensor:
+        return F.conv2d(input, self._filter, stride=self._stride, padding=self._pad, groups=input.shape[1])
+

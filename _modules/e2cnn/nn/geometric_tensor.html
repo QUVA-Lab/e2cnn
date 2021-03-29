@@ -397,12 +397,19 @@
 <span class="sd">        Split this tensor on the channel dimension in a list of smaller tensors.</span>
 <span class="sd">        The original tensor is split at the *fields* specified by the index list ``breaks``.</span>
 <span class="sd">        </span>
-<span class="sd">        If the tensor is associated with the list of fields :math:`\{\rho_i\}_i`</span>
-<span class="sd">        (see :attr:`e2cnn.nn.FieldType.representations`), the :math:`j`-th output tensor will contain the fields</span>
-<span class="sd">        :math:`\rho_{\text{breaks}[j-1]}, \dots, \rho_{\text{breaks}[j]-1}` of the original tensor.</span>
+<span class="sd">        If the tensor is associated with the list of fields :math:`\{\rho_i\}_{i=0}^{L-1}`</span>
+<span class="sd">        (where :math:`L` equals `len(self.type)`;</span>
+<span class="sd">        see also :attr:`e2cnn.nn.FieldType.representations`),</span>
+<span class="sd">        the :math:`j`-th output tensor (:math:`j&gt;0`) will contain</span>
+<span class="sd">        the fields :math:`\rho_{\text{breaks}[j-1]}, \dots, \rho_{\text{breaks}[j]-1}` of the original tensor.</span>
+<span class="sd">        The :math:`j=0`-th tensor contains the fields :math:`\rho_{0}, \dots, \rho_{\text{breaks}[0]-1}` while the last</span>
+<span class="sd">        tensor (:math:`j = len(breaks)`) contains the last fields :math:`\rho_{\text{breaks}[-1]}, \dots, \rho_{L-1}`.</span>
+<span class="sd">        </span>
+<span class="sd">        .. note ::</span>
+<span class="sd">            `breaks` must  be *sorted* list of integers greater than `0` and smaller than `len(self.type) - 1`.</span>
 <span class="sd">        </span>
 <span class="sd">        If `breaks = None`, the tensor is split at each field.</span>
-<span class="sd">        This is equivalent to using `breaks = list(range(len(self.type)))`.</span>
+<span class="sd">        This is equivalent to using `breaks = list(range(1, len(self.type)))`.</span>
 <span class="sd">        </span>
 <span class="sd">        Example ::</span>
 <span class="sd">        </span>
@@ -426,22 +433,22 @@
 <span class="sd">            &gt;&gt; torch.Size([10, 15, 7, 7])</span>
 <span class="sd">            </span>
 <span class="sd">            # split the tensor in 3 parts</span>
-<span class="sd">            len(geom_tensor.split([0, 4, 6]))</span>
+<span class="sd">            len(geom_tensor.split([4, 6]))</span>
 <span class="sd">            &gt;&gt; 3</span>
 <span class="sd">            </span>
 <span class="sd">            # the first contains</span>
 <span class="sd">            # - the first 2 regular fields (2*4 = 8 channels)</span>
 <span class="sd">            # - 2 vector fields (irrep(1)) (2*2 = 4 channels)</span>
 <span class="sd">            # and, therefore, contains 12 channels</span>
-<span class="sd">            geom_tensor.split([0, 4, 6])[0].shape</span>
+<span class="sd">            geom_tensor.split([4, 6])[0].shape</span>
 <span class="sd">            &gt;&gt; torch.Size([10, 12, 7, 7])</span>
 <span class="sd">            </span>
 <span class="sd">            # the second contains only 2 scalar (trivial) fields (2*1 = 2 channels)</span>
-<span class="sd">            geom_tensor.split([0, 4, 6])[1].shape</span>
+<span class="sd">            geom_tensor.split([4, 6])[1].shape</span>
 <span class="sd">            &gt;&gt; torch.Size([10, 2, 7, 7])</span>
 <span class="sd">            </span>
 <span class="sd">            # the last contains only 1 scalar (trivial) field (1*1 = 1 channels)</span>
-<span class="sd">            geom_tensor.split([0, 4, 6])[2].shape</span>
+<span class="sd">            geom_tensor.split([4, 6])[2].shape</span>
 <span class="sd">            &gt;&gt; torch.Size([10, 1, 7, 7])</span>
 <span class="sd">            </span>
 <span class="sd">        </span>
@@ -453,7 +460,7 @@
 <span class="sd">            </span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="n">breaks</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="n">breaks</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">type</span><span class="p">)))</span>
+            <span class="n">breaks</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">type</span><span class="p">)))</span>
             
         <span class="n">breaks</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">type</span><span class="p">))</span>
         
@@ -474,7 +481,7 @@
             <span class="k">assert</span> <span class="n">b</span> <span class="o">&gt;</span> <span class="n">last_field</span><span class="p">,</span> <span class="s1">&#39;Error! &quot;breaks&quot; must be an increasing list of positive indexes&#39;</span>
             
             <span class="c1"># compute the sub-class of the new sub-tensor</span>
-            <span class="nb">repr</span> <span class="o">=</span> <span class="n">FieldType</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">type</span><span class="o">.</span><span class="n">gspace</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">type</span><span class="o">.</span><span class="n">representations</span><span class="p">[</span><span class="n">last_field</span><span class="p">:</span> <span class="n">b</span><span class="p">])</span>
+            <span class="nb">repr</span> <span class="o">=</span> <span class="n">FieldType</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">type</span><span class="o">.</span><span class="n">gspace</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">type</span><span class="o">.</span><span class="n">representations</span><span class="p">[</span><span class="n">last_field</span><span class="p">:</span><span class="n">b</span><span class="p">])</span>
             
             <span class="c1"># retrieve the sub-tensor</span>
             <span class="n">data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">tensor</span><span class="p">[:,</span> <span class="n">positions</span><span class="p">[</span><span class="n">last_field</span><span class="p">]:</span><span class="n">positions</span><span class="p">[</span><span class="n">b</span><span class="p">],</span> <span class="o">...</span><span class="p">]</span>

@@ -47,6 +47,7 @@ from .dropout import FieldDropout
 from .dropout import PointwiseDropout
 
 from .sequential_module import SequentialModule
+from .module_list import ModuleList
 from .identity_module import IdentityModule
 
 from .masking_module import MaskModule
@@ -90,6 +91,7 @@ __all__ = [
     "FieldDropout",
     "PointwiseDropout",
     "SequentialModule",
+    "ModuleList",
     "IdentityModule",
     "MaskModule",
     # subpackages

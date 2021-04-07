@@ -18,7 +18,7 @@ class ModuleList(torch.nn.ModuleList):
                  ):
         r"""
         
-        Module similar to :class:`~torch.nn.ModuleList` containing a list of :class:`~e2cnn.nn.EquivariantModule`s
+        Module similar to :class:`~torch.nn.ModuleList` containing a list of :class:`~e2cnn.nn.EquivariantModule` s.
         
         This class works like :class:`~torch.nn.ModuleList` except for the fact it only accepts instances of
         :class:`~e2cnn.nn.EquivariantModule`.
@@ -36,6 +36,7 @@ class ModuleList(torch.nn.ModuleList):
         super(ModuleList, self).__init__(modules)
         
     def __setitem__(self, idx: int, module: EquivariantModule):
+        assert isinstance(module, EquivariantModule)
         super(ModuleList, self).__setitem__(idx, module)
 
     def insert(self, index: int, module: EquivariantModule) -> None:
@@ -50,8 +51,7 @@ class ModuleList(torch.nn.ModuleList):
 
         """
         assert isinstance(module, EquivariantModule)
-        self.add_module(str(len(self)), module)
-        return self
+        return super(ModuleList, self).append(module)
 
     def extend(self, modules: Iterable[EquivariantModule]) -> 'ModuleList':
         r"""Appends multiple :class:`~e2cnn.nn.EquivariantModule` instances from a Python
@@ -62,12 +62,11 @@ class ModuleList(torch.nn.ModuleList):
             
         """
         if not isinstance(modules, container_abcs.Iterable):
-            raise TypeError("ModuleList.extend should be called with an "
-                            "iterable, but got " + type(modules).__name__)
-        offset = len(self)
-        for i, module in enumerate(modules):
+            raise TypeError("ModuleList.extend expects an iterable object, but found " + type(modules).__name__)
+        
+        for module in modules:
             assert isinstance(module, EquivariantModule)
-            self.add_module(str(offset + i), module)
+            self.append(module)
         return self
 
     def export(self) -> torch.nn.ModuleList:

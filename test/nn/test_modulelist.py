@@ -14,7 +14,38 @@ import numpy as np
 
 class TestModuleList(TestCase):
     
-    def test_modulelist(self):
+    def test_expand(self):
+        
+        for gs in [Rot2dOnR2(9), FlipRot2dOnR2(7), Flip2dOnR2(), TrivialOnR2()]:
+            gs.fibergroup._build_quotient_representations()
+            reprs = [r for r in gs.representations.values() if 'pointwise' in r.supported_nonlinearities]
+            
+            f_in = FieldType(gs, reprs)
+            f_out = FieldType(gs, [gs.regular_repr] * 1)
+            
+            for i in range(20):
+                net = [
+                    R2Conv(f_in, f_in, 7, bias=True),
+                    InnerBatchNorm(f_in, affine=True),
+                    ReLU(f_in, inplace=True),
+                    PointwiseMaxPool(f_in, 3, 2, 1),
+                    R2Conv(f_in, f_out, 3, bias=True),
+                    InnerBatchNorm(f_out, affine=False),
+                    ELU(f_out, inplace=True),
+                    GroupPooling(f_out),
+                ]
+                
+                net1 = ModuleList(net[:5]).extend(net[5:])
+                net2 = ModuleList(net)
+                
+                s1 = net1.state_dict()
+                s2 = net2.state_dict()
+                
+                assert s1.keys() == s2.keys()
+                for k in s1.keys():
+                    assert torch.allclose(s1[k], s2[k])
+    
+    def test_export_modulelist(self):
     
         for gs in [Rot2dOnR2(9), FlipRot2dOnR2(7), Flip2dOnR2(), TrivialOnR2()]:
             gs.fibergroup._build_quotient_representations()
@@ -39,7 +70,7 @@ class TestModuleList(TestCase):
                 
                 self.check_state_dict(net)
 
-    def test_Sequential_example(self):
+    def test_export_Sequential_example(self):
     
         s = Rot2dOnR2(8)
         c_in = FieldType(s, [s.trivial_repr] * 3)

@@ -48,6 +48,7 @@ __all__ = [
     "FieldDropout",
     "PointwiseDropout",
     "SequentialModule",
+    "ModuleList",
     "IdentityModule",
     "MaskModule",
     # init

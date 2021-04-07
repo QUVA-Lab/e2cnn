@@ -339,6 +339,13 @@ Sequential
     :members:
     :show-inheritance:
 
+ModuleList
+~~~~~~~~~~
+
+.. autoclass:: e2cnn.nn.ModuleList
+    :members:
+    :show-inheritance:
+
 Restriction
 ~~~~~~~~~~~
 

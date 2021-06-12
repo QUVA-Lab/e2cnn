@@ -21,7 +21,7 @@ class SingleBlockBasisExpansion(BasisExpansion):
                  ):
         r"""
         
-        Basis expansion method for a single contiguous block, i.e. for kernels whose input type and output type contain
+        Basis expansion method for a single contiguous block, i.e. for kernels/PDOs whose input type and output type contain
         only fields of one type.
         
         Args:

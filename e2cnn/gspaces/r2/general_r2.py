@@ -131,46 +131,42 @@ class GeneralOnR2(GSpace):
                            **kwargs) -> kernels.KernelBasis:
         r"""
         
-        Builds a basis for the space of the equivariant kernels with respect to the symmetries described by this
+        Builds a basis for the space of the equivariant PDOs with respect to the symmetries described by this
         :class:`~e2cnn.gspaces.GSpace`.
         
-        A kernel :math:`\kappa` equivariant to a group :math:`G` needs to satisfy the following equivariance constraint:
-
-        .. math::
-            \kappa(gx) = \rho_\text{out}(g) \kappa(x) \rho_\text{in}(g)^{-1}  \qquad \forall g \in G, x \in \R^2
+        A :math:`G`-equivariant PDO :math:`D(P)` for a matrix of polynomials :math:`P`, mapping between an input field, transforming under
+        :math:`\rho_\text{in}` (``in_repr``), and an output field, transforming under  :math:`\rho_\text{out}`
+        (``out_repr``), satisfies the following constraint:
         
-        where :math:`\rho_\text{in}` is ``in_repr`` while :math:`\rho_\text{out}` is ``out_repr``.
+        .. math ::
+            
+            P(gx) = \rho_\text{out}(g) P(x) \rho_\text{in}(g)^{-1} \qquad \forall g \in G, \forall x \in X
         
+        for :math:`G \leq O(d)`.
         
-        Because the equivariance constraints only restrict the angular part of the kernels, any radial profile is
-        permitted.
-        The basis for the radial profile used here contains rings with different radii (``rings``)
-        associated with (possibly different) widths (``sigma``).
-        A ring is implemented as a Gaussian function over the radial component, centered at one radius
-        (see also :class:`~e2cnn.kernels.GaussianRadialProfile`).
+        A complete basis is obtained by combining certain PDOs with powers of the Laplacian operator.
+        ``max_power`` describes the maximum power of the Laplacian to use when building the basis.
         
         .. note ::
-            This method is a wrapper for the functions building the bases which are defined in :doc:`e2cnn.kernels`:
+            This method is a wrapper for the functions building the bases which are defined in :doc:`e2cnn.diffops`:
             
-            - :meth:`e2cnn.kernels.kernels_O2_act_R2`,
-            
-            - :meth:`e2cnn.kernels.kernels_SO2_act_R2`,
-            
-            - :meth:`e2cnn.kernels.kernels_DN_act_R2`,
-            
-            - :meth:`e2cnn.kernels.kernels_CN_act_R2`,
-            
-            - :meth:`e2cnn.kernels.kernels_Flip_act_R2`,
-            
-            - :meth:`e2cnn.kernels.kernels_Trivial_act_R2`
+            - :meth:`e2cnn.diffops.diffops_O2_act_R2`,
+
+            - :meth:`e2cnn.diffops.diffops_SO2_act_R2`,
+
+            - :meth:`e2cnn.diffops.diffops_DN_act_R2`,
+
+            - :meth:`e2cnn.diffops.diffops_CN_act_R2`,
+
+            - :meth:`e2cnn.diffops.diffops_Flip_act_R2`,
+
+            - :meth:`e2cnn.diffops.diffops_Trivial_act_R2`
             
             
         Args:
             in_repr (Representation): the input representation
             out_repr (Representation): the output representation
-            sigma (list or float): parameters controlling the width of each ring of the radial profile.
-                    If only one scalar is passed, it is used for all rings
-            rings (list): radii of the rings defining the radial profile
+            max_power (int): the largest power of the Laplacian that will be used
             **kwargs: Group-specific keywords arguments for ``_basis_generator`` method
 
         Returns:

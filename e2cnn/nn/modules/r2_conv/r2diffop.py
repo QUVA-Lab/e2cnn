@@ -46,8 +46,8 @@ class R2Diffop(EquivariantModule):
                  bias: bool = True,
                  basisexpansion: str = 'blocks',
                  maximum_order: int = None,
-                 maximum_offset: int = None,
                  maximum_power: int = None,
+                 maximum_offset: int = None,
                  recompute: bool = False,
                  angle_offset: float = None,
                  basis_filter: Callable[[dict], bool] = None,
@@ -56,6 +56,153 @@ class R2Diffop(EquivariantModule):
                  rbffd: bool = False,
                  smoothing: float = None,
                  ):
+        r"""
+        
+        
+        G-steerable planar partial differential operator mapping between the
+        input and output :class:`~e2cnn.nn.FieldType` s specified by
+        the parameters ``in_type`` and ``out_type``.
+        This operation is equivariant under the action of :math:`\R^2\rtimes G` where :math:`G` is the
+        :attr:`e2cnn.nn.FieldType.fibergroup` of ``in_type`` and ``out_type``.
+        
+        Specifically, let :math:`\rho_\text{in}: G \to \GL{\R^{c_\text{in}}}` and
+        :math:`\rho_\text{out}: G \to \GL{\R^{c_\text{out}}}` be the representations specified by the input and output
+        field types.
+        Then :class:`~e2cnn.nn.R2Diffop` guarantees an equivariant mapping
+        
+        .. math::
+            D [\mathcal{T}^\text{in}_{g,u} . f] = \mathcal{T}^\text{out}_{g,u} . [Df] \qquad\qquad \forall g \in G, u \in \R^2
+            
+        where the transformation of the input and output fields are given by
+ 
+        .. math::
+            [\mathcal{T}^\text{in}_{g,u} . f](x) &= \rho_\text{in}(g)f(g^{-1} (x - u)) \\
+            [\mathcal{T}^\text{out}_{g,u} . f](x) &= \rho_\text{out}(g)f(g^{-1} (x - u)) \\
+
+        The equivariance of G-steerable PDOs is guaranteed by restricting the space of PDOs to an
+        equivariant subspace.
+
+        During training, in each forward pass the module expands the basis of G-steerable PDOs with learned weights
+        before calling :func:`torch.nn.functional.conv2d`.
+        When :meth:`~torch.nn.Module.eval()` is called, the filter is built with the current trained weights and stored
+        for future reuse such that no overhead of expanding the PDO remains.
+        
+        .. warning ::
+            
+            When :meth:`~torch.nn.Module.train()` is called, the attributes :attr:`~e2cnn.nn.R2Diffop.filter` and
+            :attr:`~e2cnn.nn.R2Diffop.expanded_bias` are discarded to avoid situations of mismatch with the
+            learnable expansion coefficients.
+            See also :meth:`e2cnn.nn.R2Diffop.train`.
+            
+            This behaviour can cause problems when storing the :meth:`~torch.nn.Module.state_dict` of a model while in
+            a mode and lately loading it in a model with a different mode, as the attributes of the class change.
+            To avoid this issue, we recommend converting the model to eval mode before storing or loading the state
+            dictionary.
+ 
+ 
+        The learnable expansion coefficients of the this module can be initialized with the methods in
+        :mod:`e2cnn.nn.init`.
+        By default, the weights are initialized in the constructors using :func:`~e2cnn.nn.init.generalized_he_init`.
+        
+        .. warning ::
+            
+            This initialization procedure can be extremely slow for wide layers.
+            In case initializing the model is not required (e.g. before loading the state dict of a pre-trained model)
+            or another initialization method is preferred (e.g. :func:`~e2cnn.nn.init.deltaorthonormal_init`), the
+            parameter ``initialize`` can be set to ``False`` to avoid unnecessary overhead.
+        
+        A reasonable default is to only set the ``kernel_size`` and leave all other options
+        on their defaults. However, you might get considerable performance improvements
+        by setting ``smoothing`` to something other than ``None`` (``kernel_size / 4`` is
+        a sane default, see below for details).
+        
+        If you want to modify ``accuracy`` or ``maximum_order``, you will need to take
+        into account how they are related to ``kernel_size``: it is possible to set any two
+        of ``kernel_size``, ``accuracy`` and ``maximum_order``, in which case the third
+        one will be determined automatically. Alternatively, you can set either ``kernel_size``
+        or ``maximum_order``, in which case a sane default will be used for ``accuracy``. 
+        The relation between the three is approximately :math:`kernel_size \approx accuracy + order`,
+        though this formula is off by one in some cases.
+        A larger maximum order will lead to more basis filters and this more parameters.
+        A larger accuracy (i.e. larger kernel size at constant order)
+        might lead to lower equivariance errors, though whether this actually happens may
+        depend on your exact setup.
+        
+        The parameters ``basisexpansion``, ``maximum_power``,  and ``maximum_offset`` are
+        optional parameters used to control how the basis for the PDOs is built, how it is sampled on the filter
+        grid and how it is expanded to build the filter. We suggest to keep these default values.
+        
+        
+        Args:
+            in_type (FieldType): the type of the input field, specifying its transformation law
+            out_type (FieldType): the type of the output field, specifying its transformation law
+            kernel_size (int, optional): the size of the (square) filter. This can be chosen automatically,
+                see above for details.
+            accuracy (int, optional): the desired asymptotic accuracy for the PDO discretization,
+                affects the ``kernel_size``. See above for details.
+            padding (int, optional): implicit zero paddings on both sides of the input. Default: ``0``
+            padding_mode(str, optional): ``zeros``, ``reflect``, ``replicate`` or ``circular``. Default: ``zeros``
+            stride (int, optional): the stride of the kernel. Default: ``1``
+            dilation (int, optional): the spacing between kernel elements. Default: ``1``
+            groups (int, optional): number of blocked connections from input channels to output channels.
+                                    It allows depthwise convolution. When used, the input and output types need to be
+                                    divisible in ``groups`` groups, all equal to each other.
+                                    Default: ``1``.
+            bias (bool, optional): Whether to add a bias to the output (only to fields which contain a
+                    trivial irrep) or not. Default ``True``
+            basisexpansion (str, optional): the basis expansion algorithm to use
+            maximum_order (int, optional): the largest derivative order to allow
+                as part of the basis. Larger maximum orders require larger kernel sizes,
+                see above for details.
+            maximum_power (int, optional): the maximum power of the Laplacian that will be used
+                for constructing the basis. If this is not ``None``, it places a restriction on
+                the basis elements, *in addition to* the restriction given by ``maximum_order``.
+                We suggest to leave this setting on its default unless you have a good reason
+                to change it.
+            maximum_offset (int, optional): number of additional (aliased) frequencies in the intertwiners for finite
+                    groups. By default (``None``), all additional frequencies allowed by the frequencies cut-off
+                    are used.
+            recompute (bool, optional): if ``True``, recomputes a new basis for the equivariant PDOs.
+                    By Default (``False``), it  caches the basis built or reuse a cached one, if it is found.
+            basis_filter (callable, optional): function which takes as input a descriptor of a basis element
+                    (as a dictionary) and returns a boolean value: whether to preserve (``True``) or discard (``False``)
+                    the basis element. By default (``None``), no filtering is applied.
+            initialize (bool, optional): initialize the weights of the model. Default: ``True``
+            cache (bool or str, optional): Discretizing the PDOs can take a bit longer than
+                for kernels, so we provide the option to cache PDOs on disk. Our suggestion is
+                to keep the cache off (default) and only activate it if discretizing the PDOs
+                is in fact a bottleneck for your setup (it often is not). Setting ``cache`` to
+                ``True`` will load an existing cache before instantiating the layer and will
+                write to the cache afterwards. You can also set ``cache`` to ``load`` or ``store``
+                to only do one of these.
+
+                All :class:`~e2cnn.nn.R2Diffop` layers share the PDO cache in memory.
+                If you have several :class:`~e2cnn.nn.R2Diffop` layers inside your model,
+                we therefore recommend to leave ``cache`` to ``False`` and instead call
+                :func:`e2cnn.diffops.load_cache` before instantiating the model, and :func:`e2cnn.diffops.store_cache`
+                afterwards to save the PDOs for the next run of the program.
+                This will avoid unnecessary reads/writes from/to disk.
+            rbffd (bool, optional): if set to ``True``, use RBF-FD discretization instead of
+                finite differences (the default). We suggest leaving this to ``False`` unless
+                you have a specific reason for wanting to use RBF-FD.
+            smoothing (float, optional): if not ``None``, discretization will be performed
+                with derivatives of Gaussians as stencils. This is similar to smoothing
+                with a Gaussian before applying the PDO, though there are slight technical
+                differences. ``smoothing`` is the standard deviation (in pixels) of the Gaussian,
+                meaning that larger values correspond to stronger smoothing.
+                A reasonable value would be about ``kernel_size / 4`` but you might want to experiment
+                a bit with this parameter.
+        
+        Attributes:
+            
+            ~.weights (torch.Tensor): the learnable parameters which are used to expand the PDO
+            ~.filter (torch.Tensor): the convolutional stencil obtained by expanding the parameters
+                                    in :attr:`~e2cnn.nn.R2Diffop.weights`
+            ~.bias (torch.Tensor): the learnable parameters which are used to expand the bias, if ``bias=True``
+            ~.expanded_bias (torch.Tensor): the equivariant bias which is summed to the output, obtained by expanding
+                                    the parameters in :attr:`~e2cnn.nn.R2Diffop.bias`
+        
+        """
 
         assert in_type.gspace == out_type.gspace
         assert isinstance(in_type.gspace, GeneralOnR2)
@@ -77,7 +224,7 @@ class R2Diffop(EquivariantModule):
         if kernel_size is None:
             assert maximum_order is not None
             if accuracy is None:
-                accuracy = 2
+                accuracy = 2 if (maximum_order > 0) else 1
             # TODO: Ideally, we should look at the basis, maybe the maximum_order isn't
             # reached (e.g. if it is odd but all basis diffops are even). In that case,
             # we could perhaps get away with a smaller kernel

@@ -18,7 +18,7 @@ class TestSolutionsEquivariance(TestCase):
         in_rep = group.regular_representation
         out_rep = group.regular_representation
 
-        basis = kernels_Trivial_act_R2(in_rep, out_rep,
+        basis = diffops_Trivial_act_R2(in_rep, out_rep,
                                        max_power=1,
                                        max_frequency=3)
         action = group.irrep(0) + group.irrep(0)
@@ -40,7 +40,7 @@ class TestSolutionsEquivariance(TestCase):
         #     print(axis)
 
         axis = np.pi / 2
-        basis = kernels_Flip_act_R2(in_rep, out_rep,
+        basis = diffops_Flip_act_R2(in_rep, out_rep,
                                     axis=axis,
                                     max_power=1,
                                     max_frequency=3)
@@ -59,7 +59,7 @@ class TestSolutionsEquivariance(TestCase):
         out_rep = group.regular_representation
 
         for _ in range(5):
-            basis = kernels_CN_act_R2(in_rep, out_rep,
+            basis = diffops_CN_act_R2(in_rep, out_rep,
                                       max_power=1,
                                       max_frequency=3)
             action = group.irrep(1)
@@ -71,7 +71,7 @@ class TestSolutionsEquivariance(TestCase):
         in_rep = group.regular_representation
         out_rep = group.regular_representation
 
-        basis = kernels_CN_act_R2(in_rep, out_rep,
+        basis = diffops_CN_act_R2(in_rep, out_rep,
                                   max_power=1,
                                   max_frequency=3)
         action = group.irrep(1)
@@ -84,7 +84,7 @@ class TestSolutionsEquivariance(TestCase):
         out_rep = directsum(list(group.irreps.values()), name="irreps_sum")
 
         for _ in range(5):
-            basis = kernels_CN_act_R2(in_rep, out_rep,
+            basis = diffops_CN_act_R2(in_rep, out_rep,
                                       max_power=1,
                                       max_frequency=3)
             action = group.irrep(1)
@@ -97,7 +97,7 @@ class TestSolutionsEquivariance(TestCase):
         out_rep = group.regular_representation
 
         for _ in range(5):
-            basis = kernels_CN_act_R2(in_rep, out_rep,
+            basis = diffops_CN_act_R2(in_rep, out_rep,
                                       max_power=1,
                                       max_frequency=3)
             action = group.irrep(1)
@@ -110,7 +110,7 @@ class TestSolutionsEquivariance(TestCase):
         out_rep = directsum(list(group.irreps.values()), name="irreps_sum")
 
         for _ in range(5):
-            basis = kernels_CN_act_R2(in_rep, out_rep,
+            basis = diffops_CN_act_R2(in_rep, out_rep,
                                       max_power=1,
                                       max_frequency=3)
             action = group.irrep(1)
@@ -123,7 +123,7 @@ class TestSolutionsEquivariance(TestCase):
         out_rep = group.regular_representation
         axis = np.pi / 2
 
-        basis = kernels_DN_act_R2(in_rep, out_rep,
+        basis = diffops_DN_act_R2(in_rep, out_rep,
                                   axis=axis,
                                   max_power=1,
                                   max_frequency=3)
@@ -140,7 +140,7 @@ class TestSolutionsEquivariance(TestCase):
         out_rep = group.regular_representation
         axis = np.pi/2
 
-        basis = kernels_DN_act_R2(in_rep, out_rep,
+        basis = diffops_DN_act_R2(in_rep, out_rep,
                                   axis=axis,
                                   max_power=1,
                                   max_frequency=3)
@@ -158,7 +158,7 @@ class TestSolutionsEquivariance(TestCase):
             for out_rep in group.irreps.values():
 
                 try:
-                    basis = kernels_CN_act_R2(in_rep, out_rep,
+                    basis = diffops_CN_act_R2(in_rep, out_rep,
                                             max_power=1,
                                             max_frequency=3)
                     action = group.irrep(1)
@@ -176,7 +176,7 @@ class TestSolutionsEquivariance(TestCase):
 
         for in_rep in group.irreps.values():
             for out_rep in group.irreps.values():
-                basis = kernels_DN_act_R2(in_rep, out_rep,
+                basis = diffops_DN_act_R2(in_rep, out_rep,
                                         axis=axis,
                                         max_power=1,
                                         max_frequency=4)
@@ -195,7 +195,7 @@ class TestSolutionsEquivariance(TestCase):
 
         for in_rep in reprs:
             for out_rep in reprs:
-                basis = kernels_DN_act_R2(in_rep, out_rep,
+                basis = diffops_DN_act_R2(in_rep, out_rep,
                                           axis=axis,
                                           max_power=1,
                                           max_frequency=3)
@@ -230,7 +230,7 @@ class TestSolutionsEquivariance(TestCase):
 
         for in_rep in group.irreps.values():
             for out_rep in group.irreps.values():
-                basis = kernels_SO2_act_R2(in_rep, out_rep,
+                basis = diffops_SO2_act_R2(in_rep, out_rep,
                                            max_power=1
                                            )
                 action = group.irrep(1)
@@ -244,7 +244,7 @@ class TestSolutionsEquivariance(TestCase):
         for in_rep in group.irreps.values():
             for out_rep in group.irreps.values():
                 try:
-                    basis = kernels_O2_act_R2(in_rep, out_rep,
+                    basis = diffops_O2_act_R2(in_rep, out_rep,
                                               axis=axis,
                                               max_power=1
                                               )

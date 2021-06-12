@@ -1,5 +1,6 @@
 import numpy as np
-from e2cnn.diffops.utils import *
+from e2cnn.diffops import store_cache, load_cache
+from e2cnn.diffops.utils import discretize_homogeneous_polynomial
 
 def test_cache():
     # generate a few diffops:

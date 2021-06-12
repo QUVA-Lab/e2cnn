@@ -2,8 +2,6 @@
 import itertools
 from e2cnn.kernels.basis import EmptyBasisException
 import numpy as np
-import torch
-from abc import ABC, abstractmethod
 from typing import Iterable, List, Optional, Union, Tuple
 
 from e2cnn.kernels import KernelBasis
@@ -15,13 +13,23 @@ class DiffopBasis(KernelBasis):
 
     def __init__(self, coefficients: List[np.ndarray]):
         r"""
-
-        Basis for homogeneous differential operators.
-
-
+        Abstract class for implementing the basis of a space of differential operators.
+        Such a space consists of :math:`c_\text{out} \times c_\text{in}` matrices with
+        partial differential operators as entries.
+        
         Args:
-            coefficients (list of ndarray): each element must have shape C_out x C_in x (n + 1)
-              where n is the order of the operator. The last axis contains the coefficients of x^n, x^{n - 1}y, ..., y^n.
+            coefficients (list): a list of ndarrays. Each array describes one element
+                of the basis and has shape ``(c_out, c_in, n + 1)``, where ``n``
+                is the derivative order of the entries of the matrix.
+                PDOs are encoded as the coefficients of :math:`\frac{\partial^n}{\partial x^n}`,
+                :math:`\frac{\partial^n}{\partial x^{n - 1}\partial y}`, ...,
+                :math:`\frac{\partial^n}{\partial y^n}.
+            
+        Attributes:
+            ~.coefficients (list): an analytical description of the PDO basis elements, see above
+            ~.dim (int): the dimensionality of the basis :math:`|\mathcal{K}|` (number of elements)
+            ~.shape (tuple): a tuple containing :math:`c_\text{out}` and :math:`c_\text{in}`
+
         """
         dim = len(coefficients)
         if dim == 0:
@@ -47,25 +55,30 @@ class DiffopBasis(KernelBasis):
                smoothing: float = None,
                angle_offset: float = None,
                ) -> np.ndarray:
-        """Discretize the basis on a set of points.
+        r"""
+        Discretize the basis on a set of points.
 
         Args:
             points (ndarray, tuple or list): To use RBF-FD, this has to be a
-              2 x N array with N points on which to discretize.
-              To use FD, this can be either a list of floats, which will be used
-              as the 1D coordinates on which to discretize, or a tuple of two such
-              lists, one for the x- and one for the y-axis.
-              You can also use RBF-FD on a regular kernel,
-              in that case you need to pass in the grid coordinates explicitly (see ``make_grid``).
+                `2 x N` array with `N` points on which to discretize.
+                To use FD, this can be either a list of floats, which will be used
+                as the 1D coordinates on which to discretize, or a tuple of two such
+                lists, one for the x- and one for the y-axis.
+                You can also use RBF-FD on a regular grid,
+                in that case you need to pass in the grid coordinates explicitly as an array.
             mask (ndarray, optional): Boolean array of shape (dim, ), where ``dim`` is the number of basis elements.
-              True for elements to discretize and False for elements to discard.
+                True for elements to discretize and False for elements to discard.
+            smoothing (float, optional): if this is not ``None``, derivatives of Gaussians
+                are used for discretization, rather than FD or RBF-FD. In that case, ``points``
+                may have any of the three formats described above. ``smoothing`` is the standard
+                deviation of the Gaussian used for discretization.
+            angle_offset (float, optional): if not ``None``, rotate the PDOs by this many radians.
 
         Returns:
-            If ``out_coords`` is ``None``, ndarray of with shape (C_out, C_in, num_basis_elements, n_in), where
-            ``num_basis_elements`` are the number of elements after applying the mask, and ``n_in`` is the number
+            ndarray of with shape `(C_out, C_in, num_basis_elements, n_in)`, where
+            `num_basis_elements` are the number of elements after applying the mask, and `n_in` is the number
             of points.
-            Otherwise, a sparse.COO array of shape (c_out, c_in, num_basis_elements, n_out, n_in), where n_out
-            and n_in are the number of output and input points.
+
         """
         if mask is None:
             # if no mask is given, we use all basis elements
@@ -112,7 +125,8 @@ class DiffopBasis(KernelBasis):
 
         return basis
 
-    def pretty_print(self):
+    def pretty_print(self) -> str:
+        """Return a human-readable representation of all basis elements."""
         out = ""
         for element in self.coefficients:
             out += display_matrix(element)
@@ -124,19 +138,17 @@ class LaplaceProfile(DiffopBasis):
 
     def __init__(self, max_power: int):
         r"""
-
-        Basis for kernels defined over a radius in :math:`\R^+_0`.
-
+        Basis for rotationally invariant PDOs.
         Each basis element is defined as a power of a Laplacian.
 
-        In order to build a complete basis of kernels, you should combine this basis with a basis which defines the
-        angular profile through :class:`~e2cnn.kernels.PolarBasis`.
+        In order to build a complete basis of PDOs, you should combine this basis
+        with a basis which defines the angular profile through :class:`~e2cnn.diffops.TensorBasis`.
 
 
         Args:
             max_power (int): the maximum power of the Laplace operator that will be used.
-              The maximum degree (as a differential operator) will be two times this maximum
-              power.
+                The maximum degree (as a differential operator) will be two times this maximum
+                power.
 
         """
 
@@ -170,19 +182,19 @@ class TensorBasis(DiffopBasis):
     def __init__(self, basis1: DiffopBasis, basis2: DiffopBasis):
         r"""
 
-        Build the tensor product basis of two diffop bases over the
+        Build the tensor product basis of two PDO bases over the
         plane. Given two bases :math:`A = \{a_i\}_i` and :math:`B = \{b_j\}_j`, this basis is defined as
 
         .. math::
-            C = A \otimes B = \left\{ c_{i,j}(x, y) := a_i(x, y) \circ b_j(x, y) \right\}_{i,j}.
+            C = A \otimes B = \left\{ c_{i,j} := a_i \circ b_j \right\}_{i,j}.
 
         Args:
-            basis1 (KernelBasis): the first basis
-            basis2 (KernelBasis): the second basis
+            basis1 (DiffopBasis): the first basis
+            basis2 (DiffopBasis): the second basis
 
         Attributes:
-            ~.basis1 (KernelBasis): the first basis
-            ~.basis2 (KernelBasis): the second basis
+            ~.basis1 (DiffopBasis): the first basis
+            ~.basis2 (DiffopBasis): the second basis
 
         """
         coefficients = []

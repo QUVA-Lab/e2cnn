@@ -20,39 +20,38 @@ class SteerableDiffopBasis(DiffopBasis):
                  **kwargs):
         r"""
         
-        Implements a general basis for the vector space of equivariant kernels.
-        A :math:`G`-equivariant kernel :math:`\kappa`, mapping between an input field, transforming under
+        Implements a general basis for the vector space of equivariant PDOs.
+        A :math:`G`-equivariant PDO :math:`D(P)` for a matrix of polynomials :math:`P`, mapping between an input field, transforming under
         :math:`\rho_\text{in}` (``in_repr``), and an output field, transforming under  :math:`\rho_\text{out}`
         (``out_repr``), satisfies the following constraint:
         
         .. math ::
             
-            \kappa(gx) = \rho_\text{out}(g) \kappa(x) \rho_\text{in}(g)^{-1} \qquad \forall g \in G, \forall x \in X
+            P(gx) = \rho_\text{out}(g) P(x) \rho_\text{in}(g)^{-1} \qquad \forall g \in G, \forall x \in X
         
-        As the kernel constraint is a linear constraint, the space of equivariant kernels is a vector subspace of the
-        space of all convolutional kernels. It follows that any equivariant kernel can be expressed in terms of a basis
+        for :math:`G \leq O(d)`.
+
+        As the PDO constraint is a linear constraint, the space of equivariant PDOs is a vector subspace of the
+        space of all PDOs. It follows that any equivariant PDO can be expressed in terms of a basis
         of this space.
         
-        This class solves the kernel constraint for two arbitrary representations by combining the solutions of the
-        kernel constraints associated to their :class:`~e2cnn.group.IrreducibleRepresentation` s.
+        This class solves the PDO constraint for two arbitrary representations by combining the solutions of the
+        PDO constraints associated to their :class:`~e2cnn.group.IrreducibleRepresentation` s.
         In order to do so, it relies on ``irreps_basis`` which solves individual irreps constraints. ``irreps_basis``
-        must be a class (subclass of :class:`~e2cnn.kernels.IrrepsBasis`) which builds a basis for equivariant
+        must be a class which builds a basis for equivariant
         kernels associated with irreducible representations when instantiated.
         
         The groups :math:`G` which are currently implemented are origin-preserving isometries (what are called
         structure groups, or sometimes gauge groups, in the language of
         `Gauge Equivariant CNNs <https://arxiv.org/abs/1902.04615>`_ ).
         The origin-preserving isometries of :math:`\R^d` are subgroups of :math:`O(d)`, i.e. reflections and rotations.
-        Therefore, equivariance does not enforce any constraint on the radial component of the kernels.
-        Hence, this class only implements a basis for the angular part of the kernels.
+        Therefore, PDOs may be composed with any rotation and reflection invariant PDO without
+        affecting equivariance. This class only implements a basis up to such invariant PDOs,
+        which are given by polynomials in the Laplacian operator.
         
-        In order to build a complete basis of kernels, you should combine this basis with a basis which defines the
-        radial profile (such as :class:`~e2cnn.kernels.GaussianRadialProfile`) through
-        :class:`~e2cnn.kernels.PolarBasis`.
-        
-        .. math::
-            
-            \mathcal{B} = \left\{ b_i (r) :=  \exp \left( \frac{ \left( r - r_i \right)^2}{2 \sigma_i^2} \right) \right\}_i
+        In order to build a complete basis of PDOs, you should combine this basis with
+        :class:`~e2cnn.diffops.LaplaceProfile`) through
+        :class:`~e2cnn.diffops.TensorBasis`.
         
         .. warning ::
             

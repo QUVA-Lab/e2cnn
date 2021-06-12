@@ -65,7 +65,7 @@ def test_so2_irreps():
 
     for in_rep in group.irreps.values():
         for out_rep in group.irreps.values():
-            basis = kernels_SO2_act_R2(in_rep, out_rep, max_power=1)
+            basis = diffops_SO2_act_R2(in_rep, out_rep, max_power=1)
             size = required_points(6, 2)
             points = symmetric_points(size)
             check_quarter_rotations(basis, points, [0., np.pi/2, np.pi, 3*np.pi/2], in_rep, out_rep)
@@ -76,7 +76,7 @@ def test_o2_irreps():
     for in_rep in group.irreps.values():
         for out_rep in group.irreps.values():
             try:
-                basis = kernels_O2_act_R2(in_rep, out_rep, max_power=1, axis=np.pi/2)
+                basis = diffops_O2_act_R2(in_rep, out_rep, max_power=1, axis=np.pi/2)
                 size = required_points(6, 2)
                 points = symmetric_points(size)
                 check_quarter_rotations(basis, points, [(0, 0.), (0, np.pi/2), (0, np.pi), (0, 3*np.pi/2)], in_rep, out_rep)
@@ -89,7 +89,7 @@ def test_cyclic_even_regular():
         in_rep = group.regular_representation
         out_rep = group.regular_representation
 
-        basis = kernels_CN_act_R2(in_rep, out_rep,
+        basis = diffops_CN_act_R2(in_rep, out_rep,
                                   max_power=1,
                                   max_frequency=4)
         size = required_points(6, 2)
@@ -102,7 +102,7 @@ def test_cyclic_mix():
         in_rep = directsum(list(group.irreps.values()), name="irreps_sum")
         out_rep = directsum(list(group.irreps.values()), name="irreps_sum")
 
-        basis = kernels_CN_act_R2(in_rep, out_rep,
+        basis = diffops_CN_act_R2(in_rep, out_rep,
                                   max_power=1,
                                   max_frequency=4)
         size = required_points(6, 2)
@@ -115,7 +115,7 @@ def test_cyclic_changeofbasis():
         in_rep = directsum(list(group.irreps.values()), name="irreps_sum")
         out_rep = group.regular_representation
 
-        basis = kernels_CN_act_R2(in_rep, out_rep,
+        basis = diffops_CN_act_R2(in_rep, out_rep,
                                   max_power=1,
                                   max_frequency=4)
         size = required_points(6, 2)
@@ -125,7 +125,7 @@ def test_cyclic_changeofbasis():
         in_rep = group.regular_representation
         out_rep = directsum(list(group.irreps.values()), name="irreps_sum")
 
-        basis = kernels_CN_act_R2(in_rep, out_rep,
+        basis = diffops_CN_act_R2(in_rep, out_rep,
                                   max_power=1,
                                   max_frequency=4)
         check_quarter_rotations(basis, points, [0, N // 4, N // 2, 3 * N // 4], in_rep, out_rep)
@@ -137,7 +137,7 @@ def test_cyclic_irreps():
     for in_rep in group.irreps.values():
         for out_rep in group.irreps.values():
             try:
-                basis = kernels_CN_act_R2(in_rep, out_rep,
+                basis = diffops_CN_act_R2(in_rep, out_rep,
                                           max_power=1,
                                           max_frequency=4)
                 size = required_points(6, 2)

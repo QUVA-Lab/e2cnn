@@ -138,6 +138,26 @@ class Flip2dOnR2(GeneralOnR2):
                                 max_power: int,
                                 **kwargs,
                                 ) -> diffops.DiffopBasis:
+        r"""
+        Method that builds the analytical basis that spans the space of equivariant PDOs which
+        are intertwiners between the representations induced from the representation ``in_repr`` and ``out_repr``.
+
+        Either ``maximum_frequency`` or ``maximum_offset`` must be set in the keywords arguments.
+
+        Args:
+            in_repr: the input representation
+            out_repr: the output representation
+            max_power (int): the maximum power of Laplacians to use
+
+        Keyword Args:
+            maximum_frequency (int): the maximum frequency allowed in the basis vectors
+            maximum_offset (int): the maximum frequencies offset for each basis vector with respect to its base ones
+                                  (sum and difference of the frequencies of the input and the output representations)
+
+        Returns:
+            the basis built
+
+        """
         maximum_frequency = None
         maximum_offset = None
 
@@ -152,7 +172,7 @@ class Flip2dOnR2(GeneralOnR2):
         assert (maximum_frequency is not None or maximum_offset is not None), \
             'Error! Either the maximum frequency or the maximum offset for the frequencies must be set'
 
-        return diffops.kernels_Flip_act_R2(in_repr, out_repr, max_power,
+        return diffops.diffops_Flip_act_R2(in_repr, out_repr, max_power,
                                            axis=self.axis,
                                            max_frequency=maximum_frequency,
                                            max_offset=maximum_offset)

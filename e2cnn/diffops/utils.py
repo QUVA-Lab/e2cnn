@@ -5,7 +5,7 @@ import warnings
 import pickle
 
 import numpy as np
-import scipy.special  # type: ignore
+import scipy.special
 from sympy.calculus.finite_diff import finite_diff_weights
 
 # TODO: I'm not sure whether ufuncify might be better for
@@ -15,7 +15,7 @@ from sympy.calculus.finite_diff import finite_diff_weights
 # initially might be faster with ufuncify?
 try:
     from rbf.pde.fd import weight_matrix # type: ignore
-    from rbf.basis import set_symbolic_to_numeric_method, get_rbf
+    from rbf.basis import set_symbolic_to_numeric_method, get_rbf # type: ignore
 
     _RBF_AVAILABLE = True
 
@@ -30,17 +30,36 @@ except ImportError:
 _DIFFOP_CACHE = {}
 _1D_KERNEL_CACHE = {}
 
-def load_cache():
-    if os.path.exists("./.e2cnn_cache/diffops.pickle"):
+def load_cache(path: str = "./.e2cnn_cache/diffops.pickle"):
+    """
+    Load cached PDO discretizations from disk.
+    The cache should have been previously created using :func:`~e2cnn.diffops.utils.store_cache`.
+    
+    Args:
+        path (str, optional): the path to the file with discretizations.
+        
+    """
+    if os.path.exists(path):
         print("Loading cached Diffops")
-        with open("./.e2cnn_cache/diffops.pickle", "rb") as f:
+        with open(path, "rb") as f:
             _DIFFOP_CACHE = pickle.load(f)
     else:
         print("Diffop cache not found, skipping")
 
-def store_cache():
-    os.makedirs("./.e2cnn_cache", exist_ok=True)
-    with open("./.e2cnn_cache/diffops.pickle", "w+b") as f:
+def store_cache(path: str = "./.e2cnn_cache/diffops.pickle"):
+    """
+    Cache PDO discretizations on disk.
+    The cache can later be loaded using :func:`~e2cnn.diffops.utils.store_cache`.
+    This will speed up network instantiation as long as the architecture does not
+    change too much.
+    
+    Args:
+        path (str, optional): the path to the file with discretizations.
+        
+    """
+    directory = os.path.dirname(path)
+    os.makedirs(directory, exist_ok=True)
+    with open(path, "w+b") as f:
         pickle.dump(_DIFFOP_CACHE, f)
 
 
@@ -49,22 +68,12 @@ def discretize_homogeneous_polynomial(
         coefficients: np.ndarray,
         smoothing: float = None,
 ) -> np.ndarray:
-    """Discretize a homogeneous differential operator.
+    r"""Discretize a homogeneous partial differential operator.
+    Homogeneous means that all terms have the same derivative order.
 
-    Args:
-        points (ndarray, tuple or list): To use RBF-FD, this has to be a
-          2 x N array with N points on which to discretize.
-          To use FD, this can be either a list of floats, which will be used
-          as the 1D coordinates on which to discretize, or a tuple of two such
-          lists, one for the x- and one for the y-axis.
-          You can also use RBF-FD on a regular kernel,
-          in that case you need to pass in the grid coordinates explicitly.
-        coefficients (ndarray): array with the coefficients of x^n, x^{n - 1}y, ..., y^n
-          (in that order)
+    See :meth:`e2cnn.DiffopBasis.sample` for details.
 
-    Returns:
-        If ``out_coords`` is ``None``, ndarray of length N with weights for the N grid points.
-        Otherwise, sparse matrix of shape (M, N)"""
+    """
     if isinstance(points, (list, tuple)):
         if isinstance(points, list):
             num_points = len(points) **2

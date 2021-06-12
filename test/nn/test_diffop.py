@@ -61,20 +61,19 @@ class TestDiffop(TestCase):
         cl.eval()
         cl.check_equivariance()
 
-    # TODO: Uncomment this once O(2) is implemented
-    # def test_o2(self):
-    #     N = 7
-    #     g = FlipRot2dOnR2(-1, N)
+    def test_o2(self):
+        N = 7
+        g = FlipRot2dOnR2(-1, N)
 
-    #     r1 = FieldType(g, list(g.representations.values()))
-    #     r2 = FieldType(g, list(g.representations.values()))
+        r1 = FieldType(g, list(g.representations.values()))
+        r2 = FieldType(g, list(g.representations.values()))
     
-    #     s = 7
+        s = 7
         
-    #     cl = R2Diffop(r1, r2, s, maximum_order=4, bias=True)
+        cl = R2Diffop(r1, r2, s, maximum_order=4, bias=True)
 
-    #     cl.eval()
-    #     cl.check_equivariance()
+        cl.eval()
+        cl.check_equivariance()
 
     def test_flip(self):
         # g = Flip2dOnR2(axis=np.pi/3)

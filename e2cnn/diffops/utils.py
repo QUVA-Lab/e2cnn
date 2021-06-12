@@ -8,11 +8,6 @@ import numpy as np
 import scipy.special
 from sympy.calculus.finite_diff import finite_diff_weights
 
-# TODO: I'm not sure whether ufuncify might be better for
-# larger models. I think during training/inference it shouldn't
-# matter anyways because all the kernels are precomputed.
-# But for large models, the process of building up the kernels
-# initially might be faster with ufuncify?
 try:
     from rbf.pde.fd import weight_matrix # type: ignore
     from rbf.basis import set_symbolic_to_numeric_method, get_rbf # type: ignore
@@ -20,7 +15,6 @@ try:
     _RBF_AVAILABLE = True
 
     set_symbolic_to_numeric_method('lambdify')
-    # TODO: Should probably be configurable more easily
     phi = get_rbf("phs3")
     _gaussian = get_rbf("ga")
 

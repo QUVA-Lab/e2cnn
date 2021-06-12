@@ -1,5 +1,6 @@
 
 from e2cnn.kernels import KernelBasis, EmptyBasisException
+from e2cnn.diffops import DiffopBasis
 from .basisexpansion import BasisExpansion
 
 from typing import Callable, Dict, List, Iterable, Union
@@ -16,6 +17,7 @@ class SingleBlockBasisExpansion(BasisExpansion):
                  basis: KernelBasis,
                  points: np.ndarray,
                  basis_filter: Callable[[dict], bool] = None,
+                 **kwargs
                  ):
         r"""
         
@@ -27,6 +29,7 @@ class SingleBlockBasisExpansion(BasisExpansion):
             points (ndarray): points where the analytical basis should be sampled
             basis_filter (callable, optional): filter for the basis elements. Should take a dictionary containing an
                                                element's attributes and return whether to keep it or not.
+            **kwargs: additional optional arguments for the discretization procedure
             
         """
 
@@ -48,17 +51,26 @@ class SingleBlockBasisExpansion(BasisExpansion):
         for attr in attributes:
             sizes.append(attr["shape"][0])
 
-        # sample the basis on the grid
-        sampled_basis = torch.Tensor(basis.sample(points)).permute(2, 0, 1, 3)
+        # Sample the basis on the grid.
+        # For diffops, masking happens inside the sampling functions to improve
+        # performance, but this is currently not implemented for kernels.
+        if isinstance(basis, DiffopBasis):
+            angle_offset = kwargs.get("angle_offset", None)
+            smoothing = kwargs.get("smoothing", None)
+            sampled_basis = torch.Tensor(basis.sample(
+                points, mask=mask, smoothing=smoothing, angle_offset=angle_offset
+            )).permute(2, 0, 1, 3)
+        else:
+            sampled_basis = torch.Tensor(basis.sample(points)).permute(2, 0, 1, 3)
 
-        # DEPRECATED FROM PyTorch 1.2
-        # PyTorch 1.2 suggests using BoolTensor instead of ByteTensor for boolean indexing
-        # but BoolTensor have been introduced only in PyTorch 1.2
-        # Hence, for the moment we use ByteTensor
-        mask = torch.tensor(mask.astype(np.uint8))
+            # DEPRECATED FROM PyTorch 1.2
+            # PyTorch 1.2 suggests using BoolTensor instead of ByteTensor for boolean indexing
+            # but BoolTensor have been introduced only in PyTorch 1.2
+            # Hence, for the moment we use ByteTensor
+            mask = torch.tensor(mask.astype(np.uint8))
 
-        # filter out the basis elements discarded by the filter
-        sampled_basis = sampled_basis[mask, ...]
+            # filter out the basis elements discarded by the filter
+            sampled_basis = sampled_basis[mask, ...]
         
         # normalize the basis
         sizes = torch.tensor(sizes, dtype=sampled_basis.dtype)
@@ -78,10 +90,16 @@ class SingleBlockBasisExpansion(BasisExpansion):
         self._idx_to_ids = []
         self._ids_to_idx = {}
         for idx, attr in enumerate(self.attributes):
+            if "radius" in attr:
+                radial_info = attr["radius"]
+            elif "order" in attr:
+                radial_info = attr["order"]
+            else:
+                raise ValueError("No radial information found.")
             id = '({}-{},{}-{})_({}/{})_{}'.format(
                     attr["in_irrep"], attr["in_irrep_idx"],  # name and index within the field of the input irrep
                     attr["out_irrep"], attr["out_irrep_idx"],  # name and index within the field of the output irrep
-                    attr["radius"],  # radius of the ring
+                    radial_info,
                     attr["frequency"],  # frequency of the basis element
                     # int(np.abs(attr["frequency"])),  # absolute frequency of the basis element
                     attr["inner_idx"],
@@ -122,7 +140,8 @@ _stored_filters = {}
 def block_basisexpansion(basis: KernelBasis,
                          points: np.ndarray,
                          basis_filter: Callable[[dict], bool] = None,
-                         recompute: bool = False
+                         recompute: bool = False,
+                         **kwargs
                          ) -> SingleBlockBasisExpansion:
     r"""
 
@@ -141,14 +160,22 @@ def block_basisexpansion(basis: KernelBasis,
         for b, attr in enumerate(basis):
             mask[b] = basis_filter(attr)
         
-        key = (basis, mask.tobytes(), points.tobytes())
+        angle_offset = kwargs.get("angle_offset", None)
+        smoothing = kwargs.get("smoothing", None)
+        if isinstance(points, list):
+            points_key = tuple(points)
+        elif isinstance(points, tuple):
+            points_key = (tuple(points[0]), tuple(points[1]))
+        else:
+            points_key = points.tobytes()
+        key = (basis, mask.tobytes(), points_key, angle_offset, smoothing)
         if key not in _stored_filters:
-            _stored_filters[key] = SingleBlockBasisExpansion(basis, points, basis_filter)
+            _stored_filters[key] = SingleBlockBasisExpansion(basis, points, basis_filter, **kwargs)
         
         return _stored_filters[key]
     
     else:
-        return SingleBlockBasisExpansion(basis, points, basis_filter)
+        return SingleBlockBasisExpansion(basis, points, basis_filter, **kwargs)
 
 
 def normalize_basis(basis: torch.Tensor, sizes: torch.Tensor) -> torch.Tensor:

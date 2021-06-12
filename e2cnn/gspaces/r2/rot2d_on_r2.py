@@ -3,6 +3,7 @@ from __future__ import annotations
 
 from e2cnn import gspaces
 from e2cnn import kernels
+from e2cnn import diffops
 
 from .general_r2 import GeneralOnR2
 from .utils import rotate_array
@@ -150,6 +151,34 @@ class Rot2dOnR2(GeneralOnR2):
                                              max_offset=maximum_offset)
         else:
             return kernels.kernels_SO2_act_R2(in_repr, out_repr, rings, sigma)
+    
+    def _diffop_basis_generator(self,
+                                in_repr: Representation,
+                                out_repr: Representation,
+                                max_power: int,
+                                **kwargs,
+                                ) -> diffops.DiffopBasis:
+    
+        if self.fibergroup.order() > 0:
+            maximum_frequency = None
+            maximum_offset = None
+    
+            if 'maximum_frequency' in kwargs and kwargs['maximum_frequency'] is not None:
+                maximum_frequency = kwargs['maximum_frequency']
+                assert isinstance(maximum_frequency, int) and maximum_frequency >= 0
+    
+            if 'maximum_offset' in kwargs and kwargs['maximum_offset'] is not None:
+                maximum_offset = kwargs['maximum_offset']
+                assert isinstance(maximum_offset, int) and maximum_offset >= 0
+    
+            assert (maximum_frequency is not None or maximum_offset is not None), \
+                'Error! Either the maximum frequency or the maximum offset for the frequencies must be set'
+            
+            return diffops.kernels_CN_act_R2(in_repr, out_repr, max_power,
+                                             maximum_frequency,
+                                             max_offset=maximum_offset)
+        else:
+            return diffops.kernels_SO2_act_R2(in_repr, out_repr, max_power)
 
     def _basespace_action(self, input: np.ndarray, element: Union[float, int]) -> np.ndarray:
     

@@ -16,6 +16,7 @@ __all__ = [
     "MultipleModule",
     "R2Conv",
     "R2ConvTransposed",
+    "R2Diffop",
     "R2Upsampling",
     "GatedNonLinearity1",
     "GatedNonLinearity2",

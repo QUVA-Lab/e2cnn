@@ -2,6 +2,7 @@ from __future__ import annotations
 
 from e2cnn import gspaces
 from e2cnn import kernels
+from e2cnn import diffops
 
 from .general_r2 import GeneralOnR2
 
@@ -116,6 +117,14 @@ class TrivialOnR2(GeneralOnR2):
         return kernels.kernels_Trivial_act_R2(in_repr, out_repr, rings, sigma,
                                               maximum_frequency,
                                               max_offset=maximum_offset)
+
+    def _diffop_basis_generator(self,
+                                in_repr: Representation,
+                                out_repr: Representation,
+                                max_power: int,
+                                **kwargs,
+                                ) -> diffops.DiffopBasis:
+        raise NotImplementedError("{e}-steerable PDOs are not yet implemented.")
 
     def _basespace_action(self, input: np.ndarray, element: Union[float, int]) -> np.ndarray:
         

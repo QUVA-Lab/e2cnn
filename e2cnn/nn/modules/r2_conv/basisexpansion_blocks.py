@@ -24,10 +24,9 @@ class BlocksBasisExpansion(BasisExpansion):
                  in_type: FieldType,
                  out_type: FieldType,
                  points: np.ndarray,
-                 sigma: List[float],
-                 rings: List[float],
                  basis_filter: Callable[[dict], bool] = None,
                  recompute: bool = False,
+                 method: str = "kernel",
                  **kwargs
                  ):
         r"""
@@ -39,8 +38,6 @@ class BlocksBasisExpansion(BasisExpansion):
             in_type (FieldType): the input field type
             out_type (FieldType): the output field type
             points (~numpy.ndarray): points where the analytical basis should be sampled
-            sigma (list): width of each ring where the bases are sampled
-            rings (list): radii of the rings where to sample the bases
             basis_filter (callable, optional): filter for the basis elements. Should take a dictionary containing an
                                                element's attributes and return whether to keep it or not.
             recompute (bool, optional): whether to recompute new bases or reuse, if possible, already built tensors.
@@ -62,7 +59,13 @@ class BlocksBasisExpansion(BasisExpansion):
         self.points = points
         
         # int: number of points where the filters are sampled
-        self.S = self.points.shape[1]
+        if isinstance(points, list):
+            self.S = len(points) ** 2
+        elif isinstance(points, tuple):
+            self.S = len(points[0]) * len(points[1])
+        else:
+            # int: number of points where the filters are sampled
+            self.S = self.points.shape[1]
 
         space = in_type.gspace
 
@@ -75,13 +78,14 @@ class BlocksBasisExpansion(BasisExpansion):
             for o_repr in out_type._unique_representations:
                 reprs_names = (i_repr.name, o_repr.name)
                 try:
+                    if method == "kernel":
+                        basis = space.build_kernel_basis(i_repr, o_repr, **kwargs)
+                    elif method == "diffop":
+                        basis = space.build_diffop_basis(i_repr, o_repr, **kwargs)
+                    else:
+                        raise ValueError(f"Method {method} not recognized, must be 'kernel' or 'diffop'")
                     
-                    basis = space.build_kernel_basis(i_repr, o_repr,
-                                                     sigma=sigma,
-                                                     rings=rings,
-                                                     **kwargs)
-                    
-                    block_expansion = block_basisexpansion(basis, points, basis_filter, recompute=recompute)
+                    block_expansion = block_basisexpansion(basis, points, basis_filter, recompute=recompute, **kwargs)
                     _block_expansion_modules[reprs_names] = block_expansion
                     
                     # register the block expansion as a submodule

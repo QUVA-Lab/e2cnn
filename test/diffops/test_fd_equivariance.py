@@ -70,6 +70,19 @@ def test_so2_irreps():
             points = symmetric_points(size)
             check_quarter_rotations(basis, points, [0., np.pi/2, np.pi, 3*np.pi/2], in_rep, out_rep)
 
+def test_o2_irreps():
+    group = o2_group(2)
+
+    for in_rep in group.irreps.values():
+        for out_rep in group.irreps.values():
+            try:
+                basis = kernels_O2_act_R2(in_rep, out_rep, max_power=1, axis=np.pi/2)
+                size = required_points(6, 2)
+                points = symmetric_points(size)
+                check_quarter_rotations(basis, points, [(0, 0.), (0, np.pi/2), (0, np.pi), (0, 3*np.pi/2)], in_rep, out_rep)
+            except EmptyBasisException:
+                pass
+
 def test_cyclic_even_regular():
     for N in [4, 8, 12]:
         group = cyclic_group(N)

@@ -725,6 +725,158 @@ class R2ContinuousRotationsSolution(DiffopBasis):
         return (hash(self.in_irrep) + hash(self.out_irrep) + hash(str(self.mu)) + hash(str(self.invert)))
 
 
+class R2FlipsContinuousRotationsSolution(DiffopBasis):
+    
+    def __init__(self,
+                 group: Group,
+                 in_irrep: Union[str, IrreducibleRepresentation, Tuple[int]],
+                 out_irrep: Union[str, IrreducibleRepresentation, Tuple[int, int]],
+                 axis: float = 0.,
+                 ):
+        
+        assert isinstance(group, O2)
+        
+        assert isinstance(axis, float)
+        self.axis = axis
+        
+        if isinstance(in_irrep, tuple):
+            in_irrep = group.irrep(in_irrep[0], in_irrep[1])
+        elif isinstance(in_irrep, str):
+            in_irrep = group.irreps[in_irrep]
+        elif not isinstance(in_irrep, IrreducibleRepresentation):
+            raise ValueError(f"'in_irrep' should be a non-negative integer, a string or an instance"
+                             f" of IrreducibleRepresentation but {in_irrep} found")
+        
+        if isinstance(out_irrep, tuple):
+            out_irrep = group.irrep(out_irrep[0], out_irrep[1])
+        elif isinstance(out_irrep, str):
+            out_irrep = group.irreps[out_irrep]
+        elif not isinstance(out_irrep, IrreducibleRepresentation):
+            raise ValueError(f"'out_irrep' should be a non-negative integer, a string or an instance"
+                             f" of IrreducibleRepresentation but {in_irrep} found")
+        
+        self.m = out_irrep.attributes['frequency']
+        self.n = in_irrep.attributes['frequency']
+        
+        self.fi = in_irrep.attributes['flip_frequency']
+        self.fo = out_irrep.attributes['flip_frequency']
+
+        self.mu = []
+        
+        if in_irrep.size == 2 and out_irrep.size == 2:
+            assert (self.m > 0 and self.n > 0 and self.fi == 1 and self.fo == 1)
+            self.s = []
+            # m, n > 0
+            
+            self.invert = 0
+            for s in [0, 1]:
+                mu = self.m - self.n * (-1) ** s
+                
+                self.mu.append(mu)
+                self.s.append(s)
+        
+        elif in_irrep.size == 2 and out_irrep.size == 1:
+            assert self.m == 0 and self.fi == 1
+            # n > 0, m = 0
+            
+            self.invert = self.fo
+            
+            mu = self.n + self.m
+            self.mu.append(mu)
+        
+        elif in_irrep.size == 1 and out_irrep.size == 2:
+            assert self.n == 0 and self.fo == 1
+            # m > 0, n = 0
+            
+            self.invert = self.fi
+            
+            mu = self.n + self.m
+            self.mu.append(mu)
+            
+        elif in_irrep.size == 1 and out_irrep.size == 1:
+            assert self.n == 0 and self.m == 0
+            
+            self.invert = ((self.fi + self.fo) % 2)
+            
+            mu = self.m - self.n
+            if mu > 0 or self.invert == 0:
+                # don't add sin(0*theta) as a basis since it is zero everywhere
+                self.mu.append(mu)
+        
+        self.dim = len(self.mu)
+        self.group = group
+        self.in_irrep = in_irrep
+        self.out_irrep = out_irrep
+        # would be set later anyway but we need it now
+        self.shape = (out_irrep.size, in_irrep.size)
+
+        coefficients = []
+    
+        # the basis vectors depends on the shape of the input and output irreps,
+        # while their frequencies depend on the irreps frequencies
+        if self.shape[0] == 2 and self.shape[1] == 2:
+            for i in range(self.dim):
+                s = self.s[i]
+                mu = self.mu[i]
+                out = np.empty((self.shape) + (abs(mu) + 1,))
+                out[0, 0, :] = cheby("t", mu, self.invert)
+                out[0, 1, :] = -(-1)**s * cheby("u", mu, self.invert)
+                out[1, 0, :] = cheby("u", mu, self.invert)
+                out[1, 1, :] = (-1)**s * cheby("t", mu, self.invert)
+                coefficients.append(out)
+        
+        elif self.shape[0] == 1 and self.shape[1] == 2:
+            for i in range(self.dim):
+                mu = self.mu[i]
+                out = np.empty((self.shape) + (abs(mu) + 1,))
+                out[0, 0, :] = (-1)**self.invert * homogenized_cheby(mu, "u" if self.invert else "t")
+                out[0, 1, :] = homogenized_cheby(mu, "t" if self.invert else "u")
+                coefficients.append(out)
+        
+        elif self.shape[0] == 2 and self.shape[1] == 1:
+            for i in range(self.dim):
+                mu = self.mu[i]
+                out = np.empty((self.shape) + (abs(mu) + 1,))
+                out[0, 0, :] = (-1)**self.invert * homogenized_cheby(mu, "u" if self.invert else "t")
+                out[1, 0, :] = homogenized_cheby(mu, "t" if self.invert else "u")
+                coefficients.append(out)
+        
+        elif self.shape[0] == 1 and self.shape[1] == 1:
+            for i in range(self.dim):
+                mu = self.mu[i]
+                out = homogenized_cheby(mu, "u" if self.invert else "t").reshape(1, 1, -1)
+                coefficients.append(out)
+        else:
+            raise ValueError(f"Shape {self.shape} not recognized!")
+        
+        super().__init__(coefficients)
+    
+    def __getitem__(self, idx):
+        assert idx < self.dim
+        attr = {}
+        attr["frequency"] = self.mu[idx]
+        attr["order"] = abs(self.mu[idx])
+        attr["invert"] = self.invert
+        if hasattr(self, "s"):
+            attr["s"] = self.s[idx]
+
+        attr["idx"] = idx
+        return attr
+
+    def __eq__(self, other):
+        if not isinstance(other, R2FlipsContinuousRotationsSolution):
+            return False
+        elif self.in_irrep != other.in_irrep or self.out_irrep != other.out_irrep:
+            return False
+        elif hasattr(self, "s") and not np.allclose(self.s, other.s):
+            return False
+        else:
+            return np.allclose(self.mu, other.mu) and self.invert == other.invert
+
+    def __hash__(self):
+        return (hash(self.in_irrep) + hash(self.out_irrep) + hash(str(self.mu)) + hash(self.invert))
+
+
 def cheby(kind, mu, invert):
     inverter = {"u": "t", "t": "u"}
     if kind == "t" and invert:

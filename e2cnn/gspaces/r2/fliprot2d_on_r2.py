@@ -241,7 +241,7 @@ class FlipRot2dOnR2(GeneralOnR2):
                                              max_frequency=maximum_frequency,
                                              max_offset=maximum_offset)
         else:
-            raise NotImplementedError("O(2)-steerable PDOs are not yet implemented")
+            return diffops.kernels_O2_act_R2(in_repr, out_repr, max_power, axis=self.axis)
 
     def _basespace_action(self, input: np.ndarray, element: Tuple[int, Union[float, int]]) -> np.ndarray:
     

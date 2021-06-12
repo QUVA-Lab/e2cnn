@@ -9,11 +9,11 @@ from typing import List, Union
 
 __all__ = [
     "kernels_SO2_act_R2",
-    # "kernels_O2_act_R2",
+    "kernels_O2_act_R2",
     "kernels_CN_act_R2",
     "kernels_DN_act_R2",
     "kernels_Flip_act_R2",
-    # "kernels_Trivial_act_R2",
+    "kernels_Trivial_act_R2",
 ]
 
 
@@ -208,4 +208,94 @@ def kernels_DN_act_R2(in_repr: Representation, out_repr: Representation,
 
     radial_profile = LaplaceProfile(max_power)
 
+    return TensorBasis(radial_profile, angular_basis)
+
+
+def kernels_O2_act_R2(in_repr: Representation, out_repr: Representation,
+                      max_power: int,
+                      axis: float = np.pi / 2) -> DiffopBasis:
+    r"""
+
+    Builds a basis for convolutional kernels equivariant to reflections and continuous rotations, modeled by the
+    group :math:`O(2)`.
+    ``in_repr`` and ``out_repr`` need to be :class:`~e2cnn.group.Representation` s of :class:`~e2cnn.group.O2`.
+
+    Because the equivariance constraints allow any choice of radial profile, we use a
+    :class:`~e2cnn.kernels.GaussianRadialProfile`.
+    ``radii`` specifies the radial distances at which the rings are centered while ``sigma`` contains the width of each
+    of these rings (see :class:`~e2cnn.kernels.GaussianRadialProfile`).
+
+    Because :math:`O(2)` contains all rotations, the reflection element of the group can be associated to any reflection
+    axis. Reflections along other axes can be obtained by composition with rotations.
+    However, a choice of this axis is required to align the basis with respect to the action of the group.
+
+    Args:
+        in_repr (Representation): the representation specifying the transformation of the input feature field
+        out_repr (Representation): the representation specifying the transformation of the output feature field
+        radii (list): radii of the rings defining the basis for the radial profile
+        sigma (list or float): widths of the rings defining the basis for the radial profile
+        axis (float, optional): angle of the axis of the reflection element
+
+    """
+    assert in_repr.group == out_repr.group
+    
+    group = in_repr.group
+    assert isinstance(group, O2)
+    
+    angular_basis = SteerableDiffopBasis(R2FlipsContinuousRotationsSolution, in_repr, out_repr, axis=axis)
+    
+    radial_profile = LaplaceProfile(max_power)
+    
+    return TensorBasis(radial_profile, angular_basis)
+
+
+def kernels_Trivial_act_R2(in_repr: Representation, out_repr: Representation,
+                           max_power: int,
+                           max_frequency: int = None, max_offset: int = None) -> DiffopBasis:
+    r"""
+
+    Builds a basis for unconstrained convolutional kernels.
+    
+    This is equivalent to use :func:`~e2cnn.kernels.kernels_CN_act_R2` with an instance of
+    :class:`~e2cnn.group.CyclicGroup` with ``N=1`` (the trivial group :math:`C_1`).
+    
+    ``in_repr`` and ``out_repr`` need to be associated with an instance of :class:`~e2cnn.group.CyclicGroup` with
+    ``N=1``.
+
+    Because the equivariance constraints allow any choice of radial profile, we use a
+    :class:`~e2cnn.kernels.GaussianRadialProfile`.
+    ``radii`` specifies the radial distances at which the rings are centered while ``sigma`` contains the width of each
+    of these rings (see :class:`~e2cnn.kernels.GaussianRadialProfile`).
+
+    The analytical angular solutions of kernel constraints belong to an infinite dimensional space and so can be
+    expressed in terms of infinitely many basis elements. Only a finite subset can however be implemented.
+    ``max_frequency`` and ``max_offset`` defines two ways to do so and therefore it is necessary to specify one of them.
+    See :func:`~e2cnn.kernels.kernels_CN_act_R2` for more details.
+
+    .. todo ::
+        remove ``max_offset`` as it is equivalent to ``max_frequency`` here
+
+
+    Args:
+        in_repr (Representation): the representation specifying the transformation of the input feature field
+        out_repr (Representation): the representation specifying the transformation of the output feature field
+        radii (list): radii of the rings defining the basis for the radial profile
+        sigma (list or float): widths of the rings defining the basis for the radial profile
+        axis (float): angle defining the reflection axis
+        max_frequency (int): maximum frequency of the basis
+        max_offset (int): maximum offset in the frequencies of the basis
+
+    """
+    
+    assert in_repr.group == out_repr.group
+
+    group = in_repr.group
+    assert isinstance(group, CyclicGroup) and group.order() == 1
+
+    angular_basis = SteerableDiffopBasis(R2DiscreteRotationsSolution, in_repr, out_repr,
+                                         max_frequency=max_frequency,
+                                         max_offset=max_offset)
+
+    radial_profile = LaplaceProfile(max_power)
+    
     return TensorBasis(radial_profile, angular_basis)

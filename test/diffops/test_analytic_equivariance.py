@@ -12,18 +12,17 @@ from e2cnn.diffops.utils import eval_polys
 
 class TestSolutionsEquivariance(TestCase):
 
-    # def test_trivial(self):
-    #     N = 1
-    #     group = cyclic_group(N)
-    #     in_rep = group.regular_representation
-    #     out_rep = group.regular_representation
+    def test_trivial(self):
+        N = 1
+        group = cyclic_group(N)
+        in_rep = group.regular_representation
+        out_rep = group.regular_representation
 
-    #     basis = kernels_Trivial_act_R2(in_rep, out_rep,
-    #                                    radii=[0., 1., 2., 5, 10],
-    #                                    sigma=[0.6, 1., 1.3, 2.5, 3.],
-    #                                    max_frequency=9)
-    #     action = group.irrep(0) + group.irrep(0)
-    #     self._check(basis, group, in_rep, out_rep, action)
+        basis = kernels_Trivial_act_R2(in_rep, out_rep,
+                                       max_power=1,
+                                       max_frequency=3)
+        action = group.irrep(0) + group.irrep(0)
+        self._check(basis, group, in_rep, out_rep, action)
 
     def test_flips(self):
         group = cyclic_group(2)
@@ -237,25 +236,25 @@ class TestSolutionsEquivariance(TestCase):
                 action = group.irrep(1)
                 self._check(basis, group, in_rep, out_rep, action)
 
-    # def test_o2_irreps(self):
+    def test_o2_irreps(self):
 
-    #     group = o2_group(10)
-    #     axis = np.pi / 2
+        group = o2_group(10)
+        axis = np.pi / 2
 
-    #     for in_rep in group.irreps.values():
-    #         for out_rep in group.irreps.values():
-    #             try:
-    #                 basis = kernels_O2_act_R2(in_rep, out_rep,
-    #                                           axis=axis,
-    #                                           radii=[0., 1., 2., 5, 10],
-    #                                           sigma=[0.6, 1., 1.3, 2.5, 3.]
-    #                                           )
-    #             except EmptyBasisException:
-    #                 print(f"KernelBasis between {in_rep.name} and {out_rep.name} is empty, continuing")
-    #                 continue
+        for in_rep in group.irreps.values():
+            for out_rep in group.irreps.values():
+                try:
+                    basis = kernels_O2_act_R2(in_rep, out_rep,
+                                              axis=axis,
+                                              max_power=1
+                                              )
+                except EmptyBasisException:
+                    print(f"KernelBasis between {in_rep.name} and {out_rep.name} is empty, continuing")
+                    continue
 
-    #             action = change_basis(group.irrep(1, 1), psi(axis)[..., 0, 0], "horizontal_flip")
-    #             self._check(basis, group, in_rep, out_rep, action)
+                # action = change_basis(group.irrep(1, 1), psi(axis)[..., 0, 0], "horizontal_flip")
+                action = group.irrep(1, 1)
+                self._check(basis, group, in_rep, out_rep, action)
 
     def _check(self, basis, group, in_rep, out_rep, action):
         if basis is None:

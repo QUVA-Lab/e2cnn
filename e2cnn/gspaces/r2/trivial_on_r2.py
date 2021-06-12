@@ -124,7 +124,23 @@ class TrivialOnR2(GeneralOnR2):
                                 max_power: int,
                                 **kwargs,
                                 ) -> diffops.DiffopBasis:
-        raise NotImplementedError("{e}-steerable PDOs are not yet implemented.")
+        maximum_frequency = None
+        maximum_offset = None
+    
+        if 'maximum_frequency' in kwargs and kwargs['maximum_frequency'] is not None:
+            maximum_frequency = kwargs['maximum_frequency']
+            assert isinstance(maximum_frequency, int) and maximum_frequency >= 0
+    
+        if 'maximum_offset' in kwargs and kwargs['maximum_offset'] is not None:
+            maximum_offset = kwargs['maximum_offset']
+            assert isinstance(maximum_offset, int) and maximum_offset >= 0
+    
+        assert (maximum_frequency is not None or maximum_offset is not None), \
+            'Error! Either the maximum frequency or the maximum offset for the frequencies must be set'
+    
+        return diffops.kernels_Trivial_act_R2(in_repr, out_repr, max_power,
+                                              maximum_frequency,
+                                              max_offset=maximum_offset)
 
     def _basespace_action(self, input: np.ndarray, element: Union[float, int]) -> np.ndarray:
         

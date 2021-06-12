@@ -2,39 +2,46 @@
 from typing import List, Union, Iterable, Tuple
 import os
 import warnings
+import pickle
 
 import numpy as np
-import dill
 import scipy.special  # type: ignore
 from sympy.calculus.finite_diff import finite_diff_weights
-from rbf.pde.fd import weight_matrix # type: ignore
-from rbf.basis import set_symbolic_to_numeric_method, get_rbf
 
 # TODO: I'm not sure whether ufuncify might be better for
 # larger models. I think during training/inference it shouldn't
 # matter anyways because all the kernels are precomputed.
 # But for large models, the process of building up the kernels
 # initially might be faster with ufuncify?
-set_symbolic_to_numeric_method('lambdify')
-phi = get_rbf("phs3")
-_gaussian = get_rbf("ga")
+try:
+    from rbf.pde.fd import weight_matrix # type: ignore
+    from rbf.basis import set_symbolic_to_numeric_method, get_rbf
+
+    _RBF_AVAILABLE = True
+
+    set_symbolic_to_numeric_method('lambdify')
+    # TODO: Should probably be configurable more easily
+    phi = get_rbf("phs3")
+    _gaussian = get_rbf("ga")
+
+except ImportError:
+    _RBF_AVAILABLE = False
 
 _DIFFOP_CACHE = {}
-_RBFFD_CACHE = {}
 _1D_KERNEL_CACHE = {}
 
 def load_cache():
     if os.path.exists("./.e2cnn_cache/diffops.pickle"):
         print("Loading cached Diffops")
         with open("./.e2cnn_cache/diffops.pickle", "rb") as f:
-            _DIFFOP_CACHE = dill.load(f)
+            _DIFFOP_CACHE = pickle.load(f)
     else:
         print("Diffop cache not found, skipping")
 
 def store_cache():
     os.makedirs("./.e2cnn_cache", exist_ok=True)
     with open("./.e2cnn_cache/diffops.pickle", "w+b") as f:
-        dill.dump(_DIFFOP_CACHE, f)
+        pickle.dump(_DIFFOP_CACHE, f)
 
 
 def discretize_homogeneous_polynomial(
@@ -89,6 +96,10 @@ def discretize_homogeneous_polynomial(
         return np.zeros(num_points)
     
     if smoothing is not None:
+        if not _RBF_AVAILABLE:
+            raise RuntimeError("Using derivatives of Gaussians for discretization "
+                               "requires the RBF package, please install it. "
+                               "See https://github.com/treverhines/RBF for instructions.")
         # use derivatives of Gaussians. In this context, we don't distinguish
         # between FD/RBF-FD, we just return the derivative of a Gaussian on
         # the given points
@@ -118,6 +129,10 @@ def discretize_homogeneous_polynomial(
             coefficients[nonzero][:, None] * kernels, axis=0
         )
     else:
+        if not _RBF_AVAILABLE:
+            raise RuntimeError("Using RBF-FD for discretization "
+                               "requires the RBF package, please install it. "
+                               "See https://github.com/treverhines/RBF for instructions.")
         # points is an array, so we use RBF-FD
         out = weight_matrix(targets, points.T, num_points, diffs, coefficients[nonzero], phi=phi)
         if np.any(np.isnan(out.data)):

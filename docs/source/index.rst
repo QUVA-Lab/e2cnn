@@ -8,17 +8,20 @@ e2cnn documentation
 
 *Equivariant neural networks* guarantee a prespecified transformation behavior of their features under transformations of their input.
 This package provides functionality for the equivariant processing of planar images.
-It implements the *most general convolutional maps* which are equivariant under the isometries of the plane, that is, under translations, rotations and reflections.
+It implements the *most general convolutional maps* and the *most general differential operators*
+which are equivariant under the isometries of the plane, that is, under translations, rotations and reflections.
 
 
 Package Reference
 -----------------
 
-The library is structured into four subpackages with different high-level features:
+The library is structured into five subpackages with different high-level features:
 
 * :doc:`e2cnn.group <api/e2cnn.group>`         implements basic concepts of group and representation theory
     
 * :doc:`e2cnn.kernels <api/e2cnn.kernels>`     solves for spaces of equivariant convolution kernels
+
+* :doc:`e2cnn.diffops <api/e2cnn.diffops>`     solves for spaces of equivariant differential operators
     
 * :doc:`e2cnn.gspaces <api/e2cnn.gspaces>`     defines the image plane and its symmetries
         
@@ -42,6 +45,7 @@ an equivariant model on the rotated MNIST dataset.
 
    api/e2cnn.group
    api/e2cnn.kernels
+   api/e2cnn.diffops
    api/e2cnn.gspaces
    api/e2cnn.nn
 

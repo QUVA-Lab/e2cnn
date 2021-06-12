@@ -125,8 +125,8 @@ direct sum
 .. autofunction:: e2cnn.nn.tensor_directsum
 
 
-Planar Convolution
-------------------
+Planar Convolution and Differential Operators
+---------------------------------------------
 
 R2Conv
 ~~~~~~
@@ -137,6 +137,12 @@ R2Conv
 R2ConvTransposed
 ~~~~~~~~~~~~~~~~
 .. autoclass:: e2cnn.nn.R2ConvTransposed
+    :members:
+    :show-inheritance:
+
+R2Diffop
+~~~~~~~~
+.. autoclass:: e2cnn.nn.R2Diffop
     :members:
     :show-inheritance:
 

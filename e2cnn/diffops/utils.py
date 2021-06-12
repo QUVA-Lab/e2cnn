@@ -27,7 +27,7 @@ _1D_KERNEL_CACHE = {}
 def load_cache(path: str = "./.e2cnn_cache/diffops.pickle"):
     """
     Load cached PDO discretizations from disk.
-    The cache should have been previously created using :func:`~e2cnn.diffops.utils.store_cache`.
+    The cache should have been previously created using :func:`~e2cnn.diffops.store_cache`.
     
     Args:
         path (str, optional): the path to the file with discretizations.
@@ -43,7 +43,7 @@ def load_cache(path: str = "./.e2cnn_cache/diffops.pickle"):
 def store_cache(path: str = "./.e2cnn_cache/diffops.pickle"):
     """
     Cache PDO discretizations on disk.
-    The cache can later be loaded using :func:`~e2cnn.diffops.utils.store_cache`.
+    The cache can later be loaded using :func:`~e2cnn.diffops.load_cache`.
     This will speed up network instantiation as long as the architecture does not
     change too much.
     

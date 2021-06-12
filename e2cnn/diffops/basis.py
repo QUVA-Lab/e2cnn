@@ -23,7 +23,7 @@ class DiffopBasis(KernelBasis):
                 is the derivative order of the entries of the matrix.
                 PDOs are encoded as the coefficients of :math:`\frac{\partial^n}{\partial x^n}`,
                 :math:`\frac{\partial^n}{\partial x^{n - 1}\partial y}`, ...,
-                :math:`\frac{\partial^n}{\partial y^n}.
+                :math:`\frac{\partial^n}{\partial y^n}`.
             
         Attributes:
             ~.coefficients (list): an analytical description of the PDO basis elements, see above

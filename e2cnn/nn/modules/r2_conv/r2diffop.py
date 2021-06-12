@@ -121,7 +121,7 @@ class R2Diffop(EquivariantModule):
         of ``kernel_size``, ``accuracy`` and ``maximum_order``, in which case the third
         one will be determined automatically. Alternatively, you can set either ``kernel_size``
         or ``maximum_order``, in which case a sane default will be used for ``accuracy``. 
-        The relation between the three is approximately :math:`kernel_size \approx accuracy + order`,
+        The relation between the three is approximately :math:`\text{kernel size} \approx \text{accuracy} + \text{order}`,
         though this formula is off by one in some cases.
         A larger maximum order will lead to more basis filters and this more parameters.
         A larger accuracy (i.e. larger kernel size at constant order)

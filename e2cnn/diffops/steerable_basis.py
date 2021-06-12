@@ -29,7 +29,7 @@ class SteerableDiffopBasis(DiffopBasis):
             
             P(gx) = \rho_\text{out}(g) P(x) \rho_\text{in}(g)^{-1} \qquad \forall g \in G, \forall x \in X
         
-        for :math:`G \leq O(d)`.
+        for :math:`G \leq \O{d}`.
 
         As the PDO constraint is a linear constraint, the space of equivariant PDOs is a vector subspace of the
         space of all PDOs. It follows that any equivariant PDO can be expressed in terms of a basis

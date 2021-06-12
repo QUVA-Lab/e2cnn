@@ -72,7 +72,6 @@ class SteerableDiffopBasis(DiffopBasis):
         self.out_repr = out_repr
         group = in_repr.group
         self.group = group
-        self.special_regular_basis = False
 
         A_inv = np.array(in_repr.change_of_basis_inv, copy=True)
         B = np.array(out_repr.change_of_basis, copy=True)
@@ -183,15 +182,6 @@ class SteerableDiffopBasis(DiffopBasis):
     def __getitem__(self, idx):
         assert idx < self.dim
 
-        if self.special_regular_basis:
-            return {
-                "idx": idx,
-                "inner_idx": idx,
-                "shape": self.coefficients[idx].shape[:2],
-                "order": self.coefficients[idx].shape[2] - 1,
-                "frequency": self.coefficients[idx].shape[2] - 1
-            }
-        
         count = 0
         for ii in range(len(self.in_sizes)):
             for oo in range(len(self.out_sizes)):
@@ -219,16 +209,6 @@ class SteerableDiffopBasis(DiffopBasis):
                     count += dim
 
     def __iter__(self):
-        if self.special_regular_basis:
-            for idx in range(len(self.coefficients)):
-                yield {
-                    "idx": idx,
-                    "inner_idx": idx,
-                    "shape": self.coefficients[idx].shape[:2],
-                    "order": self.coefficients[idx].shape[2] - 1,
-                    "frequency": self.coefficients[idx].shape[2] - 1
-                }
-            return
 
         idx = 0
         for ii in range(len(self.in_sizes)):
@@ -257,13 +237,6 @@ class SteerableDiffopBasis(DiffopBasis):
             return False
         elif self.in_repr != other.in_repr or self.out_repr != other.out_repr:
             return False
-        elif self.special_regular_basis:
-            if not other.special_regular_basis:
-                return False
-            # checking whether the bases are equally large, which works
-            # because the only variable is the maximum frequency, which determines
-            # the basis size
-            return len(self.coefficients) == len(other.coefficients)
         else:
             sbk1 = sorted(self.irreps_bases.keys())
             sbk2 = sorted(other.irreps_bases.keys())
@@ -277,9 +250,7 @@ class SteerableDiffopBasis(DiffopBasis):
             return True
 
     def __hash__(self):
-        key = (self.in_repr, self.out_repr, self.special_regular_basis)
-        if self.special_regular_basis:
-            return hash((key, len(self.coefficients)))
+        key = (self.in_repr, self.out_repr)
 
         h = hash(key)
         for basis in self.irreps_bases.items():

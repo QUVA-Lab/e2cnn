@@ -9,7 +9,7 @@ from e2cnn.group import Group, IrreducibleRepresentation
 from e2cnn.group import cyclic_group, dihedral_group, so2_group, o2_group
 from e2cnn.group import CyclicGroup, DihedralGroup, SO2, O2
 
-from .utils import homogenized_cheby
+from .utils import homogenized_cheby, transform_polynomial
 from .basis import DiffopBasis
 
 from typing import Union, Tuple, Optional
@@ -102,6 +102,13 @@ class R2FlipsSolution(DiffopBasis):
                 coefficients.append(out)
         else:
             raise ValueError(f"Shape {self.shape} not recognized!")
+
+        if axis != 0:
+            so2 = SO2(1)
+            # rotation matrix by angle_offset
+            matrix = so2.irrep(1)(axis)
+            # we transform the polynomial with the matrix
+            coefficients = [transform_polynomial(element, matrix) for element in coefficients]
 
         super().__init__(coefficients)
     
@@ -358,9 +365,6 @@ class R2FlipsDiscreteRotationsSolution(DiffopBasis):
                  group: Union[Group, int],
                  in_irrep: Union[str, IrreducibleRepresentation, Tuple[int]],
                  out_irrep: Union[str, IrreducibleRepresentation, Tuple[int, int]],
-                 # TODO: Right now, we just ignore the axis instead of rotating the diffop.
-                 # This is mostly fine in practice, as long as N is a multiple of 4 anyway
-                 # but should be done before merging this
                  axis: float,
                  max_frequency: int = None,
                  max_offset: int = None,
@@ -548,6 +552,13 @@ class R2FlipsDiscreteRotationsSolution(DiffopBasis):
                 coefficients.append(out)
         else:
             raise ValueError(f"Shape {self.shape} not recognized!")
+
+        if axis != 0:
+            so2 = SO2(1)
+            # rotation matrix by angle_offset
+            matrix = so2.irrep(1)(axis)
+            # we transform the polynomial with the matrix
+            coefficients = [transform_polynomial(element, matrix) for element in coefficients]
 
         super().__init__(coefficients)
 
@@ -849,6 +860,13 @@ class R2FlipsContinuousRotationsSolution(DiffopBasis):
         else:
             raise ValueError(f"Shape {self.shape} not recognized!")
         
+        if axis != 0:
+            so2 = SO2(1)
+            # rotation matrix by angle_offset
+            matrix = so2.irrep(1)(axis)
+            # we transform the polynomial with the matrix
+            coefficients = [transform_polynomial(element, matrix) for element in coefficients]
+
         super().__init__(coefficients)
     
     def __getitem__(self, idx):

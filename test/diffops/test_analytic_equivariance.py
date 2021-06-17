@@ -1,3 +1,4 @@
+from typing import Union
 import unittest
 from unittest import TestCase
 
@@ -8,6 +9,34 @@ from e2cnn.group import *
 from e2cnn.diffops import *
 from e2cnn.kernels import EmptyBasisException
 from e2cnn.diffops.utils import eval_polys
+
+def psi(theta: Union[np.ndarray, float],
+        k: int = 1,
+        gamma: float = 0.,
+        out: np.ndarray = None) -> np.ndarray:
+    
+    # rotation matrix of frequency k corresponding to the angle theta
+
+    if isinstance(theta, float):
+        theta = np.array(theta)
+
+    k = np.array(k, copy=False).reshape(-1, 1)
+    gamma = np.array(gamma, copy=False).reshape(-1, 1)
+    theta = theta.reshape(1, -1)
+
+    x = k * theta + gamma
+
+    cos, sin = np.cos(x), np.sin(x)
+
+    if out is None:
+        out = np.empty((2, 2, x.shape[0], x.shape[-1]))
+
+    out[0, 0, ...] = cos
+    out[0, 1, ...] = -sin
+    out[1, 0, ...] = sin
+    out[1, 1, ...] = cos
+    
+    return out
 
 
 class TestSolutionsEquivariance(TestCase):
@@ -31,26 +60,18 @@ class TestSolutionsEquivariance(TestCase):
         in_rep = directsum(list(group.irreps.values()), name="irreps_sum")
         out_rep = directsum(list(group.irreps.values()), name="irreps_sum")
 
-        # # axis = 0.
-        # # for axis in [0., np.pi / 2, np.pi/3]:
-        # # for axis in [np.pi/2]:
-        # A = 10
-        # for a in range(A):
-        #     axis = a*np.pi/A
-        #     print(axis)
-
-        axis = np.pi / 2
-        basis = diffops_Flip_act_R2(in_rep, out_rep,
-                                    axis=axis,
-                                    max_power=1,
-                                    max_frequency=3)
-
-        #action = directsum([group.irrep(0), group.irrep(1)], psi(axis)[..., 0, 0], f"horizontal_flip_{axis}")
-        # Note that diffops currently don't support a custom axis.
-        # We only test horizontal reflections, which is the only option
-        action = directsum([group.irrep(0), group.irrep(1)])
-
-        self._check(basis, group, in_rep, out_rep, action)
+        A = 10
+        for a in range(A):
+            axis = a*np.pi/A
+            print(axis)
+    
+            basis = diffops_Flip_act_R2(in_rep, out_rep,
+                                        axis=axis,
+                                        max_power=1,
+                                        max_frequency=3)
+    
+            action = directsum([group.irrep(0), group.irrep(1)], psi(axis)[..., 0, 0], f"horizontal_flip_{axis}")
+            self._check(basis, group, in_rep, out_rep, action)
 
     def test_cyclic_odd_regular(self):
         N = 3
@@ -128,8 +149,7 @@ class TestSolutionsEquivariance(TestCase):
                                   max_power=1,
                                   max_frequency=3)
 
-        # action = change_basis(group.irrep(1, 1), psi(axis)[..., 0, 0], "horizontal_flip")
-        action = group.irrep(1, 1)
+        action = change_basis(group.irrep(1, 1), psi(axis)[..., 0, 0], "horizontal_flip")
 
         self._check(basis, group, in_rep, out_rep, action)
 
@@ -145,8 +165,7 @@ class TestSolutionsEquivariance(TestCase):
                                   max_power=1,
                                   max_frequency=3)
 
-        # action = change_basis(group.irrep(1, 1), psi(axis)[..., 0, 0], "horizontal_flip")
-        action = group.irrep(1, 1)
+        action = change_basis(group.irrep(1, 1), psi(axis)[..., 0, 0], "horizontal_flip")
 
         self._check(basis, group, in_rep, out_rep, action)
 
@@ -167,24 +186,20 @@ class TestSolutionsEquivariance(TestCase):
                     continue
 
     def test_dihedral_irreps(self):
-        # NOTE: For now we only test multiples of 4 because
-        # axes are not yet implemented for diffops. Once we implement
-        # axes, we should also test N = 2
         N = 4
         group = dihedral_group(N)
-        axis = np.pi / 2
 
-        for in_rep in group.irreps.values():
-            for out_rep in group.irreps.values():
-                basis = diffops_DN_act_R2(in_rep, out_rep,
-                                        axis=axis,
-                                        max_power=1,
-                                        max_frequency=4)
+        for axis in [0., np.pi/2, np.pi/3]:
+            for in_rep in group.irreps.values():
+                for out_rep in group.irreps.values():
+                    basis = diffops_DN_act_R2(in_rep, out_rep,
+                                            axis=axis,
+                                            max_power=1,
+                                            max_frequency=4)
 
-                # action = change_basis(group.irrep(1, 1), psi(axis)[..., 0, 0], "horizontal_flip")
-                action = group.irrep(1, 1)
+                    action = change_basis(group.irrep(1, 1), psi(axis)[..., 0, 0], "horizontal_flip")
 
-                self._check(basis, group, in_rep, out_rep, action)
+                    self._check(basis, group, in_rep, out_rep, action)
 
     def test_dihedral_2_irreps(self):
         N = 2
@@ -200,29 +215,26 @@ class TestSolutionsEquivariance(TestCase):
                                           max_power=1,
                                           max_frequency=3)
 
-                # action = change_basis(group.irrep(0, 1) + group.irrep(1, 1), psi(axis)[..., 0, 0], "horizontal_flip")
-                action = group.irrep(0, 1) + group.irrep(1, 1)
+                action = change_basis(group.irrep(0, 1) + group.irrep(1, 1), psi(axis)[..., 0, 0], "horizontal_flip")
 
                 self._check(basis, group, in_rep, out_rep, action)
 
-    # def test_flips_irreps(self):
-    #     group = cyclic_group(2)
+    def test_flips_irreps(self):
+        group = cyclic_group(2)
 
-    #     # for axis in [0., np.pi/3, np.pi/2,]:
-    #     A = 10
-    #     for axis in range(A):
-    #         axis = axis * np.pi/A
-    #         for in_rep in list(group.irreps.values()) + [group.regular_representation]:
-    #             for out_rep in list(group.irreps.values()) + [group.regular_representation]:
-    #                 basis = kernels_Flip_act_R2(in_rep, out_rep,
-    #                                             axis=axis,
-    #                                             radii=[0., 1., 2., 5, 10],
-    #                                             sigma=[0.6, 1., 1.3, 2.5, 3.],
-    #                                             max_frequency=13)
+        A = 10
+        for axis in range(A):
+            axis = axis * np.pi/A
+            for in_rep in list(group.irreps.values()) + [group.regular_representation]:
+                for out_rep in list(group.irreps.values()) + [group.regular_representation]:
+                    basis = diffops_Flip_act_R2(in_rep, out_rep,
+                                                axis=axis,
+                                                max_power=1,
+                                                max_frequency=4)
 
-    #                 action = directsum([group.irrep(0), group.irrep(1)], psi(axis)[..., 0, 0], f"horizontal_flip_{axis}")
+                    action = directsum([group.irrep(0), group.irrep(1)], psi(axis)[..., 0, 0], f"horizontal_flip_{axis}")
 
-    #                 self._check(basis, group, in_rep, out_rep, action)
+                    self._check(basis, group, in_rep, out_rep, action)
 
     def test_so2_irreps(self):
 
@@ -252,8 +264,7 @@ class TestSolutionsEquivariance(TestCase):
                     print(f"KernelBasis between {in_rep.name} and {out_rep.name} is empty, continuing")
                     continue
 
-                # action = change_basis(group.irrep(1, 1), psi(axis)[..., 0, 0], "horizontal_flip")
-                action = group.irrep(1, 1)
+                action = change_basis(group.irrep(1, 1), psi(axis)[..., 0, 0], "horizontal_flip")
                 self._check(basis, group, in_rep, out_rep, action)
 
     def _check(self, basis, group, in_rep, out_rep, action):

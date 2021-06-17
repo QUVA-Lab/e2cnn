@@ -47,9 +47,7 @@ class TestDiffop(TestCase):
 
     def test_dihedral(self):
         N = 8
-        # TODO: once axes are properly implemented, we should use np.pi/3 here again
-        # g = FlipRot2dOnR2(N, axis=np.pi/3)
-        g = FlipRot2dOnR2(N, axis=np.pi/2)
+        g = FlipRot2dOnR2(N, axis=np.pi/3)
 
         r1 = FieldType(g, list(g.representations.values()))
         r2 = FieldType(g, list(g.representations.values()))

@@ -54,6 +54,7 @@ class DiffopBasis(KernelBasis):
                mask: np.ndarray = None,
                smoothing: float = None,
                angle_offset: float = None,
+               radial_basis_function: str = "ga",
                ) -> np.ndarray:
         r"""
         Discretize the basis on a set of points.
@@ -73,6 +74,8 @@ class DiffopBasis(KernelBasis):
                 may have any of the three formats described above. ``smoothing`` is the standard
                 deviation of the Gaussian used for discretization.
             angle_offset (float, optional): if not ``None``, rotate the PDOs by this many radians.
+            radial_basis_function (str, optional): which RBF to use (only relevant for RBF-FD).
+                Can be any of the abbreviations `here <https://rbf.readthedocs.io/en/latest/basis.html>`_.
 
         Returns:
             ndarray of with shape `(C_out, C_in, num_basis_elements, n_in)`, where
@@ -118,7 +121,7 @@ class DiffopBasis(KernelBasis):
         for k, element in enumerate(coefficients):
             for i in range(self.shape[0]):
                 for j in range(self.shape[1]):
-                    basis[k, i, j] = discretize_homogeneous_polynomial(points, element[i, j], smoothing)
+                    basis[k, i, j] = discretize_homogeneous_polynomial(points, element[i, j], smoothing, phi=radial_basis_function)
 
         # Finally, we move the len_basis axis to the third position
         basis = basis.transpose(1, 2, 0, 3)

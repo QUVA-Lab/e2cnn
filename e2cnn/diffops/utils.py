@@ -15,7 +15,6 @@ try:
     _RBF_AVAILABLE = True
 
     set_symbolic_to_numeric_method('lambdify')
-    phi = get_rbf("phs3")
     _gaussian = get_rbf("ga")
 
 except ImportError:
@@ -61,6 +60,7 @@ def discretize_homogeneous_polynomial(
         points: Union[np.ndarray, Tuple[List[float], List[float]], List[float]],
         coefficients: np.ndarray,
         smoothing: float = None,
+        phi: str = "ga",
 ) -> np.ndarray:
     r"""Discretize a homogeneous partial differential operator.
     Homogeneous means that all terms have the same derivative order.
@@ -139,15 +139,15 @@ def discretize_homogeneous_polynomial(
         # points is an array, so we use RBF-FD
         out = weight_matrix(targets, points.T, num_points, diffs, coefficients[nonzero], phi=phi)
         if np.any(np.isnan(out.data)):
-            raise Exception(f"NaNs encountered while discretizing diffop {display_diffop(coefficients)} on {num_neighbors} points.\n"
+            raise Exception(f"NaNs encountered while discretizing diffop {display_diffop(coefficients)} on {num_points} points.\n"
                             f"Diffop passed to RBF: {diffs} with coefficients {coefficients[nonzero]}")
         if np.all(out.data == 0):
-            warnings.warn(f"Zero filter encountered while discretizing diffop {display_diffop(coefficients)} on {num_neighbors} points. "
+            warnings.warn(f"Zero filter encountered while discretizing diffop {display_diffop(coefficients)} on {num_points} points. "
                         "This might indicate that the kernel size is too small for this differential operator.\n"
                         f"Diffop passed to RBF: {diffs} with coefficients {coefficients[nonzero]}", RuntimeWarning)
         if np.any(np.abs(out.data) > 1e2):
-            warnings.warn(f"Large filter values encountered while discretizing diffop {display_diffop(coefficients)} on {num_neighbors} points. "
-                        "A larger kernel size might help.\n"
+            warnings.warn(f"Large filter values encountered while discretizing diffop {display_diffop(coefficients)} on {num_points} points. "
+                        "A larger kernel size or different RBF might help.\n"
                         f"Max abs filter value: {np.max(np.abs(out))}\n"
                         f"Diffop passed to RBF: {diffs} with coefficients {coefficients[nonzero]}", RuntimeWarning)
 

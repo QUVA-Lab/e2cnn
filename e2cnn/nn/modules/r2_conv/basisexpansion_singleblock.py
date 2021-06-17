@@ -57,8 +57,9 @@ class SingleBlockBasisExpansion(BasisExpansion):
         if isinstance(basis, DiffopBasis):
             angle_offset = kwargs.get("angle_offset", None)
             smoothing = kwargs.get("smoothing", None)
+            rbf = kwargs["radial_basis_function"]
             sampled_basis = torch.Tensor(basis.sample(
-                points, mask=mask, smoothing=smoothing, angle_offset=angle_offset
+                points, mask=mask, smoothing=smoothing, angle_offset=angle_offset, radial_basis_function=rbf
             )).permute(2, 0, 1, 3)
         else:
             sampled_basis = torch.Tensor(basis.sample(points)).permute(2, 0, 1, 3)

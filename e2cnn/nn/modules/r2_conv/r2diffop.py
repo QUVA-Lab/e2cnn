@@ -54,6 +54,7 @@ class R2Diffop(EquivariantModule):
                  initialize: bool = True,
                  cache: Union[bool, str] = False,
                  rbffd: bool = False,
+                 radial_basis_function: str = "ga",
                  smoothing: float = None,
                  ):
         r"""
@@ -185,6 +186,10 @@ class R2Diffop(EquivariantModule):
             rbffd (bool, optional): if set to ``True``, use RBF-FD discretization instead of
                 finite differences (the default). We suggest leaving this to ``False`` unless
                 you have a specific reason for wanting to use RBF-FD.
+            radial_basis_function (str, optional): which RBF to use (only relevant for RBF-FD).
+                Can be any of the abbreviations in `this list <https://rbf.readthedocs.io/en/latest/basis.html>`_.
+                The default is to use Gaussian RBFs because this always avoids singularity issues.
+                But other RBFs, such as polyharmonic splines, may work better if they are applicable.
             smoothing (float, optional): if not ``None``, discretization will be performed
                 with derivatives of Gaussians as stencils. This is similar to smoothing
                 with a Gaussian before applying the PDO, though there are slight technical
@@ -337,6 +342,7 @@ class R2Diffop(EquivariantModule):
                                                           maximum_order,
                                                           maximum_power,
                                                           rbffd,
+                                                          radial_basis_function,
                                                           smoothing,
                                                           angle_offset)
 
@@ -694,6 +700,7 @@ def compute_basis_params(kernel_size: int,
                          maximum_order: int,
                          maximum_power: int,
                          rbffd: bool,
+                         radial_basis_function: str,
                          smoothing: float,
                          angle_offset: float,
                          ):
@@ -704,6 +711,12 @@ def compute_basis_params(kernel_size: int,
         # compute the coordinates of the centers of the cells in the grid where the filter is sampled
         grid = get_grid_coords(kernel_size, dilation)
     else:
+        if radial_basis_function != "ga":
+            warnings.warn(
+                "A custom RBF was chosen but RBF-FD flag not set, ignoring. "
+                "Please set the rbffd argument of e2cnn.nn.R2Diffop to True if "
+                "you meant to use RBF-FD."
+            )
         # For FD, we don't pass on points but instead just a 1D list of coordinates.
         # These should be arranged symmetrically around 0, which is what the following
         # helper function does (essentially just a 1D analogon of get_grid_coords)
@@ -729,6 +742,7 @@ def compute_basis_params(kernel_size: int,
         "method": "diffop",
         "smoothing": smoothing,
         "angle_offset": angle_offset,
+        "radial_basis_function": radial_basis_function,
     }
 
     return grid, basis_filter, params

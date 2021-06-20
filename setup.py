@@ -16,7 +16,7 @@ install_requires = [
 setup_requires = []
 tests_require = ['scikit-learn', 'scikit-image']
 extras_require = {
-    'RBF-FD and Gaussians': ['cython', 'git+https://github.com/treverhines/RBF']
+    'RBF-FD and Gaussians': ['cython', 'RBF @ git+https://github.com/treverhines/RBF']
 }
 
 with open("README.md", 'r', encoding='utf-8') as f:

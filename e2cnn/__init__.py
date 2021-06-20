@@ -26,7 +26,7 @@ except ImportError:
     pass
 
 try:
-    from e2cnn import kernels
+    from e2cnn import diffops
     __all__ += ['diffops']
 except ImportError:
     pass

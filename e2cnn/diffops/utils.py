@@ -173,10 +173,10 @@ def discretize_1d_monomial(n: int, points: List[float]) -> np.ndarray:
 
 
 def fd_weights(n, points):
-        weights = finite_diff_weights(n, points, 0)
-        # first -1 is because we want the highest order (n),
-        # second -1 means we want the most accurate approximation (using all points)
-        return np.array(weights[-1][-1], dtype=float)
+    weights = finite_diff_weights(n, points, 0)
+    # first -1 is because we want the highest order (n),
+    # second -1 means we want the most accurate approximation (using all points)
+    return np.array(weights[-1][-1], dtype=float)
 
 
 def discretize_2d_monomial(n_x: int,
@@ -440,13 +440,3 @@ def symmetric_points(n: int, dilation: float = 1) -> List[float]:
     points = range(n)
     offset = (n - 1) / 2
     return [(x - offset) * dilation for x in points]
-
-# See https://stackoverflow.com/questions/47269390/numpy-how-to-find-first-non-zero-value-in-every-column-of-a-numpy-array
-def first_nonzero(arr, axis, invalid_val=-1):
-    mask = arr!=0
-    return np.where(mask.any(axis=axis), mask.argmax(axis=axis), invalid_val)
-
-def last_nonzero(arr, axis, invalid_val=-1):
-    mask = arr!=0
-    val = arr.shape[axis] - np.flip(mask, axis=axis).argmax(axis=axis) - 1
-    return np.where(mask.any(axis=axis), val, invalid_val)

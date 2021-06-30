@@ -165,7 +165,7 @@ class BlocksBasisExpansion(BasisExpansion):
     
             # increment the position counter
             last_weight_position += total_weights
-
+            
     def get_basis_names(self) -> List[str]:
         return self._basis_to_ids
     
@@ -363,6 +363,48 @@ class BlocksBasisExpansion(BasisExpansion):
 
         # return the new filter
         return _filter
+
+    def __hash__(self):
+    
+        _hash = 0
+        for io in self._representations_pairs:
+            n_pairs = self._in_count[io[0]] * self._out_count[io[1]]
+            _hash += hash(getattr(self, f"block_expansion_{io}")) * n_pairs
+    
+        return _hash
+
+    def __eq__(self, other):
+        if not isinstance(other, BlocksBasisExpansion):
+            return False
+    
+        if self.dimension() != other.dimension():
+            return False
+    
+        if self._representations_pairs != other._representations_pairs:
+            return False
+    
+        for io in self._representations_pairs:
+            if self._contiguous[io] != other._contiguous[io]:
+                return False
+        
+            if self._weights_ranges[io] != other._weights_ranges[io]:
+                return False
+        
+            if self._contiguous[io]:
+                if getattr(self, f"in_indices_{io}") != getattr(other, f"in_indices_{io}"):
+                    return False
+                if getattr(self, f"out_indices_{io}") != getattr(other, f"out_indices_{io}"):
+                    return False
+            else:
+                if torch.any(getattr(self, f"in_indices_{io}") != getattr(other, f"in_indices_{io}")):
+                    return False
+                if torch.any(getattr(self, f"out_indices_{io}") != getattr(other, f"out_indices_{io}")):
+                    return False
+        
+            if getattr(self, f"block_expansion_{io}") != getattr(other, f"block_expansion_{io}"):
+                return False
+    
+        return True
 
 
 def _retrieve_indices(type: FieldType):

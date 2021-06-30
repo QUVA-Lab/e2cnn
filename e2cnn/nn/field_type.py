@@ -210,8 +210,9 @@ class FieldType:
         and its (induced) action on the base space.
 
         .. warning ::
-            The input tensor is detached before the transformation, therefore no gradient is propagated back
-            through this operation.
+            This method is internally implemented using ```numpy```.
+            This means that the input tensor is detached (and moved to CPU) before the transformation, therefore no
+            gradient is propagated back through this operation.
 
         .. seealso ::
 
@@ -229,9 +230,14 @@ class FieldType:
             transformed tensor
 
         """
-        transformed = self.gspace.featurefield_action(input.detach().numpy(), self.representation, element)
+        if input.is_cuda:
+            import warnings
+            warnings.warn('The input tensor is on GPU. The `FieldType.transform()` operation is based on `numpy` and,'
+                          ' therefore, must temporarily move the tensor on CPU. This can cause performance issues.')
+            
+        transformed = self.gspace.featurefield_action(input.detach().cpu().numpy(), self.representation, element)
         transformed = np.ascontiguousarray(transformed)
-        return torch.from_numpy(transformed.astype(np.float32))
+        return torch.from_numpy(transformed.astype(np.float32)).to(device=input.device)
 
     def restrict(self, id) -> 'FieldType':
         r"""

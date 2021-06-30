@@ -80,4 +80,10 @@ class BasisExpansion(ABC, Module):
         """
         pass
 
+    @abstractmethod
+    def __hash__(self):
+        raise NotImplementedError()
 
+    @abstractmethod
+    def __eq__(self, other):
+        raise NotImplementedError()

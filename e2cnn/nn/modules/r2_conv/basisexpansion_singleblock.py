@@ -32,6 +32,8 @@ class SingleBlockBasisExpansion(BasisExpansion):
 
         super(SingleBlockBasisExpansion, self).__init__()
         
+        self.basis = basis
+        
         # compute the mask of the sampled basis containing only the elements allowed by the filter
         mask = np.zeros(len(basis), dtype=bool)
         for b, attr in enumerate(basis):
@@ -69,7 +71,8 @@ class SingleBlockBasisExpansion(BasisExpansion):
         if not any(norms):
             raise EmptyBasisException
         sampled_basis = sampled_basis[norms, ...]
-        
+        self._mask = mask
+
         self.attributes = [attr for b, attr in enumerate(attributes) if norms[b]]
         
         # register the bases tensors as parameters of this module
@@ -111,7 +114,20 @@ class SingleBlockBasisExpansion(BasisExpansion):
 
     def dimension(self) -> int:
         return self.sampled_basis.shape[0]
-    
+
+    def __eq__(self, other):
+        if isinstance(other, SingleBlockBasisExpansion):
+            return (
+                    self.basis == other.basis and
+                    torch.allclose(self.sampled_basis, other.sampled_basis) and
+                    (self._mask == other._mask).all()
+            )
+        else:
+            return False
+
+    def __hash__(self):
+        return 10000 * hash(self.basis) + 100 * hash(self.sampled_basis) + hash(self._mask)
+
 
 # dictionary storing references to already built basis tensors
 # when a new filter tensor is built, it is also stored here

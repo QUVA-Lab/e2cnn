@@ -140,8 +140,8 @@ R2ConvTransposed
     :members:
     :show-inheritance:
 
-Basis Expansion methods
-~~~~~~~~~~~~~~~~~~~~~~~
+Basis Expansion
+~~~~~~~~~~~~~~~
 
 .. autoclass:: e2cnn.nn.modules.r2_conv.BasisExpansion
     :members:
@@ -150,6 +150,12 @@ Basis Expansion methods
 .. autoclass:: e2cnn.nn.modules.r2_conv.BlocksBasisExpansion
     :members:
     :show-inheritance:
+
+.. autoclass:: e2cnn.nn.modules.r2_conv.SingleBlockBasisExpansion
+    :members:
+    :show-inheritance:
+
+.. autofunction:: e2cnn.nn.modules.r2_conv.block_basisexpansion
 
 
 Non Linearities

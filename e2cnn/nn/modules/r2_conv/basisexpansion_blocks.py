@@ -1,6 +1,7 @@
 
 from e2cnn.kernels import KernelBasis, EmptyBasisException
 from e2cnn.gspaces import *
+from e2cnn.group import Representation
 from e2cnn.nn import FieldType
 from .. import utils
 
@@ -23,9 +24,8 @@ class BlocksBasisExpansion(BasisExpansion):
     def __init__(self,
                  in_type: FieldType,
                  out_type: FieldType,
+                 basis_generator: Callable[[Representation, Representation], KernelBasis],
                  points: np.ndarray,
-                 sigma: List[float],
-                 rings: List[float],
                  basis_filter: Callable[[dict], bool] = None,
                  recompute: bool = False,
                  **kwargs
@@ -38,13 +38,12 @@ class BlocksBasisExpansion(BasisExpansion):
         Args:
             in_type (FieldType): the input field type
             out_type (FieldType): the output field type
+            basis_generator (callable): method that generates the analytical filter basis
             points (~numpy.ndarray): points where the analytical basis should be sampled
-            sigma (list): width of each ring where the bases are sampled
-            rings (list): radii of the rings where to sample the bases
             basis_filter (callable, optional): filter for the basis elements. Should take a dictionary containing an
                                                element's attributes and return whether to keep it or not.
             recompute (bool, optional): whether to recompute new bases or reuse, if possible, already built tensors.
-            **kwargs: keyword arguments specific to the groups and basis used
+            **kwargs: keyword arguments to be passed to ```basis_generator```
         
         Attributes:
             S (int): number of points where the filters are sampled
@@ -76,10 +75,7 @@ class BlocksBasisExpansion(BasisExpansion):
                 reprs_names = (i_repr.name, o_repr.name)
                 try:
                     
-                    basis = space.build_kernel_basis(i_repr, o_repr,
-                                                     sigma=sigma,
-                                                     rings=rings,
-                                                     **kwargs)
+                    basis = basis_generator(i_repr, o_repr, **kwargs)
                     
                     block_expansion = block_basisexpansion(basis, points, basis_filter, recompute=recompute)
                     _block_expansion_modules[reprs_names] = block_expansion

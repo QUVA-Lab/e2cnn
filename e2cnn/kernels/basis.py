@@ -74,6 +74,35 @@ class KernelBasis(ABC):
         """
         pass
 
+    def sample_masked(self, points: np.ndarray, mask: np.ndarray, out: np.ndarray = None) -> np.ndarray:
+        r"""
+        Mask the basis sampled through :meth:`~e2cnn.kernels.KernelBasis.sample` to drop some basis elements using the
+        input ```mask```.
+        
+        ```mask``` must be a ```np.uint8``` array of shape ```(len(self), )```.
+
+        Args:
+            points (~numpy.ndarray): points where to evaluate the basis elements
+            mask (~numpy.ndarray): binary array to mask the basis
+            out (~numpy.ndarray, optional): pre-existing array to use to store the output
+
+        Returns:
+            the sampled basis
+
+        """
+        
+        assert mask.shape == (self.dim, )
+        assert mask.dtype == np.bool
+
+        basis = self.sample(points)
+        
+        if out is not None:
+            out[:] = basis[..., mask, :]
+        else:
+            out = basis[..., mask, :]
+        
+        return out
+
     @abstractmethod
     def __getitem__(self, idx: int) -> dict:
         pass

@@ -252,7 +252,8 @@ class R2Conv(EquivariantModule):
         # notice that `in_type` is used instead of `self.in_type` such that it works also when `groups > 1`
         if basisexpansion == 'blocks':
             self._basisexpansion = BlocksBasisExpansion(in_type, out_type,
-                                                        grid,
+                                                        basis_generator=self.space.build_kernel_basis,
+                                                        points=grid,
                                                         sigma=sigma,
                                                         rings=rings,
                                                         maximum_offset=maximum_offset,

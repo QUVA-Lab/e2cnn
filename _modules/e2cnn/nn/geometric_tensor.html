@@ -1,41 +1,42 @@
 
 
 <!DOCTYPE html>
-<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8">
+  <meta charset="utf-8" />
   
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>e2cnn.nn.geometric_tensor &mdash; e2cnn 0.1.8 documentation</title>
+  <title>e2cnn.nn.geometric_tensor &mdash; e2cnn 0.1.9 documentation</title>
   
-
-  
-  
-  
-  
-
-  
-  <script type="text/javascript" src="../../../_static/js/modernizr.min.js"></script>
-  
-    
-      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
-        <script type="text/javascript" src="../../../_static/jquery.js"></script>
-        <script type="text/javascript" src="../../../_static/underscore.js"></script>
-        <script type="text/javascript" src="../../../_static/doctools.js"></script>
-        <script type="text/javascript" src="../../../_static/language_data.js"></script>
-        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
-        <script type="text/x-mathjax-config">MathJax.Hub.Config({"TeX": {"Macros": {"bold": ["{\\bf #1}", 1], "R": "{\\mathbb R}", "N": "{\\mathbb N}", "Z": "{\\mathbb Z}", "Ind": ["{\\operatorname{Ind}_{#1}^{#2}}", 2], "Res": ["{\\operatorname{Res}_{#1}^{#2}}", 2], "GL": ["{\\operatorname{GL}(#1)}", 1], "E": ["{\\operatorname{E}(#1)}", 1], "SE": ["{\\operatorname{SE}(#1)}", 1], "O": ["{\\operatorname{O}(#1)}", 1], "SO": ["{\\operatorname{SO}(#1)}", 1], "U": ["{\\operatorname{U}(#1)}", 1], "D": ["{\\operatorname{D}_{#1}}", 1], "C": ["{\\operatorname{C}_{#1}}", 1], "DN": "{\\operatorname{D}_{\\!N}}", "CN": "{\\operatorname{C}_{\\!N}}"}}})</script>
-    
-    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
-
-    
 
   
   <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
   <link rel="stylesheet" href="../../../_static/custom.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
     <link rel="index" title="Index" href="../../../genindex.html" />
     <link rel="search" title="Search" href="../../../search.html" /> 
 </head>
@@ -61,7 +62,7 @@
             
             
               <div class="version">
-                0.1.8
+                0.1.9
               </div>
             
           
@@ -78,6 +79,7 @@
           
         </div>
 
+        
         <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
           
             
@@ -125,6 +127,7 @@
             
           
         </div>
+        
       </div>
     </nav>
 
@@ -159,11 +162,13 @@
 
 
 
+
+
 <div role="navigation" aria-label="breadcrumbs navigation">
 
   <ul class="wy-breadcrumbs">
     
-      <li><a href="../../../index.html">Docs</a> &raquo;</li>
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
         
           <li><a href="../../index.html">Module code</a> &raquo;</li>
         
@@ -186,14 +191,14 @@
 <span></span>
 <span class="kn">import</span> <span class="nn">torch</span>
 
-<span class="kn">from</span> <span class="nn">torch</span> <span class="k">import</span> <span class="n">Tensor</span>
+<span class="kn">from</span> <span class="nn">torch</span> <span class="kn">import</span> <span class="n">Tensor</span>
 
-<span class="kn">from</span> <span class="nn">.field_type</span> <span class="k">import</span> <span class="n">FieldType</span>
+<span class="kn">from</span> <span class="nn">.field_type</span> <span class="kn">import</span> <span class="n">FieldType</span>
 
-<span class="kn">from</span> <span class="nn">typing</span> <span class="k">import</span> <span class="n">List</span><span class="p">,</span> <span class="n">Union</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">List</span><span class="p">,</span> <span class="n">Union</span>
 
 <span class="kn">import</span> <span class="nn">itertools</span>
-<span class="kn">from</span> <span class="nn">collections.abc</span> <span class="k">import</span> <span class="n">Iterable</span>
+<span class="kn">from</span> <span class="nn">collections.abc</span> <span class="kn">import</span> <span class="n">Iterable</span>
 
 
 <span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;GeometricTensor&quot;</span><span class="p">,</span> <span class="s2">&quot;tensor_directsum&quot;</span><span class="p">]</span>
@@ -201,7 +206,7 @@
 
 <div class="viewcode-block" id="GeometricTensor"><a class="viewcode-back" href="../../../api/e2cnn.nn.html#e2cnn.nn.GeometricTensor">[docs]</a><span class="k">class</span> <span class="nc">GeometricTensor</span><span class="p">:</span>
     
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tensor</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">,</span> <span class="nb">type</span><span class="p">:</span> <span class="n">FieldType</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tensor</span><span class="p">:</span> <span class="n">Tensor</span><span class="p">,</span> <span class="nb">type</span><span class="p">:</span> <span class="n">FieldType</span><span class="p">):</span>
         <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        </span>
 <span class="sd">        A GeometricTensor can be interpreted as a *typed* tensor.</span>
@@ -347,7 +352,7 @@
         
         <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">tensor</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="mi">2</span>
         <span class="k">assert</span> <span class="n">tensor</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="nb">type</span><span class="o">.</span><span class="n">size</span><span class="p">,</span> \
-            <span class="n">f</span><span class="s2">&quot;Error! The size of the tensor </span><span class="si">{tensor.shape}</span><span class="s2"> does not match the size of the field type </span><span class="si">{type.size}</span><span class="s2">.&quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;Error! The size of the tensor </span><span class="si">{</span><span class="n">tensor</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2"> does not match the size of the field type </span><span class="si">{</span><span class="nb">type</span><span class="o">.</span><span class="n">size</span><span class="si">}</span><span class="s2">.&quot;</span>
         
         <span class="c1"># torch.Tensor: PyTorch tensor containing the data</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">tensor</span> <span class="o">=</span> <span class="n">tensor</span>
@@ -579,7 +584,7 @@
         <span class="n">tensor</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">tensor</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">GeometricTensor</span><span class="p">(</span><span class="n">tensor</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">type</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="GeometricTensor.__getitem__"><a class="viewcode-back" href="../../../api/e2cnn.nn.html#e2cnn.nn.GeometricTensor.__getitem__">[docs]</a>    <span class="k">def</span> <span class="nf">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">slices</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s1">&#39;GeometricTensor&#39;</span><span class="p">:</span>
+<div class="viewcode-block" id="GeometricTensor.__getitem__"><a class="viewcode-back" href="../../../api/e2cnn.nn.html#e2cnn.nn.GeometricTensor.__getitem__">[docs]</a>    <span class="k">def</span> <span class="fm">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">slices</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s1">&#39;GeometricTensor&#39;</span><span class="p">:</span>
         <span class="sa">r</span><span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">        </span>
 <span class="sd">        A GeometricTensor supports *slicing* in a similar way to PyTorch&#39;s :class:`torch.Tensor`.</span>
@@ -605,9 +610,9 @@
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">slices</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">):</span>
             <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">slices</span><span class="p">)</span> <span class="o">&gt;</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tensor</span><span class="o">.</span><span class="n">shape</span><span class="p">):</span>
                 <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span>
-                    <span class="n">f</span><span class="s1">&#39;&#39;&#39;</span>
+                    <span class="sa">f</span><span class="s1">&#39;&#39;&#39;</span>
 <span class="s1">                        Error! Too many slicing indices for GeometricTensor.</span>
-<span class="s1">                        At most {len(self.tensor.shape)} indices expected but {len(slices)} indices passed.</span>
+<span class="s1">                        At most </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tensor</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span><span class="si">}</span><span class="s1"> indices expected but </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">slices</span><span class="p">)</span><span class="si">}</span><span class="s1"> indices passed.</span>
 <span class="s1">                    &#39;&#39;&#39;</span>
                 <span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
@@ -615,7 +620,7 @@
             
         <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">idx</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">slices</span><span class="p">):</span>
             <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">idx</span><span class="p">,</span> <span class="nb">slice</span><span class="p">)</span> <span class="ow">or</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">idx</span><span class="p">,</span> <span class="nb">int</span><span class="p">)</span> <span class="ow">or</span> <span class="n">idx</span> <span class="o">==</span> <span class="bp">Ellipsis</span><span class="p">):</span>
-                <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="n">f</span><span class="s1">&#39;&#39;&#39;</span>
+                <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;&#39;&#39;</span>
 <span class="s1">                        Error! Advanced Indexing over a GeometricTensor is not supported yet.</span>
 <span class="s1">                        Currently, only basic slicing is supported.</span>
 <span class="s1">                &#39;&#39;&#39;</span><span class="p">)</span>
@@ -731,7 +736,7 @@
         <span class="n">sliced_tensor</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">tensor</span><span class="p">[</span><span class="n">idxs</span><span class="p">]</span>
         <span class="k">return</span> <span class="n">GeometricTensor</span><span class="p">(</span><span class="n">sliced_tensor</span><span class="p">,</span> <span class="nb">type</span><span class="p">)</span></div>
 
-    <span class="k">def</span> <span class="nf">__add__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">:</span> <span class="s1">&#39;GeometricTensor&#39;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s1">&#39;GeometricTensor&#39;</span><span class="p">:</span>
+<div class="viewcode-block" id="GeometricTensor.__add__"><a class="viewcode-back" href="../../../api/e2cnn.nn.html#e2cnn.nn.GeometricTensor.__add__">[docs]</a>    <span class="k">def</span> <span class="fm">__add__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">:</span> <span class="s1">&#39;GeometricTensor&#39;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s1">&#39;GeometricTensor&#39;</span><span class="p">:</span>
         <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Add two compatible :class:`~e2cnn.nn.GeometricTensor` using pointwise addition.</span>
 <span class="sd">        The two tensors needs to have the same shape and be associated to the same field type.</span>
@@ -744,9 +749,9 @@
 
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">assert</span> <span class="bp">self</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">type</span><span class="p">,</span> <span class="s1">&#39;The two geometric tensor must have the same FieldType&#39;</span>
-        <span class="k">return</span> <span class="n">GeometricTensor</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tensor</span> <span class="o">+</span> <span class="n">other</span><span class="o">.</span><span class="n">tensor</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">type</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">GeometricTensor</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tensor</span> <span class="o">+</span> <span class="n">other</span><span class="o">.</span><span class="n">tensor</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">type</span><span class="p">)</span></div>
 
-    <span class="k">def</span> <span class="nf">__sub__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">:</span> <span class="s1">&#39;GeometricTensor&#39;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s1">&#39;GeometricTensor&#39;</span><span class="p">:</span>
+<div class="viewcode-block" id="GeometricTensor.__sub__"><a class="viewcode-back" href="../../../api/e2cnn.nn.html#e2cnn.nn.GeometricTensor.__sub__">[docs]</a>    <span class="k">def</span> <span class="fm">__sub__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">:</span> <span class="s1">&#39;GeometricTensor&#39;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s1">&#39;GeometricTensor&#39;</span><span class="p">:</span>
         <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Subtract two compatible :class:`~e2cnn.nn.GeometricTensor` using pointwise subtraction.</span>
 <span class="sd">        The two tensors needs to have the same shape and be associated to the same field type.</span>
@@ -759,9 +764,9 @@
 
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">assert</span> <span class="bp">self</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">type</span><span class="p">,</span> <span class="s1">&#39;The two geometric tensor must have the same FieldType&#39;</span>
-        <span class="k">return</span> <span class="n">GeometricTensor</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tensor</span> <span class="o">-</span> <span class="n">other</span><span class="o">.</span><span class="n">tensor</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">type</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">GeometricTensor</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tensor</span> <span class="o">-</span> <span class="n">other</span><span class="o">.</span><span class="n">tensor</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">type</span><span class="p">)</span></div>
 
-    <span class="k">def</span> <span class="nf">__iadd__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">:</span> <span class="s1">&#39;GeometricTensor&#39;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s1">&#39;GeometricTensor&#39;</span><span class="p">:</span>
+<div class="viewcode-block" id="GeometricTensor.__iadd__"><a class="viewcode-back" href="../../../api/e2cnn.nn.html#e2cnn.nn.GeometricTensor.__iadd__">[docs]</a>    <span class="k">def</span> <span class="fm">__iadd__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">:</span> <span class="s1">&#39;GeometricTensor&#39;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s1">&#39;GeometricTensor&#39;</span><span class="p">:</span>
         <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Add a compatible :class:`~e2cnn.nn.GeometricTensor` to this tensor inplace.</span>
 <span class="sd">        The two tensors needs to have the same shape and be associated to the same field type.</span>
@@ -775,9 +780,9 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">assert</span> <span class="bp">self</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">type</span><span class="p">,</span> <span class="s1">&#39;The two geometric tensor must have the same FieldType&#39;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">tensor</span> <span class="o">+=</span> <span class="n">other</span><span class="o">.</span><span class="n">tensor</span>
-        <span class="k">return</span> <span class="bp">self</span>
+        <span class="k">return</span> <span class="bp">self</span></div>
 
-    <span class="k">def</span> <span class="nf">__isub__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">:</span> <span class="s1">&#39;GeometricTensor&#39;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s1">&#39;GeometricTensor&#39;</span><span class="p">:</span>
+<div class="viewcode-block" id="GeometricTensor.__isub__"><a class="viewcode-back" href="../../../api/e2cnn.nn.html#e2cnn.nn.GeometricTensor.__isub__">[docs]</a>    <span class="k">def</span> <span class="fm">__isub__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">:</span> <span class="s1">&#39;GeometricTensor&#39;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s1">&#39;GeometricTensor&#39;</span><span class="p">:</span>
         <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Subtract a compatible :class:`~e2cnn.nn.GeometricTensor` to this tensor inplace.</span>
 <span class="sd">        The two tensors needs to have the same shape and be associated to the same field type.</span>
@@ -792,9 +797,9 @@
         <span class="k">assert</span> <span class="bp">self</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">type</span><span class="p">,</span> <span class="s1">&#39;The two geometric tensor must have the same FieldType&#39;</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">tensor</span> <span class="o">-=</span> <span class="n">other</span><span class="o">.</span><span class="n">tensor</span>
-        <span class="k">return</span> <span class="bp">self</span>
+        <span class="k">return</span> <span class="bp">self</span></div>
     
-    <span class="k">def</span> <span class="nf">__mul__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="s1">&#39;GeometricTensor&#39;</span><span class="p">:</span>
+<div class="viewcode-block" id="GeometricTensor.__mul__"><a class="viewcode-back" href="../../../api/e2cnn.nn.html#e2cnn.nn.GeometricTensor.__mul__">[docs]</a>    <span class="k">def</span> <span class="fm">__mul__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="s1">&#39;GeometricTensor&#39;</span><span class="p">:</span>
         <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Scalar product of this :class:`~e2cnn.nn.GeometricTensor` with a scalar.</span>
 <span class="sd">        The operation is done inplace.</span>
@@ -811,11 +816,11 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="nb">float</span><span class="p">)</span> <span class="ow">or</span> <span class="n">other</span><span class="o">.</span><span class="n">numel</span><span class="p">()</span> <span class="o">==</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;Only multiplication with a scalar is allowed&#39;</span>
 
-        <span class="k">return</span> <span class="n">GeometricTensor</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tensor</span> <span class="o">*</span> <span class="n">other</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">type</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">GeometricTensor</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tensor</span> <span class="o">*</span> <span class="n">other</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">type</span><span class="p">)</span></div>
 
     <span class="fm">__rmul__</span> <span class="o">=</span> <span class="fm">__mul__</span>
 
-    <span class="k">def</span> <span class="nf">__imul__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="s1">&#39;GeometricTensor&#39;</span><span class="p">:</span>
+<div class="viewcode-block" id="GeometricTensor.__imul__"><a class="viewcode-back" href="../../../api/e2cnn.nn.html#e2cnn.nn.GeometricTensor.__imul__">[docs]</a>    <span class="k">def</span> <span class="fm">__imul__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="s1">&#39;GeometricTensor&#39;</span><span class="p">:</span>
         <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Scalar product of this :class:`~e2cnn.nn.GeometricTensor` with a scalar.</span>
 
@@ -832,9 +837,9 @@
         <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="nb">float</span><span class="p">)</span> <span class="ow">or</span> <span class="n">other</span><span class="o">.</span><span class="n">numel</span><span class="p">()</span> <span class="o">==</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;Only multiplication with a scalar is allowed&#39;</span>
     
         <span class="bp">self</span><span class="o">.</span><span class="n">tensor</span> <span class="o">*=</span> <span class="n">other</span>
-        <span class="k">return</span> <span class="bp">self</span>
+        <span class="k">return</span> <span class="bp">self</span></div>
     
-    <span class="k">def</span> <span class="nf">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">t</span> <span class="o">=</span> <span class="nb">repr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tensor</span><span class="p">)[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
         <span class="n">t</span> <span class="o">=</span> <span class="n">t</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">,</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">  &#39;</span><span class="p">)</span>
         <span class="n">r</span> <span class="o">=</span> <span class="s1">&#39;g_&#39;</span> <span class="o">+</span> <span class="n">t</span> <span class="o">+</span> <span class="s1">&#39;, &#39;</span> <span class="o">+</span> <span class="nb">repr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">type</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39;)&#39;</span>
@@ -889,20 +894,25 @@
            
           </div>
           <footer>
-  
 
   <hr/>
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2019, Qualcomm Innovation Center, Inc. Developed by Gabriele Cesa, Maurice Weiler
+        &#169; Copyright 2019, Qualcomm Innovation Center, Inc. Developed by Gabriele Cesa, Maurice Weiler.
 
     </p>
   </div>
-  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
 
 </footer>
-
         </div>
       </div>
 
@@ -910,7 +920,6 @@
 
   </div>
   
-
 
   <script type="text/javascript">
       jQuery(function () {

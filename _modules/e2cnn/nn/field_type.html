@@ -1,41 +1,42 @@
 
 
 <!DOCTYPE html>
-<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8">
+  <meta charset="utf-8" />
   
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>e2cnn.nn.field_type &mdash; e2cnn 0.1.8 documentation</title>
+  <title>e2cnn.nn.field_type &mdash; e2cnn 0.1.9 documentation</title>
   
-
-  
-  
-  
-  
-
-  
-  <script type="text/javascript" src="../../../_static/js/modernizr.min.js"></script>
-  
-    
-      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
-        <script type="text/javascript" src="../../../_static/jquery.js"></script>
-        <script type="text/javascript" src="../../../_static/underscore.js"></script>
-        <script type="text/javascript" src="../../../_static/doctools.js"></script>
-        <script type="text/javascript" src="../../../_static/language_data.js"></script>
-        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
-        <script type="text/x-mathjax-config">MathJax.Hub.Config({"TeX": {"Macros": {"bold": ["{\\bf #1}", 1], "R": "{\\mathbb R}", "N": "{\\mathbb N}", "Z": "{\\mathbb Z}", "Ind": ["{\\operatorname{Ind}_{#1}^{#2}}", 2], "Res": ["{\\operatorname{Res}_{#1}^{#2}}", 2], "GL": ["{\\operatorname{GL}(#1)}", 1], "E": ["{\\operatorname{E}(#1)}", 1], "SE": ["{\\operatorname{SE}(#1)}", 1], "O": ["{\\operatorname{O}(#1)}", 1], "SO": ["{\\operatorname{SO}(#1)}", 1], "U": ["{\\operatorname{U}(#1)}", 1], "D": ["{\\operatorname{D}_{#1}}", 1], "C": ["{\\operatorname{C}_{#1}}", 1], "DN": "{\\operatorname{D}_{\\!N}}", "CN": "{\\operatorname{C}_{\\!N}}"}}})</script>
-    
-    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
-
-    
 
   
   <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
   <link rel="stylesheet" href="../../../_static/custom.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
     <link rel="index" title="Index" href="../../../genindex.html" />
     <link rel="search" title="Search" href="../../../search.html" /> 
 </head>
@@ -61,7 +62,7 @@
             
             
               <div class="version">
-                0.1.8
+                0.1.9
               </div>
             
           
@@ -78,6 +79,7 @@
           
         </div>
 
+        
         <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
           
             
@@ -125,6 +127,7 @@
             
           
         </div>
+        
       </div>
     </nav>
 
@@ -159,11 +162,13 @@
 
 
 
+
+
 <div role="navigation" aria-label="breadcrumbs navigation">
 
   <ul class="wy-breadcrumbs">
     
-      <li><a href="../../../index.html">Docs</a> &raquo;</li>
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
         
           <li><a href="../../index.html">Module code</a> &raquo;</li>
         
@@ -184,17 +189,17 @@
             
   <h1>Source code for e2cnn.nn.field_type</h1><div class="highlight"><pre>
 <span></span>
-<span class="kn">from</span> <span class="nn">typing</span> <span class="k">import</span> <span class="n">List</span><span class="p">,</span> <span class="n">Dict</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">List</span><span class="p">,</span> <span class="n">Dict</span>
 
-<span class="kn">from</span> <span class="nn">collections</span> <span class="k">import</span> <span class="n">defaultdict</span>
+<span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">defaultdict</span>
 
-<span class="kn">from</span> <span class="nn">e2cnn.group</span> <span class="k">import</span> <span class="n">Group</span>
-<span class="kn">from</span> <span class="nn">e2cnn.group</span> <span class="k">import</span> <span class="n">Representation</span>
-<span class="kn">from</span> <span class="nn">e2cnn.gspaces</span> <span class="k">import</span> <span class="n">GSpace</span>
-<span class="kn">from</span> <span class="nn">e2cnn.group</span> <span class="k">import</span> <span class="n">directsum</span>
+<span class="kn">from</span> <span class="nn">e2cnn.group</span> <span class="kn">import</span> <span class="n">Group</span>
+<span class="kn">from</span> <span class="nn">e2cnn.group</span> <span class="kn">import</span> <span class="n">Representation</span>
+<span class="kn">from</span> <span class="nn">e2cnn.gspaces</span> <span class="kn">import</span> <span class="n">GSpace</span>
+<span class="kn">from</span> <span class="nn">e2cnn.group</span> <span class="kn">import</span> <span class="n">directsum</span>
 
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">from</span> <span class="nn">scipy</span> <span class="k">import</span> <span class="n">sparse</span>
+<span class="kn">from</span> <span class="nn">scipy</span> <span class="kn">import</span> <span class="n">sparse</span>
 
 <span class="kn">import</span> <span class="nn">torch</span>
 
@@ -203,7 +208,7 @@
 
 <div class="viewcode-block" id="FieldType"><a class="viewcode-back" href="../../../api/e2cnn.nn.html#e2cnn.nn.FieldType">[docs]</a><span class="k">class</span> <span class="nc">FieldType</span><span class="p">:</span>
     
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
                  <span class="n">gspace</span><span class="p">:</span> <span class="n">GSpace</span><span class="p">,</span>
                  <span class="n">representations</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Representation</span><span class="p">]):</span>
         <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
@@ -307,7 +312,7 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_representation</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">uniques_fields_names</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">([</span><span class="n">r</span><span class="o">.</span><span class="n">name</span> <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_unique_representations</span><span class="p">])</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_representation</span> <span class="o">=</span> <span class="n">directsum</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">representations</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="n">f</span><span class="s2">&quot;FiberRepresentation:[</span><span class="si">{self.size}</span><span class="s2">], [</span><span class="si">{uniques_fields_names}</span><span class="s2">]&quot;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_representation</span> <span class="o">=</span> <span class="n">directsum</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">representations</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;FiberRepresentation:[</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">size</span><span class="si">}</span><span class="s2">], [</span><span class="si">{</span><span class="n">uniques_fields_names</span><span class="si">}</span><span class="s2">]&quot;</span><span class="p">)</span>
 
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_representation</span>
 
@@ -395,8 +400,9 @@
 <span class="sd">        and its (induced) action on the base space.</span>
 
 <span class="sd">        .. warning ::</span>
-<span class="sd">            The input tensor is detached before the transformation, therefore no gradient is propagated back</span>
-<span class="sd">            through this operation.</span>
+<span class="sd">            This method is internally implemented using ```numpy```.</span>
+<span class="sd">            This means that the input tensor is detached (and moved to CPU) before the transformation, therefore no</span>
+<span class="sd">            gradient is propagated back through this operation.</span>
 
 <span class="sd">        .. seealso ::</span>
 
@@ -414,9 +420,14 @@
 <span class="sd">            transformed tensor</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">transformed</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">gspace</span><span class="o">.</span><span class="n">featurefield_action</span><span class="p">(</span><span class="nb">input</span><span class="o">.</span><span class="n">detach</span><span class="p">()</span><span class="o">.</span><span class="n">numpy</span><span class="p">(),</span> <span class="bp">self</span><span class="o">.</span><span class="n">representation</span><span class="p">,</span> <span class="n">element</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">input</span><span class="o">.</span><span class="n">is_cuda</span><span class="p">:</span>
+            <span class="kn">import</span> <span class="nn">warnings</span>
+            <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="s1">&#39;The input tensor is on GPU. The `FieldType.transform()` operation is based on `numpy` and,&#39;</span>
+                          <span class="s1">&#39; therefore, must temporarily move the tensor on CPU. This can cause performance issues.&#39;</span><span class="p">)</span>
+            
+        <span class="n">transformed</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">gspace</span><span class="o">.</span><span class="n">featurefield_action</span><span class="p">(</span><span class="nb">input</span><span class="o">.</span><span class="n">detach</span><span class="p">()</span><span class="o">.</span><span class="n">cpu</span><span class="p">()</span><span class="o">.</span><span class="n">numpy</span><span class="p">(),</span> <span class="bp">self</span><span class="o">.</span><span class="n">representation</span><span class="p">,</span> <span class="n">element</span><span class="p">)</span>
         <span class="n">transformed</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ascontiguousarray</span><span class="p">(</span><span class="n">transformed</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">torch</span><span class="o">.</span><span class="n">from_numpy</span><span class="p">(</span><span class="n">transformed</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">))</span></div>
+        <span class="k">return</span> <span class="n">torch</span><span class="o">.</span><span class="n">from_numpy</span><span class="p">(</span><span class="n">transformed</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">))</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">device</span><span class="o">=</span><span class="nb">input</span><span class="o">.</span><span class="n">device</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="FieldType.restrict"><a class="viewcode-back" href="../../../api/e2cnn.nn.html#e2cnn.nn.FieldType.restrict">[docs]</a>    <span class="k">def</span> <span class="nf">restrict</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">id</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s1">&#39;FieldType&#39;</span><span class="p">:</span>
         <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
@@ -473,7 +484,7 @@
     
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">index_select</span><span class="p">(</span><span class="n">permutation</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="FieldType.__add__"><a class="viewcode-back" href="../../../api/e2cnn.nn.html#e2cnn.nn.FieldType.__add__">[docs]</a>    <span class="k">def</span> <span class="nf">__add__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">:</span> <span class="s1">&#39;FieldType&#39;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s1">&#39;FieldType&#39;</span><span class="p">:</span>
+<div class="viewcode-block" id="FieldType.__add__"><a class="viewcode-back" href="../../../api/e2cnn.nn.html#e2cnn.nn.FieldType.__add__">[docs]</a>    <span class="k">def</span> <span class="fm">__add__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">:</span> <span class="s1">&#39;FieldType&#39;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s1">&#39;FieldType&#39;</span><span class="p">:</span>
         <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 
 <span class="sd">        Returns a field type associate with the *direct sum* :math:`\rho = \rho_1 \oplus \rho_2` of the representations</span>
@@ -496,7 +507,7 @@
     
         <span class="k">return</span> <span class="n">FieldType</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">gspace</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">representations</span> <span class="o">+</span> <span class="n">other</span><span class="o">.</span><span class="n">representations</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="FieldType.__len__"><a class="viewcode-back" href="../../../api/e2cnn.nn.html#e2cnn.nn.FieldType.__len__">[docs]</a>    <span class="k">def</span> <span class="nf">__len__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+<div class="viewcode-block" id="FieldType.__len__"><a class="viewcode-back" href="../../../api/e2cnn.nn.html#e2cnn.nn.FieldType.__len__">[docs]</a>    <span class="k">def</span> <span class="fm">__len__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
         <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 
 <span class="sd">        Return the number of feature fields in this :class:`~e2cnn.nn.FieldType`, i.e. the length of</span>
@@ -612,7 +623,7 @@
         
         <span class="k">return</span> <span class="n">types</span></div>
 
-<div class="viewcode-block" id="FieldType.__iter__"><a class="viewcode-back" href="../../../api/e2cnn.nn.html#e2cnn.nn.FieldType.__iter__">[docs]</a>    <span class="k">def</span> <span class="nf">__iter__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="FieldType.__iter__"><a class="viewcode-back" href="../../../api/e2cnn.nn.html#e2cnn.nn.FieldType.__iter__">[docs]</a>    <span class="k">def</span> <span class="fm">__iter__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        </span>
 <span class="sd">        It is possible to iterate over all :attr:`~e2cnn.nn.FieldType.representations` in a field type by using</span>
@@ -621,16 +632,16 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="nb">iter</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">representations</span><span class="p">)</span></div>
 
-    <span class="k">def</span> <span class="nf">__eq__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__eq__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="n">FieldType</span><span class="p">):</span>
             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">gspace</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">gspace</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">representations</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">representations</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="k">return</span> <span class="kc">False</span>
     
-    <span class="k">def</span> <span class="nf">__hash__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__hash__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_hash</span>
     
-    <span class="k">def</span> <span class="nf">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="s1">&#39;[&#39;</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">gspace</span><span class="o">.</span><span class="n">name</span> <span class="o">+</span> <span class="s1">&#39;: {&#39;</span> <span class="o">+</span> <span class="s1">&#39;, &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="n">r</span><span class="o">.</span><span class="n">name</span> <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">representations</span><span class="p">])</span> <span class="o">+</span> <span class="s1">&#39;}]&#39;</span>
 
     <span class="nd">@property</span>
@@ -663,20 +674,25 @@
            
           </div>
           <footer>
-  
 
   <hr/>
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2019, Qualcomm Innovation Center, Inc. Developed by Gabriele Cesa, Maurice Weiler
+        &#169; Copyright 2019, Qualcomm Innovation Center, Inc. Developed by Gabriele Cesa, Maurice Weiler.
 
     </p>
   </div>
-  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
 
 </footer>
-
         </div>
       </div>
 
@@ -684,7 +700,6 @@
 
   </div>
   
-
 
   <script type="text/javascript">
       jQuery(function () {

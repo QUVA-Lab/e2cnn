@@ -1,41 +1,42 @@
 
 
 <!DOCTYPE html>
-<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8">
+  <meta charset="utf-8" />
   
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>e2cnn.nn.modules.r2_conv.basisexpansion_blocks &mdash; e2cnn 0.1.8 documentation</title>
+  <title>e2cnn.nn.modules.r2_conv.basisexpansion_blocks &mdash; e2cnn 0.1.9 documentation</title>
   
-
-  
-  
-  
-  
-
-  
-  <script type="text/javascript" src="../../../../../_static/js/modernizr.min.js"></script>
-  
-    
-      <script type="text/javascript" id="documentation_options" data-url_root="../../../../../" src="../../../../../_static/documentation_options.js"></script>
-        <script type="text/javascript" src="../../../../../_static/jquery.js"></script>
-        <script type="text/javascript" src="../../../../../_static/underscore.js"></script>
-        <script type="text/javascript" src="../../../../../_static/doctools.js"></script>
-        <script type="text/javascript" src="../../../../../_static/language_data.js"></script>
-        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
-        <script type="text/x-mathjax-config">MathJax.Hub.Config({"TeX": {"Macros": {"bold": ["{\\bf #1}", 1], "R": "{\\mathbb R}", "N": "{\\mathbb N}", "Z": "{\\mathbb Z}", "Ind": ["{\\operatorname{Ind}_{#1}^{#2}}", 2], "Res": ["{\\operatorname{Res}_{#1}^{#2}}", 2], "GL": ["{\\operatorname{GL}(#1)}", 1], "E": ["{\\operatorname{E}(#1)}", 1], "SE": ["{\\operatorname{SE}(#1)}", 1], "O": ["{\\operatorname{O}(#1)}", 1], "SO": ["{\\operatorname{SO}(#1)}", 1], "U": ["{\\operatorname{U}(#1)}", 1], "D": ["{\\operatorname{D}_{#1}}", 1], "C": ["{\\operatorname{C}_{#1}}", 1], "DN": "{\\operatorname{D}_{\\!N}}", "CN": "{\\operatorname{C}_{\\!N}}"}}})</script>
-    
-    <script type="text/javascript" src="../../../../../_static/js/theme.js"></script>
-
-    
 
   
   <link rel="stylesheet" href="../../../../../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../../../../../_static/pygments.css" type="text/css" />
   <link rel="stylesheet" href="../../../../../_static/custom.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../../../" src="../../../../../_static/documentation_options.js"></script>
+        <script src="../../../../../_static/jquery.js"></script>
+        <script src="../../../../../_static/underscore.js"></script>
+        <script src="../../../../../_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="../../../../../_static/js/theme.js"></script>
+
+    
     <link rel="index" title="Index" href="../../../../../genindex.html" />
     <link rel="search" title="Search" href="../../../../../search.html" /> 
 </head>
@@ -61,7 +62,7 @@
             
             
               <div class="version">
-                0.1.8
+                0.1.9
               </div>
             
           
@@ -78,6 +79,7 @@
           
         </div>
 
+        
         <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
           
             
@@ -125,6 +127,7 @@
             
           
         </div>
+        
       </div>
     </nav>
 
@@ -159,11 +162,13 @@
 
 
 
+
+
 <div role="navigation" aria-label="breadcrumbs navigation">
 
   <ul class="wy-breadcrumbs">
     
-      <li><a href="../../../../../index.html">Docs</a> &raquo;</li>
+      <li><a href="../../../../../index.html" class="icon icon-home"></a> &raquo;</li>
         
           <li><a href="../../../../index.html">Module code</a> &raquo;</li>
         
@@ -184,17 +189,17 @@
             
   <h1>Source code for e2cnn.nn.modules.r2_conv.basisexpansion_blocks</h1><div class="highlight"><pre>
 <span></span>
-<span class="kn">from</span> <span class="nn">e2cnn.kernels</span> <span class="k">import</span> <span class="n">KernelBasis</span><span class="p">,</span> <span class="n">EmptyBasisException</span>
-<span class="kn">from</span> <span class="nn">e2cnn.gspaces</span> <span class="k">import</span> <span class="o">*</span>
-<span class="kn">from</span> <span class="nn">e2cnn.nn</span> <span class="k">import</span> <span class="n">FieldType</span>
-<span class="kn">from</span> <span class="nn">..</span> <span class="k">import</span> <span class="n">utils</span>
+<span class="kn">from</span> <span class="nn">e2cnn.kernels</span> <span class="kn">import</span> <span class="n">KernelBasis</span><span class="p">,</span> <span class="n">EmptyBasisException</span>
+<span class="kn">from</span> <span class="nn">e2cnn.gspaces</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">e2cnn.nn</span> <span class="kn">import</span> <span class="n">FieldType</span>
+<span class="kn">from</span> <span class="nn">..</span> <span class="kn">import</span> <span class="n">utils</span>
 
-<span class="kn">from</span> <span class="nn">.basisexpansion</span> <span class="k">import</span> <span class="n">BasisExpansion</span>
-<span class="kn">from</span> <span class="nn">.basisexpansion_singleblock</span> <span class="k">import</span> <span class="n">block_basisexpansion</span>
+<span class="kn">from</span> <span class="nn">.basisexpansion</span> <span class="kn">import</span> <span class="n">BasisExpansion</span>
+<span class="kn">from</span> <span class="nn">.basisexpansion_singleblock</span> <span class="kn">import</span> <span class="n">block_basisexpansion</span>
 
-<span class="kn">from</span> <span class="nn">collections</span> <span class="k">import</span> <span class="n">defaultdict</span>
+<span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">defaultdict</span>
 
-<span class="kn">from</span> <span class="nn">typing</span> <span class="k">import</span> <span class="n">Callable</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Iterable</span><span class="p">,</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">Union</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Callable</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Iterable</span><span class="p">,</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">Union</span>
 
 <span class="kn">import</span> <span class="nn">torch</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
@@ -205,7 +210,7 @@
 
 <div class="viewcode-block" id="BlocksBasisExpansion"><a class="viewcode-back" href="../../../../../api/e2cnn.nn.html#e2cnn.nn.modules.r2_conv.BlocksBasisExpansion">[docs]</a><span class="k">class</span> <span class="nc">BlocksBasisExpansion</span><span class="p">(</span><span class="n">BasisExpansion</span><span class="p">):</span>
     
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
                  <span class="n">in_type</span><span class="p">:</span> <span class="n">FieldType</span><span class="p">,</span>
                  <span class="n">out_type</span><span class="p">:</span> <span class="n">FieldType</span><span class="p">,</span>
                  <span class="n">points</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span>
@@ -270,7 +275,7 @@
                     <span class="n">_block_expansion_modules</span><span class="p">[</span><span class="n">reprs_names</span><span class="p">]</span> <span class="o">=</span> <span class="n">block_expansion</span>
                     
                     <span class="c1"># register the block expansion as a submodule</span>
-                    <span class="bp">self</span><span class="o">.</span><span class="n">add_module</span><span class="p">(</span><span class="n">f</span><span class="s2">&quot;block_expansion_</span><span class="si">{reprs_names}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">block_expansion</span><span class="p">)</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">add_module</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;block_expansion_</span><span class="si">{</span><span class="n">reprs_names</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">block_expansion</span><span class="p">)</span>
                     
                 <span class="k">except</span> <span class="n">EmptyBasisException</span><span class="p">:</span>
                     <span class="c1"># print(f&quot;Empty basis at {reprs_names}&quot;)</span>
@@ -350,7 +355,7 @@
     
             <span class="c1"># increment the position counter</span>
             <span class="n">last_weight_position</span> <span class="o">+=</span> <span class="n">total_weights</span>
-
+            
     <span class="k">def</span> <span class="nf">get_basis_names</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_basis_to_ids</span>
     
@@ -369,7 +374,7 @@
                 <span class="k">break</span>
         <span class="k">assert</span> <span class="n">reprs_names</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">relative_idx</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
         
-        <span class="n">block_expansion</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">f</span><span class="s2">&quot;block_expansion_</span><span class="si">{reprs_names}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="n">block_expansion</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;block_expansion_</span><span class="si">{</span><span class="n">reprs_names</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
         <span class="n">block_idx</span> <span class="o">=</span> <span class="n">relative_idx</span> <span class="o">//</span> <span class="n">block_expansion</span><span class="o">.</span><span class="n">dimension</span><span class="p">()</span>
         <span class="n">relative_idx</span> <span class="o">=</span> <span class="n">relative_idx</span> <span class="o">%</span> <span class="n">block_expansion</span><span class="o">.</span><span class="n">dimension</span><span class="p">()</span>
         
@@ -414,7 +419,7 @@
                 <span class="n">in_irreps_count</span> <span class="o">+=</span> <span class="nb">len</span><span class="p">(</span><span class="n">i_repr</span><span class="o">.</span><span class="n">irreps</span><span class="p">)</span>
             <span class="n">out_irreps_count</span> <span class="o">+=</span> <span class="nb">len</span><span class="p">(</span><span class="n">o_repr</span><span class="o">.</span><span class="n">irreps</span><span class="p">)</span>
         
-        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="n">f</span><span class="s2">&quot;Parameter with index </span><span class="si">{idx}</span><span class="s2"> not found!&quot;</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Parameter with index </span><span class="si">{</span><span class="n">idx</span><span class="si">}</span><span class="s2"> not found!&quot;</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">get_basis_info</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Iterable</span><span class="p">:</span>
         
@@ -435,7 +440,7 @@
         <span class="n">idx</span> <span class="o">=</span> <span class="mi">0</span>
         <span class="k">for</span> <span class="n">reprs_names</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_representations_pairs</span><span class="p">:</span>
 
-            <span class="n">block_expansion</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">f</span><span class="s2">&quot;block_expansion_</span><span class="si">{reprs_names}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="n">block_expansion</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;block_expansion_</span><span class="si">{</span><span class="n">reprs_names</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
             
             <span class="k">for</span> <span class="n">o</span> <span class="ow">in</span> <span class="n">out_block_counts</span><span class="p">[</span><span class="n">reprs_names</span><span class="p">[</span><span class="mi">1</span><span class="p">]]:</span>
                 <span class="n">out_irreps_count</span> <span class="o">=</span> <span class="n">out_irreps_counts</span><span class="p">[</span><span class="n">o</span><span class="p">]</span>
@@ -474,7 +479,7 @@
 
     <span class="k">def</span> <span class="nf">_expand_block</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">weights</span><span class="p">,</span> <span class="n">io_pair</span><span class="p">):</span>
         <span class="c1"># retrieve the basis</span>
-        <span class="n">block_expansion</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">f</span><span class="s2">&quot;block_expansion_</span><span class="si">{io_pair}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="n">block_expansion</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;block_expansion_</span><span class="si">{</span><span class="n">io_pair</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 
         <span class="c1"># retrieve the linear coefficients for the basis expansion</span>
         <span class="n">coefficients</span> <span class="o">=</span> <span class="n">weights</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_weights_ranges</span><span class="p">[</span><span class="n">io_pair</span><span class="p">][</span><span class="mi">0</span><span class="p">]:</span><span class="bp">self</span><span class="o">.</span><span class="n">_weights_ranges</span><span class="p">[</span><span class="n">io_pair</span><span class="p">][</span><span class="mi">1</span><span class="p">]]</span>
@@ -514,8 +519,8 @@
             <span class="c1"># if there is only one block (i.e. one type of input field and one type of output field),</span>
             <span class="c1">#  we can return the expanded block immediately, instead of copying it inside a preallocated empty tensor</span>
             <span class="n">io_pair</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_representations_pairs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-            <span class="n">in_indices</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">f</span><span class="s2">&quot;in_indices_</span><span class="si">{io_pair}</span><span class="s2">&quot;</span><span class="p">)</span>
-            <span class="n">out_indices</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">f</span><span class="s2">&quot;out_indices_</span><span class="si">{io_pair}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="n">in_indices</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;in_indices_</span><span class="si">{</span><span class="n">io_pair</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="n">out_indices</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;out_indices_</span><span class="si">{</span><span class="n">io_pair</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
             <span class="n">_filter</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_expand_block</span><span class="p">(</span><span class="n">weights</span><span class="p">,</span> <span class="n">io_pair</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">out_indices</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">in_indices</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">S</span><span class="p">)</span>
             
         <span class="k">else</span><span class="p">:</span>
@@ -527,8 +532,8 @@
             <span class="k">for</span> <span class="n">io_pair</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_representations_pairs</span><span class="p">:</span>
                 
                 <span class="c1"># retrieve the indices</span>
-                <span class="n">in_indices</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">f</span><span class="s2">&quot;in_indices_</span><span class="si">{io_pair}</span><span class="s2">&quot;</span><span class="p">)</span>
-                <span class="n">out_indices</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">f</span><span class="s2">&quot;out_indices_</span><span class="si">{io_pair}</span><span class="s2">&quot;</span><span class="p">)</span>
+                <span class="n">in_indices</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;in_indices_</span><span class="si">{</span><span class="n">io_pair</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+                <span class="n">out_indices</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;out_indices_</span><span class="si">{</span><span class="n">io_pair</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
                 
                 <span class="c1"># expand the current subset of basis vectors and set the result in the appropriate place in the filter</span>
                 <span class="n">expanded</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_expand_block</span><span class="p">(</span><span class="n">weights</span><span class="p">,</span> <span class="n">io_pair</span><span class="p">)</span>
@@ -547,7 +552,49 @@
                     <span class="p">]</span> <span class="o">=</span> <span class="n">expanded</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">S</span><span class="p">)</span>
 
         <span class="c1"># return the new filter</span>
-        <span class="k">return</span> <span class="n">_filter</span></div></div>
+        <span class="k">return</span> <span class="n">_filter</span></div>
+
+    <span class="k">def</span> <span class="fm">__hash__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    
+        <span class="n">_hash</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">for</span> <span class="n">io</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_representations_pairs</span><span class="p">:</span>
+            <span class="n">n_pairs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_in_count</span><span class="p">[</span><span class="n">io</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">_out_count</span><span class="p">[</span><span class="n">io</span><span class="p">[</span><span class="mi">1</span><span class="p">]]</span>
+            <span class="n">_hash</span> <span class="o">+=</span> <span class="nb">hash</span><span class="p">(</span><span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;block_expansion_</span><span class="si">{</span><span class="n">io</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">))</span> <span class="o">*</span> <span class="n">n_pairs</span>
+    
+        <span class="k">return</span> <span class="n">_hash</span>
+
+    <span class="k">def</span> <span class="fm">__eq__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="n">BlocksBasisExpansion</span><span class="p">):</span>
+            <span class="k">return</span> <span class="kc">False</span>
+    
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">dimension</span><span class="p">()</span> <span class="o">!=</span> <span class="n">other</span><span class="o">.</span><span class="n">dimension</span><span class="p">():</span>
+            <span class="k">return</span> <span class="kc">False</span>
+    
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_representations_pairs</span> <span class="o">!=</span> <span class="n">other</span><span class="o">.</span><span class="n">_representations_pairs</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">False</span>
+    
+        <span class="k">for</span> <span class="n">io</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_representations_pairs</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_contiguous</span><span class="p">[</span><span class="n">io</span><span class="p">]</span> <span class="o">!=</span> <span class="n">other</span><span class="o">.</span><span class="n">_contiguous</span><span class="p">[</span><span class="n">io</span><span class="p">]:</span>
+                <span class="k">return</span> <span class="kc">False</span>
+        
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_weights_ranges</span><span class="p">[</span><span class="n">io</span><span class="p">]</span> <span class="o">!=</span> <span class="n">other</span><span class="o">.</span><span class="n">_weights_ranges</span><span class="p">[</span><span class="n">io</span><span class="p">]:</span>
+                <span class="k">return</span> <span class="kc">False</span>
+        
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_contiguous</span><span class="p">[</span><span class="n">io</span><span class="p">]:</span>
+                <span class="k">if</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;in_indices_</span><span class="si">{</span><span class="n">io</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;in_indices_</span><span class="si">{</span><span class="n">io</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">):</span>
+                    <span class="k">return</span> <span class="kc">False</span>
+                <span class="k">if</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;out_indices_</span><span class="si">{</span><span class="n">io</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;out_indices_</span><span class="si">{</span><span class="n">io</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">):</span>
+                    <span class="k">return</span> <span class="kc">False</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">torch</span><span class="o">.</span><span class="n">any</span><span class="p">(</span><span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;in_indices_</span><span class="si">{</span><span class="n">io</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;in_indices_</span><span class="si">{</span><span class="n">io</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)):</span>
+                    <span class="k">return</span> <span class="kc">False</span>
+                <span class="k">if</span> <span class="n">torch</span><span class="o">.</span><span class="n">any</span><span class="p">(</span><span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;out_indices_</span><span class="si">{</span><span class="n">io</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;out_indices_</span><span class="si">{</span><span class="n">io</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)):</span>
+                    <span class="k">return</span> <span class="kc">False</span>
+        
+            <span class="k">if</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;block_expansion_</span><span class="si">{</span><span class="n">io</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;block_expansion_</span><span class="si">{</span><span class="n">io</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">):</span>
+                <span class="k">return</span> <span class="kc">False</span>
+    
+        <span class="k">return</span> <span class="kc">True</span></div>
 
 
 <span class="k">def</span> <span class="nf">_retrieve_indices</span><span class="p">(</span><span class="nb">type</span><span class="p">:</span> <span class="n">FieldType</span><span class="p">):</span>
@@ -615,20 +662,25 @@
            
           </div>
           <footer>
-  
 
   <hr/>
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2019, Qualcomm Innovation Center, Inc. Developed by Gabriele Cesa, Maurice Weiler
+        &#169; Copyright 2019, Qualcomm Innovation Center, Inc. Developed by Gabriele Cesa, Maurice Weiler.
 
     </p>
   </div>
-  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
 
 </footer>
-
         </div>
       </div>
 
@@ -636,7 +688,6 @@
 
   </div>
   
-
 
   <script type="text/javascript">
       jQuery(function () {

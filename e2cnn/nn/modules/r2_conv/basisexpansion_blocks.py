@@ -1,6 +1,7 @@
 
 from e2cnn.kernels import KernelBasis, EmptyBasisException
 from e2cnn.gspaces import *
+from e2cnn.group import Representation
 from e2cnn.nn import FieldType
 from .. import utils
 
@@ -23,6 +24,7 @@ class BlocksBasisExpansion(BasisExpansion):
     def __init__(self,
                  in_type: FieldType,
                  out_type: FieldType,
+                 basis_generator: Callable[[Representation, Representation], KernelBasis],
                  points: np.ndarray,
                  basis_filter: Callable[[dict], bool] = None,
                  recompute: bool = False,
@@ -37,11 +39,12 @@ class BlocksBasisExpansion(BasisExpansion):
         Args:
             in_type (FieldType): the input field type
             out_type (FieldType): the output field type
+            basis_generator (callable): method that generates the analytical filter basis
             points (~numpy.ndarray): points where the analytical basis should be sampled
             basis_filter (callable, optional): filter for the basis elements. Should take a dictionary containing an
                                                element's attributes and return whether to keep it or not.
             recompute (bool, optional): whether to recompute new bases or reuse, if possible, already built tensors.
-            **kwargs: keyword arguments specific to the groups and basis used
+            **kwargs: keyword arguments to be passed to ```basis_generator```
         
         Attributes:
             S (int): number of points where the filters are sampled
@@ -85,7 +88,9 @@ class BlocksBasisExpansion(BasisExpansion):
                     else:
                         raise ValueError(f"Method {method} not recognized, must be 'kernel' or 'diffop'")
                     
-                    block_expansion = block_basisexpansion(basis, points, basis_filter, recompute=recompute, **kwargs)
+                    basis = basis_generator(i_repr, o_repr, **kwargs)
+                    
+                    block_expansion = block_basisexpansion(basis, points, basis_filter, recompute=recompute)
                     _block_expansion_modules[reprs_names] = block_expansion
                     
                     # register the block expansion as a submodule
@@ -169,7 +174,7 @@ class BlocksBasisExpansion(BasisExpansion):
     
             # increment the position counter
             last_weight_position += total_weights
-
+            
     def get_basis_names(self) -> List[str]:
         return self._basis_to_ids
     
@@ -367,6 +372,48 @@ class BlocksBasisExpansion(BasisExpansion):
 
         # return the new filter
         return _filter
+
+    def __hash__(self):
+    
+        _hash = 0
+        for io in self._representations_pairs:
+            n_pairs = self._in_count[io[0]] * self._out_count[io[1]]
+            _hash += hash(getattr(self, f"block_expansion_{io}")) * n_pairs
+    
+        return _hash
+
+    def __eq__(self, other):
+        if not isinstance(other, BlocksBasisExpansion):
+            return False
+    
+        if self.dimension() != other.dimension():
+            return False
+    
+        if self._representations_pairs != other._representations_pairs:
+            return False
+    
+        for io in self._representations_pairs:
+            if self._contiguous[io] != other._contiguous[io]:
+                return False
+        
+            if self._weights_ranges[io] != other._weights_ranges[io]:
+                return False
+        
+            if self._contiguous[io]:
+                if getattr(self, f"in_indices_{io}") != getattr(other, f"in_indices_{io}"):
+                    return False
+                if getattr(self, f"out_indices_{io}") != getattr(other, f"out_indices_{io}"):
+                    return False
+            else:
+                if torch.any(getattr(self, f"in_indices_{io}") != getattr(other, f"in_indices_{io}")):
+                    return False
+                if torch.any(getattr(self, f"out_indices_{io}") != getattr(other, f"out_indices_{io}")):
+                    return False
+        
+            if getattr(self, f"block_expansion_{io}") != getattr(other, f"block_expansion_{io}"):
+                return False
+    
+        return True
 
 
 def _retrieve_indices(type: FieldType):

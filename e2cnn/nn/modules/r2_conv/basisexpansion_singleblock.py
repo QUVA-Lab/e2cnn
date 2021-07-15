@@ -24,6 +24,9 @@ class SingleBlockBasisExpansion(BasisExpansion):
         Basis expansion method for a single contiguous block, i.e. for kernels/PDOs whose input type and output type contain
         only fields of one type.
         
+        This class should be instantiated through the factory method
+        :func:`~e2cnn.nn.modules.r2_conv.block_basisexpansion` to enable caching.
+        
         Args:
             basis (KernelBasis): analytical basis to sample
             points (ndarray): points where the analytical basis should be sampled
@@ -34,6 +37,8 @@ class SingleBlockBasisExpansion(BasisExpansion):
         """
 
         super(SingleBlockBasisExpansion, self).__init__()
+        
+        self.basis = basis
         
         # compute the mask of the sampled basis containing only the elements allowed by the filter
         mask = np.zeros(len(basis), dtype=bool)
@@ -50,31 +55,22 @@ class SingleBlockBasisExpansion(BasisExpansion):
         sizes = []
         for attr in attributes:
             sizes.append(attr["shape"][0])
-
-        # Sample the basis on the grid.
-        # For diffops, masking happens inside the sampling functions to improve
-        # performance, but this is currently not implemented for kernels.
-        if isinstance(basis, DiffopBasis):
-            angle_offset = kwargs.get("angle_offset", None)
-            smoothing = kwargs.get("smoothing", None)
-            rbf = kwargs["radial_basis_function"]
-            sampled_basis = torch.Tensor(basis.sample(
-                points, mask=mask, smoothing=smoothing, angle_offset=angle_offset, radial_basis_function=rbf
-            )).permute(2, 0, 1, 3)
-        else:
-            sampled_basis = torch.Tensor(basis.sample(points)).permute(2, 0, 1, 3)
-
-            # DEPRECATED FROM PyTorch 1.2
-            # PyTorch 1.2 suggests using BoolTensor instead of ByteTensor for boolean indexing
-            # but BoolTensor have been introduced only in PyTorch 1.2
-            # Hence, for the moment we use ByteTensor
-            mask = torch.tensor(mask.astype(np.uint8))
-
-            # filter out the basis elements discarded by the filter
-            sampled_basis = sampled_basis[mask, ...]
         
+        # sample the basis on the grid
+        # and filter out the basis elements discarded by the filter
+        sampled_basis = torch.Tensor(basis.sample_masked(points, mask=mask)).permute(2, 0, 1, 3)
+
+        # DEPRECATED FROM PyTorch 1.2
+        # PyTorch 1.2 suggests using BoolTensor instead of ByteTensor for boolean indexing
+        # but BoolTensor have been introduced only in PyTorch 1.2
+        # Hence, for the moment we use ByteTensor
+        mask = mask.astype(np.uint8)
+        mask = torch.tensor(mask)
+
         # normalize the basis
         sizes = torch.tensor(sizes, dtype=sampled_basis.dtype)
+        assert sizes.shape[0] == mask.to(torch.int).sum(), sizes.shape
+        assert sizes.shape[0] == sampled_basis.shape[0], (sizes.shape, sampled_basis.shape)
         sampled_basis = normalize_basis(sampled_basis, sizes)
 
         # discard the basis which are close to zero everywhere
@@ -83,6 +79,10 @@ class SingleBlockBasisExpansion(BasisExpansion):
             raise EmptyBasisException
         sampled_basis = sampled_basis[norms, ...]
         
+        full_mask = torch.zeros_like(mask)
+        full_mask[mask] = norms.to(torch.uint8)
+        self._mask = full_mask
+
         self.attributes = [attr for b, attr in enumerate(attributes) if norms[b]]
         
         # register the bases tensors as parameters of this module
@@ -130,7 +130,20 @@ class SingleBlockBasisExpansion(BasisExpansion):
 
     def dimension(self) -> int:
         return self.sampled_basis.shape[0]
-    
+
+    def __eq__(self, other):
+        if isinstance(other, SingleBlockBasisExpansion):
+            return (
+                    self.basis == other.basis and
+                    torch.allclose(self.sampled_basis, other.sampled_basis) and
+                    (self._mask == other._mask).all()
+            )
+        else:
+            return False
+
+    def __hash__(self):
+        return 10000 * hash(self.basis) + 100 * hash(self.sampled_basis) + hash(self._mask)
+
 
 # dictionary storing references to already built basis tensors
 # when a new filter tensor is built, it is also stored here
@@ -145,13 +158,18 @@ def block_basisexpansion(basis: KernelBasis,
                          **kwargs
                          ) -> SingleBlockBasisExpansion:
     r"""
-
+    
+    Return an instance of :class:`~e2cnn.nn.modules.r2_conv.SingleBlockBasisExpansion`.
+    
+    This function support caching through the argument ```recompute```.
 
     Args:
         basis (KernelBasis): basis defining the space of kernels
-        points (ndarray): points where the analytical basis should be sampled
-        basis_filter (callable):
-        recompute (bool, optional): whether to recompute new bases or reuse, if possible, already built tensors.
+        points (~np.ndarray): points where the analytical basis should be sampled
+        basis_filter (callable, optional): filter for the basis elements. Should take a dictionary containing an
+                                           element's attributes and return whether to keep it or not.
+        recompute (bool, optional): whether to recompute new bases (```True```) or reuse, if possible,
+                                    already built tensors (```False```, default).
 
     """
     

@@ -353,7 +353,8 @@ class R2Diffop(EquivariantModule):
         # notice that `in_type` is used instead of `self.in_type` such that it works also when `groups > 1`
         if basisexpansion == 'blocks':
             self._basisexpansion = BlocksBasisExpansion(in_type, out_type,
-                                                        grid,
+                                                        self.space.build_diffop_basis,
+                                                        points=grid,
                                                         maximum_offset=maximum_offset,
                                                         **params,
                                                         basis_filter=basis_filter,

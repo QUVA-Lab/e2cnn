@@ -72,6 +72,12 @@ def test_so2_irreps():
     for in_rep in group.irreps.values():
         for out_rep in group.irreps.values():
             basis = diffops_SO2_act_R2(in_rep, out_rep, max_power=0)
+            # depending on the order in which tests are run, more than irreps up
+            # to n = 2 may already have been built. But we want to skip any
+            # bases with order > 6 (because we'd need larger grids to discretize
+            # them)
+            if basis.maximum_order > 6:
+                continue
             points = make_grid(3)
             check_quarter_rotations(basis, points, [0., np.pi/2, np.pi, 3*np.pi/2], in_rep, out_rep)
 
@@ -82,6 +88,12 @@ def test_o2_irreps():
         for out_rep in group.irreps.values():
             try:
                 basis = diffops_O2_act_R2(in_rep, out_rep, max_power=0, axis=np.pi/2)
+                # depending on the order in which tests are run, more than irreps up
+                # to n = 2 may already have been built. But we want to skip any
+                # bases with order > 6 (because we'd need larger grids to discretize
+                # them)
+                if basis.maximum_order > 6:
+                    continue
                 points = make_grid(3)
                 check_quarter_rotations(basis, points, [(0, 0.), (0, np.pi/2), (0, np.pi), (0, 3*np.pi/2)], in_rep, out_rep)
             except EmptyBasisException:

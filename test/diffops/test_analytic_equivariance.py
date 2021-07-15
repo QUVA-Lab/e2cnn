@@ -261,7 +261,7 @@ class TestSolutionsEquivariance(TestCase):
                                               max_power=1
                                               )
                 except EmptyBasisException:
-                    print(f"KernelBasis between {in_rep.name} and {out_rep.name} is empty, continuing")
+                    print(f"DiffopBasis between {in_rep.name} and {out_rep.name} is empty, continuing")
                     continue
 
                 action = change_basis(group.irrep(1, 1), psi(axis)[..., 0, 0], "horizontal_flip")
@@ -269,7 +269,7 @@ class TestSolutionsEquivariance(TestCase):
 
     def _check(self, basis, group, in_rep, out_rep, action):
         if basis is None:
-            print("Empty KernelBasis!")
+            print("Empty DiffopBasis!")
             return
 
         P = 100

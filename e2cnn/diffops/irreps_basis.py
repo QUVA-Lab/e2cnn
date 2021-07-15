@@ -2,7 +2,6 @@
 import numpy as np
 import math
 
-from e2cnn.kernels.basis import KernelBasis
 from e2cnn.kernels.utils import offset_iterator
 
 from e2cnn.group import Group, IrreducibleRepresentation

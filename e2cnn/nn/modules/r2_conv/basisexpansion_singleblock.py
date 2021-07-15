@@ -1,5 +1,5 @@
 
-from e2cnn.kernels import KernelBasis, EmptyBasisException
+from e2cnn.kernels import Basis, EmptyBasisException
 from e2cnn.diffops import DiffopBasis
 from .basisexpansion import BasisExpansion
 
@@ -14,7 +14,7 @@ __all__ = ["SingleBlockBasisExpansion", "block_basisexpansion"]
 class SingleBlockBasisExpansion(BasisExpansion):
     
     def __init__(self,
-                 basis: KernelBasis,
+                 basis: Basis,
                  points: np.ndarray,
                  basis_filter: Callable[[dict], bool] = None,
                  **kwargs
@@ -28,7 +28,7 @@ class SingleBlockBasisExpansion(BasisExpansion):
         :func:`~e2cnn.nn.modules.r2_conv.block_basisexpansion` to enable caching.
         
         Args:
-            basis (KernelBasis): analytical basis to sample
+            basis (Basis): analytical basis to sample
             points (ndarray): points where the analytical basis should be sampled
             basis_filter (callable, optional): filter for the basis elements. Should take a dictionary containing an
                                                element's attributes and return whether to keep it or not.
@@ -151,7 +151,7 @@ class SingleBlockBasisExpansion(BasisExpansion):
 _stored_filters = {}
 
 
-def block_basisexpansion(basis: KernelBasis,
+def block_basisexpansion(basis: Basis,
                          points: np.ndarray,
                          basis_filter: Callable[[dict], bool] = None,
                          recompute: bool = False,
@@ -164,7 +164,7 @@ def block_basisexpansion(basis: KernelBasis,
     This function support caching through the argument ```recompute```.
 
     Args:
-        basis (KernelBasis): basis defining the space of kernels
+        basis (Basis): basis defining the space of kernels
         points (~np.ndarray): points where the analytical basis should be sampled
         basis_filter (callable, optional): filter for the basis elements. Should take a dictionary containing an
                                            element's attributes and return whether to keep it or not.

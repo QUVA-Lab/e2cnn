@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 from e2cnn.gspaces import GSpace
-from e2cnn import kernels
+from e2cnn import kernels, diffops
 from e2cnn.group import Group
 from e2cnn.group import Representation
 
@@ -128,7 +128,7 @@ class GeneralOnR2(GSpace):
                            in_repr: Representation,
                            out_repr: Representation,
                            max_power: int,
-                           **kwargs) -> kernels.KernelBasis:
+                           **kwargs) -> diffops.DiffopBasis:
         r"""
         
         Builds a basis for the space of the equivariant PDOs with respect to the symmetries described by this

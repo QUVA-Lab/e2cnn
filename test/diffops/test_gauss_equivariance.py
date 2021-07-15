@@ -7,7 +7,7 @@ from e2cnn.diffops.utils import required_points, symmetric_points
 
 def check_quarter_rotations(basis, points, elements, in_rep, out_rep):
     if basis is None:
-        print("Empty KernelBasis!")
+        print("Empty DiffopBasis!")
         return
     print(basis, in_rep, out_rep)
 

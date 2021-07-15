@@ -1,8 +1,7 @@
 
 import numpy as np
 
-from e2cnn.kernels.basis import KernelBasis, EmptyBasisException
-from e2cnn.kernels.irreps_basis import IrrepBasis
+from e2cnn.kernels.basis import EmptyBasisException
 
 from e2cnn.group import Representation, SO2, CyclicGroup
 

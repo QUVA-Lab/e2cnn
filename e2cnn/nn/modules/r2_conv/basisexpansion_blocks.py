@@ -1,5 +1,5 @@
 
-from e2cnn.kernels import KernelBasis, EmptyBasisException
+from e2cnn.kernels import Basis, EmptyBasisException
 from e2cnn.gspaces import *
 from e2cnn.group import Representation
 from e2cnn.nn import FieldType
@@ -24,11 +24,10 @@ class BlocksBasisExpansion(BasisExpansion):
     def __init__(self,
                  in_type: FieldType,
                  out_type: FieldType,
-                 basis_generator: Callable[[Representation, Representation], KernelBasis],
+                 basis_generator: Callable[[Representation, Representation], Basis],
                  points: np.ndarray,
                  basis_filter: Callable[[dict], bool] = None,
                  recompute: bool = False,
-                 method: str = "kernel",
                  **kwargs
                  ):
         r"""
@@ -70,8 +69,6 @@ class BlocksBasisExpansion(BasisExpansion):
             # int: number of points where the filters are sampled
             self.S = self.points.shape[1]
 
-        space = in_type.gspace
-
         # we group the basis vectors by their input and output representations
         _block_expansion_modules = {}
         
@@ -81,13 +78,6 @@ class BlocksBasisExpansion(BasisExpansion):
             for o_repr in out_type._unique_representations:
                 reprs_names = (i_repr.name, o_repr.name)
                 try:
-                    if method == "kernel":
-                        basis = space.build_kernel_basis(i_repr, o_repr, **kwargs)
-                    elif method == "diffop":
-                        basis = space.build_diffop_basis(i_repr, o_repr, **kwargs)
-                    else:
-                        raise ValueError(f"Method {method} not recognized, must be 'kernel' or 'diffop'")
-                    
                     basis = basis_generator(i_repr, o_repr, **kwargs)
                     
                     block_expansion = block_basisexpansion(basis, points, basis_filter, recompute=recompute)

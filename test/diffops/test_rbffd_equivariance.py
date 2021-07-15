@@ -12,7 +12,7 @@ def make_grid(n):
 
 def check_quarter_rotations(basis, points, elements, in_rep, out_rep):
     if basis is None:
-        print("Empty KernelBasis!")
+        print("Empty DiffopBasis!")
         return
     print(basis, in_rep, out_rep)
 

@@ -4,12 +4,12 @@ from e2cnn.kernels.basis import EmptyBasisException
 import numpy as np
 from typing import Iterable, List, Optional, Union, Tuple
 
-from e2cnn.kernels import KernelBasis
+from e2cnn.kernels import Basis
 from e2cnn.group import SO2
 from .utils import discretize_homogeneous_polynomial, multiply_polynomials, laplacian_power, display_diffop, transform_polynomial
 
 
-class DiffopBasis(KernelBasis):
+class DiffopBasis(Basis):
 
     def __init__(self, coefficients: List[np.ndarray]):
         r"""
@@ -29,6 +29,7 @@ class DiffopBasis(KernelBasis):
             ~.coefficients (list): an analytical description of the PDO basis elements, see above
             ~.dim (int): the dimensionality of the basis :math:`|\mathcal{K}|` (number of elements)
             ~.shape (tuple): a tuple containing :math:`c_\text{out}` and :math:`c_\text{in}`
+            ~.maximum_order (int): the largest derivative order occuring in the basis
 
         """
         dim = len(coefficients)

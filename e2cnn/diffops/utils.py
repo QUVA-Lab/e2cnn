@@ -6,7 +6,12 @@ import pickle
 
 import numpy as np
 import scipy.special
-from sympy.calculus.finite_diff import finite_diff_weights
+
+try:
+    from sympy.calculus.finite_diff import finite_diff_weights
+    _SYMPY_AVAILABLE = True
+except ImportError:
+    _SYMPY_AVAILABLE = False
 
 try:
     from rbf.pde.fd import weight_matrix # type: ignore
@@ -120,6 +125,9 @@ def discretize_homogeneous_polynomial(
     # No smoothing is used, the remaining implementation depends on whether
     # we use FD or RBF-FD
     if isinstance(points, (tuple, list)):
+        if not _SYMPY_AVAILABLE:
+            raise RuntimeError("Using finite difference discretization "
+                               "requires sympy, please install it.")
         # If points is a list or tuple, we use a regular grid
         # and the standard FD kernels
         kernels = np.stack(

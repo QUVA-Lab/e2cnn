@@ -1,17 +1,41 @@
 
+from dataclasses import dataclass
 import itertools
 from e2cnn.kernels.basis import EmptyBasisException
 import numpy as np
-from typing import Iterable, List, Optional, Union, Tuple
+from typing import Iterable, List, Optional, Type, Union, Tuple
 
 from e2cnn.kernels import Basis
-from e2cnn.group import SO2
+from e2cnn.group import SO2, Representation
+# we need SteerableDiffopBasis, but importing that directly
+# leads to cyclic imports because it also relies on this file.
+# So we just import the diffops module instead
+import e2cnn.diffops as diffops
 from .utils import discretize_homogeneous_polynomial, multiply_polynomials, laplacian_power, display_diffop, transform_polynomial
+
+
+@dataclass(frozen=True)
+class DiscretizationArgs:
+    """Parameters specifying a discretization procedure for PDOs.
+
+    smoothing (float, optional): if this is not ``None``, derivatives of Gaussians
+        are used for discretization, rather than FD or RBF-FD. ``smoothing`` is the standard
+        deviation of the Gaussian used for discretization.
+    angle_offset (float, optional): if not ``None``, rotate the PDOs by this many radians.
+    phi (str, optional): which RBF to use (only relevant for RBF-FD).
+        Can be any of the abbreviations `here <https://rbf.readthedocs.io/en/latest/basis.html>`_.
+    """
+    smoothing: Optional[float] = None
+    angle_offset: Optional[float] = None
+    phi: str = "ga"
 
 
 class DiffopBasis(Basis):
 
-    def __init__(self, coefficients: List[np.ndarray]):
+    def __init__(self, 
+                 coefficients: List[np.ndarray],
+                 discretization: DiscretizationArgs = DiscretizationArgs(),
+                 ):
         r"""
         Abstract class for implementing the basis of a space of differential operators.
         Such a space consists of :math:`c_\text{out} \times c_\text{in}` matrices with
@@ -24,6 +48,8 @@ class DiffopBasis(Basis):
                 PDOs are encoded as the coefficients of :math:`\frac{\partial^n}{\partial x^n}`,
                 :math:`\frac{\partial^n}{\partial x^{n - 1}\partial y}`, ...,
                 :math:`\frac{\partial^n}{\partial y^n}`.
+            discretization (optional): additional parameters specifying parameters for
+                the discretization procedure. See :class:`~e2cnn.diffops.DiscretizationArgs`.
             
         Attributes:
             ~.coefficients (list): an analytical description of the PDO basis elements, see above
@@ -36,6 +62,7 @@ class DiffopBasis(Basis):
         if dim == 0:
             raise EmptyBasisException
         shape = coefficients[0].shape[:2]
+        self.disc = discretization
         self.maximum_order = 0
         for element in coefficients:
             assert element.shape[:2] == shape
@@ -52,11 +79,17 @@ class DiffopBasis(Basis):
 
     def sample(self,
                points: Union[np.ndarray, List[float], Tuple[List[float], List[float]]],
-               mask: np.ndarray = None,
-               smoothing: float = None,
-               angle_offset: float = None,
-               radial_basis_function: str = "ga",
                ) -> np.ndarray:
+        r"""
+        Discretize the basis on a set of points.
+        See :meth:`~e2cnn.diffops.DiffopBasis.sampled_masked` for details.
+        """
+        return self.sample_masked(points)
+
+    def sample_masked(self,
+                      points: Union[np.ndarray, List[float], Tuple[List[float], List[float]]],
+                      mask: np.ndarray = None,
+                      ) -> np.ndarray:
         r"""
         Discretize the basis on a set of points.
 
@@ -68,15 +101,9 @@ class DiffopBasis(Basis):
                 lists, one for the x- and one for the y-axis.
                 You can also use RBF-FD on a regular grid,
                 in that case you need to pass in the grid coordinates explicitly as an array.
+                Either format works if derivatives of Gaussians are used.
             mask (ndarray, optional): Boolean array of shape (dim, ), where ``dim`` is the number of basis elements.
                 True for elements to discretize and False for elements to discard.
-            smoothing (float, optional): if this is not ``None``, derivatives of Gaussians
-                are used for discretization, rather than FD or RBF-FD. In that case, ``points``
-                may have any of the three formats described above. ``smoothing`` is the standard
-                deviation of the Gaussian used for discretization.
-            angle_offset (float, optional): if not ``None``, rotate the PDOs by this many radians.
-            radial_basis_function (str, optional): which RBF to use (only relevant for RBF-FD).
-                Can be any of the abbreviations `here <https://rbf.readthedocs.io/en/latest/basis.html>`_.
 
         Returns:
             ndarray of with shape `(C_out, C_in, num_basis_elements, n_in)`, where
@@ -90,10 +117,10 @@ class DiffopBasis(Basis):
         assert isinstance(mask, np.ndarray)
         assert mask.shape == (self.dim, )
 
-        if angle_offset is not None:
+        if self.disc.angle_offset is not None:
             so2 = SO2(1)
             # rotation matrix by angle_offset
-            matrix = so2.irrep(1)(angle_offset)
+            matrix = so2.irrep(1)(self.disc.angle_offset)
             # we transform the polynomial with the matrix
             coefficients = (transform_polynomial(element, matrix) for element in self.coefficients)
         else:
@@ -122,7 +149,7 @@ class DiffopBasis(Basis):
         for k, element in enumerate(coefficients):
             for i in range(self.shape[0]):
                 for j in range(self.shape[1]):
-                    basis[k, i, j] = discretize_homogeneous_polynomial(points, element[i, j], smoothing, phi=radial_basis_function)
+                    basis[k, i, j] = discretize_homogeneous_polynomial(points, element[i, j], self.disc.smoothing, phi=self.disc.phi)
 
         # Finally, we move the len_basis axis to the third position
         basis = basis.transpose(1, 2, 0, 3)
@@ -140,7 +167,7 @@ class DiffopBasis(Basis):
 
 class LaplaceProfile(DiffopBasis):
 
-    def __init__(self, max_power: int):
+    def __init__(self, max_power: int, discretization: DiscretizationArgs = DiscretizationArgs()):
         r"""
         Basis for rotationally invariant PDOs.
         Each basis element is defined as a power of a Laplacian.
@@ -153,6 +180,8 @@ class LaplaceProfile(DiffopBasis):
             max_power (int): the maximum power of the Laplace operator that will be used.
                 The maximum degree (as a differential operator) will be two times this maximum
                 power.
+            discretization (optional): additional parameters specifying parameters for
+                the discretization procedure. See :class:`~e2cnn.diffops.DiscretizationArgs`.
 
         """
 
@@ -163,7 +192,7 @@ class LaplaceProfile(DiffopBasis):
             laplacian_power(k).reshape(1, 1, -1) for k in range(max_power + 1)
         ]
 
-        super().__init__(coefficients)
+        super().__init__(coefficients, discretization)
 
         self.max_power = max_power
 
@@ -183,7 +212,14 @@ class LaplaceProfile(DiffopBasis):
 
 class TensorBasis(DiffopBasis):
 
-    def __init__(self, basis1: DiffopBasis, basis2: DiffopBasis):
+    def __init__(self,
+                 irreps_basis: Type[DiffopBasis],
+                 in_repr: Representation,
+                 out_repr: Representation,
+                 max_power: int,
+                 discretization: DiscretizationArgs = DiscretizationArgs(),
+                 **kwargs
+                 ):
         r"""
 
         Build the tensor product basis of two PDO bases over the
@@ -193,14 +229,19 @@ class TensorBasis(DiffopBasis):
             C = A \otimes B = \left\{ c_{i,j} := a_i \circ b_j \right\}_{i,j}.
 
         Args:
-            basis1 (DiffopBasis): the first basis
-            basis2 (DiffopBasis): the second basis
+            are passed on to :class:`~e2cnn.diffops.SteerableDiffopBasis` and
+                :class:`~e2cnn.diffops.LaplaceProfile`, see their documentation.
 
         Attributes:
-            ~.basis1 (DiffopBasis): the first basis
-            ~.basis2 (DiffopBasis): the second basis
+            ~.basis1 (SteerableDiffopBasis): the first basis
+            ~.basis2 (LaplaceProfile): the second basis
 
         """
+        basis1 = diffops.SteerableDiffopBasis(
+            irreps_basis, in_repr, out_repr, discretization, **kwargs
+        )
+        basis2 = LaplaceProfile(max_power, discretization)
+
         coefficients = []
         for a, b in itertools.product(basis1.coefficients, basis2.coefficients):
             order = a.shape[2] + b.shape[2] - 2
@@ -212,7 +253,7 @@ class TensorBasis(DiffopBasis):
                 out[i, j, k, l] = multiply_polynomials(a[i, k], b[j, l])
             out = out.reshape(a.shape[0] * b.shape[0], a.shape[1] * b.shape[1], order + 1)
             coefficients.append(out)
-        super().__init__(coefficients)
+        super().__init__(coefficients, discretization)
         self.basis1 = basis1
         self.basis2 = basis2
 

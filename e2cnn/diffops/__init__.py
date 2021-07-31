@@ -1,6 +1,6 @@
 
 from .steerable_basis import SteerableDiffopBasis
-from .basis import LaplaceProfile, TensorBasis, DiffopBasis
+from .basis import LaplaceProfile, TensorBasis, DiffopBasis, DiscretizationArgs
 
 from .r2 import *
 
@@ -13,6 +13,7 @@ __all__ = [
     "LaplaceProfile",
     "TensorBasis",
     "DiffopBasis",
+    "DiscretizationArgs",
     # R2 bases
     "diffops_Flip_act_R2",
     "diffops_DN_act_R2",

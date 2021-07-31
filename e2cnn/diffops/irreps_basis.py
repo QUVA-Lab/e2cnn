@@ -9,7 +9,7 @@ from e2cnn.group import cyclic_group, dihedral_group, so2_group, o2_group
 from e2cnn.group import CyclicGroup, DihedralGroup, SO2, O2
 
 from .utils import homogenized_cheby, transform_polynomial
-from .basis import DiffopBasis
+from .basis import DiffopBasis, DiscretizationArgs
 
 from typing import Union, Tuple, Optional
 
@@ -23,6 +23,7 @@ class R2FlipsSolution(DiffopBasis):
                  axis: float,
                  max_frequency: int = None,
                  max_offset: int = None,
+                 discretization: DiscretizationArgs = DiscretizationArgs(),
                  ):
         
         if isinstance(group, int):
@@ -109,7 +110,7 @@ class R2FlipsSolution(DiffopBasis):
             # we transform the polynomial with the matrix
             coefficients = [transform_polynomial(element, matrix) for element in coefficients]
 
-        super().__init__(coefficients)
+        super().__init__(coefficients, discretization)
     
     def __getitem__(self, idx):
         assert idx < self.dim
@@ -141,6 +142,7 @@ class R2DiscreteRotationsSolution(DiffopBasis):
                  out_irrep: Union[str, IrreducibleRepresentation, int],
                  max_frequency: int = None,
                  max_offset: int = None,
+                 discretization: DiscretizationArgs = DiscretizationArgs(),
                  ):
 
         if isinstance(group, int):
@@ -328,7 +330,7 @@ class R2DiscreteRotationsSolution(DiffopBasis):
         else:
             raise ValueError(f"Shape {self.shape} not recognized!")
 
-        super().__init__(coefficients)
+        super().__init__(coefficients, discretization)
 
 
     def __getitem__(self, idx):
@@ -367,6 +369,7 @@ class R2FlipsDiscreteRotationsSolution(DiffopBasis):
                  axis: float,
                  max_frequency: int = None,
                  max_offset: int = None,
+                 discretization: DiscretizationArgs = DiscretizationArgs(),
                  ):
 
         if isinstance(group, int):
@@ -559,7 +562,7 @@ class R2FlipsDiscreteRotationsSolution(DiffopBasis):
             # we transform the polynomial with the matrix
             coefficients = [transform_polynomial(element, matrix) for element in coefficients]
 
-        super().__init__(coefficients)
+        super().__init__(coefficients, discretization)
 
 
     def __getitem__(self, idx):
@@ -594,6 +597,7 @@ class R2ContinuousRotationsSolution(DiffopBasis):
         group: Group,
         in_irrep: Union[str, IrreducibleRepresentation, int],
         out_irrep: Union[str, IrreducibleRepresentation, int],
+        discretization: DiscretizationArgs = DiscretizationArgs(),
     ):
 
         assert isinstance(group, SO2)
@@ -707,7 +711,7 @@ class R2ContinuousRotationsSolution(DiffopBasis):
         else:
             raise ValueError(f"Shape {self.shape} not recognized!")
 
-        super().__init__(coefficients)
+        super().__init__(coefficients, discretization)
 
     def __getitem__(self, idx):
         assert idx < self.dim
@@ -742,6 +746,7 @@ class R2FlipsContinuousRotationsSolution(DiffopBasis):
                  in_irrep: Union[str, IrreducibleRepresentation, Tuple[int]],
                  out_irrep: Union[str, IrreducibleRepresentation, Tuple[int, int]],
                  axis: float = 0.,
+                 discretization: DiscretizationArgs = DiscretizationArgs(),
                  ):
         
         assert isinstance(group, O2)
@@ -866,7 +871,7 @@ class R2FlipsContinuousRotationsSolution(DiffopBasis):
             # we transform the polynomial with the matrix
             coefficients = [transform_polynomial(element, matrix) for element in coefficients]
 
-        super().__init__(coefficients)
+        super().__init__(coefficients, discretization)
     
     def __getitem__(self, idx):
         assert idx < self.dim

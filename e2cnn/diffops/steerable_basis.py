@@ -5,7 +5,7 @@ from e2cnn.kernels.basis import EmptyBasisException
 
 from e2cnn.group import Representation, SO2, CyclicGroup
 
-from .basis import DiffopBasis
+from .basis import DiffopBasis, DiscretizationArgs
 
 from typing import Type, List
 
@@ -16,6 +16,7 @@ class SteerableDiffopBasis(DiffopBasis):
                  irreps_basis: Type[DiffopBasis],
                  in_repr: Representation,
                  out_repr: Representation,
+                 discretization: DiscretizationArgs = DiscretizationArgs(),
                  **kwargs):
         r"""
         
@@ -61,6 +62,8 @@ class SteerableDiffopBasis(DiffopBasis):
             irreps_basis (class): class defining the irreps basis. This class is instantiated for each pair of irreps to solve all irreps constraints.
             in_repr (Representation): Representation associated with the input feature field
             out_repr (Representation): Representation associated with the output feature field
+            discretization (optional): additional parameters specifying parameters for
+                the discretization procedure. See :class:`~e2cnn.diffops.DiscretizationArgs`.
             **kwargs: additional arguments used when instantiating ``irreps_basis``
             
         """
@@ -100,6 +103,7 @@ class SteerableDiffopBasis(DiffopBasis):
                     basis = irreps_basis(group=group,
                                          in_irrep=i_irrep_name,
                                          out_irrep=o_irrep_name,
+                                         discretization=discretization,
                                          **kwargs)
 
                     self.irreps_bases[(i_irrep_name, o_irrep_name)] = basis
@@ -138,7 +142,7 @@ class SteerableDiffopBasis(DiffopBasis):
             pre_coefficients = self._direct_sum_coefficients()
             coefficients = self._change_of_basis(pre_coefficients)
         
-        super().__init__(coefficients)
+        super().__init__(coefficients, discretization)
 
     def _direct_sum_coefficients(self) -> List[np.ndarray]:
         coefficients: List[np.ndarray] = []

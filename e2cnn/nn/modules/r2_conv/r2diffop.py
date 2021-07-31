@@ -15,6 +15,7 @@ from e2cnn.nn import init
 from e2cnn.nn import FieldType
 from e2cnn.nn import GeometricTensor
 from e2cnn.gspaces import *
+from e2cnn.diffops import DiscretizationArgs
 
 from ..equivariant_module import EquivariantModule
 
@@ -732,6 +733,11 @@ def compute_basis_params(kernel_size: int,
         maximum_power = min(maximum_power, maximum_order // 2)
     else:
         maximum_power = maximum_order // 2
+    disc = DiscretizationArgs(
+        smoothing=smoothing,
+        angle_offset=angle_offset,
+        phi=radial_basis_function,
+    )
     params = {
         # to guarantee that all relevant tensor products
         # are generated, we need Laplacian powers up to
@@ -740,10 +746,7 @@ def compute_basis_params(kernel_size: int,
         "max_power": maximum_power,
         # frequencies higher than than the maximum order will be discarded anyway
         "maximum_frequency": maximum_order,
-        "method": "diffop",
-        "smoothing": smoothing,
-        "angle_offset": angle_offset,
-        "radial_basis_function": radial_basis_function,
+        "discretization": disc,
     }
 
     return grid, basis_filter, params

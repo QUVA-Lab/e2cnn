@@ -1,6 +1,5 @@
 
 from e2cnn.kernels import Basis, EmptyBasisException
-from e2cnn.diffops import DiffopBasis
 from .basisexpansion import BasisExpansion
 
 from typing import Callable, Dict, List, Iterable, Union
@@ -17,7 +16,6 @@ class SingleBlockBasisExpansion(BasisExpansion):
                  basis: Basis,
                  points: np.ndarray,
                  basis_filter: Callable[[dict], bool] = None,
-                 **kwargs
                  ):
         r"""
         
@@ -32,7 +30,6 @@ class SingleBlockBasisExpansion(BasisExpansion):
             points (ndarray): points where the analytical basis should be sampled
             basis_filter (callable, optional): filter for the basis elements. Should take a dictionary containing an
                                                element's attributes and return whether to keep it or not.
-            **kwargs: additional optional arguments for the discretization procedure
             
         """
 
@@ -154,8 +151,7 @@ _stored_filters = {}
 def block_basisexpansion(basis: Basis,
                          points: np.ndarray,
                          basis_filter: Callable[[dict], bool] = None,
-                         recompute: bool = False,
-                         **kwargs
+                         recompute: bool = False
                          ) -> SingleBlockBasisExpansion:
     r"""
     
@@ -179,22 +175,20 @@ def block_basisexpansion(basis: Basis,
         for b, attr in enumerate(basis):
             mask[b] = basis_filter(attr)
         
-        angle_offset = kwargs.get("angle_offset", None)
-        smoothing = kwargs.get("smoothing", None)
         if isinstance(points, list):
             points_key = tuple(points)
         elif isinstance(points, tuple):
             points_key = (tuple(points[0]), tuple(points[1]))
         else:
             points_key = points.tobytes()
-        key = (basis, mask.tobytes(), points_key, angle_offset, smoothing)
+        key = (basis, mask.tobytes(), points_key)
         if key not in _stored_filters:
-            _stored_filters[key] = SingleBlockBasisExpansion(basis, points, basis_filter, **kwargs)
+            _stored_filters[key] = SingleBlockBasisExpansion(basis, points, basis_filter)
         
         return _stored_filters[key]
     
     else:
-        return SingleBlockBasisExpansion(basis, points, basis_filter, **kwargs)
+        return SingleBlockBasisExpansion(basis, points, basis_filter)
 
 
 def normalize_basis(basis: torch.Tensor, sizes: torch.Tensor) -> torch.Tensor:

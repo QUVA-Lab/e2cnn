@@ -21,7 +21,9 @@ def diffops_Flip_act_R2(in_repr: Representation, out_repr: Representation,
                         max_power: int,
                         axis: float = np.pi / 2,
                         max_frequency: int = None,
-                        max_offset: int = None) -> DiffopBasis:
+                        max_offset: int = None,
+                        discretization: DiscretizationArgs = DiscretizationArgs(),
+                        ) -> DiffopBasis:
     r"""
 
     Builds a basis for PDOs equivariant to reflections.
@@ -52,24 +54,25 @@ def diffops_Flip_act_R2(in_repr: Representation, out_repr: Representation,
         axis (float): angle defining the reflection axis
         max_frequency (int): maximum frequency of the basis
         max_offset (int): maximum offset in the frequencies of the basis
+        discretization (optional): additional parameters specifying parameters for
+            the discretization procedure. See :class:`~e2cnn.diffops.DiscretizationArgs`.
 
     """
     assert in_repr.group == out_repr.group
     group = in_repr.group
     assert isinstance(group, CyclicGroup) and group.order() == 2
 
-    angular_basis = SteerableDiffopBasis(R2FlipsSolution, in_repr, out_repr,
-                                         axis=axis,
-                                         max_frequency=max_frequency,
-                                         max_offset=max_offset)
-
-    radial_profile = LaplaceProfile(max_power)
-    
-    return TensorBasis(radial_profile, angular_basis)
+    return TensorBasis(R2FlipsSolution, in_repr, out_repr,
+                       max_power,
+                       discretization,
+                       axis=axis,
+                       max_frequency=max_frequency,
+                       max_offset=max_offset)
 
 
 def diffops_SO2_act_R2(in_repr: Representation, out_repr: Representation,
-                       max_power: int
+                       max_power: int,
+                       discretization: DiscretizationArgs = DiscretizationArgs(),
                        ) -> DiffopBasis:
     r"""
 
@@ -86,6 +89,8 @@ def diffops_SO2_act_R2(in_repr: Representation, out_repr: Representation,
         in_repr (Representation): the representation specifying the transformation of the input feature field
         out_repr (Representation): the representation specifying the transformation of the output feature field
         max_power (int): maximum power of the Laplacian for the radial profile
+        discretization (optional): additional parameters specifying parameters for
+            the discretization procedure. See :class:`~e2cnn.diffops.DiscretizationArgs`.
 
     """
     assert in_repr.group == out_repr.group
@@ -94,17 +99,15 @@ def diffops_SO2_act_R2(in_repr: Representation, out_repr: Representation,
 
     assert isinstance(group, SO2)
     
-    angular_basis = SteerableDiffopBasis(R2ContinuousRotationsSolution, in_repr, out_repr)
+    return TensorBasis(R2ContinuousRotationsSolution, in_repr, out_repr, max_power, discretization)
 
-    radial_profile = LaplaceProfile(max_power)
-    
-    return TensorBasis(radial_profile, angular_basis)
 
 
 def diffops_CN_act_R2(in_repr: Representation, out_repr: Representation,
                     max_power: int,
                     max_frequency: int = None,
                     max_offset: int = None,
+                    discretization: DiscretizationArgs = DiscretizationArgs(),
                     ) -> DiffopBasis:
     r"""
 
@@ -140,6 +143,8 @@ def diffops_CN_act_R2(in_repr: Representation, out_repr: Representation,
         max_power (int): maximum power of the Laplacian for the radial profile
         max_frequency (int): maximum frequency of the basis
         max_offset (int): maximum offset in the frequencies of the basis
+        discretization (optional): additional parameters specifying parameters for
+            the discretization procedure. See :class:`~e2cnn.diffops.DiscretizationArgs`.
 
     """
 
@@ -149,19 +154,23 @@ def diffops_CN_act_R2(in_repr: Representation, out_repr: Representation,
 
     assert isinstance(group, CyclicGroup)
 
-    angular_basis = SteerableDiffopBasis(R2DiscreteRotationsSolution, in_repr, out_repr,
-                                         max_frequency=max_frequency,
-                                         max_offset=max_offset)
+    return TensorBasis(R2DiscreteRotationsSolution,
+                       in_repr,
+                       out_repr,
+                       max_power,
+                       discretization,
+                       max_frequency=max_frequency,
+                       max_offset=max_offset)
 
-    radial_profile = LaplaceProfile(max_power)
-
-    return TensorBasis(radial_profile, angular_basis)
 
 
 def diffops_DN_act_R2(in_repr: Representation, out_repr: Representation,
                       max_power: int,
                       axis: float = np.pi/2,
-                      max_frequency: int = None, max_offset: int = None) -> DiffopBasis:
+                      max_frequency: int = None,
+                      max_offset: int = None,
+                      discretization: DiscretizationArgs = DiscretizationArgs(),
+                      ) -> DiffopBasis:
     r"""
 
     Builds a basis for PDOs equivariant to reflections and :math:`N` discrete rotations,
@@ -192,6 +201,8 @@ def diffops_DN_act_R2(in_repr: Representation, out_repr: Representation,
         max_frequency (int): maximum frequency of the basis
         max_offset (int): maximum offset in the frequencies of the basis
         axis (float): angle defining the reflection axis
+        discretization (optional): additional parameters specifying parameters for
+            the discretization procedure. See :class:`~e2cnn.diffops.DiscretizationArgs`.
 
 
     """
@@ -201,19 +212,19 @@ def diffops_DN_act_R2(in_repr: Representation, out_repr: Representation,
 
     assert isinstance(group, DihedralGroup)
     
-    angular_basis = SteerableDiffopBasis(R2FlipsDiscreteRotationsSolution, in_repr, out_repr,
-                                         axis=axis,
-                                         max_frequency=max_frequency,
-                                         max_offset=max_offset)
-
-    radial_profile = LaplaceProfile(max_power)
-
-    return TensorBasis(radial_profile, angular_basis)
+    return TensorBasis(R2FlipsDiscreteRotationsSolution, in_repr, out_repr,
+                       max_power,
+                       discretization,
+                       axis=axis,
+                       max_frequency=max_frequency,
+                       max_offset=max_offset)
 
 
 def diffops_O2_act_R2(in_repr: Representation, out_repr: Representation,
                       max_power: int,
-                      axis: float = np.pi / 2) -> DiffopBasis:
+                      axis: float = np.pi / 2,
+                      discretization: DiscretizationArgs = DiscretizationArgs(),
+                      ) -> DiffopBasis:
     r"""
 
     Builds a basis for PDOs equivariant to reflections and continuous rotations, modeled by the
@@ -234,6 +245,8 @@ def diffops_O2_act_R2(in_repr: Representation, out_repr: Representation,
         out_repr (Representation): the representation specifying the transformation of the output feature field
         max_power (int): maximum power of the Laplacian for the radial profile
         axis (float, optional): angle of the axis of the reflection element
+        discretization (optional): additional parameters specifying parameters for
+            the discretization procedure. See :class:`~e2cnn.diffops.DiscretizationArgs`.
 
     """
     assert in_repr.group == out_repr.group
@@ -241,16 +254,21 @@ def diffops_O2_act_R2(in_repr: Representation, out_repr: Representation,
     group = in_repr.group
     assert isinstance(group, O2)
     
-    angular_basis = SteerableDiffopBasis(R2FlipsContinuousRotationsSolution, in_repr, out_repr, axis=axis)
+    return TensorBasis(R2FlipsContinuousRotationsSolution,
+                       in_repr,
+                       out_repr,
+                       max_power,
+                       discretization,
+                       axis=axis)
     
-    radial_profile = LaplaceProfile(max_power)
-    
-    return TensorBasis(radial_profile, angular_basis)
 
 
 def diffops_Trivial_act_R2(in_repr: Representation, out_repr: Representation,
                            max_power: int,
-                           max_frequency: int = None, max_offset: int = None) -> DiffopBasis:
+                           max_frequency: int = None,
+                           max_offset: int = None,
+                           discretization: DiscretizationArgs = DiscretizationArgs(),
+                           ) -> DiffopBasis:
     r"""
 
     Builds a basis for unconstrained PDOs.
@@ -282,6 +300,8 @@ def diffops_Trivial_act_R2(in_repr: Representation, out_repr: Representation,
         axis (float): angle defining the reflection axis
         max_frequency (int): maximum frequency of the basis
         max_offset (int): maximum offset in the frequencies of the basis
+        discretization (optional): additional parameters specifying parameters for
+            the discretization procedure. See :class:`~e2cnn.diffops.DiscretizationArgs`.
 
     """
     
@@ -290,10 +310,8 @@ def diffops_Trivial_act_R2(in_repr: Representation, out_repr: Representation,
     group = in_repr.group
     assert isinstance(group, CyclicGroup) and group.order() == 1
 
-    angular_basis = SteerableDiffopBasis(R2DiscreteRotationsSolution, in_repr, out_repr,
-                                         max_frequency=max_frequency,
-                                         max_offset=max_offset)
-
-    radial_profile = LaplaceProfile(max_power)
-    
-    return TensorBasis(radial_profile, angular_basis)
+    return TensorBasis(R2DiscreteRotationsSolution, in_repr, out_repr,
+                       max_power,
+                       discretization,
+                       max_frequency=max_frequency,
+                       max_offset=max_offset)

@@ -89,7 +89,7 @@ def discretize_homogeneous_polynomial(
 
     targets = np.array([[0, 0]])
 
-    key = (points_key, coefficients.tobytes(), smoothing)
+    key = (points_key, coefficients.tobytes(), smoothing, phi)
     if key in _DIFFOP_CACHE:
         return _DIFFOP_CACHE[key]
 

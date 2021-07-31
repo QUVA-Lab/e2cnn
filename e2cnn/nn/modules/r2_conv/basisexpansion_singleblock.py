@@ -175,13 +175,7 @@ def block_basisexpansion(basis: Basis,
         for b, attr in enumerate(basis):
             mask[b] = basis_filter(attr)
         
-        if isinstance(points, list):
-            points_key = tuple(points)
-        elif isinstance(points, tuple):
-            points_key = (tuple(points[0]), tuple(points[1]))
-        else:
-            points_key = points.tobytes()
-        key = (basis, mask.tobytes(), points_key)
+        key = (basis, mask.tobytes(), points.tobytes())
         if key not in _stored_filters:
             _stored_filters[key] = SingleBlockBasisExpansion(basis, points, basis_filter)
         

@@ -3,7 +3,8 @@ import numpy as np
 from e2cnn.group import *
 from e2cnn.diffops import *
 from e2cnn.kernels import EmptyBasisException
-from e2cnn.diffops.utils import required_points, symmetric_points
+
+disc = DiscretizationArgs(method="rbffd")
 
 def make_grid(n):
     x = np.arange(-n, n + 1)
@@ -71,7 +72,7 @@ def test_so2_irreps():
 
     for in_rep in group.irreps.values():
         for out_rep in group.irreps.values():
-            basis = diffops_SO2_act_R2(in_rep, out_rep, max_power=0)
+            basis = diffops_SO2_act_R2(in_rep, out_rep, max_power=0, discretization=disc)
             # depending on the order in which tests are run, more than irreps up
             # to n = 2 may already have been built. But we want to skip any
             # bases with order > 6 (because we'd need larger grids to discretize
@@ -87,7 +88,7 @@ def test_o2_irreps():
     for in_rep in group.irreps.values():
         for out_rep in group.irreps.values():
             try:
-                basis = diffops_O2_act_R2(in_rep, out_rep, max_power=0, axis=np.pi/2)
+                basis = diffops_O2_act_R2(in_rep, out_rep, max_power=0, axis=np.pi/2, discretization=disc)
                 # depending on the order in which tests are run, more than irreps up
                 # to n = 2 may already have been built. But we want to skip any
                 # bases with order > 6 (because we'd need larger grids to discretize
@@ -107,7 +108,8 @@ def test_cyclic_even_regular():
 
         basis = diffops_CN_act_R2(in_rep, out_rep,
                                   max_power=0,
-                                  max_frequency=4)
+                                  max_frequency=4,
+                                  discretization=disc)
         points = make_grid(3)
         check_quarter_rotations(basis, points, [0, N // 4, N // 2, 3 * N // 4], in_rep, out_rep)
 
@@ -119,7 +121,8 @@ def test_cyclic_mix():
 
         basis = diffops_CN_act_R2(in_rep, out_rep,
                                   max_power=0,
-                                  max_frequency=4)
+                                  max_frequency=4,
+                                  discretization=disc)
         points = make_grid(3)
         check_quarter_rotations(basis, points, [0, N // 4, N // 2, 3 * N // 4], in_rep, out_rep)
 
@@ -131,7 +134,8 @@ def test_cyclic_changeofbasis():
 
         basis = diffops_CN_act_R2(in_rep, out_rep,
                                   max_power=0,
-                                  max_frequency=4)
+                                  max_frequency=4,
+                                  discretization=disc)
         points = make_grid(3)
         check_quarter_rotations(basis, points, [0, N // 4, N // 2, 3 * N // 4], in_rep, out_rep)
 
@@ -140,7 +144,8 @@ def test_cyclic_changeofbasis():
 
         basis = diffops_CN_act_R2(in_rep, out_rep,
                                   max_power=0,
-                                  max_frequency=4)
+                                  max_frequency=4,
+                                  discretization=disc)
         check_quarter_rotations(basis, points, [0, N // 4, N // 2, 3 * N // 4], in_rep, out_rep)
 
 def test_cyclic_irreps():
@@ -152,7 +157,8 @@ def test_cyclic_irreps():
             try:
                 basis = diffops_CN_act_R2(in_rep, out_rep,
                                           max_power=0,
-                                          max_frequency=4)
+                                          max_frequency=4,
+                                          discretization=disc)
                 points = make_grid(3)
                 check_quarter_rotations(basis, points, [0, N // 4, N // 2, 3 * N // 4], in_rep, out_rep)
             except EmptyBasisException:

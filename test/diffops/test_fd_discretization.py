@@ -60,14 +60,16 @@ def test_exact_on_polynomials():
         # to differentiate between odd and even sizes in the code below
         if size % 2 == 0:
             size += 1
-        points = symmetric_points(size)
+        points = make_grid(size // 2)
         N = 20
         grid = make_grid(N)
         # the convolution will discard some boundary values, so need a smaller grid for final comparison
         small_N = N - (size // 2)
         small_grid = make_grid(small_N)
         coefficients = np.random.randn(n + 1)
-        kernel = discretize_homogeneous_polynomial(points, coefficients).reshape(size, size)
+        # the rot90 is needed because we use the convention from get_grid_coords,
+        # which rotates the kernel
+        kernel = np.rot90(discretize_homogeneous_polynomial(points, coefficients).reshape(size, size), 1)
         for degree in range(3):
             # generate random homogeneous polynomial
             poly = np.random.randn(degree + 1)
@@ -89,5 +91,4 @@ def test_exact_on_polynomials():
 
 def make_grid(n):
     x = np.arange(-n, n + 1)
-    # we want x to be the first axis, that's why we need the ::-1
-    return np.stack(np.meshgrid(x, x)[::-1]).reshape(2, -1)
+    return np.stack(np.meshgrid(x, -x)).reshape(2, -1)

@@ -18,13 +18,16 @@ from .utils import discretize_homogeneous_polynomial, multiply_polynomials, lapl
 class DiscretizationArgs:
     """Parameters specifying a discretization procedure for PDOs.
 
-    smoothing (float, optional): if this is not ``None``, derivatives of Gaussians
-        are used for discretization, rather than FD or RBF-FD. ``smoothing`` is the standard
-        deviation of the Gaussian used for discretization.
+    method (str, optional): the discretization method to use,
+        either 'rbffd', 'fd' or 'gauss'.
+    smoothing (float, optional): ``smoothing`` is the standard
+        deviation of the Gaussian used for discretization. Must be set if `method='gauss'`,
+        has no effect otherwise.
     angle_offset (float, optional): if not ``None``, rotate the PDOs by this many radians.
     phi (str, optional): which RBF to use (only relevant for RBF-FD).
         Can be any of the abbreviations `here <https://rbf.readthedocs.io/en/latest/basis.html>`_.
     """
+    method: str = "fd"
     smoothing: Optional[float] = None
     angle_offset: Optional[float] = None
     phi: str = "ga"
@@ -78,7 +81,7 @@ class DiffopBasis(Basis):
         super().__init__(dim, shape)
 
     def sample(self,
-               points: Union[np.ndarray, List[float], Tuple[List[float], List[float]]],
+               points: np.ndarray,
                ) -> np.ndarray:
         r"""
         Discretize the basis on a set of points.
@@ -87,21 +90,16 @@ class DiffopBasis(Basis):
         return self.sample_masked(points)
 
     def sample_masked(self,
-                      points: Union[np.ndarray, List[float], Tuple[List[float], List[float]]],
+                      points: np.ndarray,
                       mask: np.ndarray = None,
                       ) -> np.ndarray:
         r"""
         Discretize the basis on a set of points.
 
         Args:
-            points (ndarray, tuple or list): To use RBF-FD, this has to be a
-                `2 x N` array with `N` points on which to discretize.
-                To use FD, this can be either a list of floats, which will be used
-                as the 1D coordinates on which to discretize, or a tuple of two such
-                lists, one for the x- and one for the y-axis.
-                You can also use RBF-FD on a regular grid,
-                in that case you need to pass in the grid coordinates explicitly as an array.
-                Either format works if derivatives of Gaussians are used.
+            points (ndarray): a `2 x N` array with `N` points on which to discretize.
+                If FD is used (default), this has to be a flattened version of
+                a regular sorted grid (like you would get using np.meshgrid on ranges).
             mask (ndarray, optional): Boolean array of shape (dim, ), where ``dim`` is the number of basis elements.
                 True for elements to discretize and False for elements to discard.
 
@@ -149,7 +147,13 @@ class DiffopBasis(Basis):
         for k, element in enumerate(coefficients):
             for i in range(self.shape[0]):
                 for j in range(self.shape[1]):
-                    basis[k, i, j] = discretize_homogeneous_polynomial(points, element[i, j], self.disc.smoothing, phi=self.disc.phi)
+                    basis[k, i, j] = discretize_homogeneous_polynomial(
+                        points,
+                        element[i, j],
+                        self.disc.smoothing,
+                        phi=self.disc.phi,
+                        method=self.disc.method,
+                    )
 
         # Finally, we move the len_basis axis to the third position
         basis = basis.transpose(1, 2, 0, 3)

@@ -61,13 +61,7 @@ class BlocksBasisExpansion(BasisExpansion):
         self.points = points
         
         # int: number of points where the filters are sampled
-        if isinstance(points, list):
-            self.S = len(points) ** 2
-        elif isinstance(points, tuple):
-            self.S = len(points[0]) * len(points[1])
-        else:
-            # int: number of points where the filters are sampled
-            self.S = self.points.shape[1]
+        self.S = self.points.shape[1]
 
         # we group the basis vectors by their input and output representations
         _block_expansion_modules = {}

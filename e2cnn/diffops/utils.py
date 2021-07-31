@@ -62,10 +62,11 @@ def store_cache(path: str = "./.e2cnn_cache/diffops.pickle"):
 
 
 def discretize_homogeneous_polynomial(
-        points: Union[np.ndarray, Tuple[List[float], List[float]], List[float]],
+        points: np.ndarray,
         coefficients: np.ndarray,
         smoothing: float = None,
         phi: str = "ga",
+        method: str = "fd",
 ) -> np.ndarray:
     r"""Discretize a homogeneous partial differential operator.
     Homogeneous means that all terms have the same derivative order.
@@ -73,23 +74,13 @@ def discretize_homogeneous_polynomial(
     See :meth:`e2cnn.DiffopBasis.sample` for details.
 
     """
-    if isinstance(points, (list, tuple)):
-        if isinstance(points, list):
-            num_points = len(points) **2
-            points_key = tuple(points)
-        else:
-            num_points = len(points[0]) * len(points[1])
-            points_key = (tuple(points[0]), tuple(points[1]))
-
-    else:
-        assert isinstance(points, np.ndarray)
-        assert points.shape[0] == 2
-        points_key = points.tobytes()
-        num_points = points.shape[1]
+    assert isinstance(points, np.ndarray)
+    assert points.shape[0] == 2
+    num_points = points.shape[1]
 
     targets = np.array([[0, 0]])
 
-    key = (points_key, coefficients.tobytes(), smoothing, phi)
+    key = (points.tobytes(), coefficients.tobytes(), smoothing, phi, method)
     if key in _DIFFOP_CACHE:
         return _DIFFOP_CACHE[key]
 
@@ -103,48 +94,53 @@ def discretize_homogeneous_polynomial(
         # we have the zero operator
         return np.zeros(num_points)
     
-    if smoothing is not None:
+    if method == "gauss":
+        if smoothing is None:
+            raise ValueError("smoothing must be set when method = 'gauss'")
         if not _RBF_AVAILABLE:
             raise RuntimeError("Using derivatives of Gaussians for discretization "
                                "requires the RBF package, please install it. "
                                "See https://github.com/treverhines/RBF for instructions.")
-        # use derivatives of Gaussians. In this context, we don't distinguish
-        # between FD/RBF-FD, we just return the derivative of a Gaussian on
-        # the given points
-        if isinstance(points, list):
-            points = (points, points)
-        if isinstance(points, tuple):
-            assert len(points) == 2
-            xx, yy = np.meshgrid(points[0], points[1], indexing="ij")
-            grid = np.stack([xx, yy]).reshape(2, -1)
-            return gaussian_derivative(coefficients, grid, smoothing)
-        
-        assert isinstance(points, np.ndarray)
-        return gaussian_derivative(coefficients, points, smoothing)
+        out = gaussian_derivative(coefficients, points, smoothing)
 
-    # No smoothing is used, the remaining implementation depends on whether
-    # we use FD or RBF-FD
-    if isinstance(points, (tuple, list)):
+    elif method == "fd":
         if not _SYMPY_AVAILABLE:
             raise RuntimeError("Using finite difference discretization "
                                "requires sympy, please install it.")
-        # If points is a list or tuple, we use a regular grid
-        # and the standard FD kernels
+        # For FD, points needs to be a regular grid, and we need to
+        # extract its projection onto the two axes.
+        axis_points = (np.unique(points[0]), np.unique(points[1]))
+        # Here, we just check that everything went as expected
+        # (i.e. that the input had the expected format).
+        # The minus sign is the convention that get_grid_coords
+        # uses, which is what the modules in the nn package use.
+        check_points = np.stack(
+            np.meshgrid(axis_points[0], -axis_points[1], indexing="xy")
+        ).reshape(2, -1)
+        if not np.array_equal(check_points, points):
+            print(axis_points)
+            print(points)
+            print(check_points)
+            raise ValueError("Format of points doesn't match the one needed for FD.")
+
         kernels = np.stack(
-            # type checkers get confused by expanding diff, but we know
-            # that it has length 2.
-            [discretize_2d_monomial(*diff, points) for diff in diffs] # type: ignore
+            [
+                # type checkers get confused by expanding diff, but we know
+                # that it has length 2.
+                discretize_2d_monomial(*diff, axis_points) # type: ignore
+                for diff in diffs
+            ]
         ).reshape(-1, num_points)
 
         out = np.sum(
             coefficients[nonzero][:, None] * kernels, axis=0
         )
-    else:
+
+    elif method == "rbffd":
         if not _RBF_AVAILABLE:
             raise RuntimeError("Using RBF-FD for discretization "
                                "requires the RBF package, please install it. "
                                "See https://github.com/treverhines/RBF for instructions.")
-        # points is an array, so we use RBF-FD
         out = weight_matrix(targets, points.T, num_points, diffs, coefficients[nonzero], phi=phi)
         if np.any(np.isnan(out.data)):
             raise Exception(f"NaNs encountered while discretizing diffop {display_diffop(coefficients)} on {num_points} points.\n"
@@ -160,6 +156,10 @@ def discretize_homogeneous_polynomial(
                         f"Diffop passed to RBF: {diffs} with coefficients {coefficients[nonzero]}", RuntimeWarning)
 
         out = out.toarray().flatten()
+    else:
+        raise ValueError(f"Discretization method {method} not recognized. "
+                         "Choices are 'fd', 'gauss' and 'rbffd'.")
+
     _DIFFOP_CACHE[key] = out
     return out
 
@@ -189,11 +189,9 @@ def fd_weights(n, points):
 
 def discretize_2d_monomial(n_x: int,
                            n_y: int,
-                           points: Union[Tuple[List[float], List[float]], List[float]],
+                           points: Tuple[List[float], List[float]],
                            ) -> np.ndarray:
     """Discretize the differential operator d^{n_x + n_y}/{dx^n_x dy^n_y}."""
-    if not isinstance(points, tuple):
-        points = (points, points)
     x_kernel = discretize_1d_monomial(n_x, points[0])
     y_kernel = discretize_1d_monomial(n_y, points[1])
     return x_kernel[:, None] * y_kernel[None, :]

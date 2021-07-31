@@ -4,7 +4,6 @@ import warnings
 from e2cnn.diffops.utils import (
     load_cache,
     store_cache,
-    symmetric_points,
     required_points,
     largest_possible_order,
 )
@@ -707,22 +706,8 @@ def compute_basis_params(kernel_size: int,
                          angle_offset: float,
                          ):
 
-    if rbffd:
-        if smoothing is not None:
-            warnings.warn("RBF-FD flag has no effect when smoothing is used")
-        # compute the coordinates of the centers of the cells in the grid where the filter is sampled
-        grid = get_grid_coords(kernel_size, dilation)
-    else:
-        if radial_basis_function != "ga":
-            warnings.warn(
-                "A custom RBF was chosen but RBF-FD flag not set, ignoring. "
-                "Please set the rbffd argument of e2cnn.nn.R2Diffop to True if "
-                "you meant to use RBF-FD."
-            )
-        # For FD, we don't pass on points but instead just a 1D list of coordinates.
-        # These should be arranged symmetrically around 0, which is what the following
-        # helper function does (essentially just a 1D analogon of get_grid_coords)
-        grid = symmetric_points(kernel_size, dilation)
+    # compute the coordinates of the centers of the cells in the grid where the filter is sampled
+    grid = get_grid_coords(kernel_size, dilation)
 
     if custom_basis_filter is None:
         basis_filter = order_filter(maximum_order)
@@ -733,7 +718,18 @@ def compute_basis_params(kernel_size: int,
         maximum_power = min(maximum_power, maximum_order // 2)
     else:
         maximum_power = maximum_order // 2
+    
+    if smoothing is not None and rbffd:
+        raise ValueError("You can't use smoothing and RBF-FD at the same time.")
+    if smoothing is not None:
+        method = "gauss"
+    elif rbffd:
+        method = "rbffd"
+    else:
+        method = "fd"
+
     disc = DiscretizationArgs(
+        method=method,
         smoothing=smoothing,
         angle_offset=angle_offset,
         phi=radial_basis_function,

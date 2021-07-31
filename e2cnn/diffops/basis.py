@@ -126,22 +126,10 @@ class DiffopBasis(Basis):
 
         coefficients = (coeff for coeff, m in zip(coefficients, mask) if m)
 
-        if isinstance(points, np.ndarray):
-            assert len(points.shape) == 2
-            assert points.shape[0] == 2
-            num_points = points.shape[1]
-        elif isinstance(points, list):
-            num_points = len(points) ** 2
-            for x in points:
-                assert isinstance(x, float)
-        else:
-            assert isinstance(points, tuple)
-            assert len(points) == 2
-            num_points = len(points[0]) * len(points[1])
-            for i in range(2):
-                assert isinstance(points[i], list)
-                for x in points[i]:
-                    assert isinstance(x, float)
+        assert isinstance(points, np.ndarray)
+        assert len(points.shape) == 2
+        assert points.shape[0] == 2
+        num_points = points.shape[1]
 
         basis = np.empty((np.sum(mask), ) + self.shape + (num_points, ))
         for k, element in enumerate(coefficients):

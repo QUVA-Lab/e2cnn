@@ -1,9 +1,13 @@
 
 from .equivariant_module import EquivariantModule
 
-from torch._six import container_abcs
-
 import torch
+TORCH_MAJOR, TORCH_MINOR = map(int, torch.__version__.split('.')[:2])
+
+if TORCH_MAJOR == 1 and TORCH_MINOR <= 8:
+    from torch._six import container_abcs
+else:
+    import collections.abc as container_abcs
 
 from typing import List, Iterable
 

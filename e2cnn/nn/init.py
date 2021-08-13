@@ -106,7 +106,12 @@ def deltaorthonormal_init(tensor: torch.Tensor, basisexpansion: BasisExpansion):
         o = attr["out_irrep"]
         ip = attr["in_irreps_position"]
         op = attr["out_irreps_position"]
-        r = attr["radius"]
+        if "radius" in attr:
+            r = attr["radius"]
+        elif "order" in attr:
+            r = attr["order"]
+        else:
+            raise ValueError("Attribute dict has no radial information, needed for deltaorthonormal init")
         
         if i == o and r == 0.:
             counts[i][(ip, op)].append(p)

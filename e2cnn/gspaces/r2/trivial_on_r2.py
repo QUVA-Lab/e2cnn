@@ -2,6 +2,7 @@ from __future__ import annotations
 
 from e2cnn import gspaces
 from e2cnn import kernels
+from e2cnn import diffops
 
 from .general_r2 import GeneralOnR2
 
@@ -114,6 +115,50 @@ class TrivialOnR2(GeneralOnR2):
             'Error! Either the maximum frequency or the maximum offset for the frequencies must be set'
     
         return kernels.kernels_Trivial_act_R2(in_repr, out_repr, rings, sigma,
+                                              maximum_frequency,
+                                              max_offset=maximum_offset)
+
+    def _diffop_basis_generator(self,
+                                in_repr: Representation,
+                                out_repr: Representation,
+                                max_power: int,
+                                **kwargs,
+                                ) -> diffops.DiffopBasis:
+        r"""
+        Method that builds the analytical basis that spans the space of equivariant PDOs which
+        are intertwiners between the representations induced from the representation ``in_repr`` and ``out_repr``.
+
+        Either ``maximum_frequency`` or ``maximum_offset`` must be set in the keywords arguments.
+
+        Args:
+            in_repr: the input representation
+            out_repr: the output representation
+            max_power (int): the maximum power of Laplacians to use
+
+        Keyword Args:
+            maximum_frequency (int): the maximum frequency allowed in the basis vectors
+            maximum_offset (int): the maximum frequencies offset for each basis vector with respect to its base ones
+                                  (sum and difference of the frequencies of the input and the output representations)
+
+        Returns:
+            the basis built
+
+        """
+        maximum_frequency = None
+        maximum_offset = None
+    
+        if 'maximum_frequency' in kwargs and kwargs['maximum_frequency'] is not None:
+            maximum_frequency = kwargs['maximum_frequency']
+            assert isinstance(maximum_frequency, int) and maximum_frequency >= 0
+    
+        if 'maximum_offset' in kwargs and kwargs['maximum_offset'] is not None:
+            maximum_offset = kwargs['maximum_offset']
+            assert isinstance(maximum_offset, int) and maximum_offset >= 0
+    
+        assert (maximum_frequency is not None or maximum_offset is not None), \
+            'Error! Either the maximum frequency or the maximum offset for the frequencies must be set'
+    
+        return diffops.diffops_Trivial_act_R2(in_repr, out_repr, max_power,
                                               maximum_frequency,
                                               max_offset=maximum_offset)
 

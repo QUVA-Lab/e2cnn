@@ -7,14 +7,58 @@ from typing import List, Union, Tuple
 class EmptyBasisException(Exception):
     def __init__(self):
         r"""
-        Exception raised when a :class:`~e2cnn.kernels.KernelBasis` with no elements is built.
+        Exception raised when a :class:`~e2cnn.kernels.Basis` with no elements is built.
         
         """
-        message = "The KernelBasis you tried to instantiate is empty (dim = 0). You should catch this exception."
+        message = "The Basis you tried to instantiate is empty (dim = 0). You should catch this exception."
         super(EmptyBasisException, self).__init__(message)
-        
 
-class KernelBasis(ABC):
+
+class Basis(ABC):
+    
+    def __init__(self, dim: int, shape: Tuple[int, int]):
+        r"""
+        
+        Abstract class for implementing the basis of a space of maps between
+        feature spaces (either kernels or PDOs).
+        
+        Args:
+            dim (int): the dimensionality of the basis (number of elements)
+            shape (tuple): a tuple containing :math:`c_\text{out}` and :math:`c_\text{in}`
+            
+        Attributes:
+            ~.dim (int): the dimensionality of the basis (number of elements)
+            ~.shape (tuple): a tuple containing :math:`c_\text{out}` and :math:`c_\text{in}`
+            
+        """
+        assert isinstance(dim, int)
+        assert isinstance(shape, tuple) and len(shape) == 2
+        
+        assert dim >= 0
+        
+        if dim == 0:
+            raise EmptyBasisException()
+        
+        self.dim = dim
+        self.shape = shape
+
+    def __len__(self):
+        return self.dim
+    
+    def __iter__(self):
+        for i in range(self.dim):
+            yield self[i]
+
+    @abstractmethod
+    def __getitem__(self, idx: int) -> dict:
+        pass
+    
+    @abstractmethod
+    def __hash__(self):
+        pass
+
+
+class KernelBasis(Basis):
     
     def __init__(self, dim: int, shape: Tuple[int, int]):
         r"""
@@ -37,23 +81,7 @@ class KernelBasis(ABC):
             ~.shape (tuple): a tuple containing :math:`c_\text{out}` and :math:`c_\text{in}`
             
         """
-        assert isinstance(dim, int)
-        assert isinstance(shape, tuple) and len(shape) == 2
-        
-        assert dim >= 0
-        
-        if dim == 0:
-            raise EmptyBasisException()
-        
-        self.dim = dim
-        self.shape = shape
-
-    def __len__(self):
-        return self.dim
-    
-    def __iter__(self):
-        for i in range(self.dim):
-            yield self[i]
+        super().__init__(dim, shape)
 
     @abstractmethod
     def sample(self, points: np.ndarray, out: np.ndarray = None) -> np.ndarray:
@@ -102,14 +130,6 @@ class KernelBasis(ABC):
             out = basis[..., mask, :]
         
         return out
-
-    @abstractmethod
-    def __getitem__(self, idx: int) -> dict:
-        pass
-    
-    @abstractmethod
-    def __hash__(self):
-        pass
 
 
 class GaussianRadialProfile(KernelBasis):

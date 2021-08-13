@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 from e2cnn.gspaces import GSpace
-from e2cnn import kernels
+from e2cnn import kernels, diffops
 from e2cnn.group import Group
 from e2cnn.group import Representation
 
@@ -123,6 +123,77 @@ class GeneralOnR2(GSpace):
 
         # return the dictionary with all the basis built for this filter size
         return self._fields_intertwiners_basis_memory[key][(in_repr.name, out_repr.name)]
+
+    def build_diffop_basis(self,
+                           in_repr: Representation,
+                           out_repr: Representation,
+                           max_power: int,
+                           **kwargs) -> diffops.DiffopBasis:
+        r"""
+        
+        Builds a basis for the space of the equivariant PDOs with respect to the symmetries described by this
+        :class:`~e2cnn.gspaces.GSpace`.
+        
+        A :math:`G`-equivariant PDO :math:`D(P)` for a matrix of polynomials :math:`P`, mapping between an input field, transforming under
+        :math:`\rho_\text{in}` (``in_repr``), and an output field, transforming under  :math:`\rho_\text{out}`
+        (``out_repr``), satisfies the following constraint:
+        
+        .. math ::
+            
+            P(gx) = \rho_\text{out}(g) P(x) \rho_\text{in}(g)^{-1} \qquad \forall g \in G, \forall x \in X
+        
+        for :math:`G \leq O(d)`.
+        
+        A complete basis is obtained by combining certain PDOs with powers of the Laplacian operator.
+        ``max_power`` describes the maximum power of the Laplacian to use when building the basis.
+        
+        .. note ::
+            This method is a wrapper for the functions building the bases which are defined in :doc:`e2cnn.diffops`:
+            
+            - :meth:`e2cnn.diffops.diffops_O2_act_R2`,
+
+            - :meth:`e2cnn.diffops.diffops_SO2_act_R2`,
+
+            - :meth:`e2cnn.diffops.diffops_DN_act_R2`,
+
+            - :meth:`e2cnn.diffops.diffops_CN_act_R2`,
+
+            - :meth:`e2cnn.diffops.diffops_Flip_act_R2`,
+
+            - :meth:`e2cnn.diffops.diffops_Trivial_act_R2`
+            
+            
+        Args:
+            in_repr (Representation): the input representation
+            out_repr (Representation): the output representation
+            max_power (int): the largest power of the Laplacian that will be used
+            **kwargs: Group-specific keywords arguments for ``_basis_generator`` method
+
+        Returns:
+            the analytical basis
+        
+        """
+        
+        assert isinstance(in_repr, Representation)
+        assert isinstance(out_repr, Representation)
+        
+        assert in_repr.group == self.fibergroup
+        assert out_repr.group == self.fibergroup
+        
+        # build the key
+        key = dict(**kwargs)
+        key = tuple(sorted(key.items()))
+
+        if (in_repr.name, out_repr.name) not in self._fields_intertwiners_basis_memory[key]:
+            # TODO - we could use a flag in the args to choose whether to store it or not
+            
+            basis = self._diffop_basis_generator(in_repr, out_repr, max_power, **kwargs)
+       
+            # store the basis in the dictionary
+            self._fields_intertwiners_basis_memory[key][(in_repr.name, out_repr.name)] = basis
+
+        # return the dictionary with all the basis built for this filter size
+        return self._fields_intertwiners_basis_memory[key][(in_repr.name, out_repr.name)]
     
     @abstractmethod
     def _basis_generator(self,
@@ -133,3 +204,10 @@ class GeneralOnR2(GSpace):
                          **kwargs):
         pass
 
+    @abstractmethod
+    def _diffop_basis_generator(self,
+                                in_repr: Representation,
+                                out_repr: Representation,
+                                max_power: int,
+                                **kwargs):
+        pass

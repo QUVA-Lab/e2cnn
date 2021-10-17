@@ -26,6 +26,12 @@ except ImportError:
     pass
 
 try:
+    from e2cnn import diffops
+    __all__ += ['diffops']
+except ImportError:
+    pass
+
+try:
     from e2cnn import gspaces
     __all__ += ['gspaces']
 except ImportError:

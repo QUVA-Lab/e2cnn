@@ -90,6 +90,7 @@ We provide a simple example::
 .. contents:: Contents
     :local:
     :backlinks: top
+    :depth: 3
 
 
 
@@ -125,8 +126,8 @@ direct sum
 .. autofunction:: e2cnn.nn.tensor_directsum
 
 
-Planar Convolution
-------------------
+Planar Convolution and Differential Operators
+---------------------------------------------
 
 R2Conv
 ~~~~~~
@@ -140,21 +141,35 @@ R2ConvTransposed
     :members:
     :show-inheritance:
 
-Basis Expansion
-~~~~~~~~~~~~~~~
+R2Diffop
+~~~~~~~~
+.. autoclass:: e2cnn.nn.R2Diffop
+    :members:
+    :show-inheritance:
 
+Basis Expansion Modules
+~~~~~~~~~~~~~~~~~~~~~~~
+
+Basis Expansion
+"""""""""""""""
 .. autoclass:: e2cnn.nn.modules.r2_conv.BasisExpansion
     :members:
     :show-inheritance:
 
+BlocksBasisExpansion
+""""""""""""""""""""
 .. autoclass:: e2cnn.nn.modules.r2_conv.BlocksBasisExpansion
     :members:
     :show-inheritance:
 
+SingleBlockBasisExpansion
+"""""""""""""""""""""""""
 .. autoclass:: e2cnn.nn.modules.r2_conv.SingleBlockBasisExpansion
     :members:
     :show-inheritance:
 
+block_basisexpansion
+""""""""""""""""""""
 .. autofunction:: e2cnn.nn.modules.r2_conv.block_basisexpansion
 
 

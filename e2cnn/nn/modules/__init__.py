@@ -8,6 +8,7 @@ from .r2upsampling import R2Upsampling
 
 from .r2_conv import R2Conv
 from .r2_conv import R2ConvTransposed
+from .r2_conv import R2Diffop
 
 from .nonlinearities import GatedNonLinearity1
 from .nonlinearities import GatedNonLinearity2
@@ -59,6 +60,7 @@ __all__ = [
     "MultipleModule",
     "R2Conv",
     "R2ConvTransposed",
+    "R2Diffop",
     "R2Upsampling",
     "GatedNonLinearity1",
     "GatedNonLinearity2",

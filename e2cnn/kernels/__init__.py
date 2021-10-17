@@ -1,5 +1,5 @@
 
-from .basis import EmptyBasisException, KernelBasis, GaussianRadialProfile, PolarBasis
+from .basis import EmptyBasisException, Basis, KernelBasis, GaussianRadialProfile, PolarBasis
 
 from .steerable_basis import SteerableKernelBasis
 
@@ -10,6 +10,7 @@ from .utils import psi, psichi, chi
 
 __all__ = [
     "EmptyBasisException",
+    "Basis",
     "KernelBasis",
     # General Bases
     'GaussianRadialProfile',

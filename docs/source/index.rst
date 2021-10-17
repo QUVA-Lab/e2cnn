@@ -63,6 +63,19 @@ Please, cite us if you use this code in your own work::
         year={2019},
     }
 
+The implementation of steerable PDOs in :doc:`e2cnn.diffops <api/e2cnn.nn>` and the subpackage
+:doc:`e2cnn.diffops <api/e2cnn.diffops>` are part of the work done in `this paper <https://arxiv.org/abs/2106.10163>`_ .
+Please, cite it if you use this code in your own work::
+
+    @misc{jenner2021steerable,
+        title={Steerable Partial Differential Operators for Equivariant Neural Networks},
+        author={Erik Jenner and Maurice Weiler},
+        year={2021},
+        eprint={2106.10163},
+        archivePrefix={arXiv},
+        primaryClass={cs.LG}
+    }
+
 
 Indices and tables
 ------------------

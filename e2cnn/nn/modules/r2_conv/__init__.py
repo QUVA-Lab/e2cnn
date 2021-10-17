@@ -5,6 +5,7 @@ from .r2diffop import R2Diffop
 
 from .basisexpansion import BasisExpansion
 from .basisexpansion_blocks import BlocksBasisExpansion
+from .basisexpansion_singleblock import SingleBlockBasisExpansion, block_basisexpansion
 
 __all__ = [
     "R2Conv",
@@ -13,5 +14,7 @@ __all__ = [
     # Basis Expansion
     "BasisExpansion",
     "BlocksBasisExpansion",
+    "SingleBlockBasisExpansion",
+    "block_basisexpansion",
 ]
 

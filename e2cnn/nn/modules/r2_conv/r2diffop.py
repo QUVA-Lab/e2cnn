@@ -133,7 +133,10 @@ class R2Diffop(EquivariantModule):
         optional parameters used to control how the basis for the PDOs is built, how it is sampled on the filter
         grid and how it is expanded to build the filter. We suggest to keep these default values.
         
-        
+        .. warning::
+            The discretization of the differential operators relies on two external packages: `sympy <https://docs.sympy.org/>`_ and
+            `rbf <https://rbf.readthedocs.io>`_. If they are not available, an error is raised.
+            
         Args:
             in_type (FieldType): the type of the input field, specifying its transformation law
             out_type (FieldType): the type of the output field, specifying its transformation law

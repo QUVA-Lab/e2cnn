@@ -22,6 +22,10 @@ class Basis(ABC):
         Abstract class for implementing the basis of a space of maps between
         feature spaces (either kernels or PDOs).
         
+        .. seealso ::
+            :class:`e2cnn.kernels.KernelBasis` and
+            :class:`e2cnn.diffops.DiffopBasis`
+        
         Args:
             dim (int): the dimensionality of the basis (number of elements)
             shape (tuple): a tuple containing :math:`c_\text{out}` and :math:`c_\text{in}`

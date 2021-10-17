@@ -16,16 +16,17 @@ from .utils import discretize_homogeneous_polynomial, multiply_polynomials, lapl
 
 @dataclass(frozen=True)
 class DiscretizationArgs:
-    """Parameters specifying a discretization procedure for PDOs.
-
-    method (str, optional): the discretization method to use,
-        either 'rbffd', 'fd' or 'gauss'.
-    smoothing (float, optional): ``smoothing`` is the standard
-        deviation of the Gaussian used for discretization. Must be set if `method='gauss'`,
-        has no effect otherwise.
-    angle_offset (float, optional): if not ``None``, rotate the PDOs by this many radians.
-    phi (str, optional): which RBF to use (only relevant for RBF-FD).
-        Can be any of the abbreviations `here <https://rbf.readthedocs.io/en/latest/basis.html>`_.
+    r"""Parameters specifying a discretization procedure for PDOs.
+        
+        Attributes:
+            ~.method (str, optional): the discretization method to use,
+                either ``"rbffd"``, ``"fd"`` or ``"gauss"``.
+            ~.smoothing (float, optional): ``smoothing`` is the standard
+                deviation of the Gaussian used for discretization. Must be set if ``method="gauss"``,
+                has no effect otherwise.
+            ~.angle_offset (float, optional): if not ``None``, rotate the PDOs by this many radians.
+            ~.phi (str, optional): which RBF to use (only relevant for RBF-FD).
+                Can be any of the abbreviations `here <https://rbf.readthedocs.io/en/latest/basis.html>`_.
     """
     method: str = "fd"
     smoothing: Optional[float] = None
@@ -172,7 +173,7 @@ class LaplaceProfile(DiffopBasis):
             max_power (int): the maximum power of the Laplace operator that will be used.
                 The maximum degree (as a differential operator) will be two times this maximum
                 power.
-            discretization (optional): additional parameters specifying parameters for
+            discretization (DiscretizationArgs, optional): additional parameters specifying parameters for
                 the discretization procedure. See :class:`~e2cnn.diffops.DiscretizationArgs`.
 
         """
@@ -220,9 +221,8 @@ class TensorBasis(DiffopBasis):
         .. math::
             C = A \otimes B = \left\{ c_{i,j} := a_i \circ b_j \right\}_{i,j}.
 
-        Args:
-            are passed on to :class:`~e2cnn.diffops.SteerableDiffopBasis` and
-                :class:`~e2cnn.diffops.LaplaceProfile`, see their documentation.
+        The arguments are passed on to :class:`~e2cnn.diffops.SteerableDiffopBasis` and
+        :class:`~e2cnn.diffops.LaplaceProfile`, see their documentation.
 
         Attributes:
             ~.basis1 (SteerableDiffopBasis): the first basis

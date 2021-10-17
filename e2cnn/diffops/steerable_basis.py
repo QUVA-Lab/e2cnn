@@ -62,7 +62,7 @@ class SteerableDiffopBasis(DiffopBasis):
             irreps_basis (class): class defining the irreps basis. This class is instantiated for each pair of irreps to solve all irreps constraints.
             in_repr (Representation): Representation associated with the input feature field
             out_repr (Representation): Representation associated with the output feature field
-            discretization (optional): additional parameters specifying parameters for
+            discretization (DiscretizationArgs, optional): additional parameters specifying parameters for
                 the discretization procedure. See :class:`~e2cnn.diffops.DiscretizationArgs`.
             **kwargs: additional arguments used when instantiating ``irreps_basis``
             

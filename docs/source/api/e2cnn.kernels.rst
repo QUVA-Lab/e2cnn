@@ -22,6 +22,10 @@ This subpackage depends only on :doc:`e2cnn.group`.
 Abstract Classes
 ----------------
 
+.. autoclass:: e2cnn.kernels.Basis
+    :members:
+    :undoc-members:
+
 .. autoclass:: e2cnn.kernels.KernelBasis
     :members:
     :undoc-members:

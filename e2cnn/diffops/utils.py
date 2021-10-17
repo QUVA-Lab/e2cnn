@@ -71,7 +71,11 @@ def discretize_homogeneous_polynomial(
     r"""Discretize a homogeneous partial differential operator.
     Homogeneous means that all terms have the same derivative order.
 
-    See :meth:`e2cnn.DiffopBasis.sample` for details.
+    See :meth:`e2cnn.diffops.DiffopBasis.sample` for details.
+    
+    .. warning::
+        The discretization relies on two external packages: `sympy <https://docs.sympy.org/>`_ and `rbf <https://rbf.readthedocs.io>`_.
+        If they are not available, an error is raised.
 
     """
     assert isinstance(points, np.ndarray)

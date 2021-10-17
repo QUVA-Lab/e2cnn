@@ -90,6 +90,7 @@ We provide a simple example::
 .. contents:: Contents
     :local:
     :backlinks: top
+    :depth: 3
 
 
 
@@ -146,21 +147,29 @@ R2Diffop
     :members:
     :show-inheritance:
 
-Basis Expansion
-~~~~~~~~~~~~~~~
+Basis Expansion Modules
+~~~~~~~~~~~~~~~~~~~~~~~
 
+Basis Expansion
+"""""""""""""""
 .. autoclass:: e2cnn.nn.modules.r2_conv.BasisExpansion
     :members:
     :show-inheritance:
 
+BlocksBasisExpansion
+""""""""""""""""""""
 .. autoclass:: e2cnn.nn.modules.r2_conv.BlocksBasisExpansion
     :members:
     :show-inheritance:
 
+SingleBlockBasisExpansion
+"""""""""""""""""""""""""
 .. autoclass:: e2cnn.nn.modules.r2_conv.SingleBlockBasisExpansion
     :members:
     :show-inheritance:
 
+block_basisexpansion
+""""""""""""""""""""
 .. autofunction:: e2cnn.nn.modules.r2_conv.block_basisexpansion
 
 

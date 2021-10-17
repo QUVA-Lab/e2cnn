@@ -157,15 +157,15 @@ def block_basisexpansion(basis: Basis,
     
     Return an instance of :class:`~e2cnn.nn.modules.r2_conv.SingleBlockBasisExpansion`.
     
-    This function support caching through the argument ```recompute```.
+    This function support caching through the argument ``recompute``.
 
     Args:
         basis (Basis): basis defining the space of kernels
         points (~np.ndarray): points where the analytical basis should be sampled
         basis_filter (callable, optional): filter for the basis elements. Should take a dictionary containing an
                                            element's attributes and return whether to keep it or not.
-        recompute (bool, optional): whether to recompute new bases (```True```) or reuse, if possible,
-                                    already built tensors (```False```, default).
+        recompute (bool, optional): whether to recompute new bases (``True``) or reuse, if possible,
+                                    already built tensors (``False``, default).
 
     """
     

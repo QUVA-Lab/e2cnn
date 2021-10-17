@@ -5,13 +5,17 @@ e2cnn.diffops
 =============
 
 This subpackage implements the complete analytical solutions of the equivariance constraints partial
-differential operators (PDOs).
-The bases of equivariant PDOs should be built through :ref:`factory functions <factory-functions-bases>`.
+differential operators (PDOs) as described in `Steerable Partial Differentail Operators for Equivariant Neural Network <https://arxiv.org/abs/2106.10163>`_.
+The bases of equivariant PDOs should be built through :ref:`factory functions <factory-functions-diffops>`.
 
 Typically, the user does not need to interact directly with this subpackage.
 Instead, we suggest to use the interface provided in :doc:`e2cnn.gspaces`.
 
-This subpackage depends only on :doc:`e2cnn.group`.
+This subpackage depends only on :doc:`e2cnn.group` and :doc:`e2cnn.kernels`.
+
+Note that discretization of the differential operators relies on the `sympy <https://docs.sympy.org/>`_ and `rbf <https://rbf.readthedocs.io>`_ packages.
+If these packages are not installed, an error will be thrown when trying to sample the operators.
+
 
 
 .. contents:: Contents
@@ -19,13 +23,17 @@ This subpackage depends only on :doc:`e2cnn.group`.
     :backlinks: top
 
 
-Abstract Classes
-----------------
+Abstract Class
+--------------
 
 .. autoclass:: e2cnn.diffops.DiffopBasis
     :members:
     :undoc-members:
     
+.. autoclass:: e2cnn.diffops.DiscretizationArgs
+    :members:
+    :undoc-members:
+
 
 PDO Bases
 ------------
@@ -55,7 +63,7 @@ General Steerable Basis for equivariant PDOs
     :undoc-members:
     :show-inheritance:
 
-.. _factory-functions-bases:
+.. _factory-functions-diffops:
 
 Bases for Group Actions on the Plane
 ------------------------------------

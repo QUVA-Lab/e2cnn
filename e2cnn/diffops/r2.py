@@ -54,7 +54,7 @@ def diffops_Flip_act_R2(in_repr: Representation, out_repr: Representation,
         axis (float): angle defining the reflection axis
         max_frequency (int): maximum frequency of the basis
         max_offset (int): maximum offset in the frequencies of the basis
-        discretization (optional): additional parameters specifying parameters for
+        discretization (DiscretizationArgs, optional): additional parameters specifying parameters for
             the discretization procedure. See :class:`~e2cnn.diffops.DiscretizationArgs`.
 
     """
@@ -89,7 +89,7 @@ def diffops_SO2_act_R2(in_repr: Representation, out_repr: Representation,
         in_repr (Representation): the representation specifying the transformation of the input feature field
         out_repr (Representation): the representation specifying the transformation of the output feature field
         max_power (int): maximum power of the Laplacian for the radial profile
-        discretization (optional): additional parameters specifying parameters for
+        discretization (DiscretizationArgs, optional): additional parameters specifying parameters for
             the discretization procedure. See :class:`~e2cnn.diffops.DiscretizationArgs`.
 
     """
@@ -143,7 +143,7 @@ def diffops_CN_act_R2(in_repr: Representation, out_repr: Representation,
         max_power (int): maximum power of the Laplacian for the radial profile
         max_frequency (int): maximum frequency of the basis
         max_offset (int): maximum offset in the frequencies of the basis
-        discretization (optional): additional parameters specifying parameters for
+        discretization (DiscretizationArgs, optional): additional parameters specifying parameters for
             the discretization procedure. See :class:`~e2cnn.diffops.DiscretizationArgs`.
 
     """
@@ -201,7 +201,7 @@ def diffops_DN_act_R2(in_repr: Representation, out_repr: Representation,
         max_frequency (int): maximum frequency of the basis
         max_offset (int): maximum offset in the frequencies of the basis
         axis (float): angle defining the reflection axis
-        discretization (optional): additional parameters specifying parameters for
+        discretization (DiscretizationArgs, optional): additional parameters specifying parameters for
             the discretization procedure. See :class:`~e2cnn.diffops.DiscretizationArgs`.
 
 
@@ -245,7 +245,7 @@ def diffops_O2_act_R2(in_repr: Representation, out_repr: Representation,
         out_repr (Representation): the representation specifying the transformation of the output feature field
         max_power (int): maximum power of the Laplacian for the radial profile
         axis (float, optional): angle of the axis of the reflection element
-        discretization (optional): additional parameters specifying parameters for
+        discretization (DiscretizationArgs, optional): additional parameters specifying parameters for
             the discretization procedure. See :class:`~e2cnn.diffops.DiscretizationArgs`.
 
     """
@@ -300,7 +300,7 @@ def diffops_Trivial_act_R2(in_repr: Representation, out_repr: Representation,
         axis (float): angle defining the reflection axis
         max_frequency (int): maximum frequency of the basis
         max_offset (int): maximum offset in the frequencies of the basis
-        discretization (optional): additional parameters specifying parameters for
+        discretization (DiscretizationArgs, optional): additional parameters specifying parameters for
             the discretization procedure. See :class:`~e2cnn.diffops.DiscretizationArgs`.
 
     """

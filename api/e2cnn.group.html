@@ -106,6 +106,13 @@
 <li class="toctree-l2"><a class="reference internal" href="e2cnn.kernels.html#bases-for-group-actions-on-the-plane">Bases for Group Actions on the Plane</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="e2cnn.diffops.html">e2cnn.diffops</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="e2cnn.diffops.html#abstract-class">Abstract Class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="e2cnn.diffops.html#pdo-bases">PDO Bases</a></li>
+<li class="toctree-l2"><a class="reference internal" href="e2cnn.diffops.html#bases-for-group-actions-on-the-plane">Bases for Group Actions on the Plane</a></li>
+<li class="toctree-l2"><a class="reference internal" href="e2cnn.diffops.html#utility-functions">Utility functions</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="e2cnn.gspaces.html">e2cnn.gspaces</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="e2cnn.gspaces.html#abstract-group-space">Abstract Group Space</a></li>
 <li class="toctree-l2"><a class="reference internal" href="e2cnn.gspaces.html#group-actions-on-the-plane">Group Actions on the Plane</a></li>
@@ -116,7 +123,7 @@
 <li class="toctree-l2"><a class="reference internal" href="e2cnn.nn.html#geometric-tensor">Geometric Tensor</a></li>
 <li class="toctree-l2"><a class="reference internal" href="e2cnn.nn.html#equivariant-module">Equivariant Module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="e2cnn.nn.html#utils">Utils</a></li>
-<li class="toctree-l2"><a class="reference internal" href="e2cnn.nn.html#planar-convolution">Planar Convolution</a></li>
+<li class="toctree-l2"><a class="reference internal" href="e2cnn.nn.html#planar-convolution-and-differential-operators">Planar Convolution and Differential Operators</a></li>
 <li class="toctree-l2"><a class="reference internal" href="e2cnn.nn.html#non-linearities">Non Linearities</a></li>
 <li class="toctree-l2"><a class="reference internal" href="e2cnn.nn.html#invariant-maps">Invariant Maps</a></li>
 <li class="toctree-l2"><a class="reference internal" href="e2cnn.nn.html#pooling">Pooling</a></li>
@@ -235,16 +242,16 @@ Instead, we suggest using the interface provided in <a class="reference internal
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><em>str</em></a>) – name identifying the group</p></li>
-<li><p><strong>continuous</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.9)"><em>bool</em></a>) – whether the group is non-finite or finite</p></li>
-<li><p><strong>abelian</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.9)"><em>bool</em></a>) – whether the group is <em>abelian</em> (commutative)</p></li>
+<li><p><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – name identifying the group</p></li>
+<li><p><strong>continuous</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a>) – whether the group is non-finite or finite</p></li>
+<li><p><strong>abelian</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a>) – whether the group is <em>abelian</em> (commutative)</p></li>
 </ul>
 </dd>
 <dt class="field-even">Variables</dt>
 <dd class="field-even"><ul class="simple">
-<li><p><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><em>str</em></a>) – Name identifying the group</p></li>
-<li><p><strong>continuous</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.9)"><em>bool</em></a>) – Whether it is a non-finite or a finite group</p></li>
-<li><p><strong>abelian</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.9)"><em>bool</em></a>) – Whether it is an <em>abelian</em> group (i.e. if the group law is commutative)</p></li>
+<li><p><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – Name identifying the group</p></li>
+<li><p><strong>continuous</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a>) – Whether it is a non-finite or a finite group</p></li>
+<li><p><strong>abelian</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a>) – Whether it is an <em>abelian</em> group (i.e. if the group law is commutative)</p></li>
 <li><p><strong>identity</strong> – Identity element of the group. The identity element <span class="math notranslate nohighlight">\(e\)</span> satisfies the
 following property <span class="math notranslate nohighlight">\(\forall\ g \in G,\ g \cdot e = e \cdot g= g\)</span></p></li>
 </ul>
@@ -552,7 +559,7 @@ New irreps (associated to higher frequencies) can be manually created by calling
 </div>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>maximum_frequency</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)"><em>int</em></a>) – the maximum frequency to consider when building the irreps of the group</p>
+<dd class="field-odd"><p><strong>maximum_frequency</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – the maximum frequency to consider when building the irreps of the group</p>
 </dd>
 <dt class="field-even">Variables</dt>
 <dd class="field-even"><p><strong>reflection</strong> – the reflection element <span class="math notranslate nohighlight">\((j, \theta) = (1, 0.)\)</span></p>
@@ -567,7 +574,7 @@ the method returns <span class="math notranslate nohighlight">\(r_{-\theta}\)</s
 <span class="math notranslate nohighlight">\(r_\theta f\)</span> (as <span class="math notranslate nohighlight">\((1, \theta)\)</span>) otherwise.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>element</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.9)"><em>tuple</em></a>) – a group element <span class="math notranslate nohighlight">\(r_{\theta}f^j\)</span> a pair <span class="math notranslate nohighlight">\((j, \theta)\)</span></p>
+<dd class="field-odd"><p><strong>element</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.10)"><em>tuple</em></a>) – a group element <span class="math notranslate nohighlight">\(r_{\theta}f^j\)</span> a pair <span class="math notranslate nohighlight">\((j, \theta)\)</span></p>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p>its inverse</p>
@@ -584,8 +591,8 @@ Given two input element <span class="math notranslate nohighlight">\(r_\alpha f^
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>e1</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.9)"><em>tuple</em></a>) – a group element <span class="math notranslate nohighlight">\(r_\alpha f^a\)</span> as a pair <span class="math notranslate nohighlight">\((a, \alpha)\)</span></p></li>
-<li><p><strong>e2</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.9)"><em>tuple</em></a>) – another element <span class="math notranslate nohighlight">\(r_\beta f^b\)</span> as a pair <span class="math notranslate nohighlight">\((b, \beta)\)</span></p></li>
+<li><p><strong>e1</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.10)"><em>tuple</em></a>) – a group element <span class="math notranslate nohighlight">\(r_\alpha f^a\)</span> as a pair <span class="math notranslate nohighlight">\((a, \alpha)\)</span></p></li>
+<li><p><strong>e2</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.10)"><em>tuple</em></a>) – another element <span class="math notranslate nohighlight">\(r_\beta f^b\)</span> as a pair <span class="math notranslate nohighlight">\((b, \beta)\)</span></p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
@@ -602,8 +609,8 @@ Given two input element <span class="math notranslate nohighlight">\(r_\alpha f^
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>e1</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.9)"><em>tuple</em></a>) – an element</p></li>
-<li><p><strong>e2</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.9)"><em>tuple</em></a>) – another element</p></li>
+<li><p><strong>e1</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.10)"><em>tuple</em></a>) – an element</p></li>
+<li><p><strong>e2</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.10)"><em>tuple</em></a>) – another element</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
@@ -643,7 +650,7 @@ by <span class="math notranslate nohighlight">\(\frac{\theta}{2}\)</span>.</p>
 </ul>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.9)"><em>tuple</em></a>) – the identification of the subgroup</p>
+<dd class="field-odd"><p><strong>id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.10)"><em>tuple</em></a>) – the identification of the subgroup</p>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p><p>a tuple containing</p>
@@ -669,8 +676,8 @@ Notice: the frequencies has to be non-negative integers: <span class="math notra
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>j</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)"><em>int</em></a>) – the frequency of the reflection in the irrep</p></li>
-<li><p><strong>k</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)"><em>int</em></a>) – the frequency of the rotations in the irrep</p></li>
+<li><p><strong>j</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – the frequency of the reflection in the irrep</p></li>
+<li><p><strong>k</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – the frequency of the rotations in the irrep</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
@@ -712,7 +719,7 @@ New irreps (associated to higher frequencies) can be manually created by calling
 <dd><p>Return the inverse element of the input element: given an angle, the method returns its opposite</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>element</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.9)"><em>float</em></a>) – an angle <span class="math notranslate nohighlight">\(\theta\)</span></p>
+<dd class="field-odd"><p><strong>element</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)"><em>float</em></a>) – an angle <span class="math notranslate nohighlight">\(\theta\)</span></p>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p>its opposite <span class="math notranslate nohighlight">\(-\theta \mod 2\pi\)</span></p>
@@ -727,8 +734,8 @@ New irreps (associated to higher frequencies) can be manually created by calling
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>e1</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.9)"><em>float</em></a>) – an angle <span class="math notranslate nohighlight">\(\alpha\)</span></p></li>
-<li><p><strong>e2</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.9)"><em>float</em></a>) – another angle <span class="math notranslate nohighlight">\(\beta\)</span></p></li>
+<li><p><strong>e1</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)"><em>float</em></a>) – an angle <span class="math notranslate nohighlight">\(\alpha\)</span></p></li>
+<li><p><strong>e2</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)"><em>float</em></a>) – another angle <span class="math notranslate nohighlight">\(\beta\)</span></p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
@@ -746,8 +753,8 @@ i.e. the fact that <span class="math notranslate nohighlight">\(0 + \epsilon \si
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>e1</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.9)"><em>float</em></a>) – an angle <span class="math notranslate nohighlight">\(\alpha\)</span></p></li>
-<li><p><strong>e2</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.9)"><em>float</em></a>) – another angle <span class="math notranslate nohighlight">\(\beta\)</span></p></li>
+<li><p><strong>e1</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)"><em>float</em></a>) – an angle <span class="math notranslate nohighlight">\(\alpha\)</span></p></li>
+<li><p><strong>e2</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)"><em>float</em></a>) – another angle <span class="math notranslate nohighlight">\(\beta\)</span></p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
@@ -771,7 +778,7 @@ by <span class="math notranslate nohighlight">\(r_{\frac{2\pi}{M}}\)</span>.</p>
 (the order of the subgroup).</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>id</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)"><em>int</em></a>) – the integer <span class="math notranslate nohighlight">\(M\)</span> identifying the subgroup</p>
+<dd class="field-odd"><p><strong>id</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – the integer <span class="math notranslate nohighlight">\(M\)</span> identifying the subgroup</p>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p><p>a tuple containing</p>
@@ -794,7 +801,7 @@ by <span class="math notranslate nohighlight">\(r_{\frac{2\pi}{M}}\)</span>.</p>
 Notice: the frequency has to be a non-negative integer.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>k</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)"><em>int</em></a>) – the frequency of the irrep</p>
+<dd class="field-odd"><p><strong>k</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – the frequency of the irrep</p>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p>the corresponding irrep</p>
@@ -819,7 +826,7 @@ For this reason, elements are stored as the integers between <span class="math n
 element can also be interpreted as the discrete rotation by <span class="math notranslate nohighlight">\(k\frac{2\pi}{N}\)</span>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>N</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)"><em>int</em></a>) – order of the group</p>
+<dd class="field-odd"><p><strong>N</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – order of the group</p>
 </dd>
 </dl>
 <dl class="py method">
@@ -829,7 +836,7 @@ element can also be interpreted as the discrete rotation by <span class="math no
 integer <span class="math notranslate nohighlight">\(j\)</span> (<code class="docutils literal notranslate"><span class="pre">element</span></code>)</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>element</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)"><em>int</em></a>) – a group element <span class="math notranslate nohighlight">\(r^j\)</span></p>
+<dd class="field-odd"><p><strong>element</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – a group element <span class="math notranslate nohighlight">\(r^j\)</span></p>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p>its opposite <span class="math notranslate nohighlight">\(r^{-j \mod N}\)</span></p>
@@ -846,8 +853,8 @@ returns the integer <span class="math notranslate nohighlight">\(a + b \mod N\)<
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>e1</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)"><em>int</em></a>) – a group element <span class="math notranslate nohighlight">\(r^a\)</span></p></li>
-<li><p><strong>e2</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)"><em>int</em></a>) – another group element <span class="math notranslate nohighlight">\(r^a\)</span></p></li>
+<li><p><strong>e1</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – a group element <span class="math notranslate nohighlight">\(r^a\)</span></p></li>
+<li><p><strong>e2</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – another group element <span class="math notranslate nohighlight">\(r^a\)</span></p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
@@ -863,8 +870,8 @@ returns the integer <span class="math notranslate nohighlight">\(a + b \mod N\)<
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>e1</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)"><em>int</em></a>) – an element</p></li>
-<li><p><strong>e2</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)"><em>int</em></a>) – another element</p></li>
+<li><p><strong>e1</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – an element</p></li>
+<li><p><strong>e2</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – another element</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
@@ -888,7 +895,7 @@ Notice that <span class="math notranslate nohighlight">\(M\)</span> has to divid
 <p>The method takes as input the integer <span class="math notranslate nohighlight">\(M\)</span> identifying of the subgroup to build (the order of the subgroup)</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>id</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)"><em>int</em></a>) – the integer <span class="math notranslate nohighlight">\(M\)</span> identifying of the subgroup</p>
+<dd class="field-odd"><p><strong>id</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – the integer <span class="math notranslate nohighlight">\(M\)</span> identifying of the subgroup</p>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p><p>a tuple containing</p>
@@ -912,7 +919,7 @@ The frequency has to be a non-negative integer in <span class="math notranslate 
 where <span class="math notranslate nohighlight">\(N\)</span> is the order of the group.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>k</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)"><em>int</em></a>) – the frequency of the representation</p>
+<dd class="field-odd"><p><strong>k</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – the frequency of the representation</p>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p>the corresponding irrep</p>
@@ -945,12 +952,12 @@ it, i.e. <span class="math notranslate nohighlight">\(r^k \cdot f = f \cdot r^{-
 and <span class="math notranslate nohighlight">\(k \in \{0, \dots, N-1\}\)</span>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>N</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)"><em>int</em></a>) – number of discrete rotations in the group</p>
+<dd class="field-odd"><p><strong>N</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – number of discrete rotations in the group</p>
 </dd>
 <dt class="field-even">Variables</dt>
 <dd class="field-even"><ul class="simple">
 <li><p><strong>reflection</strong> – the reflection element</p></li>
-<li><p><strong>rotation_order</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)"><em>int</em></a>) – the number of discrete rotations in this group (equal to the parameter <code class="docutils literal notranslate"><span class="pre">N</span></code>)</p></li>
+<li><p><strong>rotation_order</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – the number of discrete rotations in this group (equal to the parameter <code class="docutils literal notranslate"><span class="pre">N</span></code>)</p></li>
 </ul>
 </dd>
 </dl>
@@ -963,7 +970,7 @@ the method returns <span class="math notranslate nohighlight">\(r^{-k}\)</span> 
 <span class="math notranslate nohighlight">\(fr^{-k}=r^kf\)</span> (as <span class="math notranslate nohighlight">\((1, k)\)</span>) otherwise.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>element</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.9)"><em>tuple</em></a>) – a group element <span class="math notranslate nohighlight">\(r^kf^j\)</span> as a pair <span class="math notranslate nohighlight">\((j, k)\)</span></p>
+<dd class="field-odd"><p><strong>element</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.10)"><em>tuple</em></a>) – a group element <span class="math notranslate nohighlight">\(r^kf^j\)</span> as a pair <span class="math notranslate nohighlight">\((j, k)\)</span></p>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p>its inverse</p>
@@ -980,8 +987,8 @@ Given two input element <span class="math notranslate nohighlight">\(r^af^b\)</s
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>e1</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.9)"><em>tuple</em></a>) – a group element <span class="math notranslate nohighlight">\(r^af^b\)</span> as a pair <span class="math notranslate nohighlight">\((b, a)\)</span></p></li>
-<li><p><strong>e2</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.9)"><em>tuple</em></a>) – another element <span class="math notranslate nohighlight">\(r^cf^d\)</span> as a pair <span class="math notranslate nohighlight">\((d, c)\)</span></p></li>
+<li><p><strong>e1</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.10)"><em>tuple</em></a>) – a group element <span class="math notranslate nohighlight">\(r^af^b\)</span> as a pair <span class="math notranslate nohighlight">\((b, a)\)</span></p></li>
+<li><p><strong>e2</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.10)"><em>tuple</em></a>) – another element <span class="math notranslate nohighlight">\(r^cf^d\)</span> as a pair <span class="math notranslate nohighlight">\((d, c)\)</span></p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
@@ -997,8 +1004,8 @@ Given two input element <span class="math notranslate nohighlight">\(r^af^b\)</s
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>e1</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.9)"><em>tuple</em></a>) – an element</p></li>
-<li><p><strong>e2</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.9)"><em>tuple</em></a>) – another element</p></li>
+<li><p><strong>e1</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.10)"><em>tuple</em></a>) – an element</p></li>
+<li><p><strong>e2</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.10)"><em>tuple</em></a>) – another element</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
@@ -1037,7 +1044,7 @@ The order <span class="math notranslate nohighlight">\(M\)</span> has to divide 
 </ul>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.9)"><em>tuple</em></a>) – the identification of the subgroup</p>
+<dd class="field-odd"><p><strong>id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.10)"><em>tuple</em></a>) – the identification of the subgroup</p>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p><p>a tuple containing</p>
@@ -1065,8 +1072,8 @@ If <span class="math notranslate nohighlight">\(N\)</span> is even, the group al
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>j</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)"><em>int</em></a>) – the frequency of the reflections in the irrep</p></li>
-<li><p><strong>k</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)"><em>int</em></a>) – the frequency of the rotations in the irrep</p></li>
+<li><p><strong>j</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – the frequency of the reflections in the irrep</p></li>
+<li><p><strong>k</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – the frequency of the rotations in the irrep</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
@@ -1096,7 +1103,7 @@ In case of multiple calls of this function with different parameters or in case 
 and, therefore, all its references will see the new representations.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>maximum_frequency</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)"><em>int</em></a>) – maximum frequency of the irreps</p>
+<dd class="field-odd"><p><strong>maximum_frequency</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – maximum frequency of the irreps</p>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p>the group <span class="math notranslate nohighlight">\(SO(2)\)</span></p>
@@ -1120,7 +1127,7 @@ In case of multiple calls of this function with different parameters or in case 
 and, therefore, all its references will see the new representations.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>maximum_frequency</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)"><em>int</em></a>) – maximum frequency of the irreps</p>
+<dd class="field-odd"><p><strong>maximum_frequency</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – maximum frequency of the irreps</p>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p>the group <span class="math notranslate nohighlight">\(O(2)\)</span></p>
@@ -1139,7 +1146,7 @@ In case of multiple calls of this function with different parameters or in case 
 the new representations and, therefore, all its references will see the new representations.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>N</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)"><em>int</em></a>) – number of discrete rotations in the group</p>
+<dd class="field-odd"><p><strong>N</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – number of discrete rotations in the group</p>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p>the cyclic group of order <code class="docutils literal notranslate"><span class="pre">N</span></code></p>
@@ -1159,7 +1166,7 @@ In case of multiple calls of this function with different parameters or in case 
 the new representations and, therefore, all its references will see the new representations.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>N</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)"><em>int</em></a>) – number of discrete rotations in the group</p>
+<dd class="field-odd"><p><strong>N</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – number of discrete rotations in the group</p>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p>the dihedral group of order <code class="docutils literal notranslate"><span class="pre">2N</span></code></p>
@@ -1243,16 +1250,16 @@ evaluating <code class="docutils literal notranslate"><span class="pre">represen
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>group</strong> (<a class="reference internal" href="#e2cnn.group.Group" title="e2cnn.group.Group"><em>Group</em></a>) – the group to be represented.</p></li>
-<li><p><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><em>str</em></a>) – an identification name for this representation.</p></li>
-<li><p><strong>irreps</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.9)"><em>list</em></a>) – a list of strings. Each string represents the name of one of the <em>irreps</em> of the
+<li><p><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – an identification name for this representation.</p></li>
+<li><p><strong>irreps</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.10)"><em>list</em></a>) – a list of strings. Each string represents the name of one of the <em>irreps</em> of the
 group (see <a class="reference internal" href="#e2cnn.group.Group.irreps" title="e2cnn.group.Group.irreps"><code class="xref py py-attr docutils literal notranslate"><span class="pre">e2cnn.group.Group.irreps</span></code></a>).</p></li>
 <li><p><strong>change_of_basis</strong> (<a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.21)"><em>ndarray</em></a>) – the matrix which transforms the direct sum of the irreps
 in this representation.</p></li>
-<li><p><strong>supported_nonlinearities</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.9)"><em>list</em></a><em> or </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#set" title="(in Python v3.9)"><em>set</em></a>) – a list or set of nonlinearity types supported by this
+<li><p><strong>supported_nonlinearities</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.10)"><em>list</em></a><em> or </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#set" title="(in Python v3.10)"><em>set</em></a>) – a list or set of nonlinearity types supported by this
 representation.</p></li>
-<li><p><strong>representation</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.9)"><em>dict</em></a><em> or </em><em>callable</em><em>, </em><em>optional</em>) – a callable implementing this representation or a dictionary
+<li><p><strong>representation</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.10)"><em>dict</em></a><em> or </em><em>callable</em><em>, </em><em>optional</em>) – a callable implementing this representation or a dictionary
 mapping each of the group’s elements to its representation.</p></li>
-<li><p><strong>character</strong> (<em>callable</em><em> or </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.9)"><em>dict</em></a><em>, </em><em>optional</em>) – a callable returning the character of this representation for an
+<li><p><strong>character</strong> (<em>callable</em><em> or </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.10)"><em>dict</em></a><em>, </em><em>optional</em>) – a callable returning the character of this representation for an
 input element or a dictionary mapping each element to its character.</p></li>
 <li><p><strong>change_of_basis_inv</strong> (<a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.21)"><em>ndarray</em></a><em>, </em><em>optional</em>) – the inverse of the <code class="docutils literal notranslate"><span class="pre">change_of_basis</span></code> matrix; if not
 provided (<code class="docutils literal notranslate"><span class="pre">None</span></code>), it is computed from <code class="docutils literal notranslate"><span class="pre">change_of_basis</span></code>.</p></li>
@@ -1263,16 +1270,16 @@ provided (<code class="docutils literal notranslate"><span class="pre">None</spa
 <dt class="field-even">Variables</dt>
 <dd class="field-even"><ul class="simple">
 <li><p><strong>group</strong> (<a class="reference internal" href="#e2cnn.group.Group" title="e2cnn.group.Group"><em>Group</em></a>) – The group which is being represented.</p></li>
-<li><p><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><em>str</em></a>) – A string identifying this representation.</p></li>
-<li><p><strong>size</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)"><em>int</em></a>) – Dimensionality of the vector space of this representation. In practice, this is the size of the
+<li><p><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – A string identifying this representation.</p></li>
+<li><p><strong>size</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – Dimensionality of the vector space of this representation. In practice, this is the size of the
 matrices this representation maps the group elements to.</p></li>
 <li><p><strong>change_of_basis</strong> (<a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.21)"><em>ndarray</em></a>) – Change of basis matrix for the irreps decomposition.</p></li>
 <li><p><strong>change_of_basis_inv</strong> (<a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.21)"><em>ndarray</em></a>) – Inverse of the change of basis matrix for the irreps decomposition.</p></li>
 <li><p><strong>representation</strong> (<em>callable</em>) – Method implementing the map from group elements to their representation matrix.</p></li>
-<li><p><strong>supported_nonlinearities</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#set" title="(in Python v3.9)"><em>set</em></a>) – A set of strings identifying the non linearities types supported by this representation.</p></li>
-<li><p><strong>irreps</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.9)"><em>list</em></a>) – List of irreps into which this representation decomposes.</p></li>
-<li><p><strong>attributes</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.9)"><em>dict</em></a>) – Custom attributes set when creating the instance of this class.</p></li>
-<li><p><strong>irreducible</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.9)"><em>bool</em></a>) – Whether this is an irreducible representation or not (i.e. if it can’t be decomposed into further invariant subspaces).</p></li>
+<li><p><strong>supported_nonlinearities</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#set" title="(in Python v3.10)"><em>set</em></a>) – A set of strings identifying the non linearities types supported by this representation.</p></li>
+<li><p><strong>irreps</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.10)"><em>list</em></a>) – List of irreps into which this representation decomposes.</p></li>
+<li><p><strong>attributes</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.10)"><em>dict</em></a>) – Custom attributes set when creating the instance of this class.</p></li>
+<li><p><strong>irreducible</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a>) – Whether this is an irreducible representation or not (i.e. if it can’t be decomposed into further invariant subspaces).</p></li>
 </ul>
 </dd>
 </dl>
@@ -1387,21 +1394,21 @@ Indeed, any <a class="reference internal" href="#e2cnn.group.Representation" tit
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>group</strong> (<a class="reference internal" href="#e2cnn.group.Group" title="e2cnn.group.Group"><em>Group</em></a>) – the group which is being represented</p></li>
-<li><p><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><em>str</em></a>) – an identification name for this representation</p></li>
-<li><p><strong>representation</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.9)"><em>dict</em></a><em> or </em><em>callable</em>) – a callable implementing this representation or a dictionary
+<li><p><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – an identification name for this representation</p></li>
+<li><p><strong>representation</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.10)"><em>dict</em></a><em> or </em><em>callable</em>) – a callable implementing this representation or a dictionary
 mapping each of the group’s elements to its representation.</p></li>
-<li><p><strong>size</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)"><em>int</em></a>) – the size of the vector space where this representation is defined (i.e. the size of the matrices)</p></li>
-<li><p><strong>sum_of_squares_constituents</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)"><em>int</em></a>) – the sum of the squares of the multiplicities of pairwise distinct
+<li><p><strong>size</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – the size of the vector space where this representation is defined (i.e. the size of the matrices)</p></li>
+<li><p><strong>sum_of_squares_constituents</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – the sum of the squares of the multiplicities of pairwise distinct
 irreducible constituents of the character of this representation over a non-splitting field</p></li>
-<li><p><strong>supported_nonlinearities</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.9)"><em>list</em></a>) – list of nonlinearitiy types supported by this representation.</p></li>
-<li><p><strong>character</strong> (<em>callable</em><em> or </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.9)"><em>dict</em></a><em>, </em><em>optional</em>) – a callable returning the character of this representation for an
+<li><p><strong>supported_nonlinearities</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.10)"><em>list</em></a>) – list of nonlinearitiy types supported by this representation.</p></li>
+<li><p><strong>character</strong> (<em>callable</em><em> or </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.10)"><em>dict</em></a><em>, </em><em>optional</em>) – a callable returning the character of this representation for an
 input element or a dictionary mapping each element to its character.</p></li>
 <li><p><strong>**kwargs</strong> – custom attributes the user can set and, then, access from the dictionary
 in <code class="xref py py-attr docutils literal notranslate"><span class="pre">e2cnn.group.Representation.attributes</span></code></p></li>
 </ul>
 </dd>
 <dt class="field-even">Variables</dt>
-<dd class="field-even"><p><strong>sum_of_squares_constituents</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)"><em>int</em></a>) – the sum of the squares of the multiplicities of pairwise distinct
+<dd class="field-even"><p><strong>sum_of_squares_constituents</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – the sum of the squares of the multiplicities of pairwise distinct
 irreducible constituents of the character of this representation over a non-splitting field (see
 <a class="reference external" href="https://groupprops.subwiki.org/wiki/Character_orthogonality_theorem#Statement_over_general_fields_in_terms_of_inner_product_of_class_functions">Character Orthogonality Theorem</a>
 over general fields)</p>
@@ -1425,8 +1432,8 @@ resulting representation will evaluate to <span class="math notranslate nohighli
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>repr</strong> (<a class="reference internal" href="#e2cnn.group.Representation" title="e2cnn.group.Representation"><em>Representation</em></a>) – the input representation</p></li>
 <li><p><strong>change_of_basis</strong> (<a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.21)"><em>ndarray</em></a>) – the change of basis to apply</p></li>
-<li><p><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><em>str</em></a><em>, </em><em>optional</em>) – the name to use to identify the new representation</p></li>
-<li><p><strong>supported_nonlinearities</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.9)"><em>list</em></a><em>, </em><em>optional</em>) – a list containing the ids of the supported non-linearities
+<li><p><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a><em>, </em><em>optional</em>) – the name to use to identify the new representation</p></li>
+<li><p><strong>supported_nonlinearities</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.10)"><em>list</em></a><em>, </em><em>optional</em>) – a list containing the ids of the supported non-linearities
 for the new representation</p></li>
 </ul>
 </dd>
@@ -1458,10 +1465,10 @@ for the new representation</p></li>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>reprs</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.9)"><em>list</em></a>) – the list of representations to sum.</p></li>
+<li><p><strong>reprs</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.10)"><em>list</em></a>) – the list of representations to sum.</p></li>
 <li><p><strong>change_of_basis</strong> (<a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.21)"><em>ndarray</em></a><em>, </em><em>optional</em>) – an invertible square matrix to use as change of basis after computing the direct sum.
 By default (<code class="docutils literal notranslate"><span class="pre">None</span></code>), an identity matrix is used, such that only the direct sum is evaluated.</p></li>
-<li><p><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><em>str</em></a><em>, </em><em>optional</em>) – a name for the new representation.</p></li>
+<li><p><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a><em>, </em><em>optional</em>) – a name for the new representation.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>

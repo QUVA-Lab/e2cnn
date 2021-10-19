@@ -42,7 +42,7 @@
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="e2cnn.nn" href="e2cnn.nn.html" />
-    <link rel="prev" title="e2cnn.kernels" href="e2cnn.kernels.html" /> 
+    <link rel="prev" title="e2cnn.diffops" href="e2cnn.diffops.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -106,6 +106,13 @@
 <li class="toctree-l2"><a class="reference internal" href="e2cnn.kernels.html#bases-for-group-actions-on-the-plane">Bases for Group Actions on the Plane</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="e2cnn.diffops.html">e2cnn.diffops</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="e2cnn.diffops.html#abstract-class">Abstract Class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="e2cnn.diffops.html#pdo-bases">PDO Bases</a></li>
+<li class="toctree-l2"><a class="reference internal" href="e2cnn.diffops.html#bases-for-group-actions-on-the-plane">Bases for Group Actions on the Plane</a></li>
+<li class="toctree-l2"><a class="reference internal" href="e2cnn.diffops.html#utility-functions">Utility functions</a></li>
+</ul>
+</li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">e2cnn.gspaces</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#abstract-group-space">Abstract Group Space</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#group-actions-on-the-plane">Group Actions on the Plane</a></li>
@@ -116,7 +123,7 @@
 <li class="toctree-l2"><a class="reference internal" href="e2cnn.nn.html#geometric-tensor">Geometric Tensor</a></li>
 <li class="toctree-l2"><a class="reference internal" href="e2cnn.nn.html#equivariant-module">Equivariant Module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="e2cnn.nn.html#utils">Utils</a></li>
-<li class="toctree-l2"><a class="reference internal" href="e2cnn.nn.html#planar-convolution">Planar Convolution</a></li>
+<li class="toctree-l2"><a class="reference internal" href="e2cnn.nn.html#planar-convolution-and-differential-operators">Planar Convolution and Differential Operators</a></li>
 <li class="toctree-l2"><a class="reference internal" href="e2cnn.nn.html#non-linearities">Non Linearities</a></li>
 <li class="toctree-l2"><a class="reference internal" href="e2cnn.nn.html#invariant-maps">Invariant Maps</a></li>
 <li class="toctree-l2"><a class="reference internal" href="e2cnn.nn.html#pooling">Pooling</a></li>
@@ -243,16 +250,16 @@ For more details on this interpretation we refer to
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>fibergroup</strong> (<a class="reference internal" href="e2cnn.group.html#e2cnn.group.Group" title="e2cnn.group.Group"><em>Group</em></a>) – the fiber group</p></li>
-<li><p><strong>dimensionality</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)"><em>int</em></a>) – the dimensionality of the Euclidean space on which a signal is defined</p></li>
-<li><p><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><em>str</em></a>) – an identification name</p></li>
+<li><p><strong>dimensionality</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – the dimensionality of the Euclidean space on which a signal is defined</p></li>
+<li><p><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – an identification name</p></li>
 </ul>
 </dd>
 <dt class="field-even">Variables</dt>
 <dd class="field-even"><ul class="simple">
 <li><p><strong>fibergroup</strong> (<a class="reference internal" href="e2cnn.group.html#e2cnn.group.Group" title="e2cnn.group.Group"><em>Group</em></a>) – the fiber group</p></li>
-<li><p><strong>dimensionality</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)"><em>int</em></a>) – the dimensionality of the Euclidean space on which a signal is defined</p></li>
-<li><p><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><em>str</em></a>) – an identification name</p></li>
-<li><p><strong>basespace</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><em>str</em></a>) – the name of the space whose symmetries are modeled. It is an Euclidean space <span class="math notranslate nohighlight">\(\R^D\)</span>.</p></li>
+<li><p><strong>dimensionality</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – the dimensionality of the Euclidean space on which a signal is defined</p></li>
+<li><p><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – an identification name</p></li>
+<li><p><strong>basespace</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – the name of the space whose symmetries are modeled. It is an Euclidean space <span class="math notranslate nohighlight">\(\R^D\)</span>.</p></li>
 </ul>
 </dd>
 </dl>
@@ -464,7 +471,7 @@ for a description of the parameter <code class="docutils literal notranslate"><s
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>fibergroup</strong> (<a class="reference internal" href="e2cnn.group.html#e2cnn.group.Group" title="e2cnn.group.Group"><em>Group</em></a>) – group of origin-preserving symmetries (fiber group)</p></li>
-<li><p><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><em>str</em></a>) – identification name</p></li>
+<li><p><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – identification name</p></li>
 </ul>
 </dd>
 </dl>
@@ -500,9 +507,49 @@ A ring is implemented as a Gaussian function over the radial component, centered
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>in_repr</strong> (<a class="reference internal" href="e2cnn.group.html#e2cnn.group.Representation" title="e2cnn.group.Representation"><em>Representation</em></a>) – the input representation</p></li>
 <li><p><strong>out_repr</strong> (<a class="reference internal" href="e2cnn.group.html#e2cnn.group.Representation" title="e2cnn.group.Representation"><em>Representation</em></a>) – the output representation</p></li>
-<li><p><strong>sigma</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.9)"><em>list</em></a><em> or </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.9)"><em>float</em></a>) – parameters controlling the width of each ring of the radial profile.
+<li><p><strong>sigma</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.10)"><em>list</em></a><em> or </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)"><em>float</em></a>) – parameters controlling the width of each ring of the radial profile.
 If only one scalar is passed, it is used for all rings</p></li>
-<li><p><strong>rings</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.9)"><em>list</em></a>) – radii of the rings defining the radial profile</p></li>
+<li><p><strong>rings</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.10)"><em>list</em></a>) – radii of the rings defining the radial profile</p></li>
+<li><p><strong>**kwargs</strong> – Group-specific keywords arguments for <code class="docutils literal notranslate"><span class="pre">_basis_generator</span></code> method</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>the analytical basis</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="e2cnn.gspaces.GeneralOnR2.build_diffop_basis">
+<code class="sig-name descname"><span class="pre">build_diffop_basis</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">in_repr</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">out_repr</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_power</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/e2cnn/gspaces/r2/general_r2.html#GeneralOnR2.build_diffop_basis"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#e2cnn.gspaces.GeneralOnR2.build_diffop_basis" title="Permalink to this definition">¶</a></dt>
+<dd><p>Builds a basis for the space of the equivariant PDOs with respect to the symmetries described by this
+<a class="reference internal" href="#e2cnn.gspaces.GSpace" title="e2cnn.gspaces.GSpace"><code class="xref py py-class docutils literal notranslate"><span class="pre">GSpace</span></code></a>.</p>
+<p>A <span class="math notranslate nohighlight">\(G\)</span>-equivariant PDO <span class="math notranslate nohighlight">\(D(P)\)</span> for a matrix of polynomials <span class="math notranslate nohighlight">\(P\)</span>, mapping between an input field, transforming under
+<span class="math notranslate nohighlight">\(\rho_\text{in}\)</span> (<code class="docutils literal notranslate"><span class="pre">in_repr</span></code>), and an output field, transforming under  <span class="math notranslate nohighlight">\(\rho_\text{out}\)</span>
+(<code class="docutils literal notranslate"><span class="pre">out_repr</span></code>), satisfies the following constraint:</p>
+<div class="math notranslate nohighlight">
+\[P(gx) = \rho_\text{out}(g) P(x) \rho_\text{in}(g)^{-1} \qquad \forall g \in G, \forall x \in X\]</div>
+<p>for <span class="math notranslate nohighlight">\(G \leq O(d)\)</span>.</p>
+<p>A complete basis is obtained by combining certain PDOs with powers of the Laplacian operator.
+<code class="docutils literal notranslate"><span class="pre">max_power</span></code> describes the maximum power of the Laplacian to use when building the basis.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This method is a wrapper for the functions building the bases which are defined in <a class="reference internal" href="e2cnn.diffops.html"><span class="doc">e2cnn.diffops</span></a>:</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="e2cnn.diffops.html#e2cnn.diffops.diffops_O2_act_R2" title="e2cnn.diffops.diffops_O2_act_R2"><code class="xref py py-meth docutils literal notranslate"><span class="pre">e2cnn.diffops.diffops_O2_act_R2()</span></code></a>,</p></li>
+<li><p><a class="reference internal" href="e2cnn.diffops.html#e2cnn.diffops.diffops_SO2_act_R2" title="e2cnn.diffops.diffops_SO2_act_R2"><code class="xref py py-meth docutils literal notranslate"><span class="pre">e2cnn.diffops.diffops_SO2_act_R2()</span></code></a>,</p></li>
+<li><p><a class="reference internal" href="e2cnn.diffops.html#e2cnn.diffops.diffops_DN_act_R2" title="e2cnn.diffops.diffops_DN_act_R2"><code class="xref py py-meth docutils literal notranslate"><span class="pre">e2cnn.diffops.diffops_DN_act_R2()</span></code></a>,</p></li>
+<li><p><a class="reference internal" href="e2cnn.diffops.html#e2cnn.diffops.diffops_CN_act_R2" title="e2cnn.diffops.diffops_CN_act_R2"><code class="xref py py-meth docutils literal notranslate"><span class="pre">e2cnn.diffops.diffops_CN_act_R2()</span></code></a>,</p></li>
+<li><p><a class="reference internal" href="e2cnn.diffops.html#e2cnn.diffops.diffops_Flip_act_R2" title="e2cnn.diffops.diffops_Flip_act_R2"><code class="xref py py-meth docutils literal notranslate"><span class="pre">e2cnn.diffops.diffops_Flip_act_R2()</span></code></a>,</p></li>
+<li><p><a class="reference internal" href="e2cnn.diffops.html#e2cnn.diffops.diffops_Trivial_act_R2" title="e2cnn.diffops.diffops_Trivial_act_R2"><code class="xref py py-meth docutils literal notranslate"><span class="pre">e2cnn.diffops.diffops_Trivial_act_R2()</span></code></a></p></li>
+</ul>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>in_repr</strong> (<a class="reference internal" href="e2cnn.group.html#e2cnn.group.Representation" title="e2cnn.group.Representation"><em>Representation</em></a>) – the input representation</p></li>
+<li><p><strong>out_repr</strong> (<a class="reference internal" href="e2cnn.group.html#e2cnn.group.Representation" title="e2cnn.group.Representation"><em>Representation</em></a>) – the output representation</p></li>
+<li><p><strong>max_power</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – the largest power of the Laplacian that will be used</p></li>
 <li><p><strong>**kwargs</strong> – Group-specific keywords arguments for <code class="docutils literal notranslate"><span class="pre">_basis_generator</span></code> method</p></li>
 </ul>
 </dd>
@@ -542,15 +589,15 @@ vertical axis, i.e. <span class="math notranslate nohighlight">\(0\)</span> or <
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>N</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)"><em>int</em></a>) – number of discrete rotations (integer greater than 1) or -1 for continuous rotations</p></li>
-<li><p><strong>maximum_frequency</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)"><em>int</em></a>) – maximum frequency of <a class="reference internal" href="e2cnn.group.html#e2cnn.group.O2" title="e2cnn.group.O2"><code class="xref py py-class docutils literal notranslate"><span class="pre">O2</span></code></a> ‘s irreps if <code class="docutils literal notranslate"><span class="pre">N</span> <span class="pre">=</span> <span class="pre">-1</span></code></p></li>
-<li><p><strong>axis</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.9)"><em>float</em></a><em>, </em><em>optional</em>) – the slope of the axis of the flip (in radians)</p></li>
+<li><p><strong>N</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – number of discrete rotations (integer greater than 1) or -1 for continuous rotations</p></li>
+<li><p><strong>maximum_frequency</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – maximum frequency of <a class="reference internal" href="e2cnn.group.html#e2cnn.group.O2" title="e2cnn.group.O2"><code class="xref py py-class docutils literal notranslate"><span class="pre">O2</span></code></a> ‘s irreps if <code class="docutils literal notranslate"><span class="pre">N</span> <span class="pre">=</span> <span class="pre">-1</span></code></p></li>
+<li><p><strong>axis</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)"><em>float</em></a><em>, </em><em>optional</em>) – the slope of the axis of the flip (in radians)</p></li>
 <li><p><strong>fibergroup</strong> (<a class="reference internal" href="e2cnn.group.html#e2cnn.group.Group" title="e2cnn.group.Group"><em>Group</em></a><em>, </em><em>optional</em>) – use an already existing instance of the symmetry group.
 In that case only the parameter <code class="docutils literal notranslate"><span class="pre">axis</span></code> should be used.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Variables</dt>
-<dd class="field-even"><p><strong>axis</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.9)"><em>float</em></a>) – Angle with respect to the horizontal axis which defines the reflection axis.</p>
+<dd class="field-even"><p><strong>axis</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)"><em>float</em></a>) – Angle with respect to the horizontal axis which defines the reflection axis.</p>
 </dd>
 </dl>
 <dl class="py method">
@@ -582,7 +629,7 @@ Otherwise, <span class="math notranslate nohighlight">\(M\)</span> can be any po
 </ul>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.9)"><em>tuple</em></a>) – the id of the subgroup</p>
+<dd class="field-odd"><p><strong>id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.10)"><em>tuple</em></a>) – the id of the subgroup</p>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p><p>a tuple containing</p>
@@ -616,8 +663,8 @@ In that case the parameter <code class="docutils literal notranslate"><span clas
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>N</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)"><em>int</em></a>) – number of discrete rotations (integer greater than 1) or <code class="docutils literal notranslate"><span class="pre">-1</span></code> for continuous rotations</p></li>
-<li><p><strong>maximum_frequency</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)"><em>int</em></a>) – maximum frequency of <a class="reference internal" href="e2cnn.group.html#e2cnn.group.SO2" title="e2cnn.group.SO2"><code class="xref py py-class docutils literal notranslate"><span class="pre">SO2</span></code></a>’s irreps if <code class="docutils literal notranslate"><span class="pre">N</span> <span class="pre">=</span> <span class="pre">-1</span></code></p></li>
+<li><p><strong>N</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – number of discrete rotations (integer greater than 1) or <code class="docutils literal notranslate"><span class="pre">-1</span></code> for continuous rotations</p></li>
+<li><p><strong>maximum_frequency</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – maximum frequency of <a class="reference internal" href="e2cnn.group.html#e2cnn.group.SO2" title="e2cnn.group.SO2"><code class="xref py py-class docutils literal notranslate"><span class="pre">SO2</span></code></a>’s irreps if <code class="docutils literal notranslate"><span class="pre">N</span> <span class="pre">=</span> <span class="pre">-1</span></code></p></li>
 <li><p><strong>fibergroup</strong> (<a class="reference internal" href="e2cnn.group.html#e2cnn.group.Group" title="e2cnn.group.Group"><em>Group</em></a><em>, </em><em>optional</em>) – use an already existing instance of the symmetry group.
 In that case, the other parameters should not be provided.</p></li>
 </ul>
@@ -633,7 +680,7 @@ If the current fiber group is <span class="math notranslate nohighlight">\(C_N\)
 <span class="math notranslate nohighlight">\(N\)</span>. Otherwise, <span class="math notranslate nohighlight">\(M\)</span> can be any positive integer.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>id</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)"><em>int</em></a>) – the number <span class="math notranslate nohighlight">\(M\)</span> of rotations in the subgroup</p>
+<dd class="field-odd"><p><strong>id</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – the number <span class="math notranslate nohighlight">\(M\)</span> of rotations in the subgroup</p>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p><p>a tuple containing</p>
@@ -664,13 +711,13 @@ the <em>X</em>-axis.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>axis</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.9)"><em>float</em></a><em>, </em><em>optional</em>) – the slope of the axis of the reflection (in radians).
+<li><p><strong>axis</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)"><em>float</em></a><em>, </em><em>optional</em>) – the slope of the axis of the reflection (in radians).
 By default, the vertical axis is used (<span class="math notranslate nohighlight">\(\pi/2\)</span>).</p></li>
 <li><p><strong>fibergroup</strong> (<a class="reference internal" href="e2cnn.group.html#e2cnn.group.Group" title="e2cnn.group.Group"><em>Group</em></a><em>, </em><em>optional</em>) – use an already existing instance of the symmetry group</p></li>
 </ul>
 </dd>
 <dt class="field-even">Variables</dt>
-<dd class="field-even"><p><strong>axis</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.9)"><em>float</em></a>) – Angle with respect to the horizontal axis which defines the reflection axis.</p>
+<dd class="field-even"><p><strong>axis</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)"><em>float</em></a>) – Angle with respect to the horizontal axis which defines the reflection axis.</p>
 </dd>
 </dl>
 <dl class="py method">
@@ -683,7 +730,7 @@ The only accepted input values are <code class="docutils literal notranslate"><s
 <code class="docutils literal notranslate"><span class="pre">id=2</span></code> which returns a new instance of the current group.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.9)"><em>tuple</em></a>) – the id of the subgroup</p>
+<dd class="field-odd"><p><strong>id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.10)"><em>tuple</em></a>) – the id of the subgroup</p>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p><p>a tuple containing</p>
@@ -731,7 +778,7 @@ The only accepted input value is <code class="docutils literal notranslate"><spa
 This functionality is implemented only for consistency with the other G-spaces.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>id</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)"><em>int</em></a>) – the order of the subgroup</p>
+<dd class="field-odd"><p><strong>id</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – the order of the subgroup</p>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p><p>a tuple containing</p>
@@ -760,7 +807,7 @@ This functionality is implemented only for consistency with the other G-spaces.<
           <footer>
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
         <a href="e2cnn.nn.html" class="btn btn-neutral float-right" title="e2cnn.nn" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
-        <a href="e2cnn.kernels.html" class="btn btn-neutral float-left" title="e2cnn.kernels" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="e2cnn.diffops.html" class="btn btn-neutral float-left" title="e2cnn.diffops" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
     </div>
 
   <hr/>

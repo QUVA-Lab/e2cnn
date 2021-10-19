@@ -1,0 +1,544 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>e2cnn.diffops.basis &mdash; e2cnn 0.1.9 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/custom.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> e2cnn
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.1.9
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Package Reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../api/e2cnn.group.html">e2cnn.group</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/e2cnn.group.html#groups">Groups</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/e2cnn.group.html#representations">Representations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/e2cnn.group.html#utility-functions">Utility Functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/e2cnn.group.html#subpackages">Subpackages</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../api/e2cnn.kernels.html">e2cnn.kernels</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/e2cnn.kernels.html#abstract-classes">Abstract Classes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/e2cnn.kernels.html#kernel-bases">Kernel Bases</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/e2cnn.kernels.html#bases-for-group-actions-on-the-plane">Bases for Group Actions on the Plane</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../api/e2cnn.diffops.html">e2cnn.diffops</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/e2cnn.diffops.html#abstract-class">Abstract Class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/e2cnn.diffops.html#pdo-bases">PDO Bases</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/e2cnn.diffops.html#bases-for-group-actions-on-the-plane">Bases for Group Actions on the Plane</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/e2cnn.diffops.html#utility-functions">Utility functions</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../api/e2cnn.gspaces.html">e2cnn.gspaces</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/e2cnn.gspaces.html#abstract-group-space">Abstract Group Space</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/e2cnn.gspaces.html#group-actions-on-the-plane">Group Actions on the Plane</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../api/e2cnn.nn.html">e2cnn.nn</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/e2cnn.nn.html#field-type">Field Type</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/e2cnn.nn.html#geometric-tensor">Geometric Tensor</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/e2cnn.nn.html#equivariant-module">Equivariant Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/e2cnn.nn.html#utils">Utils</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/e2cnn.nn.html#planar-convolution-and-differential-operators">Planar Convolution and Differential Operators</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/e2cnn.nn.html#non-linearities">Non Linearities</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/e2cnn.nn.html#invariant-maps">Invariant Maps</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/e2cnn.nn.html#pooling">Pooling</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/e2cnn.nn.html#normalization">Normalization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/e2cnn.nn.html#dropout">Dropout</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/e2cnn.nn.html#other-modules">Other Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/e2cnn.nn.html#module-e2cnn.nn.init">Weight Initialization</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">e2cnn</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+      <li>e2cnn.diffops.basis</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for e2cnn.diffops.basis</h1><div class="highlight"><pre>
+<span></span>
+<span class="kn">from</span> <span class="nn">dataclasses</span> <span class="kn">import</span> <span class="n">dataclass</span>
+<span class="kn">import</span> <span class="nn">itertools</span>
+<span class="kn">from</span> <span class="nn">e2cnn.kernels.basis</span> <span class="kn">import</span> <span class="n">EmptyBasisException</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Iterable</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Type</span><span class="p">,</span> <span class="n">Union</span><span class="p">,</span> <span class="n">Tuple</span>
+
+<span class="kn">from</span> <span class="nn">e2cnn.kernels</span> <span class="kn">import</span> <span class="n">Basis</span>
+<span class="kn">from</span> <span class="nn">e2cnn.group</span> <span class="kn">import</span> <span class="n">SO2</span><span class="p">,</span> <span class="n">Representation</span>
+<span class="c1"># we need SteerableDiffopBasis, but importing that directly</span>
+<span class="c1"># leads to cyclic imports because it also relies on this file.</span>
+<span class="c1"># So we just import the diffops module instead</span>
+<span class="kn">import</span> <span class="nn">e2cnn.diffops</span> <span class="k">as</span> <span class="nn">diffops</span>
+<span class="kn">from</span> <span class="nn">.utils</span> <span class="kn">import</span> <span class="n">discretize_homogeneous_polynomial</span><span class="p">,</span> <span class="n">multiply_polynomials</span><span class="p">,</span> <span class="n">laplacian_power</span><span class="p">,</span> <span class="n">display_diffop</span><span class="p">,</span> <span class="n">transform_polynomial</span>
+
+
+<div class="viewcode-block" id="DiscretizationArgs"><a class="viewcode-back" href="../../../api/e2cnn.diffops.html#e2cnn.diffops.DiscretizationArgs">[docs]</a><span class="nd">@dataclass</span><span class="p">(</span><span class="n">frozen</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="k">class</span> <span class="nc">DiscretizationArgs</span><span class="p">:</span>
+    <span class="sa">r</span><span class="sd">&quot;&quot;&quot;Parameters specifying a discretization procedure for PDOs.</span>
+<span class="sd">        </span>
+<span class="sd">        Attributes:</span>
+<span class="sd">            ~.method (str, optional): the discretization method to use,</span>
+<span class="sd">                either ``&quot;rbffd&quot;``, ``&quot;fd&quot;`` or ``&quot;gauss&quot;``.</span>
+<span class="sd">            ~.smoothing (float, optional): ``smoothing`` is the standard</span>
+<span class="sd">                deviation of the Gaussian used for discretization. Must be set if ``method=&quot;gauss&quot;``,</span>
+<span class="sd">                has no effect otherwise.</span>
+<span class="sd">            ~.angle_offset (float, optional): if not ``None``, rotate the PDOs by this many radians.</span>
+<span class="sd">            ~.phi (str, optional): which RBF to use (only relevant for RBF-FD).</span>
+<span class="sd">                Can be any of the abbreviations `here &lt;https://rbf.readthedocs.io/en/latest/basis.html&gt;`_.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">method</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;fd&quot;</span>
+    <span class="n">smoothing</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">angle_offset</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">phi</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;ga&quot;</span></div>
+
+
+<div class="viewcode-block" id="DiffopBasis"><a class="viewcode-back" href="../../../api/e2cnn.diffops.html#e2cnn.diffops.DiffopBasis">[docs]</a><span class="k">class</span> <span class="nc">DiffopBasis</span><span class="p">(</span><span class="n">Basis</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> 
+                 <span class="n">coefficients</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">],</span>
+                 <span class="n">discretization</span><span class="p">:</span> <span class="n">DiscretizationArgs</span> <span class="o">=</span> <span class="n">DiscretizationArgs</span><span class="p">(),</span>
+                 <span class="p">):</span>
+        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Abstract class for implementing the basis of a space of differential operators.</span>
+<span class="sd">        Such a space consists of :math:`c_\text{out} \times c_\text{in}` matrices with</span>
+<span class="sd">        partial differential operators as entries.</span>
+<span class="sd">        </span>
+<span class="sd">        Args:</span>
+<span class="sd">            coefficients (list): a list of ndarrays. Each array describes one element</span>
+<span class="sd">                of the basis and has shape ``(c_out, c_in, n + 1)``, where ``n``</span>
+<span class="sd">                is the derivative order of the entries of the matrix.</span>
+<span class="sd">                PDOs are encoded as the coefficients of :math:`\frac{\partial^n}{\partial x^n}`,</span>
+<span class="sd">                :math:`\frac{\partial^n}{\partial x^{n - 1}\partial y}`, ...,</span>
+<span class="sd">                :math:`\frac{\partial^n}{\partial y^n}`.</span>
+<span class="sd">            discretization (optional): additional parameters specifying parameters for</span>
+<span class="sd">                the discretization procedure. See :class:`~e2cnn.diffops.DiscretizationArgs`.</span>
+<span class="sd">            </span>
+<span class="sd">        Attributes:</span>
+<span class="sd">            ~.coefficients (list): an analytical description of the PDO basis elements, see above</span>
+<span class="sd">            ~.dim (int): the dimensionality of the basis :math:`|\mathcal{K}|` (number of elements)</span>
+<span class="sd">            ~.shape (tuple): a tuple containing :math:`c_\text{out}` and :math:`c_\text{in}`</span>
+<span class="sd">            ~.maximum_order (int): the largest derivative order occuring in the basis</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">dim</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">coefficients</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">dim</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">EmptyBasisException</span>
+        <span class="n">shape</span> <span class="o">=</span> <span class="n">coefficients</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span><span class="p">[:</span><span class="mi">2</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">disc</span> <span class="o">=</span> <span class="n">discretization</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">maximum_order</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">for</span> <span class="n">element</span> <span class="ow">in</span> <span class="n">coefficients</span><span class="p">:</span>
+            <span class="k">assert</span> <span class="n">element</span><span class="o">.</span><span class="n">shape</span><span class="p">[:</span><span class="mi">2</span><span class="p">]</span> <span class="o">==</span> <span class="n">shape</span>
+            <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">element</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span> <span class="o">==</span> <span class="mi">3</span>
+            <span class="c1"># we sometimes get very small coefficients (on the order of 1e-17)</span>
+            <span class="c1"># through rounding errors, those should be 0</span>
+            <span class="c1"># this is important to get the derivative orders right for basis filters</span>
+            <span class="n">element</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">element</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mf">1e-8</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="c1"># We want to know the maximum order that appears in this basis.</span>
+            <span class="c1"># The last axis contains the actual derivative, and has length order + 1</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">maximum_order</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">maximum_order</span><span class="p">,</span> <span class="n">element</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">coefficients</span> <span class="o">=</span> <span class="n">coefficients</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">dim</span><span class="p">,</span> <span class="n">shape</span><span class="p">)</span>
+
+<div class="viewcode-block" id="DiffopBasis.sample"><a class="viewcode-back" href="../../../api/e2cnn.diffops.html#e2cnn.diffops.DiffopBasis.sample">[docs]</a>    <span class="k">def</span> <span class="nf">sample</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
+               <span class="n">points</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span>
+               <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Discretize the basis on a set of points.</span>
+<span class="sd">        See :meth:`~e2cnn.diffops.DiffopBasis.sampled_masked` for details.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">sample_masked</span><span class="p">(</span><span class="n">points</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="DiffopBasis.sample_masked"><a class="viewcode-back" href="../../../api/e2cnn.diffops.html#e2cnn.diffops.DiffopBasis.sample_masked">[docs]</a>    <span class="k">def</span> <span class="nf">sample_masked</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
+                      <span class="n">points</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span>
+                      <span class="n">mask</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+                      <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Discretize the basis on a set of points.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            points (ndarray): a `2 x N` array with `N` points on which to discretize.</span>
+<span class="sd">                If FD is used (default), this has to be a flattened version of</span>
+<span class="sd">                a regular sorted grid (like you would get using np.meshgrid on ranges).</span>
+<span class="sd">            mask (ndarray, optional): Boolean array of shape (dim, ), where ``dim`` is the number of basis elements.</span>
+<span class="sd">                True for elements to discretize and False for elements to discard.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            ndarray of with shape `(C_out, C_in, num_basis_elements, n_in)`, where</span>
+<span class="sd">            `num_basis_elements` are the number of elements after applying the mask, and `n_in` is the number</span>
+<span class="sd">            of points.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">mask</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="c1"># if no mask is given, we use all basis elements</span>
+            <span class="n">mask</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="kc">True</span><span class="p">]</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">dim</span><span class="p">)</span>
+        <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">mask</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span>
+        <span class="k">assert</span> <span class="n">mask</span><span class="o">.</span><span class="n">shape</span> <span class="o">==</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dim</span><span class="p">,</span> <span class="p">)</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">disc</span><span class="o">.</span><span class="n">angle_offset</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">so2</span> <span class="o">=</span> <span class="n">SO2</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+            <span class="c1"># rotation matrix by angle_offset</span>
+            <span class="n">matrix</span> <span class="o">=</span> <span class="n">so2</span><span class="o">.</span><span class="n">irrep</span><span class="p">(</span><span class="mi">1</span><span class="p">)(</span><span class="bp">self</span><span class="o">.</span><span class="n">disc</span><span class="o">.</span><span class="n">angle_offset</span><span class="p">)</span>
+            <span class="c1"># we transform the polynomial with the matrix</span>
+            <span class="n">coefficients</span> <span class="o">=</span> <span class="p">(</span><span class="n">transform_polynomial</span><span class="p">(</span><span class="n">element</span><span class="p">,</span> <span class="n">matrix</span><span class="p">)</span> <span class="k">for</span> <span class="n">element</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">coefficients</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">coefficients</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">coefficients</span>
+
+        <span class="n">coefficients</span> <span class="o">=</span> <span class="p">(</span><span class="n">coeff</span> <span class="k">for</span> <span class="n">coeff</span><span class="p">,</span> <span class="n">m</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">coefficients</span><span class="p">,</span> <span class="n">mask</span><span class="p">)</span> <span class="k">if</span> <span class="n">m</span><span class="p">)</span>
+
+        <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">points</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span>
+        <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">points</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span>
+        <span class="k">assert</span> <span class="n">points</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="mi">2</span>
+        <span class="n">num_points</span> <span class="o">=</span> <span class="n">points</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+
+        <span class="n">basis</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">((</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">mask</span><span class="p">),</span> <span class="p">)</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">shape</span> <span class="o">+</span> <span class="p">(</span><span class="n">num_points</span><span class="p">,</span> <span class="p">))</span>
+        <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">element</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">coefficients</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]):</span>
+                <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]):</span>
+                    <span class="n">basis</span><span class="p">[</span><span class="n">k</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">discretize_homogeneous_polynomial</span><span class="p">(</span>
+                        <span class="n">points</span><span class="p">,</span>
+                        <span class="n">element</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">],</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">disc</span><span class="o">.</span><span class="n">smoothing</span><span class="p">,</span>
+                        <span class="n">phi</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">disc</span><span class="o">.</span><span class="n">phi</span><span class="p">,</span>
+                        <span class="n">method</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">disc</span><span class="o">.</span><span class="n">method</span><span class="p">,</span>
+                    <span class="p">)</span>
+
+        <span class="c1"># Finally, we move the len_basis axis to the third position</span>
+        <span class="n">basis</span> <span class="o">=</span> <span class="n">basis</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">basis</span></div>
+
+<div class="viewcode-block" id="DiffopBasis.pretty_print"><a class="viewcode-back" href="../../../api/e2cnn.diffops.html#e2cnn.diffops.DiffopBasis.pretty_print">[docs]</a>    <span class="k">def</span> <span class="nf">pretty_print</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;Return a human-readable representation of all basis elements.&quot;&quot;&quot;</span>
+        <span class="n">out</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">element</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">coefficients</span><span class="p">:</span>
+            <span class="n">out</span> <span class="o">+=</span> <span class="n">display_matrix</span><span class="p">(</span><span class="n">element</span><span class="p">)</span>
+            <span class="n">out</span> <span class="o">+=</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">----------------------------------</span><span class="se">\n</span><span class="s2">&quot;</span>
+        <span class="k">return</span> <span class="n">out</span></div></div>
+
+
+<div class="viewcode-block" id="LaplaceProfile"><a class="viewcode-back" href="../../../api/e2cnn.diffops.html#e2cnn.diffops.LaplaceProfile">[docs]</a><span class="k">class</span> <span class="nc">LaplaceProfile</span><span class="p">(</span><span class="n">DiffopBasis</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">max_power</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">discretization</span><span class="p">:</span> <span class="n">DiscretizationArgs</span> <span class="o">=</span> <span class="n">DiscretizationArgs</span><span class="p">()):</span>
+        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Basis for rotationally invariant PDOs.</span>
+<span class="sd">        Each basis element is defined as a power of a Laplacian.</span>
+
+<span class="sd">        In order to build a complete basis of PDOs, you should combine this basis</span>
+<span class="sd">        with a basis which defines the angular profile through :class:`~e2cnn.diffops.TensorBasis`.</span>
+
+
+<span class="sd">        Args:</span>
+<span class="sd">            max_power (int): the maximum power of the Laplace operator that will be used.</span>
+<span class="sd">                The maximum degree (as a differential operator) will be two times this maximum</span>
+<span class="sd">                power.</span>
+<span class="sd">            discretization (DiscretizationArgs, optional): additional parameters specifying parameters for</span>
+<span class="sd">                the discretization procedure. See :class:`~e2cnn.diffops.DiscretizationArgs`.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">max_power</span><span class="p">,</span> <span class="nb">int</span><span class="p">)</span>
+        <span class="k">assert</span> <span class="n">max_power</span> <span class="o">&gt;=</span> <span class="mi">0</span>
+
+        <span class="n">coefficients</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="n">laplacian_power</span><span class="p">(</span><span class="n">k</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">max_power</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="p">]</span>
+
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">coefficients</span><span class="p">,</span> <span class="n">discretization</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">max_power</span> <span class="o">=</span> <span class="n">max_power</span>
+
+    <span class="k">def</span> <span class="fm">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">r</span><span class="p">):</span>
+        <span class="k">assert</span> <span class="n">r</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">dim</span>
+        <span class="k">return</span> <span class="p">{</span><span class="s2">&quot;power&quot;</span><span class="p">:</span> <span class="n">r</span><span class="p">,</span> <span class="s2">&quot;order&quot;</span><span class="p">:</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">r</span><span class="p">,</span> <span class="s2">&quot;idx&quot;</span><span class="p">:</span> <span class="n">r</span><span class="p">}</span>
+
+    <span class="k">def</span> <span class="fm">__eq__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="n">LaplaceProfile</span><span class="p">):</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">max_power</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">max_power</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">False</span>
+
+    <span class="k">def</span> <span class="fm">__hash__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">hash</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">max_power</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="TensorBasis"><a class="viewcode-back" href="../../../api/e2cnn.diffops.html#e2cnn.diffops.TensorBasis">[docs]</a><span class="k">class</span> <span class="nc">TensorBasis</span><span class="p">(</span><span class="n">DiffopBasis</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
+                 <span class="n">irreps_basis</span><span class="p">:</span> <span class="n">Type</span><span class="p">[</span><span class="n">DiffopBasis</span><span class="p">],</span>
+                 <span class="n">in_repr</span><span class="p">:</span> <span class="n">Representation</span><span class="p">,</span>
+                 <span class="n">out_repr</span><span class="p">:</span> <span class="n">Representation</span><span class="p">,</span>
+                 <span class="n">max_power</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+                 <span class="n">discretization</span><span class="p">:</span> <span class="n">DiscretizationArgs</span> <span class="o">=</span> <span class="n">DiscretizationArgs</span><span class="p">(),</span>
+                 <span class="o">**</span><span class="n">kwargs</span>
+                 <span class="p">):</span>
+        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">        Build the tensor product basis of two PDO bases over the</span>
+<span class="sd">        plane. Given two bases :math:`A = \{a_i\}_i` and :math:`B = \{b_j\}_j`, this basis is defined as</span>
+
+<span class="sd">        .. math::</span>
+<span class="sd">            C = A \otimes B = \left\{ c_{i,j} := a_i \circ b_j \right\}_{i,j}.</span>
+
+<span class="sd">        The arguments are passed on to :class:`~e2cnn.diffops.SteerableDiffopBasis` and</span>
+<span class="sd">        :class:`~e2cnn.diffops.LaplaceProfile`, see their documentation.</span>
+
+<span class="sd">        Attributes:</span>
+<span class="sd">            ~.basis1 (SteerableDiffopBasis): the first basis</span>
+<span class="sd">            ~.basis2 (LaplaceProfile): the second basis</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">basis1</span> <span class="o">=</span> <span class="n">diffops</span><span class="o">.</span><span class="n">SteerableDiffopBasis</span><span class="p">(</span>
+            <span class="n">irreps_basis</span><span class="p">,</span> <span class="n">in_repr</span><span class="p">,</span> <span class="n">out_repr</span><span class="p">,</span> <span class="n">discretization</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span>
+        <span class="p">)</span>
+        <span class="n">basis2</span> <span class="o">=</span> <span class="n">LaplaceProfile</span><span class="p">(</span><span class="n">max_power</span><span class="p">,</span> <span class="n">discretization</span><span class="p">)</span>
+
+        <span class="n">coefficients</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span> <span class="ow">in</span> <span class="n">itertools</span><span class="o">.</span><span class="n">product</span><span class="p">(</span><span class="n">basis1</span><span class="o">.</span><span class="n">coefficients</span><span class="p">,</span> <span class="n">basis2</span><span class="o">.</span><span class="n">coefficients</span><span class="p">):</span>
+            <span class="n">order</span> <span class="o">=</span> <span class="n">a</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">+</span> <span class="n">b</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">-</span> <span class="mi">2</span>
+            <span class="n">out</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">((</span><span class="n">a</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">b</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">a</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">b</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">order</span> <span class="o">+</span> <span class="mi">1</span><span class="p">))</span>
+            <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">l</span> <span class="ow">in</span> <span class="n">itertools</span><span class="o">.</span><span class="n">product</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">a</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span>
+                                             <span class="nb">range</span><span class="p">(</span><span class="n">b</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span>
+                                             <span class="nb">range</span><span class="p">(</span><span class="n">a</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]),</span>
+                                             <span class="nb">range</span><span class="p">(</span><span class="n">b</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">])):</span>
+                <span class="n">out</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">l</span><span class="p">]</span> <span class="o">=</span> <span class="n">multiply_polynomials</span><span class="p">(</span><span class="n">a</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">k</span><span class="p">],</span> <span class="n">b</span><span class="p">[</span><span class="n">j</span><span class="p">,</span> <span class="n">l</span><span class="p">])</span>
+            <span class="n">out</span> <span class="o">=</span> <span class="n">out</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">a</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="n">b</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">a</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="n">b</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">order</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+            <span class="n">coefficients</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">out</span><span class="p">)</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">coefficients</span><span class="p">,</span> <span class="n">discretization</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">basis1</span> <span class="o">=</span> <span class="n">basis1</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">basis2</span> <span class="o">=</span> <span class="n">basis2</span>
+
+    <span class="k">def</span> <span class="fm">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">idx</span><span class="p">):</span>
+        <span class="k">assert</span> <span class="n">idx</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">dim</span>
+        <span class="n">idx1</span><span class="p">,</span> <span class="n">idx2</span> <span class="o">=</span> <span class="nb">divmod</span><span class="p">(</span><span class="n">idx</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">basis2</span><span class="o">.</span><span class="n">dim</span><span class="p">)</span>
+        <span class="n">attr1</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">basis1</span><span class="p">[</span><span class="n">idx1</span><span class="p">]</span>
+        <span class="n">attr2</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">basis2</span><span class="p">[</span><span class="n">idx2</span><span class="p">]</span>
+
+        <span class="n">attr</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+        <span class="n">attr</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">attr1</span><span class="p">)</span>
+        <span class="n">attr</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">attr2</span><span class="p">)</span>
+
+        <span class="n">attr</span><span class="p">[</span><span class="s2">&quot;order&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">attr1</span><span class="p">[</span><span class="s2">&quot;order&quot;</span><span class="p">]</span> <span class="o">+</span> <span class="n">attr2</span><span class="p">[</span><span class="s2">&quot;order&quot;</span><span class="p">]</span>
+
+        <span class="n">attr</span><span class="p">[</span><span class="s2">&quot;idx&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">idx</span>
+        <span class="n">attr</span><span class="p">[</span><span class="s2">&quot;idx1&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">idx1</span>
+        <span class="n">attr</span><span class="p">[</span><span class="s2">&quot;idx2&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">idx2</span>
+
+        <span class="k">return</span> <span class="n">attr</span>
+
+    <span class="k">def</span> <span class="fm">__iter__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">idx</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">for</span> <span class="n">attr1</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">basis1</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">attr2</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">basis2</span><span class="p">:</span>
+                <span class="n">attr</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+                <span class="n">attr</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">attr1</span><span class="p">)</span>
+                <span class="n">attr</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">attr2</span><span class="p">)</span>
+                <span class="n">attr</span><span class="p">[</span><span class="s2">&quot;order&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">attr1</span><span class="p">[</span><span class="s2">&quot;order&quot;</span><span class="p">]</span> <span class="o">+</span> <span class="n">attr2</span><span class="p">[</span><span class="s2">&quot;order&quot;</span><span class="p">]</span>
+                <span class="n">attr</span><span class="p">[</span><span class="s2">&quot;idx&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">idx</span>
+                <span class="n">attr</span><span class="p">[</span><span class="s2">&quot;idx1&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">attr1</span><span class="p">[</span><span class="s2">&quot;idx&quot;</span><span class="p">]</span>
+                <span class="n">attr</span><span class="p">[</span><span class="s2">&quot;idx2&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">attr2</span><span class="p">[</span><span class="s2">&quot;idx&quot;</span><span class="p">]</span>
+
+                <span class="k">yield</span> <span class="n">attr</span>
+                <span class="n">idx</span> <span class="o">+=</span> <span class="mi">1</span>
+
+    <span class="k">def</span> <span class="fm">__eq__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="n">TensorBasis</span><span class="p">):</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">basis1</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">basis1</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">basis2</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">basis2</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">False</span>
+
+    <span class="k">def</span> <span class="fm">__hash__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">hash</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">basis1</span><span class="p">)</span> <span class="o">+</span> <span class="nb">hash</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">basis2</span><span class="p">)</span></div>
+
+
+<span class="k">def</span> <span class="nf">display_matrix</span><span class="p">(</span><span class="n">element</span><span class="p">):</span>
+    <span class="n">out</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">element</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]):</span>
+        <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">element</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]):</span>
+            <span class="n">out</span> <span class="o">+=</span> <span class="n">display_diffop</span><span class="p">(</span><span class="n">element</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">])</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\t</span><span class="s2">&quot;</span>
+        <span class="n">out</span> <span class="o">+=</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span>
+    <span class="k">return</span> <span class="n">out</span>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2019, Qualcomm Innovation Center, Inc. Developed by Gabriele Cesa, Maurice Weiler.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

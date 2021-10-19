@@ -102,6 +102,13 @@
 <li class="toctree-l2"><a class="reference internal" href="../api/e2cnn.kernels.html#bases-for-group-actions-on-the-plane">Bases for Group Actions on the Plane</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="../api/e2cnn.diffops.html">e2cnn.diffops</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../api/e2cnn.diffops.html#abstract-class">Abstract Class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../api/e2cnn.diffops.html#pdo-bases">PDO Bases</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../api/e2cnn.diffops.html#bases-for-group-actions-on-the-plane">Bases for Group Actions on the Plane</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../api/e2cnn.diffops.html#utility-functions">Utility functions</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="../api/e2cnn.gspaces.html">e2cnn.gspaces</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../api/e2cnn.gspaces.html#abstract-group-space">Abstract Group Space</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../api/e2cnn.gspaces.html#group-actions-on-the-plane">Group Actions on the Plane</a></li>
@@ -112,7 +119,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../api/e2cnn.nn.html#geometric-tensor">Geometric Tensor</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../api/e2cnn.nn.html#equivariant-module">Equivariant Module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../api/e2cnn.nn.html#utils">Utils</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../api/e2cnn.nn.html#planar-convolution">Planar Convolution</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../api/e2cnn.nn.html#planar-convolution-and-differential-operators">Planar Convolution and Differential Operators</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../api/e2cnn.nn.html#non-linearities">Non Linearities</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../api/e2cnn.nn.html#invariant-maps">Invariant Maps</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../api/e2cnn.nn.html#pooling">Pooling</a></li>
@@ -186,7 +193,11 @@
            <div itemprop="articleBody">
             
   <h1>All modules for which code is available</h1>
-<ul><li><a href="e2cnn/group/group.html">e2cnn.group.group</a></li>
+<ul><li><a href="e2cnn/diffops/basis.html">e2cnn.diffops.basis</a></li>
+<li><a href="e2cnn/diffops/r2.html">e2cnn.diffops.r2</a></li>
+<li><a href="e2cnn/diffops/steerable_basis.html">e2cnn.diffops.steerable_basis</a></li>
+<li><a href="e2cnn/diffops/utils.html">e2cnn.diffops.utils</a></li>
+<li><a href="e2cnn/group/group.html">e2cnn.group.group</a></li>
 <li><a href="e2cnn/group/groups/cyclicgroup.html">e2cnn.group.groups.cyclicgroup</a></li>
 <li><a href="e2cnn/group/groups/dihedralgroup.html">e2cnn.group.groups.dihedralgroup</a></li>
 <li><a href="e2cnn/group/groups/factory.html">e2cnn.group.groups.factory</a></li>
@@ -239,8 +250,10 @@
 <li><a href="e2cnn/nn/modules/pooling/pointwise_max.html">e2cnn.nn.modules.pooling.pointwise_max</a></li>
 <li><a href="e2cnn/nn/modules/r2_conv/basisexpansion.html">e2cnn.nn.modules.r2_conv.basisexpansion</a></li>
 <li><a href="e2cnn/nn/modules/r2_conv/basisexpansion_blocks.html">e2cnn.nn.modules.r2_conv.basisexpansion_blocks</a></li>
+<li><a href="e2cnn/nn/modules/r2_conv/basisexpansion_singleblock.html">e2cnn.nn.modules.r2_conv.basisexpansion_singleblock</a></li>
 <li><a href="e2cnn/nn/modules/r2_conv/r2_transposed_convolution.html">e2cnn.nn.modules.r2_conv.r2_transposed_convolution</a></li>
 <li><a href="e2cnn/nn/modules/r2_conv/r2convolution.html">e2cnn.nn.modules.r2_conv.r2convolution</a></li>
+<li><a href="e2cnn/nn/modules/r2_conv/r2diffop.html">e2cnn.nn.modules.r2_conv.r2diffop</a></li>
 <li><a href="e2cnn/nn/modules/r2upsampling.html">e2cnn.nn.modules.r2upsampling</a></li>
 <li><a href="e2cnn/nn/modules/reshuffle_module.html">e2cnn.nn.modules.reshuffle_module</a></li>
 <li><a href="e2cnn/nn/modules/restriction_module.html">e2cnn.nn.modules.restriction_module</a></li>

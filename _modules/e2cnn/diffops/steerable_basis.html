@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>e2cnn.kernels.steerable_basis &mdash; e2cnn 0.1.9 documentation</title>
+  <title>e2cnn.diffops.steerable_basis &mdash; e2cnn 0.1.9 documentation</title>
   
 
   
@@ -179,7 +179,7 @@
         
           <li><a href="../../index.html">Module code</a> &raquo;</li>
         
-      <li>e2cnn.kernels.steerable_basis</li>
+      <li>e2cnn.diffops.steerable_basis</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -194,60 +194,61 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <h1>Source code for e2cnn.kernels.steerable_basis</h1><div class="highlight"><pre>
+  <h1>Source code for e2cnn.diffops.steerable_basis</h1><div class="highlight"><pre>
 <span></span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 
-<span class="kn">from</span> <span class="nn">.basis</span> <span class="kn">import</span> <span class="n">KernelBasis</span><span class="p">,</span> <span class="n">EmptyBasisException</span>
-<span class="kn">from</span> <span class="nn">.irreps_basis</span> <span class="kn">import</span> <span class="n">IrrepBasis</span>
+<span class="kn">from</span> <span class="nn">e2cnn.kernels.basis</span> <span class="kn">import</span> <span class="n">EmptyBasisException</span>
 
-<span class="kn">from</span> <span class="nn">e2cnn.group</span> <span class="kn">import</span> <span class="n">Representation</span>
+<span class="kn">from</span> <span class="nn">e2cnn.group</span> <span class="kn">import</span> <span class="n">Representation</span><span class="p">,</span> <span class="n">SO2</span><span class="p">,</span> <span class="n">CyclicGroup</span>
 
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Type</span>
+<span class="kn">from</span> <span class="nn">.basis</span> <span class="kn">import</span> <span class="n">DiffopBasis</span><span class="p">,</span> <span class="n">DiscretizationArgs</span>
+
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Type</span><span class="p">,</span> <span class="n">List</span>
 
 
-<div class="viewcode-block" id="SteerableKernelBasis"><a class="viewcode-back" href="../../../api/e2cnn.kernels.html#e2cnn.kernels.SteerableKernelBasis">[docs]</a><span class="k">class</span> <span class="nc">SteerableKernelBasis</span><span class="p">(</span><span class="n">KernelBasis</span><span class="p">):</span>
-    
+<div class="viewcode-block" id="SteerableDiffopBasis"><a class="viewcode-back" href="../../../api/e2cnn.diffops.html#e2cnn.diffops.SteerableDiffopBasis">[docs]</a><span class="k">class</span> <span class="nc">SteerableDiffopBasis</span><span class="p">(</span><span class="n">DiffopBasis</span><span class="p">):</span>
+
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
-                 <span class="n">irreps_basis</span><span class="p">:</span> <span class="n">Type</span><span class="p">[</span><span class="n">IrrepBasis</span><span class="p">],</span>
+                 <span class="n">irreps_basis</span><span class="p">:</span> <span class="n">Type</span><span class="p">[</span><span class="n">DiffopBasis</span><span class="p">],</span>
                  <span class="n">in_repr</span><span class="p">:</span> <span class="n">Representation</span><span class="p">,</span>
                  <span class="n">out_repr</span><span class="p">:</span> <span class="n">Representation</span><span class="p">,</span>
+                 <span class="n">discretization</span><span class="p">:</span> <span class="n">DiscretizationArgs</span> <span class="o">=</span> <span class="n">DiscretizationArgs</span><span class="p">(),</span>
                  <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        </span>
-<span class="sd">        Implements a general basis for the vector space of equivariant kernels.</span>
-<span class="sd">        A :math:`G`-equivariant kernel :math:`\kappa`, mapping between an input field, transforming under</span>
+<span class="sd">        Implements a general basis for the vector space of equivariant PDOs.</span>
+<span class="sd">        A :math:`G`-equivariant PDO :math:`D(P)` for a matrix of polynomials :math:`P`, mapping between an input field, transforming under</span>
 <span class="sd">        :math:`\rho_\text{in}` (``in_repr``), and an output field, transforming under  :math:`\rho_\text{out}`</span>
 <span class="sd">        (``out_repr``), satisfies the following constraint:</span>
 <span class="sd">        </span>
 <span class="sd">        .. math ::</span>
 <span class="sd">            </span>
-<span class="sd">            \kappa(gx) = \rho_\text{out}(g) \kappa(x) \rho_\text{in}(g)^{-1} \qquad \forall g \in G, \forall x \in X</span>
+<span class="sd">            P(gx) = \rho_\text{out}(g) P(x) \rho_\text{in}(g)^{-1} \qquad \forall g \in G, \forall x \in X</span>
 <span class="sd">        </span>
-<span class="sd">        As the kernel constraint is a linear constraint, the space of equivariant kernels is a vector subspace of the</span>
-<span class="sd">        space of all convolutional kernels. It follows that any equivariant kernel can be expressed in terms of a basis</span>
+<span class="sd">        for :math:`G \leq \O{d}`.</span>
+
+<span class="sd">        As the PDO constraint is a linear constraint, the space of equivariant PDOs is a vector subspace of the</span>
+<span class="sd">        space of all PDOs. It follows that any equivariant PDO can be expressed in terms of a basis</span>
 <span class="sd">        of this space.</span>
 <span class="sd">        </span>
-<span class="sd">        This class solves the kernel constraint for two arbitrary representations by combining the solutions of the</span>
-<span class="sd">        kernel constraints associated to their :class:`~e2cnn.group.IrreducibleRepresentation` s.</span>
+<span class="sd">        This class solves the PDO constraint for two arbitrary representations by combining the solutions of the</span>
+<span class="sd">        PDO constraints associated to their :class:`~e2cnn.group.IrreducibleRepresentation` s.</span>
 <span class="sd">        In order to do so, it relies on ``irreps_basis`` which solves individual irreps constraints. ``irreps_basis``</span>
-<span class="sd">        must be a class (subclass of :class:`~e2cnn.kernels.IrrepsBasis`) which builds a basis for equivariant</span>
+<span class="sd">        must be a class which builds a basis for equivariant</span>
 <span class="sd">        kernels associated with irreducible representations when instantiated.</span>
 <span class="sd">        </span>
 <span class="sd">        The groups :math:`G` which are currently implemented are origin-preserving isometries (what are called</span>
 <span class="sd">        structure groups, or sometimes gauge groups, in the language of</span>
 <span class="sd">        `Gauge Equivariant CNNs &lt;https://arxiv.org/abs/1902.04615&gt;`_ ).</span>
 <span class="sd">        The origin-preserving isometries of :math:`\R^d` are subgroups of :math:`O(d)`, i.e. reflections and rotations.</span>
-<span class="sd">        Therefore, equivariance does not enforce any constraint on the radial component of the kernels.</span>
-<span class="sd">        Hence, this class only implements a basis for the angular part of the kernels.</span>
+<span class="sd">        Therefore, PDOs may be composed with any rotation and reflection invariant PDO without</span>
+<span class="sd">        affecting equivariance. This class only implements a basis up to such invariant PDOs,</span>
+<span class="sd">        which are given by polynomials in the Laplacian operator.</span>
 <span class="sd">        </span>
-<span class="sd">        In order to build a complete basis of kernels, you should combine this basis with a basis which defines the</span>
-<span class="sd">        radial profile (such as :class:`~e2cnn.kernels.GaussianRadialProfile`) through</span>
-<span class="sd">        :class:`~e2cnn.kernels.PolarBasis`.</span>
-<span class="sd">        </span>
-<span class="sd">        .. math::</span>
-<span class="sd">            </span>
-<span class="sd">            \mathcal{B} = \left\{ b_i (r) :=  \exp \left( \frac{ \left( r - r_i \right)^2}{2 \sigma_i^2} \right) \right\}_i</span>
+<span class="sd">        In order to build a complete basis of PDOs, you should combine this basis with</span>
+<span class="sd">        :class:`~e2cnn.diffops.LaplaceProfile`) through</span>
+<span class="sd">        :class:`~e2cnn.diffops.TensorBasis`.</span>
 <span class="sd">        </span>
 <span class="sd">        .. warning ::</span>
 <span class="sd">            </span>
@@ -258,6 +259,8 @@
 <span class="sd">            irreps_basis (class): class defining the irreps basis. This class is instantiated for each pair of irreps to solve all irreps constraints.</span>
 <span class="sd">            in_repr (Representation): Representation associated with the input feature field</span>
 <span class="sd">            out_repr (Representation): Representation associated with the output feature field</span>
+<span class="sd">            discretization (DiscretizationArgs, optional): additional parameters specifying parameters for</span>
+<span class="sd">                the discretization procedure. See :class:`~e2cnn.diffops.DiscretizationArgs`.</span>
 <span class="sd">            **kwargs: additional arguments used when instantiating ``irreps_basis``</span>
 <span class="sd">            </span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -297,6 +300,7 @@
                     <span class="n">basis</span> <span class="o">=</span> <span class="n">irreps_basis</span><span class="p">(</span><span class="n">group</span><span class="o">=</span><span class="n">group</span><span class="p">,</span>
                                          <span class="n">in_irrep</span><span class="o">=</span><span class="n">i_irrep_name</span><span class="p">,</span>
                                          <span class="n">out_irrep</span><span class="o">=</span><span class="n">o_irrep_name</span><span class="p">,</span>
+                                         <span class="n">discretization</span><span class="o">=</span><span class="n">discretization</span><span class="p">,</span>
                                          <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
 
                     <span class="bp">self</span><span class="o">.</span><span class="n">irreps_bases</span><span class="p">[(</span><span class="n">i_irrep_name</span><span class="p">,</span> <span class="n">o_irrep_name</span><span class="p">)]</span> <span class="o">=</span> <span class="n">basis</span>
@@ -325,100 +329,59 @@
                 <span class="k">if</span> <span class="p">(</span><span class="n">i_irrep_name</span><span class="p">,</span> <span class="n">o_irrep_name</span><span class="p">)</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">irreps_bases</span><span class="p">:</span>
                     <span class="bp">self</span><span class="o">.</span><span class="n">bases</span><span class="p">[</span><span class="n">ii</span><span class="p">][</span><span class="n">oo</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">irreps_bases</span><span class="p">[(</span><span class="n">i_irrep_name</span><span class="p">,</span> <span class="n">o_irrep_name</span><span class="p">)]</span>
                     <span class="n">dim</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">bases</span><span class="p">[</span><span class="n">ii</span><span class="p">][</span><span class="n">oo</span><span class="p">]</span><span class="o">.</span><span class="n">dim</span>
-        
-        <span class="nb">super</span><span class="p">(</span><span class="n">SteerableKernelBasis</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">dim</span><span class="p">,</span> <span class="p">(</span><span class="n">out_repr</span><span class="o">.</span><span class="n">size</span><span class="p">,</span> <span class="n">in_repr</span><span class="o">.</span><span class="n">size</span><span class="p">))</span>
-            
-<div class="viewcode-block" id="SteerableKernelBasis.sample"><a class="viewcode-back" href="../../../api/e2cnn.kernels.html#e2cnn.kernels.SteerableKernelBasis.sample">[docs]</a>    <span class="k">def</span> <span class="nf">sample</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">angles</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">out</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
-        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 
-<span class="sd">        Sample the continuous basis elements on the discrete set of angles in ``angles``.</span>
-<span class="sd">        Optionally, store the resulting multidimentional array in ``out``.</span>
-<span class="sd">        </span>
-<span class="sd">        A value of ``nan`` is interpreted as the angle of a point placed on the origin of the axes.</span>
+        <span class="c1"># would be set later anyway but we need it now</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">shape</span> <span class="o">=</span> <span class="p">(</span><span class="n">out_repr</span><span class="o">.</span><span class="n">size</span><span class="p">,</span> <span class="n">in_repr</span><span class="o">.</span><span class="n">size</span><span class="p">)</span>
 
-<span class="sd">        ``angles`` must be an array of shape `(1, N)`, where `N` is the number of points.</span>
-
-<span class="sd">        Args:</span>
-<span class="sd">            angles (~numpy.ndarray): angles where to evaluate the basis elements</span>
-<span class="sd">            out (~numpy.ndarray, optional): pre-existing array to use to store the output</span>
-
-<span class="sd">        Returns:</span>
-<span class="sd">            the sampled basis</span>
-<span class="sd">            </span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">angles</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span>
-        <span class="k">assert</span> <span class="n">angles</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span>
-
-        <span class="k">if</span> <span class="n">out</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="n">out</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">dim</span><span class="p">,</span> <span class="n">angles</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="n">out</span><span class="o">.</span><span class="n">fill</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
-        
-        <span class="k">assert</span> <span class="n">out</span><span class="o">.</span><span class="n">shape</span> <span class="o">==</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">dim</span><span class="p">,</span> <span class="n">angles</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
-    
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">A_inv</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">B</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="n">out</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_sample_direct_sum</span><span class="p">(</span><span class="n">angles</span><span class="p">,</span> <span class="n">out</span><span class="o">=</span><span class="n">out</span><span class="p">)</span>
+            <span class="n">coefficients</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_direct_sum_coefficients</span><span class="p">()</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="n">samples</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_sample_direct_sum</span><span class="p">(</span><span class="n">angles</span><span class="p">)</span>
-            <span class="n">out</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_change_of_basis</span><span class="p">(</span><span class="n">samples</span><span class="p">,</span> <span class="n">out</span><span class="o">=</span><span class="n">out</span><span class="p">)</span>
-    
-        <span class="k">return</span> <span class="n">out</span></div>
-    
-    <span class="k">def</span> <span class="nf">_sample_direct_sum</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">angles</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">out</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
-        <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">angles</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span>
-    
-        <span class="k">if</span> <span class="n">out</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="n">out</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">dim</span><span class="p">,</span> <span class="n">angles</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span>
+            <span class="n">pre_coefficients</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_direct_sum_coefficients</span><span class="p">()</span>
+            <span class="n">coefficients</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_change_of_basis</span><span class="p">(</span><span class="n">pre_coefficients</span><span class="p">)</span>
+        
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">coefficients</span><span class="p">,</span> <span class="n">discretization</span><span class="p">)</span>
 
-        <span class="k">assert</span> <span class="n">out</span><span class="o">.</span><span class="n">shape</span> <span class="o">==</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">dim</span><span class="p">,</span> <span class="n">angles</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
-    
+    <span class="k">def</span> <span class="nf">_direct_sum_coefficients</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">]:</span>
+        <span class="n">coefficients</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="n">basis_count</span> <span class="o">=</span> <span class="mi">0</span>
         <span class="n">in_position</span> <span class="o">=</span> <span class="mi">0</span>
         <span class="k">for</span> <span class="n">ii</span><span class="p">,</span> <span class="n">in_size</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">in_sizes</span><span class="p">):</span>
             <span class="n">out_position</span> <span class="o">=</span> <span class="mi">0</span>
             <span class="k">for</span> <span class="n">oo</span><span class="p">,</span> <span class="n">out_size</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">out_sizes</span><span class="p">):</span>
                 <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">bases</span><span class="p">[</span><span class="n">ii</span><span class="p">][</span><span class="n">oo</span><span class="p">]</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-                    <span class="n">dim</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">bases</span><span class="p">[</span><span class="n">ii</span><span class="p">][</span><span class="n">oo</span><span class="p">]</span><span class="o">.</span><span class="n">dim</span>
-                    
-                    <span class="n">block</span> <span class="o">=</span> <span class="n">out</span><span class="p">[</span>
+                    <span class="n">block_coefficients</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">bases</span><span class="p">[</span><span class="n">ii</span><span class="p">][</span><span class="n">oo</span><span class="p">]</span><span class="o">.</span><span class="n">coefficients</span>
+                    <span class="k">for</span> <span class="n">element</span> <span class="ow">in</span> <span class="n">block_coefficients</span><span class="p">:</span>
+                        <span class="n">out</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">element</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">2</span><span class="p">]))</span>
+                        <span class="n">out</span><span class="p">[</span>
                             <span class="n">out_position</span><span class="p">:</span><span class="n">out_position</span><span class="o">+</span><span class="n">out_size</span><span class="p">,</span>
                             <span class="n">in_position</span><span class="p">:</span><span class="n">in_position</span><span class="o">+</span><span class="n">in_size</span><span class="p">,</span>
-                            <span class="n">basis_count</span><span class="p">:</span><span class="n">basis_count</span><span class="o">+</span><span class="n">dim</span><span class="p">,</span>
-                            <span class="o">...</span>
-                    <span class="p">]</span>
-                    <span class="bp">self</span><span class="o">.</span><span class="n">bases</span><span class="p">[</span><span class="n">ii</span><span class="p">][</span><span class="n">oo</span><span class="p">]</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="n">angles</span><span class="p">,</span> <span class="n">out</span><span class="o">=</span><span class="n">block</span><span class="p">)</span>
-                    
-                    <span class="c1"># out[</span>
-                    <span class="c1">#     out_position:out_position+out_size,</span>
-                    <span class="c1">#     in_position:in_position+in_size,</span>
-                    <span class="c1">#     basis_count:basis_count+dim,</span>
-                    <span class="c1">#     ...</span>
-                    <span class="c1"># ] = self.bases[ii][oo].sample(angles)</span>
+                            <span class="p">:</span>
+                        <span class="p">]</span> <span class="o">=</span> <span class="n">element</span>
+                        <span class="n">coefficients</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">out</span><span class="p">)</span>
 
-                    <span class="n">basis_count</span> <span class="o">+=</span> <span class="n">dim</span>
-                    
                 <span class="n">out_position</span> <span class="o">+=</span> <span class="n">out_size</span>
             <span class="n">in_position</span> <span class="o">+=</span> <span class="n">in_size</span>
 
-        <span class="k">return</span> <span class="n">out</span>
+        <span class="k">return</span> <span class="n">coefficients</span>
     
-    <span class="k">def</span> <span class="nf">_change_of_basis</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">samples</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">out</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">_change_of_basis</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">coefficients</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">]:</span>
         <span class="c1"># multiply by the change of basis matrices to transform the irreps basis in the full representations basis</span>
-        
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">A_inv</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">B</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="n">out</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">einsum</span><span class="p">(</span><span class="s2">&quot;no,oibp,ij-&gt;njbp&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">B</span><span class="p">,</span> <span class="n">samples</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">A_inv</span><span class="p">,</span> <span class="n">out</span><span class="o">=</span><span class="n">out</span><span class="p">)</span>
-        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">A_inv</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="n">out</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">einsum</span><span class="p">(</span><span class="s2">&quot;oibp,ij-&gt;ojbp&quot;</span><span class="p">,</span> <span class="n">samples</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">A_inv</span><span class="p">,</span> <span class="n">out</span><span class="o">=</span><span class="n">out</span><span class="p">)</span>
-        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">B</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="n">out</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">einsum</span><span class="p">(</span><span class="s2">&quot;no,oibp-&gt;nibp&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">B</span><span class="p">,</span> <span class="n">samples</span><span class="p">,</span> <span class="n">out</span><span class="o">=</span><span class="n">out</span><span class="p">)</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="n">out</span><span class="p">[</span><span class="o">...</span><span class="p">]</span> <span class="o">=</span> <span class="n">samples</span>
-        
-        <span class="k">return</span> <span class="n">out</span>
+        <span class="n">new_coefficients</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">element</span> <span class="ow">in</span> <span class="n">coefficients</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">A_inv</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">B</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">new_coefficients</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">einsum</span><span class="p">(</span><span class="s2">&quot;no,oib,ij-&gt;njb&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">B</span><span class="p">,</span> <span class="n">element</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">A_inv</span><span class="p">))</span>
+            <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">A_inv</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">new_coefficients</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">einsum</span><span class="p">(</span><span class="s2">&quot;oib,ij-&gt;ojb&quot;</span><span class="p">,</span> <span class="n">element</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">A_inv</span><span class="p">))</span>
+            <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">B</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">new_coefficients</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">einsum</span><span class="p">(</span><span class="s2">&quot;no,oib-&gt;nib&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">B</span><span class="p">,</span> <span class="n">element</span><span class="p">))</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">new_coefficients</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">element</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">new_coefficients</span>
 
     <span class="k">def</span> <span class="fm">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">idx</span><span class="p">):</span>
         <span class="k">assert</span> <span class="n">idx</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">dim</span>
-        
+
         <span class="n">count</span> <span class="o">=</span> <span class="mi">0</span>
         <span class="k">for</span> <span class="n">ii</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">in_sizes</span><span class="p">)):</span>
             <span class="k">for</span> <span class="n">oo</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">out_sizes</span><span class="p">)):</span>
@@ -441,12 +404,12 @@
                         <span class="n">attr</span><span class="p">[</span><span class="s2">&quot;inner_idx&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">attr</span><span class="p">[</span><span class="s2">&quot;idx&quot;</span><span class="p">]</span>
                         <span class="n">attr</span><span class="p">[</span><span class="s2">&quot;idx&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">idx</span>
                         
-
                         <span class="k">return</span> <span class="n">attr</span>
                 
                     <span class="n">count</span> <span class="o">+=</span> <span class="n">dim</span>
 
     <span class="k">def</span> <span class="fm">__iter__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
         <span class="n">idx</span> <span class="o">=</span> <span class="mi">0</span>
         <span class="k">for</span> <span class="n">ii</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">in_sizes</span><span class="p">)):</span>
             <span class="k">for</span> <span class="n">oo</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">out_sizes</span><span class="p">)):</span>
@@ -470,7 +433,7 @@
                         <span class="n">idx</span> <span class="o">+=</span> <span class="mi">1</span>
 
     <span class="k">def</span> <span class="fm">__eq__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="n">SteerableKernelBasis</span><span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="n">SteerableDiffopBasis</span><span class="p">):</span>
             <span class="k">return</span> <span class="kc">False</span>
         <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">in_repr</span> <span class="o">!=</span> <span class="n">other</span><span class="o">.</span><span class="n">in_repr</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">out_repr</span> <span class="o">!=</span> <span class="n">other</span><span class="o">.</span><span class="n">out_repr</span><span class="p">:</span>
             <span class="k">return</span> <span class="kc">False</span>
@@ -487,14 +450,12 @@
             <span class="k">return</span> <span class="kc">True</span>
 
     <span class="k">def</span> <span class="fm">__hash__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="n">h</span> <span class="o">=</span> <span class="nb">hash</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">in_repr</span><span class="p">)</span> <span class="o">+</span> <span class="nb">hash</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">out_repr</span><span class="p">)</span>
+        <span class="n">key</span> <span class="o">=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">in_repr</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">out_repr</span><span class="p">)</span>
+
+        <span class="n">h</span> <span class="o">=</span> <span class="nb">hash</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
         <span class="k">for</span> <span class="n">basis</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">irreps_bases</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
             <span class="n">h</span> <span class="o">+=</span> <span class="nb">hash</span><span class="p">(</span><span class="n">basis</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">h</span></div>
-        
-        
-
-
 </pre></div>
 
            </div>

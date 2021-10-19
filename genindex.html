@@ -102,6 +102,13 @@
 <li class="toctree-l2"><a class="reference internal" href="api/e2cnn.kernels.html#bases-for-group-actions-on-the-plane">Bases for Group Actions on the Plane</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="api/e2cnn.diffops.html">e2cnn.diffops</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="api/e2cnn.diffops.html#abstract-class">Abstract Class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/e2cnn.diffops.html#pdo-bases">PDO Bases</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/e2cnn.diffops.html#bases-for-group-actions-on-the-plane">Bases for Group Actions on the Plane</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/e2cnn.diffops.html#utility-functions">Utility functions</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="api/e2cnn.gspaces.html">e2cnn.gspaces</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="api/e2cnn.gspaces.html#abstract-group-space">Abstract Group Space</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api/e2cnn.gspaces.html#group-actions-on-the-plane">Group Actions on the Plane</a></li>
@@ -112,7 +119,7 @@
 <li class="toctree-l2"><a class="reference internal" href="api/e2cnn.nn.html#geometric-tensor">Geometric Tensor</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api/e2cnn.nn.html#equivariant-module">Equivariant Module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api/e2cnn.nn.html#utils">Utils</a></li>
-<li class="toctree-l2"><a class="reference internal" href="api/e2cnn.nn.html#planar-convolution">Planar Convolution</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/e2cnn.nn.html#planar-convolution-and-differential-operators">Planar Convolution and Differential Operators</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api/e2cnn.nn.html#non-linearities">Non Linearities</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api/e2cnn.nn.html#invariant-maps">Invariant Maps</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api/e2cnn.nn.html#pooling">Pooling</a></li>
@@ -201,6 +208,7 @@
  | <a href="#G"><strong>G</strong></a>
  | <a href="#I"><strong>I</strong></a>
  | <a href="#K"><strong>K</strong></a>
+ | <a href="#L"><strong>L</strong></a>
  | <a href="#M"><strong>M</strong></a>
  | <a href="#N"><strong>N</strong></a>
  | <a href="#O"><strong>O</strong></a>
@@ -255,6 +263,8 @@
 </li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/e2cnn.diffops.html#e2cnn.diffops.DiscretizationArgs.angle_offset">angle_offset (DiscretizationArgs attribute)</a>
+</li>
       <li><a href="api/e2cnn.nn.html#e2cnn.nn.ModuleList.append">append() (ModuleList method)</a>
 </li>
   </ul></td>
@@ -263,13 +273,23 @@
 <h2 id="B">B</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/e2cnn.kernels.html#e2cnn.kernels.Basis">Basis (class in e2cnn.kernels)</a>
+</li>
       <li><a href="api/e2cnn.nn.html#e2cnn.nn.modules.r2_conv.BasisExpansion">BasisExpansion (class in e2cnn.nn.modules.r2_conv)</a>
 </li>
       <li><a href="api/e2cnn.nn.html#e2cnn.nn.R2Conv.basisexpansion">basisexpansion() (R2Conv property)</a>
+
+      <ul>
+        <li><a href="api/e2cnn.nn.html#e2cnn.nn.R2Diffop.basisexpansion">(R2Diffop property)</a>
 </li>
+      </ul></li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/e2cnn.nn.html#e2cnn.nn.modules.r2_conv.block_basisexpansion">block_basisexpansion() (in module e2cnn.nn.modules.r2_conv)</a>
+</li>
       <li><a href="api/e2cnn.nn.html#e2cnn.nn.modules.r2_conv.BlocksBasisExpansion">BlocksBasisExpansion (class in e2cnn.nn.modules.r2_conv)</a>
+</li>
+      <li><a href="api/e2cnn.gspaces.html#e2cnn.gspaces.GeneralOnR2.build_diffop_basis">build_diffop_basis() (GeneralOnR2 method)</a>
 </li>
       <li><a href="api/e2cnn.gspaces.html#e2cnn.gspaces.GeneralOnR2.build_kernel_basis">build_kernel_basis() (GeneralOnR2 method)</a>
 
@@ -327,15 +347,31 @@
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="api/e2cnn.nn.html#e2cnn.nn.init.deltaorthonormal_init">deltaorthonormal_init() (in module e2cnn.nn.init)</a>
 </li>
+      <li><a href="api/e2cnn.diffops.html#e2cnn.diffops.DiffopBasis">DiffopBasis (class in e2cnn.diffops)</a>
+</li>
+      <li><a href="api/e2cnn.diffops.html#e2cnn.diffops.diffops_CN_act_R2">diffops_CN_act_R2() (in module e2cnn.diffops)</a>
+</li>
+      <li><a href="api/e2cnn.diffops.html#e2cnn.diffops.diffops_DN_act_R2">diffops_DN_act_R2() (in module e2cnn.diffops)</a>
+</li>
+      <li><a href="api/e2cnn.diffops.html#e2cnn.diffops.diffops_Flip_act_R2">diffops_Flip_act_R2() (in module e2cnn.diffops)</a>
+</li>
+      <li><a href="api/e2cnn.diffops.html#e2cnn.diffops.diffops_O2_act_R2">diffops_O2_act_R2() (in module e2cnn.diffops)</a>
+</li>
+      <li><a href="api/e2cnn.diffops.html#e2cnn.diffops.diffops_SO2_act_R2">diffops_SO2_act_R2() (in module e2cnn.diffops)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/e2cnn.diffops.html#e2cnn.diffops.diffops_Trivial_act_R2">diffops_Trivial_act_R2() (in module e2cnn.diffops)</a>
+</li>
       <li><a href="api/e2cnn.group.html#e2cnn.group.dihedral_group">dihedral_group() (in module e2cnn.group)</a>
 </li>
       <li><a href="api/e2cnn.group.html#e2cnn.group.DihedralGroup">DihedralGroup (class in e2cnn.group)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="api/e2cnn.nn.html#e2cnn.nn.modules.r2_conv.BasisExpansion.dimension">dimension() (BasisExpansion method)</a>
 </li>
       <li><a href="api/e2cnn.group.html#e2cnn.group.directsum">directsum() (in module e2cnn.group)</a>
+</li>
+      <li><a href="api/e2cnn.diffops.html#e2cnn.diffops.DiscretizationArgs">DiscretizationArgs (class in e2cnn.diffops)</a>
 </li>
       <li><a href="api/e2cnn.group.html#e2cnn.group.disentangle">disentangle() (in module e2cnn.group)</a>
 </li>
@@ -347,6 +383,13 @@
 <h2 id="E">E</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li>
+    e2cnn.diffops
+
+      <ul>
+        <li><a href="api/e2cnn.diffops.html#module-e2cnn.diffops">module</a>
+</li>
+      </ul></li>
       <li>
     e2cnn.group
 
@@ -412,7 +455,11 @@
       <li><a href="api/e2cnn.nn.html#e2cnn.nn.EquivariantModule.evaluate_output_shape">evaluate_output_shape() (EquivariantModule method)</a>
 </li>
       <li><a href="api/e2cnn.nn.html#e2cnn.nn.R2Conv.expand_parameters">expand_parameters() (R2Conv method)</a>
+
+      <ul>
+        <li><a href="api/e2cnn.nn.html#e2cnn.nn.R2Diffop.expand_parameters">(R2Diffop method)</a>
 </li>
+      </ul></li>
       <li><a href="api/e2cnn.nn.html#e2cnn.nn.ELU.export">export() (ELU method)</a>
 
       <ul>
@@ -439,6 +486,8 @@
         <li><a href="api/e2cnn.nn.html#e2cnn.nn.R2Conv.export">(R2Conv method)</a>
 </li>
         <li><a href="api/e2cnn.nn.html#e2cnn.nn.R2ConvTransposed.export">(R2ConvTransposed method)</a>
+</li>
+        <li><a href="api/e2cnn.nn.html#e2cnn.nn.R2Diffop.export">(R2Diffop method)</a>
 </li>
         <li><a href="api/e2cnn.nn.html#e2cnn.nn.R2Upsampling.export">(R2Upsampling method)</a>
 </li>
@@ -531,6 +580,8 @@
         <li><a href="api/e2cnn.nn.html#e2cnn.nn.PointwiseNonLinearity.forward">(PointwiseNonLinearity method)</a>
 </li>
         <li><a href="api/e2cnn.nn.html#e2cnn.nn.R2Conv.forward">(R2Conv method)</a>
+</li>
+        <li><a href="api/e2cnn.nn.html#e2cnn.nn.R2Diffop.forward">(R2Diffop method)</a>
 </li>
         <li><a href="api/e2cnn.nn.html#e2cnn.nn.R2Upsampling.forward">(R2Upsampling method)</a>
 </li>
@@ -672,6 +723,18 @@
   </ul></td>
 </tr></table>
 
+<h2 id="L">L</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/e2cnn.diffops.html#e2cnn.diffops.LaplaceProfile">LaplaceProfile (class in e2cnn.diffops)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/e2cnn.diffops.html#e2cnn.diffops.load_cache">load_cache() (in module e2cnn.diffops)</a>
+</li>
+  </ul></td>
+</tr></table>
+
 <h2 id="M">M</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
@@ -679,10 +742,14 @@
 </li>
       <li><a href="api/e2cnn.nn.others.html#e2cnn.nn.MaxPoolChannels">MaxPoolChannels (class in e2cnn.nn)</a>
 </li>
+      <li><a href="api/e2cnn.diffops.html#e2cnn.diffops.DiscretizationArgs.method">method (DiscretizationArgs attribute)</a>
+</li>
       <li>
     module
 
       <ul>
+        <li><a href="api/e2cnn.diffops.html#module-e2cnn.diffops">e2cnn.diffops</a>
+</li>
         <li><a href="api/e2cnn.group.html#module-e2cnn.group">e2cnn.group</a>
 </li>
         <li><a href="api/e2cnn.group.utils.html#module-e2cnn.group.utils">e2cnn.group.utils</a>
@@ -738,6 +805,8 @@
 <h2 id="P">P</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/e2cnn.diffops.html#e2cnn.diffops.DiscretizationArgs.phi">phi (DiscretizationArgs attribute)</a>
+</li>
       <li><a href="api/e2cnn.nn.html#e2cnn.nn.PointwiseAdaptiveAvgPool">PointwiseAdaptiveAvgPool (class in e2cnn.nn)</a>
 </li>
       <li><a href="api/e2cnn.nn.html#e2cnn.nn.PointwiseAdaptiveMaxPool">PointwiseAdaptiveMaxPool (class in e2cnn.nn)</a>
@@ -757,6 +826,8 @@
       <li><a href="api/e2cnn.nn.html#e2cnn.nn.PointwiseNonLinearity">PointwiseNonLinearity (class in e2cnn.nn)</a>
 </li>
       <li><a href="api/e2cnn.kernels.html#e2cnn.kernels.PolarBasis">PolarBasis (class in e2cnn.kernels)</a>
+</li>
+      <li><a href="api/e2cnn.diffops.html#e2cnn.diffops.DiffopBasis.pretty_print">pretty_print() (DiffopBasis method)</a>
 </li>
       <li><a href="api/e2cnn.group.utils.html#e2cnn.group.utils.psi">psi() (in module e2cnn.group.utils)</a>
 </li>
@@ -784,6 +855,8 @@
 </li>
       <li><a href="api/e2cnn.nn.html#e2cnn.nn.R2ConvTransposed">R2ConvTransposed (class in e2cnn.nn)</a>
 </li>
+      <li><a href="api/e2cnn.nn.html#e2cnn.nn.R2Diffop">R2Diffop (class in e2cnn.nn)</a>
+</li>
       <li><a href="api/e2cnn.nn.html#e2cnn.nn.R2Upsampling">R2Upsampling (class in e2cnn.nn)</a>
 </li>
       <li><a href="api/e2cnn.gspaces.html#e2cnn.gspaces.GSpace.regular_repr">regular_repr() (GSpace property)</a>
@@ -802,10 +875,10 @@
         <li><a href="api/e2cnn.gspaces.html#e2cnn.gspaces.GSpace.representations">(GSpace property)</a>
 </li>
       </ul></li>
-      <li><a href="api/e2cnn.nn.html#e2cnn.nn.ReshuffleModule">ReshuffleModule (class in e2cnn.nn)</a>
-</li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/e2cnn.nn.html#e2cnn.nn.ReshuffleModule">ReshuffleModule (class in e2cnn.nn)</a>
+</li>
       <li><a href="api/e2cnn.nn.html#e2cnn.nn.FieldType.restrict">restrict() (FieldType method)</a>
 
       <ul>
@@ -836,9 +909,11 @@
 <h2 id="S">S</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="api/e2cnn.kernels.html#e2cnn.kernels.GaussianRadialProfile.sample">sample() (GaussianRadialProfile method)</a>
+      <li><a href="api/e2cnn.diffops.html#e2cnn.diffops.DiffopBasis.sample">sample() (DiffopBasis method)</a>
 
       <ul>
+        <li><a href="api/e2cnn.kernels.html#e2cnn.kernels.GaussianRadialProfile.sample">(GaussianRadialProfile method)</a>
+</li>
         <li><a href="api/e2cnn.kernels.html#e2cnn.kernels.KernelBasis.sample">(KernelBasis method)</a>
 </li>
         <li><a href="api/e2cnn.kernels.html#e2cnn.kernels.PolarBasis.sample">(PolarBasis method)</a>
@@ -846,23 +921,37 @@
         <li><a href="api/e2cnn.kernels.html#e2cnn.kernels.SteerableKernelBasis.sample">(SteerableKernelBasis method)</a>
 </li>
       </ul></li>
+      <li><a href="api/e2cnn.diffops.html#e2cnn.diffops.DiffopBasis.sample_masked">sample_masked() (DiffopBasis method)</a>
+
+      <ul>
+        <li><a href="api/e2cnn.kernels.html#e2cnn.kernels.KernelBasis.sample_masked">(KernelBasis method)</a>
+</li>
+      </ul></li>
       <li><a href="api/e2cnn.nn.html#e2cnn.nn.SequentialModule">SequentialModule (class in e2cnn.nn)</a>
 </li>
       <li><a href="api/e2cnn.nn.html#e2cnn.nn.GeometricTensor.shape">shape() (GeometricTensor property)</a>
 </li>
+      <li><a href="api/e2cnn.nn.html#e2cnn.nn.modules.r2_conv.SingleBlockBasisExpansion">SingleBlockBasisExpansion (class in e2cnn.nn.modules.r2_conv)</a>
+</li>
       <li><a href="api/e2cnn.nn.html#e2cnn.nn.GeometricTensor.size">size() (GeometricTensor method)</a>
 </li>
-      <li><a href="api/e2cnn.group.html#e2cnn.group.SO2">SO2 (class in e2cnn.group)</a>
+      <li><a href="api/e2cnn.diffops.html#e2cnn.diffops.DiscretizationArgs.smoothing">smoothing (DiscretizationArgs attribute)</a>
 </li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/e2cnn.group.html#e2cnn.group.SO2">SO2 (class in e2cnn.group)</a>
+</li>
       <li><a href="api/e2cnn.group.html#e2cnn.group.so2_group">so2_group() (in module e2cnn.group)</a>
 </li>
       <li><a href="api/e2cnn.nn.html#e2cnn.nn.FieldType.sorted">sorted() (FieldType method)</a>
 </li>
       <li><a href="api/e2cnn.nn.html#e2cnn.nn.GeometricTensor.split">split() (GeometricTensor method)</a>
 </li>
+      <li><a href="api/e2cnn.diffops.html#e2cnn.diffops.SteerableDiffopBasis">SteerableDiffopBasis (class in e2cnn.diffops)</a>
+</li>
       <li><a href="api/e2cnn.kernels.html#e2cnn.kernels.SteerableKernelBasis">SteerableKernelBasis (class in e2cnn.kernels)</a>
+</li>
+      <li><a href="api/e2cnn.diffops.html#e2cnn.diffops.store_cache">store_cache() (in module e2cnn.diffops)</a>
 </li>
       <li><a href="api/e2cnn.group.html#e2cnn.group.CyclicGroup.subgroup">subgroup() (CyclicGroup method)</a>
 
@@ -883,6 +972,8 @@
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="api/e2cnn.nn.html#e2cnn.nn.tensor_directsum">tensor_directsum() (in module e2cnn.nn)</a>
+</li>
+      <li><a href="api/e2cnn.diffops.html#e2cnn.diffops.TensorBasis">TensorBasis (class in e2cnn.diffops)</a>
 </li>
       <li><a href="api/e2cnn.group.html#e2cnn.group.CyclicGroup.testing_elements">testing_elements() (CyclicGroup method)</a>
 
@@ -905,7 +996,11 @@
       <li><a href="api/e2cnn.nn.html#e2cnn.nn.GeometricTensor.to">to() (GeometricTensor method)</a>
 </li>
       <li><a href="api/e2cnn.nn.html#e2cnn.nn.R2Conv.train">train() (R2Conv method)</a>
+
+      <ul>
+        <li><a href="api/e2cnn.nn.html#e2cnn.nn.R2Diffop.train">(R2Diffop method)</a>
 </li>
+      </ul></li>
       <li><a href="api/e2cnn.nn.html#e2cnn.nn.FieldType.transform">transform() (FieldType method)</a>
 
       <ul>

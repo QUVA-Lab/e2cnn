@@ -1,0 +1,747 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>e2cnn.diffops &mdash; e2cnn 0.1.9 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script type="text/x-mathjax-config">MathJax.Hub.Config({"TeX": {"Macros": {"bold": ["{\\bf #1}", 1], "R": "{\\mathbb R}", "N": "{\\mathbb N}", "Z": "{\\mathbb Z}", "Ind": ["{\\operatorname{Ind}_{#1}^{#2}}", 2], "Res": ["{\\operatorname{Res}_{#1}^{#2}}", 2], "GL": ["{\\operatorname{GL}(#1)}", 1], "E": ["{\\operatorname{E}(#1)}", 1], "SE": ["{\\operatorname{SE}(#1)}", 1], "O": ["{\\operatorname{O}(#1)}", 1], "SO": ["{\\operatorname{SO}(#1)}", 1], "U": ["{\\operatorname{U}(#1)}", 1], "D": ["{\\operatorname{D}_{#1}}", 1], "C": ["{\\operatorname{C}_{#1}}", 1], "DN": "{\\operatorname{D}_{\\!N}}", "CN": "{\\operatorname{C}_{\\!N}}"}}})</script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="e2cnn.gspaces" href="e2cnn.gspaces.html" />
+    <link rel="prev" title="e2cnn.kernels" href="e2cnn.kernels.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> e2cnn
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.1.9
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Package Reference</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="e2cnn.group.html">e2cnn.group</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="e2cnn.group.html#groups">Groups</a></li>
+<li class="toctree-l2"><a class="reference internal" href="e2cnn.group.html#representations">Representations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="e2cnn.group.html#utility-functions">Utility Functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="e2cnn.group.html#subpackages">Subpackages</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="e2cnn.kernels.html">e2cnn.kernels</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="e2cnn.kernels.html#abstract-classes">Abstract Classes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="e2cnn.kernels.html#kernel-bases">Kernel Bases</a></li>
+<li class="toctree-l2"><a class="reference internal" href="e2cnn.kernels.html#bases-for-group-actions-on-the-plane">Bases for Group Actions on the Plane</a></li>
+</ul>
+</li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">e2cnn.diffops</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#abstract-class">Abstract Class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#pdo-bases">PDO Bases</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#bases-for-group-actions-on-the-plane">Bases for Group Actions on the Plane</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#utility-functions">Utility functions</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="e2cnn.gspaces.html">e2cnn.gspaces</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="e2cnn.gspaces.html#abstract-group-space">Abstract Group Space</a></li>
+<li class="toctree-l2"><a class="reference internal" href="e2cnn.gspaces.html#group-actions-on-the-plane">Group Actions on the Plane</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="e2cnn.nn.html">e2cnn.nn</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="e2cnn.nn.html#field-type">Field Type</a></li>
+<li class="toctree-l2"><a class="reference internal" href="e2cnn.nn.html#geometric-tensor">Geometric Tensor</a></li>
+<li class="toctree-l2"><a class="reference internal" href="e2cnn.nn.html#equivariant-module">Equivariant Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="e2cnn.nn.html#utils">Utils</a></li>
+<li class="toctree-l2"><a class="reference internal" href="e2cnn.nn.html#planar-convolution-and-differential-operators">Planar Convolution and Differential Operators</a></li>
+<li class="toctree-l2"><a class="reference internal" href="e2cnn.nn.html#non-linearities">Non Linearities</a></li>
+<li class="toctree-l2"><a class="reference internal" href="e2cnn.nn.html#invariant-maps">Invariant Maps</a></li>
+<li class="toctree-l2"><a class="reference internal" href="e2cnn.nn.html#pooling">Pooling</a></li>
+<li class="toctree-l2"><a class="reference internal" href="e2cnn.nn.html#normalization">Normalization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="e2cnn.nn.html#dropout">Dropout</a></li>
+<li class="toctree-l2"><a class="reference internal" href="e2cnn.nn.html#other-modules">Other Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="e2cnn.nn.html#module-e2cnn.nn.init">Weight Initialization</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">e2cnn</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+      <li>e2cnn.diffops</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="../_sources/api/e2cnn.diffops.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <span class="target" id="module-e2cnn.diffops"></span><div class="section" id="e2cnn-diffops">
+<h1>e2cnn.diffops<a class="headerlink" href="#e2cnn-diffops" title="Permalink to this headline">¶</a></h1>
+<p>This subpackage implements the complete analytical solutions of the equivariance constraints partial
+differential operators (PDOs) as described in <a class="reference external" href="https://arxiv.org/abs/2106.10163">Steerable Partial Differentail Operators for Equivariant Neural Network</a>.
+The bases of equivariant PDOs should be built through <a class="reference internal" href="#factory-functions-diffops"><span class="std std-ref">factory functions</span></a>.</p>
+<p>Typically, the user does not need to interact directly with this subpackage.
+Instead, we suggest to use the interface provided in <a class="reference internal" href="e2cnn.gspaces.html"><span class="doc">e2cnn.gspaces</span></a>.</p>
+<p>This subpackage depends only on <a class="reference internal" href="e2cnn.group.html"><span class="doc">e2cnn.group</span></a> and <a class="reference internal" href="e2cnn.kernels.html"><span class="doc">e2cnn.kernels</span></a>.</p>
+<p>Note that discretization of the differential operators relies on the <a class="reference external" href="https://docs.sympy.org/">sympy</a> and <a class="reference external" href="https://rbf.readthedocs.io">rbf</a> packages.
+If these packages are not installed, an error will be thrown when trying to sample the operators.</p>
+<div class="contents local topic" id="contents">
+<p class="topic-title">Contents</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#abstract-class" id="id5">Abstract Class</a></p></li>
+<li><p><a class="reference internal" href="#pdo-bases" id="id6">PDO Bases</a></p>
+<ul>
+<li><p><a class="reference internal" href="#tensor-product-of-laplacian-and-angular-pdos" id="id7">Tensor Product of Laplacian and angular PDOs</a></p></li>
+<li><p><a class="reference internal" href="#laplacian-profile" id="id8">Laplacian Profile</a></p></li>
+<li><p><a class="reference internal" href="#general-steerable-basis-for-equivariant-pdos" id="id9">General Steerable Basis for equivariant PDOs</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#bases-for-group-actions-on-the-plane" id="id10">Bases for Group Actions on the Plane</a></p>
+<ul>
+<li><p><a class="reference internal" href="#reflections-and-continuous-rotations" id="id11">Reflections and Continuous Rotations</a></p></li>
+<li><p><a class="reference internal" href="#continuous-rotations" id="id12">Continuous Rotations</a></p></li>
+<li><p><a class="reference internal" href="#reflections-and-discrete-rotations" id="id13">Reflections and Discrete Rotations</a></p></li>
+<li><p><a class="reference internal" href="#discrete-rotations" id="id14">Discrete Rotations</a></p></li>
+<li><p><a class="reference internal" href="#reflections" id="id15">Reflections</a></p></li>
+<li><p><a class="reference internal" href="#trivial-action" id="id16">Trivial Action</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#utility-functions" id="id17">Utility functions</a></p></li>
+</ul>
+</div>
+<div class="section" id="abstract-class">
+<h2><a class="toc-backref" href="#contents">Abstract Class</a><a class="headerlink" href="#abstract-class" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt id="e2cnn.diffops.DiffopBasis">
+<em class="property"><span class="pre">class</span> </em><code class="sig-name descname"><span class="pre">DiffopBasis</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">coefficients</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">discretization</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">DiscretizationArgs(method='fd',</span> <span class="pre">smoothing=None,</span> <span class="pre">angle_offset=None,</span> <span class="pre">phi='ga')</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/e2cnn/diffops/basis.html#DiffopBasis"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#e2cnn.diffops.DiffopBasis" title="Permalink to this definition">¶</a></dt>
+<dd><p>Abstract class for implementing the basis of a space of differential operators.
+Such a space consists of <span class="math notranslate nohighlight">\(c_\text{out} \times c_\text{in}\)</span> matrices with
+partial differential operators as entries.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>coefficients</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.10)"><em>list</em></a>) – a list of ndarrays. Each array describes one element
+of the basis and has shape <code class="docutils literal notranslate"><span class="pre">(c_out,</span> <span class="pre">c_in,</span> <span class="pre">n</span> <span class="pre">+</span> <span class="pre">1)</span></code>, where <code class="docutils literal notranslate"><span class="pre">n</span></code>
+is the derivative order of the entries of the matrix.
+PDOs are encoded as the coefficients of <span class="math notranslate nohighlight">\(\frac{\partial^n}{\partial x^n}\)</span>,
+<span class="math notranslate nohighlight">\(\frac{\partial^n}{\partial x^{n - 1}\partial y}\)</span>, …,
+<span class="math notranslate nohighlight">\(\frac{\partial^n}{\partial y^n}\)</span>.</p></li>
+<li><p><strong>discretization</strong> (<em>optional</em>) – additional parameters specifying parameters for
+the discretization procedure. See <a class="reference internal" href="#e2cnn.diffops.DiscretizationArgs" title="e2cnn.diffops.DiscretizationArgs"><code class="xref py py-class docutils literal notranslate"><span class="pre">DiscretizationArgs</span></code></a>.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Variables</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>coefficients</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.10)"><em>list</em></a>) – an analytical description of the PDO basis elements, see above</p></li>
+<li><p><strong>dim</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – the dimensionality of the basis <span class="math notranslate nohighlight">\(|\mathcal{K}|\)</span> (number of elements)</p></li>
+<li><p><strong>shape</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.10)"><em>tuple</em></a>) – a tuple containing <span class="math notranslate nohighlight">\(c_\text{out}\)</span> and <span class="math notranslate nohighlight">\(c_\text{in}\)</span></p></li>
+<li><p><strong>maximum_order</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – the largest derivative order occuring in the basis</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt id="e2cnn.diffops.DiffopBasis.sample">
+<code class="sig-name descname"><span class="pre">sample</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">points</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/e2cnn/diffops/basis.html#DiffopBasis.sample"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#e2cnn.diffops.DiffopBasis.sample" title="Permalink to this definition">¶</a></dt>
+<dd><p>Discretize the basis on a set of points.
+See <code class="xref py py-meth docutils literal notranslate"><span class="pre">sampled_masked()</span></code> for details.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="e2cnn.diffops.DiffopBasis.sample_masked">
+<code class="sig-name descname"><span class="pre">sample_masked</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">points</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mask</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/e2cnn/diffops/basis.html#DiffopBasis.sample_masked"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#e2cnn.diffops.DiffopBasis.sample_masked" title="Permalink to this definition">¶</a></dt>
+<dd><p>Discretize the basis on a set of points.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>points</strong> (<em>ndarray</em>) – a <cite>2 x N</cite> array with <cite>N</cite> points on which to discretize.
+If FD is used (default), this has to be a flattened version of
+a regular sorted grid (like you would get using np.meshgrid on ranges).</p></li>
+<li><p><strong>mask</strong> (<em>ndarray</em><em>, </em><em>optional</em>) – Boolean array of shape (dim, ), where <code class="docutils literal notranslate"><span class="pre">dim</span></code> is the number of basis elements.
+True for elements to discretize and False for elements to discard.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>ndarray of with shape <cite>(C_out, C_in, num_basis_elements, n_in)</cite>, where
+<cite>num_basis_elements</cite> are the number of elements after applying the mask, and <cite>n_in</cite> is the number
+of points.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="e2cnn.diffops.DiffopBasis.pretty_print">
+<code class="sig-name descname"><span class="pre">pretty_print</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/e2cnn/diffops/basis.html#DiffopBasis.pretty_print"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#e2cnn.diffops.DiffopBasis.pretty_print" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a human-readable representation of all basis elements.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="e2cnn.diffops.DiscretizationArgs">
+<em class="property"><span class="pre">class</span> </em><code class="sig-name descname"><span class="pre">DiscretizationArgs</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">method</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'fd'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">smoothing</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">angle_offset</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">phi</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'ga'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/e2cnn/diffops/basis.html#DiscretizationArgs"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#e2cnn.diffops.DiscretizationArgs" title="Permalink to this definition">¶</a></dt>
+<dd><p>Parameters specifying a discretization procedure for PDOs.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Variables</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>method</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a><em>, </em><em>optional</em>) – the discretization method to use,
+either <code class="docutils literal notranslate"><span class="pre">&quot;rbffd&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;fd&quot;</span></code> or <code class="docutils literal notranslate"><span class="pre">&quot;gauss&quot;</span></code>.</p></li>
+<li><p><strong>smoothing</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)"><em>float</em></a><em>, </em><em>optional</em>) – <code class="docutils literal notranslate"><span class="pre">smoothing</span></code> is the standard
+deviation of the Gaussian used for discretization. Must be set if <code class="docutils literal notranslate"><span class="pre">method=&quot;gauss&quot;</span></code>,
+has no effect otherwise.</p></li>
+<li><p><strong>angle_offset</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)"><em>float</em></a><em>, </em><em>optional</em>) – if not <code class="docutils literal notranslate"><span class="pre">None</span></code>, rotate the PDOs by this many radians.</p></li>
+<li><p><strong>phi</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a><em>, </em><em>optional</em>) – which RBF to use (only relevant for RBF-FD).
+Can be any of the abbreviations <a class="reference external" href="https://rbf.readthedocs.io/en/latest/basis.html">here</a>.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt id="e2cnn.diffops.DiscretizationArgs.method">
+<code class="sig-name descname"><span class="pre">method</span></code><em class="property"><span class="pre">:</span> <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><span class="pre">str</span></a></em><em class="property"> <span class="pre">=</span> <span class="pre">'fd'</span></em><a class="headerlink" href="#e2cnn.diffops.DiscretizationArgs.method" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="e2cnn.diffops.DiscretizationArgs.smoothing">
+<code class="sig-name descname"><span class="pre">smoothing</span></code><em class="property"><span class="pre">:</span> <span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)"><span class="pre">float</span></a><span class="p"><span class="pre">]</span></span></em><em class="property"> <span class="pre">=</span> <span class="pre">None</span></em><a class="headerlink" href="#e2cnn.diffops.DiscretizationArgs.smoothing" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="e2cnn.diffops.DiscretizationArgs.angle_offset">
+<code class="sig-name descname"><span class="pre">angle_offset</span></code><em class="property"><span class="pre">:</span> <span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)"><span class="pre">float</span></a><span class="p"><span class="pre">]</span></span></em><em class="property"> <span class="pre">=</span> <span class="pre">None</span></em><a class="headerlink" href="#e2cnn.diffops.DiscretizationArgs.angle_offset" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="e2cnn.diffops.DiscretizationArgs.phi">
+<code class="sig-name descname"><span class="pre">phi</span></code><em class="property"><span class="pre">:</span> <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><span class="pre">str</span></a></em><em class="property"> <span class="pre">=</span> <span class="pre">'ga'</span></em><a class="headerlink" href="#e2cnn.diffops.DiscretizationArgs.phi" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="pdo-bases">
+<h2><a class="toc-backref" href="#contents">PDO Bases</a><a class="headerlink" href="#pdo-bases" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="tensor-product-of-laplacian-and-angular-pdos">
+<h3><a class="toc-backref" href="#contents">Tensor Product of Laplacian and angular PDOs</a><a class="headerlink" href="#tensor-product-of-laplacian-and-angular-pdos" title="Permalink to this headline">¶</a></h3>
+<dl class="py class">
+<dt id="e2cnn.diffops.TensorBasis">
+<em class="property"><span class="pre">class</span> </em><code class="sig-name descname"><span class="pre">TensorBasis</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">irreps_basis</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">in_repr</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">out_repr</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_power</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">discretization</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">DiscretizationArgs(method='fd',</span> <span class="pre">smoothing=None,</span> <span class="pre">angle_offset=None,</span> <span class="pre">phi='ga')</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/e2cnn/diffops/basis.html#TensorBasis"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#e2cnn.diffops.TensorBasis" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">e2cnn.diffops.basis.DiffopBasis</span></code></p>
+<p>Build the tensor product basis of two PDO bases over the
+plane. Given two bases <span class="math notranslate nohighlight">\(A = \{a_i\}_i\)</span> and <span class="math notranslate nohighlight">\(B = \{b_j\}_j\)</span>, this basis is defined as</p>
+<div class="math notranslate nohighlight">
+\[C = A \otimes B = \left\{ c_{i,j} := a_i \circ b_j \right\}_{i,j}.\]</div>
+<p>The arguments are passed on to <a class="reference internal" href="#e2cnn.diffops.SteerableDiffopBasis" title="e2cnn.diffops.SteerableDiffopBasis"><code class="xref py py-class docutils literal notranslate"><span class="pre">SteerableDiffopBasis</span></code></a> and
+<a class="reference internal" href="#e2cnn.diffops.LaplaceProfile" title="e2cnn.diffops.LaplaceProfile"><code class="xref py py-class docutils literal notranslate"><span class="pre">LaplaceProfile</span></code></a>, see their documentation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Variables</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>basis1</strong> (<a class="reference internal" href="#e2cnn.diffops.SteerableDiffopBasis" title="e2cnn.diffops.SteerableDiffopBasis"><em>SteerableDiffopBasis</em></a>) – the first basis</p></li>
+<li><p><strong>basis2</strong> (<a class="reference internal" href="#e2cnn.diffops.LaplaceProfile" title="e2cnn.diffops.LaplaceProfile"><em>LaplaceProfile</em></a>) – the second basis</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="section" id="laplacian-profile">
+<h3><a class="toc-backref" href="#contents">Laplacian Profile</a><a class="headerlink" href="#laplacian-profile" title="Permalink to this headline">¶</a></h3>
+<dl class="py class">
+<dt id="e2cnn.diffops.LaplaceProfile">
+<em class="property"><span class="pre">class</span> </em><code class="sig-name descname"><span class="pre">LaplaceProfile</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">max_power</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">discretization</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">DiscretizationArgs(method='fd',</span> <span class="pre">smoothing=None,</span> <span class="pre">angle_offset=None,</span> <span class="pre">phi='ga')</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/e2cnn/diffops/basis.html#LaplaceProfile"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#e2cnn.diffops.LaplaceProfile" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">e2cnn.diffops.basis.DiffopBasis</span></code></p>
+<p>Basis for rotationally invariant PDOs.
+Each basis element is defined as a power of a Laplacian.</p>
+<p>In order to build a complete basis of PDOs, you should combine this basis
+with a basis which defines the angular profile through <a class="reference internal" href="#e2cnn.diffops.TensorBasis" title="e2cnn.diffops.TensorBasis"><code class="xref py py-class docutils literal notranslate"><span class="pre">TensorBasis</span></code></a>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>max_power</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – the maximum power of the Laplace operator that will be used.
+The maximum degree (as a differential operator) will be two times this maximum
+power.</p></li>
+<li><p><strong>discretization</strong> (<a class="reference internal" href="#e2cnn.diffops.DiscretizationArgs" title="e2cnn.diffops.DiscretizationArgs"><em>DiscretizationArgs</em></a><em>, </em><em>optional</em>) – additional parameters specifying parameters for
+the discretization procedure. See <a class="reference internal" href="#e2cnn.diffops.DiscretizationArgs" title="e2cnn.diffops.DiscretizationArgs"><code class="xref py py-class docutils literal notranslate"><span class="pre">DiscretizationArgs</span></code></a>.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="section" id="general-steerable-basis-for-equivariant-pdos">
+<h3><a class="toc-backref" href="#contents">General Steerable Basis for equivariant PDOs</a><a class="headerlink" href="#general-steerable-basis-for-equivariant-pdos" title="Permalink to this headline">¶</a></h3>
+<dl class="py class">
+<dt id="e2cnn.diffops.SteerableDiffopBasis">
+<em class="property"><span class="pre">class</span> </em><code class="sig-name descname"><span class="pre">SteerableDiffopBasis</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">irreps_basis</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">in_repr</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">out_repr</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">discretization</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">DiscretizationArgs(method='fd',</span> <span class="pre">smoothing=None,</span> <span class="pre">angle_offset=None,</span> <span class="pre">phi='ga')</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/e2cnn/diffops/steerable_basis.html#SteerableDiffopBasis"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#e2cnn.diffops.SteerableDiffopBasis" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">e2cnn.diffops.basis.DiffopBasis</span></code></p>
+<p>Implements a general basis for the vector space of equivariant PDOs.
+A <span class="math notranslate nohighlight">\(G\)</span>-equivariant PDO <span class="math notranslate nohighlight">\(D(P)\)</span> for a matrix of polynomials <span class="math notranslate nohighlight">\(P\)</span>, mapping between an input field, transforming under
+<span class="math notranslate nohighlight">\(\rho_\text{in}\)</span> (<code class="docutils literal notranslate"><span class="pre">in_repr</span></code>), and an output field, transforming under  <span class="math notranslate nohighlight">\(\rho_\text{out}\)</span>
+(<code class="docutils literal notranslate"><span class="pre">out_repr</span></code>), satisfies the following constraint:</p>
+<div class="math notranslate nohighlight">
+\[P(gx) = \rho_\text{out}(g) P(x) \rho_\text{in}(g)^{-1} \qquad \forall g \in G, \forall x \in X\]</div>
+<p>for <span class="math notranslate nohighlight">\(G \leq \O{d}\)</span>.</p>
+<p>As the PDO constraint is a linear constraint, the space of equivariant PDOs is a vector subspace of the
+space of all PDOs. It follows that any equivariant PDO can be expressed in terms of a basis
+of this space.</p>
+<p>This class solves the PDO constraint for two arbitrary representations by combining the solutions of the
+PDO constraints associated to their <a class="reference internal" href="e2cnn.group.html#e2cnn.group.IrreducibleRepresentation" title="e2cnn.group.IrreducibleRepresentation"><code class="xref py py-class docutils literal notranslate"><span class="pre">IrreducibleRepresentation</span></code></a> s.
+In order to do so, it relies on <code class="docutils literal notranslate"><span class="pre">irreps_basis</span></code> which solves individual irreps constraints. <code class="docutils literal notranslate"><span class="pre">irreps_basis</span></code>
+must be a class which builds a basis for equivariant
+kernels associated with irreducible representations when instantiated.</p>
+<p>The groups <span class="math notranslate nohighlight">\(G\)</span> which are currently implemented are origin-preserving isometries (what are called
+structure groups, or sometimes gauge groups, in the language of
+<a class="reference external" href="https://arxiv.org/abs/1902.04615">Gauge Equivariant CNNs</a> ).
+The origin-preserving isometries of <span class="math notranslate nohighlight">\(\R^d\)</span> are subgroups of <span class="math notranslate nohighlight">\(O(d)\)</span>, i.e. reflections and rotations.
+Therefore, PDOs may be composed with any rotation and reflection invariant PDO without
+affecting equivariance. This class only implements a basis up to such invariant PDOs,
+which are given by polynomials in the Laplacian operator.</p>
+<p>In order to build a complete basis of PDOs, you should combine this basis with
+<a class="reference internal" href="#e2cnn.diffops.LaplaceProfile" title="e2cnn.diffops.LaplaceProfile"><code class="xref py py-class docutils literal notranslate"><span class="pre">LaplaceProfile</span></code></a>) through
+<a class="reference internal" href="#e2cnn.diffops.TensorBasis" title="e2cnn.diffops.TensorBasis"><code class="xref py py-class docutils literal notranslate"><span class="pre">TensorBasis</span></code></a>.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Typically, the user does not need to manually instantiate this class.
+Instead, we suggest to use the interface provided in <a class="reference internal" href="e2cnn.gspaces.html"><span class="doc">e2cnn.gspaces</span></a>.</p>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>irreps_basis</strong> (<em>class</em>) – class defining the irreps basis. This class is instantiated for each pair of irreps to solve all irreps constraints.</p></li>
+<li><p><strong>in_repr</strong> (<a class="reference internal" href="e2cnn.group.html#e2cnn.group.Representation" title="e2cnn.group.Representation"><em>Representation</em></a>) – Representation associated with the input feature field</p></li>
+<li><p><strong>out_repr</strong> (<a class="reference internal" href="e2cnn.group.html#e2cnn.group.Representation" title="e2cnn.group.Representation"><em>Representation</em></a>) – Representation associated with the output feature field</p></li>
+<li><p><strong>discretization</strong> (<a class="reference internal" href="#e2cnn.diffops.DiscretizationArgs" title="e2cnn.diffops.DiscretizationArgs"><em>DiscretizationArgs</em></a><em>, </em><em>optional</em>) – additional parameters specifying parameters for
+the discretization procedure. See <a class="reference internal" href="#e2cnn.diffops.DiscretizationArgs" title="e2cnn.diffops.DiscretizationArgs"><code class="xref py py-class docutils literal notranslate"><span class="pre">DiscretizationArgs</span></code></a>.</p></li>
+<li><p><strong>**kwargs</strong> – additional arguments used when instantiating <code class="docutils literal notranslate"><span class="pre">irreps_basis</span></code></p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+</div>
+<div class="section" id="bases-for-group-actions-on-the-plane">
+<span id="factory-functions-diffops"></span><h2><a class="toc-backref" href="#contents">Bases for Group Actions on the Plane</a><a class="headerlink" href="#bases-for-group-actions-on-the-plane" title="Permalink to this headline">¶</a></h2>
+<p>The following factory functions provide an interface to build the bases for PDOs equivariant to groups acting on the
+two dimensional plane.
+The names of the functions follow this convention <cite>diffops_[G]_act_R[d]</cite>, where <span class="math notranslate nohighlight">\(G\)</span> is the origin-preserving isometry
+group while <span class="math notranslate nohighlight">\(\R^d\)</span> is the space on which it acts.
+Here, <span class="math notranslate nohighlight">\(d=2\)</span> as we only consider the planar setting.
+In the language of <a class="reference external" href="https://arxiv.org/abs/1902.04615">Gauge Equivariant CNNs</a> , the origin-preserving isometry
+<span class="math notranslate nohighlight">\(G\)</span> is called <em>structure group</em> (or, sometimes, <em>gauge group</em>).</p>
+<div class="section" id="reflections-and-continuous-rotations">
+<h3><a class="toc-backref" href="#contents">Reflections and Continuous Rotations</a><a class="headerlink" href="#reflections-and-continuous-rotations" title="Permalink to this headline">¶</a></h3>
+<dl class="py function">
+<dt id="e2cnn.diffops.diffops_O2_act_R2">
+<code class="sig-name descname"><span class="pre">diffops_O2_act_R2</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">in_repr</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">out_repr</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_power</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">axis</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.5707963267948966</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">discretization</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">DiscretizationArgs(method='fd',</span> <span class="pre">smoothing=None,</span> <span class="pre">angle_offset=None,</span> <span class="pre">phi='ga')</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/e2cnn/diffops/r2.html#diffops_O2_act_R2"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#e2cnn.diffops.diffops_O2_act_R2" title="Permalink to this definition">¶</a></dt>
+<dd><p>Builds a basis for PDOs equivariant to reflections and continuous rotations, modeled by the
+group <span class="math notranslate nohighlight">\(O(2)\)</span>.
+<code class="docutils literal notranslate"><span class="pre">in_repr</span></code> and <code class="docutils literal notranslate"><span class="pre">out_repr</span></code> need to be <a class="reference internal" href="e2cnn.group.html#e2cnn.group.Representation" title="e2cnn.group.Representation"><code class="xref py py-class docutils literal notranslate"><span class="pre">Representation</span></code></a> s of <a class="reference internal" href="e2cnn.group.html#e2cnn.group.O2" title="e2cnn.group.O2"><code class="xref py py-class docutils literal notranslate"><span class="pre">O2</span></code></a>.</p>
+<p>Because the equivariance constraints allow any choice of radial profile, we use a
+<a class="reference internal" href="#e2cnn.diffops.LaplaceProfile" title="e2cnn.diffops.LaplaceProfile"><code class="xref py py-class docutils literal notranslate"><span class="pre">LaplaceProfile</span></code></a>, which is the most general choice.
+<code class="docutils literal notranslate"><span class="pre">max_power</span></code> specifies the maximum power of the Laplacian. The maximum order of differential
+operators in the basis will be two times <code class="docutils literal notranslate"><span class="pre">max_power</span></code> plus the maximum order of the angular basis.</p>
+<p>Because <span class="math notranslate nohighlight">\(O(2)\)</span> contains all rotations, the reflection element of the group can be associated to any reflection
+axis. Reflections along other axes can be obtained by composition with rotations.
+However, a choice of this axis is required to align the basis with respect to the action of the group.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>in_repr</strong> (<a class="reference internal" href="e2cnn.group.html#e2cnn.group.Representation" title="e2cnn.group.Representation"><em>Representation</em></a>) – the representation specifying the transformation of the input feature field</p></li>
+<li><p><strong>out_repr</strong> (<a class="reference internal" href="e2cnn.group.html#e2cnn.group.Representation" title="e2cnn.group.Representation"><em>Representation</em></a>) – the representation specifying the transformation of the output feature field</p></li>
+<li><p><strong>max_power</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – maximum power of the Laplacian for the radial profile</p></li>
+<li><p><strong>axis</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)"><em>float</em></a><em>, </em><em>optional</em>) – angle of the axis of the reflection element</p></li>
+<li><p><strong>discretization</strong> (<a class="reference internal" href="#e2cnn.diffops.DiscretizationArgs" title="e2cnn.diffops.DiscretizationArgs"><em>DiscretizationArgs</em></a><em>, </em><em>optional</em>) – additional parameters specifying parameters for
+the discretization procedure. See <a class="reference internal" href="#e2cnn.diffops.DiscretizationArgs" title="e2cnn.diffops.DiscretizationArgs"><code class="xref py py-class docutils literal notranslate"><span class="pre">DiscretizationArgs</span></code></a>.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="section" id="continuous-rotations">
+<h3><a class="toc-backref" href="#contents">Continuous Rotations</a><a class="headerlink" href="#continuous-rotations" title="Permalink to this headline">¶</a></h3>
+<dl class="py function">
+<dt id="e2cnn.diffops.diffops_SO2_act_R2">
+<code class="sig-name descname"><span class="pre">diffops_SO2_act_R2</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">in_repr</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">out_repr</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_power</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">discretization</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">DiscretizationArgs(method='fd',</span> <span class="pre">smoothing=None,</span> <span class="pre">angle_offset=None,</span> <span class="pre">phi='ga')</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/e2cnn/diffops/r2.html#diffops_SO2_act_R2"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#e2cnn.diffops.diffops_SO2_act_R2" title="Permalink to this definition">¶</a></dt>
+<dd><p>Builds a basis for PDOs equivariant to continuous rotations, modeled by the
+group <span class="math notranslate nohighlight">\(SO(2)\)</span>.
+<code class="docutils literal notranslate"><span class="pre">in_repr</span></code> and <code class="docutils literal notranslate"><span class="pre">out_repr</span></code> need to be <a class="reference internal" href="e2cnn.group.html#e2cnn.group.Representation" title="e2cnn.group.Representation"><code class="xref py py-class docutils literal notranslate"><span class="pre">Representation</span></code></a> s of <a class="reference internal" href="e2cnn.group.html#e2cnn.group.SO2" title="e2cnn.group.SO2"><code class="xref py py-class docutils literal notranslate"><span class="pre">SO2</span></code></a>.</p>
+<p>Because the equivariance constraints allow any choice of radial profile, we use a
+<a class="reference internal" href="#e2cnn.diffops.LaplaceProfile" title="e2cnn.diffops.LaplaceProfile"><code class="xref py py-class docutils literal notranslate"><span class="pre">LaplaceProfile</span></code></a>, which is the most general choice.
+<code class="docutils literal notranslate"><span class="pre">max_power</span></code> specifies the maximum power of the Laplacian. The maximum order of differential
+operators in the basis will be two times <code class="docutils literal notranslate"><span class="pre">max_power</span></code> plus the maximum order of the angular basis.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>in_repr</strong> (<a class="reference internal" href="e2cnn.group.html#e2cnn.group.Representation" title="e2cnn.group.Representation"><em>Representation</em></a>) – the representation specifying the transformation of the input feature field</p></li>
+<li><p><strong>out_repr</strong> (<a class="reference internal" href="e2cnn.group.html#e2cnn.group.Representation" title="e2cnn.group.Representation"><em>Representation</em></a>) – the representation specifying the transformation of the output feature field</p></li>
+<li><p><strong>max_power</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – maximum power of the Laplacian for the radial profile</p></li>
+<li><p><strong>discretization</strong> (<a class="reference internal" href="#e2cnn.diffops.DiscretizationArgs" title="e2cnn.diffops.DiscretizationArgs"><em>DiscretizationArgs</em></a><em>, </em><em>optional</em>) – additional parameters specifying parameters for
+the discretization procedure. See <a class="reference internal" href="#e2cnn.diffops.DiscretizationArgs" title="e2cnn.diffops.DiscretizationArgs"><code class="xref py py-class docutils literal notranslate"><span class="pre">DiscretizationArgs</span></code></a>.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="section" id="reflections-and-discrete-rotations">
+<h3><a class="toc-backref" href="#contents">Reflections and Discrete Rotations</a><a class="headerlink" href="#reflections-and-discrete-rotations" title="Permalink to this headline">¶</a></h3>
+<dl class="py function">
+<dt id="e2cnn.diffops.diffops_DN_act_R2">
+<code class="sig-name descname"><span class="pre">diffops_DN_act_R2</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">in_repr</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">out_repr</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_power</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">axis</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.5707963267948966</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_frequency</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_offset</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">discretization</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">DiscretizationArgs(method='fd',</span> <span class="pre">smoothing=None,</span> <span class="pre">angle_offset=None,</span> <span class="pre">phi='ga')</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/e2cnn/diffops/r2.html#diffops_DN_act_R2"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#e2cnn.diffops.diffops_DN_act_R2" title="Permalink to this definition">¶</a></dt>
+<dd><p>Builds a basis for PDOs equivariant to reflections and <span class="math notranslate nohighlight">\(N\)</span> discrete rotations,
+modeled by the group <span class="math notranslate nohighlight">\(D_N\)</span>.
+<code class="docutils literal notranslate"><span class="pre">in_repr</span></code> and <code class="docutils literal notranslate"><span class="pre">out_repr</span></code> need to be <a class="reference internal" href="e2cnn.group.html#e2cnn.group.Representation" title="e2cnn.group.Representation"><code class="xref py py-class docutils literal notranslate"><span class="pre">Representation</span></code></a> s
+of <a class="reference internal" href="e2cnn.group.html#e2cnn.group.DihedralGroup" title="e2cnn.group.DihedralGroup"><code class="xref py py-class docutils literal notranslate"><span class="pre">DihedralGroup</span></code></a>.</p>
+<p>Because the equivariance constraints allow any choice of radial profile, we use a
+<a class="reference internal" href="#e2cnn.diffops.LaplaceProfile" title="e2cnn.diffops.LaplaceProfile"><code class="xref py py-class docutils literal notranslate"><span class="pre">LaplaceProfile</span></code></a>, which is the most general choice.
+<code class="docutils literal notranslate"><span class="pre">max_power</span></code> specifies the maximum power of the Laplacian. The maximum order of differential
+operators in the basis will be two times <code class="docutils literal notranslate"><span class="pre">max_power</span></code> plus the maximum order of the angular basis.</p>
+<p>The parameter <code class="docutils literal notranslate"><span class="pre">axis</span></code> is the angle in radians (with respect to the horizontal axis, rotating counter-clockwise)
+which defines the reflection axis for the reflection element of the group.</p>
+<p>The analytical angular solutions of PDO constraints belong to an infinite dimensional space and so can be
+expressed in terms of infinitely many basis elements. Only a finite subset can however be implemented.
+<code class="docutils literal notranslate"><span class="pre">max_frequency</span></code> and <code class="docutils literal notranslate"><span class="pre">max_offset</span></code> defines two ways to do so and therefore it is necessary to specify one of them.
+See <a class="reference internal" href="#e2cnn.diffops.diffops_CN_act_R2" title="e2cnn.diffops.diffops_CN_act_R2"><code class="xref py py-func docutils literal notranslate"><span class="pre">diffops_CN_act_R2()</span></code></a> for more details.</p>
+<p>Either <code class="docutils literal notranslate"><span class="pre">max_frequency</span></code> or <code class="docutils literal notranslate"><span class="pre">max_offset</span></code> must be specified.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>in_repr</strong> (<a class="reference internal" href="e2cnn.group.html#e2cnn.group.Representation" title="e2cnn.group.Representation"><em>Representation</em></a>) – the representation specifying the transformation of the input feature field</p></li>
+<li><p><strong>out_repr</strong> (<a class="reference internal" href="e2cnn.group.html#e2cnn.group.Representation" title="e2cnn.group.Representation"><em>Representation</em></a>) – the representation specifying the transformation of the output feature field</p></li>
+<li><p><strong>max_power</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – maximum power of the Laplacian for the radial profile</p></li>
+<li><p><strong>max_frequency</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – maximum frequency of the basis</p></li>
+<li><p><strong>max_offset</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – maximum offset in the frequencies of the basis</p></li>
+<li><p><strong>axis</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)"><em>float</em></a>) – angle defining the reflection axis</p></li>
+<li><p><strong>discretization</strong> (<a class="reference internal" href="#e2cnn.diffops.DiscretizationArgs" title="e2cnn.diffops.DiscretizationArgs"><em>DiscretizationArgs</em></a><em>, </em><em>optional</em>) – additional parameters specifying parameters for
+the discretization procedure. See <a class="reference internal" href="#e2cnn.diffops.DiscretizationArgs" title="e2cnn.diffops.DiscretizationArgs"><code class="xref py py-class docutils literal notranslate"><span class="pre">DiscretizationArgs</span></code></a>.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="section" id="discrete-rotations">
+<h3><a class="toc-backref" href="#contents">Discrete Rotations</a><a class="headerlink" href="#discrete-rotations" title="Permalink to this headline">¶</a></h3>
+<dl class="py function">
+<dt id="e2cnn.diffops.diffops_CN_act_R2">
+<code class="sig-name descname"><span class="pre">diffops_CN_act_R2</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">in_repr</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">out_repr</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_power</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_frequency</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_offset</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">discretization</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">DiscretizationArgs(method='fd',</span> <span class="pre">smoothing=None,</span> <span class="pre">angle_offset=None,</span> <span class="pre">phi='ga')</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/e2cnn/diffops/r2.html#diffops_CN_act_R2"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#e2cnn.diffops.diffops_CN_act_R2" title="Permalink to this definition">¶</a></dt>
+<dd><p>Builds a basis for PDOs equivariant to <span class="math notranslate nohighlight">\(N\)</span> discrete rotations, modeled by
+the group <span class="math notranslate nohighlight">\(C_N\)</span>.
+<code class="docutils literal notranslate"><span class="pre">in_repr</span></code> and <code class="docutils literal notranslate"><span class="pre">out_repr</span></code> need to be <a class="reference internal" href="e2cnn.group.html#e2cnn.group.Representation" title="e2cnn.group.Representation"><code class="xref py py-class docutils literal notranslate"><span class="pre">Representation</span></code></a> s of <a class="reference internal" href="e2cnn.group.html#e2cnn.group.CyclicGroup" title="e2cnn.group.CyclicGroup"><code class="xref py py-class docutils literal notranslate"><span class="pre">CyclicGroup</span></code></a>.</p>
+<p>Because the equivariance constraints allow any choice of radial profile, we use a
+<a class="reference internal" href="#e2cnn.diffops.LaplaceProfile" title="e2cnn.diffops.LaplaceProfile"><code class="xref py py-class docutils literal notranslate"><span class="pre">LaplaceProfile</span></code></a>, which is the most general choice.
+<code class="docutils literal notranslate"><span class="pre">max_power</span></code> specifies the maximum power of the Laplacian. The maximum order of differential
+operators in the basis will be two times <code class="docutils literal notranslate"><span class="pre">max_power</span></code> plus the maximum order of the angular basis.</p>
+<p>The analytical angular solutions of PDO constraints belong to an infinite dimensional space and so can be
+expressed in terms of infinitely many basis elements, each associated with one unique order. Because the kernels
+are then discretized on a finite number of points (e.g. the cells of a grid), only low-order solutions needs to be
+considered. This enables us to build a finite dimensional basis containing only a finite subset of all analytical
+solutions. <code class="docutils literal notranslate"><span class="pre">max_frequency</span></code> is an integer controlling the highest angular order sampled in the basis
+(named this way because of the analogy to frequencies for kernels). The maximum order of the complete
+PDO will be <code class="docutils literal notranslate"><span class="pre">max_frequency</span> <span class="pre">+</span> <span class="pre">2</span> <span class="pre">*</span> <span class="pre">max_power</span></code>.</p>
+<p>Orders/frequencies also appear in a basis with a period of <span class="math notranslate nohighlight">\(N\)</span>, i.e. if the basis contains an element with frequency
+<span class="math notranslate nohighlight">\(k\)</span>, then it also contains an element with order <span class="math notranslate nohighlight">\(k + N\)</span>.
+In the analytical solutions shown in Table 11 <a class="reference external" href="https://arxiv.org/abs/1911.08251">here</a>, each solution has a
+parameter <span class="math notranslate nohighlight">\(t\)</span> or <span class="math notranslate nohighlight">\(\hat{t}\)</span>.
+<code class="docutils literal notranslate"><span class="pre">max_offset</span></code> defines the maximum absolute value of these two numbers.</p>
+<p>Either <code class="docutils literal notranslate"><span class="pre">max_frequency</span></code> or <code class="docutils literal notranslate"><span class="pre">max_offset</span></code> must be specified.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>in_repr</strong> (<a class="reference internal" href="e2cnn.group.html#e2cnn.group.Representation" title="e2cnn.group.Representation"><em>Representation</em></a>) – the representation specifying the transformation of the input feature field</p></li>
+<li><p><strong>out_repr</strong> (<a class="reference internal" href="e2cnn.group.html#e2cnn.group.Representation" title="e2cnn.group.Representation"><em>Representation</em></a>) – the representation specifying the transformation of the output feature field</p></li>
+<li><p><strong>max_power</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – maximum power of the Laplacian for the radial profile</p></li>
+<li><p><strong>max_frequency</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – maximum frequency of the basis</p></li>
+<li><p><strong>max_offset</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – maximum offset in the frequencies of the basis</p></li>
+<li><p><strong>discretization</strong> (<a class="reference internal" href="#e2cnn.diffops.DiscretizationArgs" title="e2cnn.diffops.DiscretizationArgs"><em>DiscretizationArgs</em></a><em>, </em><em>optional</em>) – additional parameters specifying parameters for
+the discretization procedure. See <a class="reference internal" href="#e2cnn.diffops.DiscretizationArgs" title="e2cnn.diffops.DiscretizationArgs"><code class="xref py py-class docutils literal notranslate"><span class="pre">DiscretizationArgs</span></code></a>.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="section" id="reflections">
+<h3><a class="toc-backref" href="#contents">Reflections</a><a class="headerlink" href="#reflections" title="Permalink to this headline">¶</a></h3>
+<dl class="py function">
+<dt id="e2cnn.diffops.diffops_Flip_act_R2">
+<code class="sig-name descname"><span class="pre">diffops_Flip_act_R2</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">in_repr</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">out_repr</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_power</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">axis</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.5707963267948966</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_frequency</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_offset</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">discretization</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">DiscretizationArgs(method='fd',</span> <span class="pre">smoothing=None,</span> <span class="pre">angle_offset=None,</span> <span class="pre">phi='ga')</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/e2cnn/diffops/r2.html#diffops_Flip_act_R2"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#e2cnn.diffops.diffops_Flip_act_R2" title="Permalink to this definition">¶</a></dt>
+<dd><p>Builds a basis for PDOs equivariant to reflections.
+<code class="docutils literal notranslate"><span class="pre">in_repr</span></code> and <code class="docutils literal notranslate"><span class="pre">out_repr</span></code> need to be <a class="reference internal" href="e2cnn.group.html#e2cnn.group.Representation" title="e2cnn.group.Representation"><code class="xref py py-class docutils literal notranslate"><span class="pre">Representation</span></code></a> s of <a class="reference internal" href="e2cnn.group.html#e2cnn.group.CyclicGroup" title="e2cnn.group.CyclicGroup"><code class="xref py py-class docutils literal notranslate"><span class="pre">CyclicGroup</span></code></a>
+with <code class="docutils literal notranslate"><span class="pre">N=2</span></code>.</p>
+<p>Because the equivariance constraints allow any choice of radial profile, we use a
+<a class="reference internal" href="#e2cnn.diffops.LaplaceProfile" title="e2cnn.diffops.LaplaceProfile"><code class="xref py py-class docutils literal notranslate"><span class="pre">LaplaceProfile</span></code></a>, which is the most general choice.
+<code class="docutils literal notranslate"><span class="pre">max_power</span></code> specifies the maximum power of the Laplacian. The maximum order of differential
+operators in the basis will be two times <code class="docutils literal notranslate"><span class="pre">max_power</span></code> plus the maximum order of the angular basis.</p>
+<p>The parameter <code class="docutils literal notranslate"><span class="pre">axis</span></code> is the angle in radians (with respect to the horizontal axis, rotating counter-clockwise)
+which defines the reflection axis.</p>
+<p>The analytical angular solutions of PDO constraints belong to an infinite dimensional space and so can be
+expressed in terms of infinitely many basis elements. Only a finite subset can however be implemented.
+<code class="docutils literal notranslate"><span class="pre">max_frequency</span></code> and <code class="docutils literal notranslate"><span class="pre">max_offset</span></code> defines two ways to do so and therefore it is necessary to specify one of them.
+See <a class="reference internal" href="#e2cnn.diffops.diffops_CN_act_R2" title="e2cnn.diffops.diffops_CN_act_R2"><code class="xref py py-func docutils literal notranslate"><span class="pre">diffops_CN_act_R2()</span></code></a> for more details.</p>
+<div class="admonition-todo admonition" id="id3">
+<p class="admonition-title">Todo</p>
+<p>remove <code class="docutils literal notranslate"><span class="pre">max_offset</span></code> as it is equivalent to <code class="docutils literal notranslate"><span class="pre">max_frequency</span></code> here</p>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>in_repr</strong> (<a class="reference internal" href="e2cnn.group.html#e2cnn.group.Representation" title="e2cnn.group.Representation"><em>Representation</em></a>) – the representation specifying the transformation of the input feature field</p></li>
+<li><p><strong>out_repr</strong> (<a class="reference internal" href="e2cnn.group.html#e2cnn.group.Representation" title="e2cnn.group.Representation"><em>Representation</em></a>) – the representation specifying the transformation of the output feature field</p></li>
+<li><p><strong>max_power</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – the maximum power of Laplacians to use</p></li>
+<li><p><strong>axis</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)"><em>float</em></a>) – angle defining the reflection axis</p></li>
+<li><p><strong>max_frequency</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – maximum frequency of the basis</p></li>
+<li><p><strong>max_offset</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – maximum offset in the frequencies of the basis</p></li>
+<li><p><strong>discretization</strong> (<a class="reference internal" href="#e2cnn.diffops.DiscretizationArgs" title="e2cnn.diffops.DiscretizationArgs"><em>DiscretizationArgs</em></a><em>, </em><em>optional</em>) – additional parameters specifying parameters for
+the discretization procedure. See <a class="reference internal" href="#e2cnn.diffops.DiscretizationArgs" title="e2cnn.diffops.DiscretizationArgs"><code class="xref py py-class docutils literal notranslate"><span class="pre">DiscretizationArgs</span></code></a>.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="section" id="trivial-action">
+<h3><a class="toc-backref" href="#contents">Trivial Action</a><a class="headerlink" href="#trivial-action" title="Permalink to this headline">¶</a></h3>
+<dl class="py function">
+<dt id="e2cnn.diffops.diffops_Trivial_act_R2">
+<code class="sig-name descname"><span class="pre">diffops_Trivial_act_R2</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">in_repr</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">out_repr</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_power</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_frequency</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_offset</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">discretization</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">DiscretizationArgs(method='fd',</span> <span class="pre">smoothing=None,</span> <span class="pre">angle_offset=None,</span> <span class="pre">phi='ga')</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/e2cnn/diffops/r2.html#diffops_Trivial_act_R2"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#e2cnn.diffops.diffops_Trivial_act_R2" title="Permalink to this definition">¶</a></dt>
+<dd><p>Builds a basis for unconstrained PDOs.</p>
+<p>This is equivalent to use <a class="reference internal" href="#e2cnn.diffops.diffops_CN_act_R2" title="e2cnn.diffops.diffops_CN_act_R2"><code class="xref py py-func docutils literal notranslate"><span class="pre">diffops_CN_act_R2()</span></code></a> with an instance of
+<a class="reference internal" href="e2cnn.group.html#e2cnn.group.CyclicGroup" title="e2cnn.group.CyclicGroup"><code class="xref py py-class docutils literal notranslate"><span class="pre">CyclicGroup</span></code></a> with <code class="docutils literal notranslate"><span class="pre">N=1</span></code> (the trivial group <span class="math notranslate nohighlight">\(C_1\)</span>).</p>
+<p><code class="docutils literal notranslate"><span class="pre">in_repr</span></code> and <code class="docutils literal notranslate"><span class="pre">out_repr</span></code> need to be associated with an instance of <a class="reference internal" href="e2cnn.group.html#e2cnn.group.CyclicGroup" title="e2cnn.group.CyclicGroup"><code class="xref py py-class docutils literal notranslate"><span class="pre">CyclicGroup</span></code></a> with
+<code class="docutils literal notranslate"><span class="pre">N=1</span></code>.</p>
+<p>Because the equivariance constraints allow any choice of radial profile, we use a
+<a class="reference internal" href="#e2cnn.diffops.LaplaceProfile" title="e2cnn.diffops.LaplaceProfile"><code class="xref py py-class docutils literal notranslate"><span class="pre">LaplaceProfile</span></code></a>, which is the most general choice.
+<code class="docutils literal notranslate"><span class="pre">max_power</span></code> specifies the maximum power of the Laplacian. The maximum order of differential
+operators in the basis will be two times <code class="docutils literal notranslate"><span class="pre">max_power</span></code> plus the maximum order of the angular basis.</p>
+<p>The analytical angular solutions of PDO constraints belong to an infinite dimensional space and so can be
+expressed in terms of infinitely many basis elements. Only a finite subset can however be implemented.
+<code class="docutils literal notranslate"><span class="pre">max_frequency</span></code> and <code class="docutils literal notranslate"><span class="pre">max_offset</span></code> defines two ways to do so and therefore it is necessary to specify one of them.
+See <a class="reference internal" href="#e2cnn.diffops.diffops_CN_act_R2" title="e2cnn.diffops.diffops_CN_act_R2"><code class="xref py py-func docutils literal notranslate"><span class="pre">diffops_CN_act_R2()</span></code></a> for more details.</p>
+<div class="admonition-todo admonition" id="id4">
+<p class="admonition-title">Todo</p>
+<p>remove <code class="docutils literal notranslate"><span class="pre">max_offset</span></code> as it is equivalent to <code class="docutils literal notranslate"><span class="pre">max_frequency</span></code> here</p>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>in_repr</strong> (<a class="reference internal" href="e2cnn.group.html#e2cnn.group.Representation" title="e2cnn.group.Representation"><em>Representation</em></a>) – the representation specifying the transformation of the input feature field</p></li>
+<li><p><strong>out_repr</strong> (<a class="reference internal" href="e2cnn.group.html#e2cnn.group.Representation" title="e2cnn.group.Representation"><em>Representation</em></a>) – the representation specifying the transformation of the output feature field</p></li>
+<li><p><strong>max_power</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – maximum power of the Laplacian for the radial profile</p></li>
+<li><p><strong>axis</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)"><em>float</em></a>) – angle defining the reflection axis</p></li>
+<li><p><strong>max_frequency</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – maximum frequency of the basis</p></li>
+<li><p><strong>max_offset</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – maximum offset in the frequencies of the basis</p></li>
+<li><p><strong>discretization</strong> (<a class="reference internal" href="#e2cnn.diffops.DiscretizationArgs" title="e2cnn.diffops.DiscretizationArgs"><em>DiscretizationArgs</em></a><em>, </em><em>optional</em>) – additional parameters specifying parameters for
+the discretization procedure. See <a class="reference internal" href="#e2cnn.diffops.DiscretizationArgs" title="e2cnn.diffops.DiscretizationArgs"><code class="xref py py-class docutils literal notranslate"><span class="pre">DiscretizationArgs</span></code></a>.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+</div>
+<div class="section" id="utility-functions">
+<h2><a class="toc-backref" href="#contents">Utility functions</a><a class="headerlink" href="#utility-functions" title="Permalink to this headline">¶</a></h2>
+<dl class="py function">
+<dt id="e2cnn.diffops.store_cache">
+<code class="sig-name descname"><span class="pre">store_cache</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'./.e2cnn_cache/diffops.pickle'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/e2cnn/diffops/utils.html#store_cache"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#e2cnn.diffops.store_cache" title="Permalink to this definition">¶</a></dt>
+<dd><p>Cache PDO discretizations on disk.
+The cache can later be loaded using <a class="reference internal" href="#e2cnn.diffops.load_cache" title="e2cnn.diffops.load_cache"><code class="xref py py-func docutils literal notranslate"><span class="pre">load_cache()</span></code></a>.
+This will speed up network instantiation as long as the architecture does not
+change too much.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>path</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a><em>, </em><em>optional</em>) – the path to the file with discretizations.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="e2cnn.diffops.load_cache">
+<code class="sig-name descname"><span class="pre">load_cache</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'./.e2cnn_cache/diffops.pickle'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/e2cnn/diffops/utils.html#load_cache"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#e2cnn.diffops.load_cache" title="Permalink to this definition">¶</a></dt>
+<dd><p>Load cached PDO discretizations from disk.
+The cache should have been previously created using <a class="reference internal" href="#e2cnn.diffops.store_cache" title="e2cnn.diffops.store_cache"><code class="xref py py-func docutils literal notranslate"><span class="pre">store_cache()</span></code></a>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>path</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a><em>, </em><em>optional</em>) – the path to the file with discretizations.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="e2cnn.gspaces.html" class="btn btn-neutral float-right" title="e2cnn.gspaces" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="e2cnn.kernels.html" class="btn btn-neutral float-left" title="e2cnn.kernels" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2019, Qualcomm Innovation Center, Inc. Developed by Gabriele Cesa, Maurice Weiler.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

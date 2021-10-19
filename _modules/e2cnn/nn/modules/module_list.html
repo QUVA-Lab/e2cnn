@@ -102,6 +102,13 @@
 <li class="toctree-l2"><a class="reference internal" href="../../../../api/e2cnn.kernels.html#bases-for-group-actions-on-the-plane">Bases for Group Actions on the Plane</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../api/e2cnn.diffops.html">e2cnn.diffops</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../api/e2cnn.diffops.html#abstract-class">Abstract Class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../api/e2cnn.diffops.html#pdo-bases">PDO Bases</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../api/e2cnn.diffops.html#bases-for-group-actions-on-the-plane">Bases for Group Actions on the Plane</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../api/e2cnn.diffops.html#utility-functions">Utility functions</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../api/e2cnn.gspaces.html">e2cnn.gspaces</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../../../../api/e2cnn.gspaces.html#abstract-group-space">Abstract Group Space</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../api/e2cnn.gspaces.html#group-actions-on-the-plane">Group Actions on the Plane</a></li>
@@ -112,7 +119,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../../../../api/e2cnn.nn.html#geometric-tensor">Geometric Tensor</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../api/e2cnn.nn.html#equivariant-module">Equivariant Module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../api/e2cnn.nn.html#utils">Utils</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../../api/e2cnn.nn.html#planar-convolution">Planar Convolution</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../api/e2cnn.nn.html#planar-convolution-and-differential-operators">Planar Convolution and Differential Operators</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../api/e2cnn.nn.html#non-linearities">Non Linearities</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../api/e2cnn.nn.html#invariant-maps">Invariant Maps</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../api/e2cnn.nn.html#pooling">Pooling</a></li>
@@ -191,9 +198,13 @@
 <span></span>
 <span class="kn">from</span> <span class="nn">.equivariant_module</span> <span class="kn">import</span> <span class="n">EquivariantModule</span>
 
-<span class="kn">from</span> <span class="nn">torch._six</span> <span class="kn">import</span> <span class="n">container_abcs</span>
-
 <span class="kn">import</span> <span class="nn">torch</span>
+<span class="n">TORCH_MAJOR</span><span class="p">,</span> <span class="n">TORCH_MINOR</span> <span class="o">=</span> <span class="nb">map</span><span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="n">torch</span><span class="o">.</span><span class="n">__version__</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;.&#39;</span><span class="p">)[:</span><span class="mi">2</span><span class="p">])</span>
+
+<span class="k">if</span> <span class="n">TORCH_MAJOR</span> <span class="o">==</span> <span class="mi">1</span> <span class="ow">and</span> <span class="n">TORCH_MINOR</span> <span class="o">&lt;=</span> <span class="mi">8</span><span class="p">:</span>
+    <span class="kn">from</span> <span class="nn">torch._six</span> <span class="kn">import</span> <span class="n">container_abcs</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="kn">import</span> <span class="nn">collections.abc</span> <span class="k">as</span> <span class="nn">container_abcs</span>
 
 <span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">List</span><span class="p">,</span> <span class="n">Iterable</span>
 

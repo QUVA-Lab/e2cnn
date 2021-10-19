@@ -1,0 +1,481 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>e2cnn.nn.modules.r2_conv.basisexpansion_singleblock &mdash; e2cnn 0.1.9 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../../_static/custom.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../../../" src="../../../../../_static/documentation_options.js"></script>
+        <script src="../../../../../_static/jquery.js"></script>
+        <script src="../../../../../_static/underscore.js"></script>
+        <script src="../../../../../_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="../../../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../../../index.html" class="icon icon-home"> e2cnn
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.1.9
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Package Reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../api/e2cnn.group.html">e2cnn.group</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../api/e2cnn.group.html#groups">Groups</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../api/e2cnn.group.html#representations">Representations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../api/e2cnn.group.html#utility-functions">Utility Functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../api/e2cnn.group.html#subpackages">Subpackages</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../api/e2cnn.kernels.html">e2cnn.kernels</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../api/e2cnn.kernels.html#abstract-classes">Abstract Classes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../api/e2cnn.kernels.html#kernel-bases">Kernel Bases</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../api/e2cnn.kernels.html#bases-for-group-actions-on-the-plane">Bases for Group Actions on the Plane</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../api/e2cnn.diffops.html">e2cnn.diffops</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../api/e2cnn.diffops.html#abstract-class">Abstract Class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../api/e2cnn.diffops.html#pdo-bases">PDO Bases</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../api/e2cnn.diffops.html#bases-for-group-actions-on-the-plane">Bases for Group Actions on the Plane</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../api/e2cnn.diffops.html#utility-functions">Utility functions</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../api/e2cnn.gspaces.html">e2cnn.gspaces</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../api/e2cnn.gspaces.html#abstract-group-space">Abstract Group Space</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../api/e2cnn.gspaces.html#group-actions-on-the-plane">Group Actions on the Plane</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../api/e2cnn.nn.html">e2cnn.nn</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../api/e2cnn.nn.html#field-type">Field Type</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../api/e2cnn.nn.html#geometric-tensor">Geometric Tensor</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../api/e2cnn.nn.html#equivariant-module">Equivariant Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../api/e2cnn.nn.html#utils">Utils</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../api/e2cnn.nn.html#planar-convolution-and-differential-operators">Planar Convolution and Differential Operators</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../api/e2cnn.nn.html#non-linearities">Non Linearities</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../api/e2cnn.nn.html#invariant-maps">Invariant Maps</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../api/e2cnn.nn.html#pooling">Pooling</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../api/e2cnn.nn.html#normalization">Normalization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../api/e2cnn.nn.html#dropout">Dropout</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../api/e2cnn.nn.html#other-modules">Other Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../api/e2cnn.nn.html#module-e2cnn.nn.init">Weight Initialization</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../../index.html">e2cnn</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../../../../index.html">Module code</a> &raquo;</li>
+        
+      <li>e2cnn.nn.modules.r2_conv.basisexpansion_singleblock</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for e2cnn.nn.modules.r2_conv.basisexpansion_singleblock</h1><div class="highlight"><pre>
+<span></span>
+<span class="kn">from</span> <span class="nn">e2cnn.kernels</span> <span class="kn">import</span> <span class="n">Basis</span><span class="p">,</span> <span class="n">EmptyBasisException</span>
+<span class="kn">from</span> <span class="nn">.basisexpansion</span> <span class="kn">import</span> <span class="n">BasisExpansion</span>
+
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Callable</span><span class="p">,</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Iterable</span><span class="p">,</span> <span class="n">Union</span>
+
+<span class="kn">import</span> <span class="nn">torch</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;SingleBlockBasisExpansion&quot;</span><span class="p">,</span> <span class="s2">&quot;block_basisexpansion&quot;</span><span class="p">]</span>
+
+
+<div class="viewcode-block" id="SingleBlockBasisExpansion"><a class="viewcode-back" href="../../../../../api/e2cnn.nn.html#e2cnn.nn.modules.r2_conv.SingleBlockBasisExpansion">[docs]</a><span class="k">class</span> <span class="nc">SingleBlockBasisExpansion</span><span class="p">(</span><span class="n">BasisExpansion</span><span class="p">):</span>
+    
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
+                 <span class="n">basis</span><span class="p">:</span> <span class="n">Basis</span><span class="p">,</span>
+                 <span class="n">points</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span>
+                 <span class="n">basis_filter</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[[</span><span class="nb">dict</span><span class="p">],</span> <span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+                 <span class="p">):</span>
+        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        </span>
+<span class="sd">        Basis expansion method for a single contiguous block, i.e. for kernels/PDOs whose input type and output type contain</span>
+<span class="sd">        only fields of one type.</span>
+<span class="sd">        </span>
+<span class="sd">        This class should be instantiated through the factory method</span>
+<span class="sd">        :func:`~e2cnn.nn.modules.r2_conv.block_basisexpansion` to enable caching.</span>
+<span class="sd">        </span>
+<span class="sd">        Args:</span>
+<span class="sd">            basis (Basis): analytical basis to sample</span>
+<span class="sd">            points (ndarray): points where the analytical basis should be sampled</span>
+<span class="sd">            basis_filter (callable, optional): filter for the basis elements. Should take a dictionary containing an</span>
+<span class="sd">                                               element&#39;s attributes and return whether to keep it or not.</span>
+<span class="sd">            </span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="nb">super</span><span class="p">(</span><span class="n">SingleBlockBasisExpansion</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+        
+        <span class="bp">self</span><span class="o">.</span><span class="n">basis</span> <span class="o">=</span> <span class="n">basis</span>
+        
+        <span class="c1"># compute the mask of the sampled basis containing only the elements allowed by the filter</span>
+        <span class="n">mask</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">basis</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">bool</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">b</span><span class="p">,</span> <span class="n">attr</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">basis</span><span class="p">):</span>
+            <span class="n">mask</span><span class="p">[</span><span class="n">b</span><span class="p">]</span> <span class="o">=</span> <span class="n">basis_filter</span><span class="p">(</span><span class="n">attr</span><span class="p">)</span>
+            
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">any</span><span class="p">(</span><span class="n">mask</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="n">EmptyBasisException</span>
+
+        <span class="n">attributes</span> <span class="o">=</span> <span class="p">[</span><span class="n">attr</span> <span class="k">for</span> <span class="n">b</span><span class="p">,</span> <span class="n">attr</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">basis</span><span class="p">)</span> <span class="k">if</span> <span class="n">mask</span><span class="p">[</span><span class="n">b</span><span class="p">]]</span>
+        
+        <span class="c1"># we need to know the real output size of the basis elements (i.e. without the change of basis and the padding)</span>
+        <span class="c1"># to perform the normalization</span>
+        <span class="n">sizes</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">attr</span> <span class="ow">in</span> <span class="n">attributes</span><span class="p">:</span>
+            <span class="n">sizes</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">attr</span><span class="p">[</span><span class="s2">&quot;shape&quot;</span><span class="p">][</span><span class="mi">0</span><span class="p">])</span>
+        
+        <span class="c1"># sample the basis on the grid</span>
+        <span class="c1"># and filter out the basis elements discarded by the filter</span>
+        <span class="n">sampled_basis</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">(</span><span class="n">basis</span><span class="o">.</span><span class="n">sample_masked</span><span class="p">(</span><span class="n">points</span><span class="p">,</span> <span class="n">mask</span><span class="o">=</span><span class="n">mask</span><span class="p">))</span><span class="o">.</span><span class="n">permute</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+
+        <span class="c1"># DEPRECATED FROM PyTorch 1.2</span>
+        <span class="c1"># PyTorch 1.2 suggests using BoolTensor instead of ByteTensor for boolean indexing</span>
+        <span class="c1"># but BoolTensor have been introduced only in PyTorch 1.2</span>
+        <span class="c1"># Hence, for the moment we use ByteTensor</span>
+        <span class="n">mask</span> <span class="o">=</span> <span class="n">mask</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">uint8</span><span class="p">)</span>
+        <span class="n">mask</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">(</span><span class="n">mask</span><span class="p">)</span>
+
+        <span class="c1"># normalize the basis</span>
+        <span class="n">sizes</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">(</span><span class="n">sizes</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">sampled_basis</span><span class="o">.</span><span class="n">dtype</span><span class="p">)</span>
+        <span class="k">assert</span> <span class="n">sizes</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="n">mask</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">int</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">(),</span> <span class="n">sizes</span><span class="o">.</span><span class="n">shape</span>
+        <span class="k">assert</span> <span class="n">sizes</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="n">sampled_basis</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="p">(</span><span class="n">sizes</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">sampled_basis</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+        <span class="n">sampled_basis</span> <span class="o">=</span> <span class="n">normalize_basis</span><span class="p">(</span><span class="n">sampled_basis</span><span class="p">,</span> <span class="n">sizes</span><span class="p">)</span>
+
+        <span class="c1"># discard the basis which are close to zero everywhere</span>
+        <span class="n">norms</span> <span class="o">=</span> <span class="p">(</span><span class="n">sampled_basis</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">sampled_basis</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mf">1e-2</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">any</span><span class="p">(</span><span class="n">norms</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="n">EmptyBasisException</span>
+        <span class="n">sampled_basis</span> <span class="o">=</span> <span class="n">sampled_basis</span><span class="p">[</span><span class="n">norms</span><span class="p">,</span> <span class="o">...</span><span class="p">]</span>
+        
+        <span class="n">full_mask</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">mask</span><span class="p">)</span>
+        <span class="n">full_mask</span><span class="p">[</span><span class="n">mask</span><span class="p">]</span> <span class="o">=</span> <span class="n">norms</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">uint8</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_mask</span> <span class="o">=</span> <span class="n">full_mask</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">attributes</span> <span class="o">=</span> <span class="p">[</span><span class="n">attr</span> <span class="k">for</span> <span class="n">b</span><span class="p">,</span> <span class="n">attr</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">attributes</span><span class="p">)</span> <span class="k">if</span> <span class="n">norms</span><span class="p">[</span><span class="n">b</span><span class="p">]]</span>
+        
+        <span class="c1"># register the bases tensors as parameters of this module</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">register_buffer</span><span class="p">(</span><span class="s1">&#39;sampled_basis&#39;</span><span class="p">,</span> <span class="n">sampled_basis</span><span class="p">)</span>
+            
+        <span class="bp">self</span><span class="o">.</span><span class="n">_idx_to_ids</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_ids_to_idx</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">attr</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">attributes</span><span class="p">):</span>
+            <span class="k">if</span> <span class="s2">&quot;radius&quot;</span> <span class="ow">in</span> <span class="n">attr</span><span class="p">:</span>
+                <span class="n">radial_info</span> <span class="o">=</span> <span class="n">attr</span><span class="p">[</span><span class="s2">&quot;radius&quot;</span><span class="p">]</span>
+            <span class="k">elif</span> <span class="s2">&quot;order&quot;</span> <span class="ow">in</span> <span class="n">attr</span><span class="p">:</span>
+                <span class="n">radial_info</span> <span class="o">=</span> <span class="n">attr</span><span class="p">[</span><span class="s2">&quot;order&quot;</span><span class="p">]</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;No radial information found.&quot;</span><span class="p">)</span>
+            <span class="nb">id</span> <span class="o">=</span> <span class="s1">&#39;(</span><span class="si">{}</span><span class="s1">-</span><span class="si">{}</span><span class="s1">,</span><span class="si">{}</span><span class="s1">-</span><span class="si">{}</span><span class="s1">)_(</span><span class="si">{}</span><span class="s1">/</span><span class="si">{}</span><span class="s1">)_</span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                    <span class="n">attr</span><span class="p">[</span><span class="s2">&quot;in_irrep&quot;</span><span class="p">],</span> <span class="n">attr</span><span class="p">[</span><span class="s2">&quot;in_irrep_idx&quot;</span><span class="p">],</span>  <span class="c1"># name and index within the field of the input irrep</span>
+                    <span class="n">attr</span><span class="p">[</span><span class="s2">&quot;out_irrep&quot;</span><span class="p">],</span> <span class="n">attr</span><span class="p">[</span><span class="s2">&quot;out_irrep_idx&quot;</span><span class="p">],</span>  <span class="c1"># name and index within the field of the output irrep</span>
+                    <span class="n">radial_info</span><span class="p">,</span>
+                    <span class="n">attr</span><span class="p">[</span><span class="s2">&quot;frequency&quot;</span><span class="p">],</span>  <span class="c1"># frequency of the basis element</span>
+                    <span class="c1"># int(np.abs(attr[&quot;frequency&quot;])),  # absolute frequency of the basis element</span>
+                    <span class="n">attr</span><span class="p">[</span><span class="s2">&quot;inner_idx&quot;</span><span class="p">],</span>
+                    <span class="c1"># index of the basis element within the basis of radially independent kernels between the irreps</span>
+                <span class="p">)</span>
+            <span class="n">attr</span><span class="p">[</span><span class="s2">&quot;id&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">id</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_ids_to_idx</span><span class="p">[</span><span class="nb">id</span><span class="p">]</span> <span class="o">=</span> <span class="n">idx</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_idx_to_ids</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">id</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">weights</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">:</span>
+    
+        <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">weights</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span> <span class="ow">and</span> <span class="n">weights</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">dimension</span><span class="p">()</span>
+    
+        <span class="c1"># expand the current subset of basis vectors and set the result in the appropriate place in the filter</span>
+        <span class="k">return</span> <span class="n">torch</span><span class="o">.</span><span class="n">einsum</span><span class="p">(</span><span class="s1">&#39;boi...,kb-&gt;koi...&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">sampled_basis</span><span class="p">,</span> <span class="n">weights</span><span class="p">)</span> <span class="c1">#.transpose(1, 2).contiguous()</span>
+
+    <span class="k">def</span> <span class="nf">get_basis_names</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_idx_to_ids</span>
+
+    <span class="k">def</span> <span class="nf">get_element_info</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">int</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">:</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+            <span class="n">name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_ids_to_idx</span><span class="p">[</span><span class="n">name</span><span class="p">]</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">attributes</span><span class="p">[</span><span class="n">name</span><span class="p">]</span>
+
+    <span class="k">def</span> <span class="nf">get_basis_info</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Iterable</span><span class="p">:</span>
+        <span class="k">return</span> <span class="nb">iter</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">attributes</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">dimension</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">sampled_basis</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+    <span class="k">def</span> <span class="fm">__eq__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="n">SingleBlockBasisExpansion</span><span class="p">):</span>
+            <span class="k">return</span> <span class="p">(</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">basis</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">basis</span> <span class="ow">and</span>
+                    <span class="n">torch</span><span class="o">.</span><span class="n">allclose</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">sampled_basis</span><span class="p">,</span> <span class="n">other</span><span class="o">.</span><span class="n">sampled_basis</span><span class="p">)</span> <span class="ow">and</span>
+                    <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_mask</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">_mask</span><span class="p">)</span><span class="o">.</span><span class="n">all</span><span class="p">()</span>
+            <span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">False</span>
+
+    <span class="k">def</span> <span class="fm">__hash__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="mi">10000</span> <span class="o">*</span> <span class="nb">hash</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">basis</span><span class="p">)</span> <span class="o">+</span> <span class="mi">100</span> <span class="o">*</span> <span class="nb">hash</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">sampled_basis</span><span class="p">)</span> <span class="o">+</span> <span class="nb">hash</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_mask</span><span class="p">)</span></div>
+
+
+<span class="c1"># dictionary storing references to already built basis tensors</span>
+<span class="c1"># when a new filter tensor is built, it is also stored here</span>
+<span class="c1"># when the same basis is built again (eg. in another layer), the already existing filter tensor is retrieved</span>
+<span class="n">_stored_filters</span> <span class="o">=</span> <span class="p">{}</span>
+
+
+<div class="viewcode-block" id="block_basisexpansion"><a class="viewcode-back" href="../../../../../api/e2cnn.nn.html#e2cnn.nn.modules.r2_conv.block_basisexpansion">[docs]</a><span class="k">def</span> <span class="nf">block_basisexpansion</span><span class="p">(</span><span class="n">basis</span><span class="p">:</span> <span class="n">Basis</span><span class="p">,</span>
+                         <span class="n">points</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span>
+                         <span class="n">basis_filter</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[[</span><span class="nb">dict</span><span class="p">],</span> <span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+                         <span class="n">recompute</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
+                         <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">SingleBlockBasisExpansion</span><span class="p">:</span>
+    <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    </span>
+<span class="sd">    Return an instance of :class:`~e2cnn.nn.modules.r2_conv.SingleBlockBasisExpansion`.</span>
+<span class="sd">    </span>
+<span class="sd">    This function support caching through the argument ``recompute``.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        basis (Basis): basis defining the space of kernels</span>
+<span class="sd">        points (~np.ndarray): points where the analytical basis should be sampled</span>
+<span class="sd">        basis_filter (callable, optional): filter for the basis elements. Should take a dictionary containing an</span>
+<span class="sd">                                           element&#39;s attributes and return whether to keep it or not.</span>
+<span class="sd">        recompute (bool, optional): whether to recompute new bases (``True``) or reuse, if possible,</span>
+<span class="sd">                                    already built tensors (``False``, default).</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">recompute</span><span class="p">:</span>
+        <span class="c1"># compute the mask of the sampled basis containing only the elements allowed by the filter</span>
+        <span class="n">mask</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">basis</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">bool</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">b</span><span class="p">,</span> <span class="n">attr</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">basis</span><span class="p">):</span>
+            <span class="n">mask</span><span class="p">[</span><span class="n">b</span><span class="p">]</span> <span class="o">=</span> <span class="n">basis_filter</span><span class="p">(</span><span class="n">attr</span><span class="p">)</span>
+        
+        <span class="n">key</span> <span class="o">=</span> <span class="p">(</span><span class="n">basis</span><span class="p">,</span> <span class="n">mask</span><span class="o">.</span><span class="n">tobytes</span><span class="p">(),</span> <span class="n">points</span><span class="o">.</span><span class="n">tobytes</span><span class="p">())</span>
+        <span class="k">if</span> <span class="n">key</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">_stored_filters</span><span class="p">:</span>
+            <span class="n">_stored_filters</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">SingleBlockBasisExpansion</span><span class="p">(</span><span class="n">basis</span><span class="p">,</span> <span class="n">points</span><span class="p">,</span> <span class="n">basis_filter</span><span class="p">)</span>
+        
+        <span class="k">return</span> <span class="n">_stored_filters</span><span class="p">[</span><span class="n">key</span><span class="p">]</span>
+    
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">SingleBlockBasisExpansion</span><span class="p">(</span><span class="n">basis</span><span class="p">,</span> <span class="n">points</span><span class="p">,</span> <span class="n">basis_filter</span><span class="p">)</span></div>
+
+
+<span class="k">def</span> <span class="nf">normalize_basis</span><span class="p">(</span><span class="n">basis</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">,</span> <span class="n">sizes</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">:</span>
+    <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">    Normalize the filters in the input tensor.</span>
+<span class="sd">    The tensor of shape :math:`(B, O, I, ...)` is interpreted as a basis containing ``B`` filters/elements, each with</span>
+<span class="sd">    ``I`` inputs and ``O`` outputs. The spatial dimensions ``...`` can be anything.</span>
+
+<span class="sd">    .. notice ::</span>
+<span class="sd">        Notice that the method changes the input tensor inplace</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        basis (torch.Tensor): tensor containing the basis to normalize</span>
+<span class="sd">        sizes (torch.Tensor): original input size of the basis elements, without the padding and the change of basis</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        the normalized basis (the operation is done inplace, so this is ust a reference to the input tensor)</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    
+    <span class="n">b</span> <span class="o">=</span> <span class="n">basis</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">basis</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">2</span>
+    <span class="k">assert</span> <span class="n">sizes</span><span class="o">.</span><span class="n">shape</span> <span class="o">==</span> <span class="p">(</span><span class="n">b</span><span class="p">,)</span>
+    
+    <span class="c1"># compute the norm of each basis vector</span>
+    <span class="n">norms</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">einsum</span><span class="p">(</span><span class="s1">&#39;bop...,bpq...-&gt;boq...&#39;</span><span class="p">,</span> <span class="p">(</span><span class="n">basis</span><span class="p">,</span> <span class="n">basis</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">)))</span>
+    
+    <span class="c1"># Removing the change of basis, these matrices should be multiples of the identity</span>
+    <span class="c1"># where the scalar on the diagonal is the variance</span>
+    <span class="c1"># in order to find this variance, we can compute the trace (which is invariant to the change of basis)</span>
+    <span class="c1"># and divide by the number of elements in the diagonal ignoring the padding.</span>
+    <span class="c1"># Therefore, we need to know the original size of each basis element.</span>
+    <span class="n">norms</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">einsum</span><span class="p">(</span><span class="s2">&quot;bii...-&gt;b&quot;</span><span class="p">,</span> <span class="n">norms</span><span class="p">)</span>
+    <span class="c1"># norms = norms.reshape(b, -1).sum(1)</span>
+    <span class="n">norms</span> <span class="o">/=</span> <span class="n">sizes</span>
+
+    <span class="n">norms</span><span class="p">[</span><span class="n">norms</span> <span class="o">&lt;</span> <span class="mf">1e-15</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+    
+    <span class="n">norms</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">norms</span><span class="p">)</span>
+    
+    <span class="n">norms</span><span class="p">[</span><span class="n">norms</span> <span class="o">&lt;</span> <span class="mf">1e-6</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="n">norms</span><span class="p">[</span><span class="n">norms</span> <span class="o">!=</span> <span class="n">norms</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+    
+    <span class="n">norms</span> <span class="o">=</span> <span class="n">norms</span><span class="o">.</span><span class="n">view</span><span class="p">(</span><span class="n">b</span><span class="p">,</span> <span class="o">*</span><span class="p">([</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">basis</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)))</span>
+    
+    <span class="c1"># divide by the norm</span>
+    <span class="n">basis</span> <span class="o">/=</span> <span class="n">norms</span>
+
+    <span class="k">return</span> <span class="n">basis</span>
+
+
+
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2019, Qualcomm Innovation Center, Inc. Developed by Gabriele Cesa, Maurice Weiler.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

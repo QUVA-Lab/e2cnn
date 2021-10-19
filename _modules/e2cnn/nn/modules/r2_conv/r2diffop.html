@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>e2cnn.nn.modules.r2_conv.r2_transposed_convolution &mdash; e2cnn 0.1.9 documentation</title>
+  <title>e2cnn.nn.modules.r2_conv.r2diffop &mdash; e2cnn 0.1.9 documentation</title>
   
 
   
@@ -179,7 +179,7 @@
         
           <li><a href="../../../../index.html">Module code</a> &raquo;</li>
         
-      <li>e2cnn.nn.modules.r2_conv.r2_transposed_convolution</li>
+      <li>e2cnn.nn.modules.r2_conv.r2diffop</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -194,14 +194,24 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <h1>Source code for e2cnn.nn.modules.r2_conv.r2_transposed_convolution</h1><div class="highlight"><pre>
+  <h1>Source code for e2cnn.nn.modules.r2_conv.r2diffop</h1><div class="highlight"><pre>
 <span></span>
-<span class="kn">from</span> <span class="nn">torch.nn.functional</span> <span class="kn">import</span> <span class="n">conv_transpose2d</span>
+<span class="kn">import</span> <span class="nn">warnings</span>
+
+<span class="kn">from</span> <span class="nn">e2cnn.diffops.utils</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="n">load_cache</span><span class="p">,</span>
+    <span class="n">store_cache</span><span class="p">,</span>
+    <span class="n">required_points</span><span class="p">,</span>
+    <span class="n">largest_possible_order</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="kn">from</span> <span class="nn">torch.nn.functional</span> <span class="kn">import</span> <span class="n">conv2d</span><span class="p">,</span> <span class="n">pad</span>
 
 <span class="kn">from</span> <span class="nn">e2cnn.nn</span> <span class="kn">import</span> <span class="n">init</span>
 <span class="kn">from</span> <span class="nn">e2cnn.nn</span> <span class="kn">import</span> <span class="n">FieldType</span>
 <span class="kn">from</span> <span class="nn">e2cnn.nn</span> <span class="kn">import</span> <span class="n">GeometricTensor</span>
 <span class="kn">from</span> <span class="nn">e2cnn.gspaces</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">e2cnn.diffops</span> <span class="kn">import</span> <span class="n">DiscretizationArgs</span>
 
 <span class="kn">from</span> <span class="nn">..equivariant_module</span> <span class="kn">import</span> <span class="n">EquivariantModule</span>
 
@@ -209,85 +219,261 @@
 <span class="kn">from</span> <span class="nn">.basisexpansion_blocks</span> <span class="kn">import</span> <span class="n">BlocksBasisExpansion</span>
 
 <span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Callable</span><span class="p">,</span> <span class="n">Union</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">,</span> <span class="n">List</span>
-<span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">defaultdict</span>
 
 <span class="kn">import</span> <span class="nn">torch</span>
 <span class="kn">from</span> <span class="nn">torch.nn</span> <span class="kn">import</span> <span class="n">Parameter</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">from</span> <span class="nn">scipy</span> <span class="kn">import</span> <span class="n">stats</span>
 <span class="kn">import</span> <span class="nn">math</span>
 
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;R2Diffop&quot;</span><span class="p">]</span>
 
-<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;R2ConvTransposed&quot;</span><span class="p">]</span>
 
-
-<div class="viewcode-block" id="R2ConvTransposed"><a class="viewcode-back" href="../../../../../api/e2cnn.nn.html#e2cnn.nn.R2ConvTransposed">[docs]</a><span class="k">class</span> <span class="nc">R2ConvTransposed</span><span class="p">(</span><span class="n">EquivariantModule</span><span class="p">):</span>
+<div class="viewcode-block" id="R2Diffop"><a class="viewcode-back" href="../../../../../api/e2cnn.nn.html#e2cnn.nn.R2Diffop">[docs]</a><span class="k">class</span> <span class="nc">R2Diffop</span><span class="p">(</span><span class="n">EquivariantModule</span><span class="p">):</span>
     
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
                  <span class="n">in_type</span><span class="p">:</span> <span class="n">FieldType</span><span class="p">,</span>
                  <span class="n">out_type</span><span class="p">:</span> <span class="n">FieldType</span><span class="p">,</span>
-                 <span class="n">kernel_size</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+                 <span class="n">kernel_size</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+                 <span class="n">accuracy</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
                  <span class="n">padding</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>
-                 <span class="n">output_padding</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>
                  <span class="n">stride</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>
                  <span class="n">dilation</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>
+                 <span class="n">padding_mode</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;zeros&#39;</span><span class="p">,</span>
                  <span class="n">groups</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>
                  <span class="n">bias</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
                  <span class="n">basisexpansion</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;blocks&#39;</span><span class="p">,</span>
-                 <span class="n">sigma</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">float</span><span class="p">],</span> <span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-                 <span class="n">frequencies_cutoff</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="n">Callable</span><span class="p">[[</span><span class="nb">float</span><span class="p">],</span> <span class="nb">int</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-                 <span class="n">rings</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+                 <span class="n">maximum_order</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+                 <span class="n">maximum_power</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
                  <span class="n">maximum_offset</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
                  <span class="n">recompute</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+                 <span class="n">angle_offset</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
                  <span class="n">basis_filter</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[[</span><span class="nb">dict</span><span class="p">],</span> <span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
                  <span class="n">initialize</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+                 <span class="n">cache</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">bool</span><span class="p">,</span> <span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+                 <span class="n">rbffd</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+                 <span class="n">radial_basis_function</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;ga&quot;</span><span class="p">,</span>
+                 <span class="n">smoothing</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
                  <span class="p">):</span>
         <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        </span>
-<span class="sd">        Transposed G-steerable planar convolution layer.</span>
+<span class="sd">        </span>
+<span class="sd">        G-steerable planar partial differential operator mapping between the</span>
+<span class="sd">        input and output :class:`~e2cnn.nn.FieldType` s specified by</span>
+<span class="sd">        the parameters ``in_type`` and ``out_type``.</span>
+<span class="sd">        This operation is equivariant under the action of :math:`\R^2\rtimes G` where :math:`G` is the</span>
+<span class="sd">        :attr:`e2cnn.nn.FieldType.fibergroup` of ``in_type`` and ``out_type``.</span>
+<span class="sd">        </span>
+<span class="sd">        Specifically, let :math:`\rho_\text{in}: G \to \GL{\R^{c_\text{in}}}` and</span>
+<span class="sd">        :math:`\rho_\text{out}: G \to \GL{\R^{c_\text{out}}}` be the representations specified by the input and output</span>
+<span class="sd">        field types.</span>
+<span class="sd">        Then :class:`~e2cnn.nn.R2Diffop` guarantees an equivariant mapping</span>
+<span class="sd">        </span>
+<span class="sd">        .. math::</span>
+<span class="sd">            D [\mathcal{T}^\text{in}_{g,u} . f] = \mathcal{T}^\text{out}_{g,u} . [Df] \qquad\qquad \forall g \in G, u \in \R^2</span>
+<span class="sd">            </span>
+<span class="sd">        where the transformation of the input and output fields are given by</span>
+<span class="sd"> </span>
+<span class="sd">        .. math::</span>
+<span class="sd">            [\mathcal{T}^\text{in}_{g,u} . f](x) &amp;= \rho_\text{in}(g)f(g^{-1} (x - u)) \\</span>
+<span class="sd">            [\mathcal{T}^\text{out}_{g,u} . f](x) &amp;= \rho_\text{out}(g)f(g^{-1} (x - u)) \\</span>
+
+<span class="sd">        The equivariance of G-steerable PDOs is guaranteed by restricting the space of PDOs to an</span>
+<span class="sd">        equivariant subspace.</span>
+
+<span class="sd">        During training, in each forward pass the module expands the basis of G-steerable PDOs with learned weights</span>
+<span class="sd">        before calling :func:`torch.nn.functional.conv2d`.</span>
+<span class="sd">        When :meth:`~torch.nn.Module.eval()` is called, the filter is built with the current trained weights and stored</span>
+<span class="sd">        for future reuse such that no overhead of expanding the PDO remains.</span>
 <span class="sd">        </span>
 <span class="sd">        .. warning ::</span>
 <span class="sd">            </span>
-<span class="sd">            Transposed convolution can produce artifacts which can harm the overall equivariance of the model.</span>
-<span class="sd">            We suggest using :class:`~e2cnn.nn.R2Upsampling` combined with :class:`~e2cnn.nn.R2Conv` to perform</span>
-<span class="sd">            upsampling.</span>
+<span class="sd">            When :meth:`~torch.nn.Module.train()` is called, the attributes :attr:`~e2cnn.nn.R2Diffop.filter` and</span>
+<span class="sd">            :attr:`~e2cnn.nn.R2Diffop.expanded_bias` are discarded to avoid situations of mismatch with the</span>
+<span class="sd">            learnable expansion coefficients.</span>
+<span class="sd">            See also :meth:`e2cnn.nn.R2Diffop.train`.</span>
+<span class="sd">            </span>
+<span class="sd">            This behaviour can cause problems when storing the :meth:`~torch.nn.Module.state_dict` of a model while in</span>
+<span class="sd">            a mode and lately loading it in a model with a different mode, as the attributes of the class change.</span>
+<span class="sd">            To avoid this issue, we recommend converting the model to eval mode before storing or loading the state</span>
+<span class="sd">            dictionary.</span>
+<span class="sd"> </span>
+<span class="sd"> </span>
+<span class="sd">        The learnable expansion coefficients of the this module can be initialized with the methods in</span>
+<span class="sd">        :mod:`e2cnn.nn.init`.</span>
+<span class="sd">        By default, the weights are initialized in the constructors using :func:`~e2cnn.nn.init.generalized_he_init`.</span>
 <span class="sd">        </span>
-<span class="sd">        .. seealso ::</span>
-<span class="sd">            For additional information about the parameters and the methods of this class, see :class:`e2cnn.nn.R2Conv`.</span>
-<span class="sd">            The two modules are essentially the same, except for the type of convolution used.</span>
+<span class="sd">        .. warning ::</span>
+<span class="sd">            </span>
+<span class="sd">            This initialization procedure can be extremely slow for wide layers.</span>
+<span class="sd">            In case initializing the model is not required (e.g. before loading the state dict of a pre-trained model)</span>
+<span class="sd">            or another initialization method is preferred (e.g. :func:`~e2cnn.nn.init.deltaorthonormal_init`), the</span>
+<span class="sd">            parameter ``initialize`` can be set to ``False`` to avoid unnecessary overhead.</span>
+<span class="sd">        </span>
+<span class="sd">        A reasonable default is to only set the ``kernel_size`` and leave all other options</span>
+<span class="sd">        on their defaults. However, you might get considerable performance improvements</span>
+<span class="sd">        by setting ``smoothing`` to something other than ``None`` (``kernel_size / 4`` is</span>
+<span class="sd">        a sane default, see below for details).</span>
+<span class="sd">        </span>
+<span class="sd">        If you want to modify ``accuracy`` or ``maximum_order``, you will need to take</span>
+<span class="sd">        into account how they are related to ``kernel_size``: it is possible to set any two</span>
+<span class="sd">        of ``kernel_size``, ``accuracy`` and ``maximum_order``, in which case the third</span>
+<span class="sd">        one will be determined automatically. Alternatively, you can set either ``kernel_size``</span>
+<span class="sd">        or ``maximum_order``, in which case a sane default will be used for ``accuracy``. </span>
+<span class="sd">        The relation between the three is approximately :math:`\text{kernel size} \approx \text{accuracy} + \text{order}`,</span>
+<span class="sd">        though this formula is off by one in some cases.</span>
+<span class="sd">        A larger maximum order will lead to more basis filters and this more parameters.</span>
+<span class="sd">        A larger accuracy (i.e. larger kernel size at constant order)</span>
+<span class="sd">        might lead to lower equivariance errors, though whether this actually happens may</span>
+<span class="sd">        depend on your exact setup.</span>
+<span class="sd">        </span>
+<span class="sd">        The parameters ``basisexpansion``, ``maximum_power``,  and ``maximum_offset`` are</span>
+<span class="sd">        optional parameters used to control how the basis for the PDOs is built, how it is sampled on the filter</span>
+<span class="sd">        grid and how it is expanded to build the filter. We suggest to keep these default values.</span>
+<span class="sd">        </span>
+<span class="sd">        .. warning::</span>
+<span class="sd">            The discretization of the differential operators relies on two external packages: `sympy &lt;https://docs.sympy.org/&gt;`_ and</span>
+<span class="sd">            `rbf &lt;https://rbf.readthedocs.io&gt;`_. If they are not available, an error is raised.</span>
 <span class="sd">            </span>
 <span class="sd">        Args:</span>
-<span class="sd">            in_type (FieldType): the type of the input field</span>
-<span class="sd">            out_type (FieldType): the type of the output field</span>
-<span class="sd">            kernel_size (int): the size of the filter</span>
-<span class="sd">            padding(int, optional): implicit zero paddings on both sides of the input. Default: ``0``</span>
-<span class="sd">            output_padding(int, optional): implicit zero paddings on both sides of the input. Default: ``0``</span>
-<span class="sd">            stride(int, optional): the stride of the convolving kernel. Default: ``1``</span>
-<span class="sd">            dilation(int, optional): the spacing between kernel elements. Default: ``1``</span>
+<span class="sd">            in_type (FieldType): the type of the input field, specifying its transformation law</span>
+<span class="sd">            out_type (FieldType): the type of the output field, specifying its transformation law</span>
+<span class="sd">            kernel_size (int, optional): the size of the (square) filter. This can be chosen automatically,</span>
+<span class="sd">                see above for details.</span>
+<span class="sd">            accuracy (int, optional): the desired asymptotic accuracy for the PDO discretization,</span>
+<span class="sd">                affects the ``kernel_size``. See above for details.</span>
+<span class="sd">            padding (int, optional): implicit zero paddings on both sides of the input. Default: ``0``</span>
+<span class="sd">            padding_mode(str, optional): ``zeros``, ``reflect``, ``replicate`` or ``circular``. Default: ``zeros``</span>
+<span class="sd">            stride (int, optional): the stride of the kernel. Default: ``1``</span>
+<span class="sd">            dilation (int, optional): the spacing between kernel elements. Default: ``1``</span>
 <span class="sd">            groups (int, optional): number of blocked connections from input channels to output channels.</span>
+<span class="sd">                                    It allows depthwise convolution. When used, the input and output types need to be</span>
+<span class="sd">                                    divisible in ``groups`` groups, all equal to each other.</span>
 <span class="sd">                                    Default: ``1``.</span>
 <span class="sd">            bias (bool, optional): Whether to add a bias to the output (only to fields which contain a</span>
 <span class="sd">                    trivial irrep) or not. Default ``True``</span>
+<span class="sd">            basisexpansion (str, optional): the basis expansion algorithm to use</span>
+<span class="sd">            maximum_order (int, optional): the largest derivative order to allow</span>
+<span class="sd">                as part of the basis. Larger maximum orders require larger kernel sizes,</span>
+<span class="sd">                see above for details.</span>
+<span class="sd">            maximum_power (int, optional): the maximum power of the Laplacian that will be used</span>
+<span class="sd">                for constructing the basis. If this is not ``None``, it places a restriction on</span>
+<span class="sd">                the basis elements, *in addition to* the restriction given by ``maximum_order``.</span>
+<span class="sd">                We suggest to leave this setting on its default unless you have a good reason</span>
+<span class="sd">                to change it.</span>
+<span class="sd">            maximum_offset (int, optional): number of additional (aliased) frequencies in the intertwiners for finite</span>
+<span class="sd">                    groups. By default (``None``), all additional frequencies allowed by the frequencies cut-off</span>
+<span class="sd">                    are used.</span>
+<span class="sd">            recompute (bool, optional): if ``True``, recomputes a new basis for the equivariant PDOs.</span>
+<span class="sd">                    By Default (``False``), it  caches the basis built or reuse a cached one, if it is found.</span>
+<span class="sd">            basis_filter (callable, optional): function which takes as input a descriptor of a basis element</span>
+<span class="sd">                    (as a dictionary) and returns a boolean value: whether to preserve (``True``) or discard (``False``)</span>
+<span class="sd">                    the basis element. By default (``None``), no filtering is applied.</span>
 <span class="sd">            initialize (bool, optional): initialize the weights of the model. Default: ``True``</span>
+<span class="sd">            cache (bool or str, optional): Discretizing the PDOs can take a bit longer than</span>
+<span class="sd">                for kernels, so we provide the option to cache PDOs on disk. Our suggestion is</span>
+<span class="sd">                to keep the cache off (default) and only activate it if discretizing the PDOs</span>
+<span class="sd">                is in fact a bottleneck for your setup (it often is not). Setting ``cache`` to</span>
+<span class="sd">                ``True`` will load an existing cache before instantiating the layer and will</span>
+<span class="sd">                write to the cache afterwards. You can also set ``cache`` to ``load`` or ``store``</span>
+<span class="sd">                to only do one of these.</span>
+
+<span class="sd">                All :class:`~e2cnn.nn.R2Diffop` layers share the PDO cache in memory.</span>
+<span class="sd">                If you have several :class:`~e2cnn.nn.R2Diffop` layers inside your model,</span>
+<span class="sd">                we therefore recommend to leave ``cache`` to ``False`` and instead call</span>
+<span class="sd">                :func:`e2cnn.diffops.load_cache` before instantiating the model, and :func:`e2cnn.diffops.store_cache`</span>
+<span class="sd">                afterwards to save the PDOs for the next run of the program.</span>
+<span class="sd">                This will avoid unnecessary reads/writes from/to disk.</span>
+<span class="sd">            rbffd (bool, optional): if set to ``True``, use RBF-FD discretization instead of</span>
+<span class="sd">                finite differences (the default). We suggest leaving this to ``False`` unless</span>
+<span class="sd">                you have a specific reason for wanting to use RBF-FD.</span>
+<span class="sd">            radial_basis_function (str, optional): which RBF to use (only relevant for RBF-FD).</span>
+<span class="sd">                Can be any of the abbreviations in `this list &lt;https://rbf.readthedocs.io/en/latest/basis.html&gt;`_.</span>
+<span class="sd">                The default is to use Gaussian RBFs because this always avoids singularity issues.</span>
+<span class="sd">                But other RBFs, such as polyharmonic splines, may work better if they are applicable.</span>
+<span class="sd">            smoothing (float, optional): if not ``None``, discretization will be performed</span>
+<span class="sd">                with derivatives of Gaussians as stencils. This is similar to smoothing</span>
+<span class="sd">                with a Gaussian before applying the PDO, though there are slight technical</span>
+<span class="sd">                differences. ``smoothing`` is the standard deviation (in pixels) of the Gaussian,</span>
+<span class="sd">                meaning that larger values correspond to stronger smoothing.</span>
+<span class="sd">                A reasonable value would be about ``kernel_size / 4`` but you might want to experiment</span>
+<span class="sd">                a bit with this parameter.</span>
+<span class="sd">        </span>
+<span class="sd">        Attributes:</span>
 <span class="sd">            </span>
+<span class="sd">            ~.weights (torch.Tensor): the learnable parameters which are used to expand the PDO</span>
+<span class="sd">            ~.filter (torch.Tensor): the convolutional stencil obtained by expanding the parameters</span>
+<span class="sd">                                    in :attr:`~e2cnn.nn.R2Diffop.weights`</span>
+<span class="sd">            ~.bias (torch.Tensor): the learnable parameters which are used to expand the bias, if ``bias=True``</span>
+<span class="sd">            ~.expanded_bias (torch.Tensor): the equivariant bias which is summed to the output, obtained by expanding</span>
+<span class="sd">                                    the parameters in :attr:`~e2cnn.nn.R2Diffop.bias`</span>
+<span class="sd">        </span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="k">assert</span> <span class="n">in_type</span><span class="o">.</span><span class="n">gspace</span> <span class="o">==</span> <span class="n">out_type</span><span class="o">.</span><span class="n">gspace</span>
         <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">in_type</span><span class="o">.</span><span class="n">gspace</span><span class="p">,</span> <span class="n">GeneralOnR2</span><span class="p">)</span>
 
-        <span class="nb">super</span><span class="p">(</span><span class="n">R2ConvTransposed</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">R2Diffop</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">space</span> <span class="o">=</span> <span class="n">in_type</span><span class="o">.</span><span class="n">gspace</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">in_type</span> <span class="o">=</span> <span class="n">in_type</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">out_type</span> <span class="o">=</span> <span class="n">out_type</span>
+
+        <span class="k">if</span> <span class="n">cache</span> <span class="ow">and</span> <span class="n">cache</span> <span class="o">!=</span> <span class="s2">&quot;store&quot;</span><span class="p">:</span>
+            <span class="c1"># Load the cached lambdas for RBFs if they exist</span>
+            <span class="n">load_cache</span><span class="p">()</span>
+
+        <span class="c1"># out of kernel_size, accuracy and maximum_order, exactly two must be known,</span>
+        <span class="c1"># the third one can then be determined automatically.</span>
+        <span class="c1"># To provide sane defaults, we will also allow only kernel_size or maximum_order</span>
+        <span class="c1"># to be set, in that case accuracy will become 2.</span>
+        <span class="k">if</span> <span class="n">kernel_size</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">assert</span> <span class="n">maximum_order</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
+            <span class="k">if</span> <span class="n">accuracy</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">accuracy</span> <span class="o">=</span> <span class="mi">2</span> <span class="k">if</span> <span class="p">(</span><span class="n">maximum_order</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span> <span class="k">else</span> <span class="mi">1</span>
+            <span class="c1"># TODO: Ideally, we should look at the basis, maybe the maximum_order isn&#39;t</span>
+            <span class="c1"># reached (e.g. if it is odd but all basis diffops are even). In that case,</span>
+            <span class="c1"># we could perhaps get away with a smaller kernel</span>
+            <span class="n">kernel_size</span> <span class="o">=</span> <span class="n">required_points</span><span class="p">(</span><span class="n">maximum_order</span><span class="p">,</span> <span class="n">accuracy</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">maximum_order</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">assert</span> <span class="n">kernel_size</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
+            <span class="k">if</span> <span class="n">accuracy</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">accuracy</span> <span class="o">=</span> <span class="mi">2</span> <span class="k">if</span> <span class="p">(</span><span class="n">kernel_size</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">)</span> <span class="k">else</span> <span class="mi">1</span>
+            <span class="n">maximum_order</span> <span class="o">=</span> <span class="n">largest_possible_order</span><span class="p">(</span><span class="n">kernel_size</span><span class="p">,</span> <span class="n">accuracy</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">maximum_order</span> <span class="o">&lt;</span> <span class="mi">2</span><span class="p">:</span>
+                <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Maximum order is only </span><span class="si">{</span><span class="n">maximum_order</span><span class="si">}</span><span class="s2"> for kernel size &quot;</span>
+                              <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">kernel_size</span><span class="si">}</span><span class="s2"> and desired accuracy </span><span class="si">{</span><span class="n">accuracy</span><span class="si">}</span><span class="s2">. This may &quot;</span>
+                              <span class="s2">&quot;lead to a small basis. If this is unintentional, consider &quot;</span>
+                              <span class="s2">&quot;increasing the kernel size.&quot;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">accuracy</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">kernel_size</span> <span class="o">&lt;</span> <span class="n">required_points</span><span class="p">(</span><span class="n">maximum_order</span><span class="p">,</span> <span class="mi">2</span><span class="p">):</span>
+                <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Small kernel size: </span><span class="si">{</span><span class="n">kernel_size</span><span class="si">}</span><span class="s2"> x </span><span class="si">{</span><span class="n">kernel_size</span><span class="si">}</span><span class="s2"> kernel &quot;</span>
+                              <span class="sa">f</span><span class="s2">&quot;is used for differential operators of order up to </span><span class="si">{</span><span class="n">maximum_order</span><span class="si">}</span><span class="s2">. &quot;</span>
+                              <span class="s2">&quot;This may lead to bad approximations, consider using a larger kernel &quot;</span>
+                              <span class="s2">&quot;or setting the desired accuracy instead of the kernel size.&quot;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="c1"># all three are set</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;At most two of kernel size, maximum order and accuracy can bet set, &quot;</span>
+                             <span class="s2">&quot;see documentation for details.&quot;</span><span class="p">)</span>
         
         <span class="bp">self</span><span class="o">.</span><span class="n">kernel_size</span> <span class="o">=</span> <span class="n">kernel_size</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">stride</span> <span class="o">=</span> <span class="n">stride</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">dilation</span> <span class="o">=</span> <span class="n">dilation</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">padding</span> <span class="o">=</span> <span class="n">padding</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">output_padding</span> <span class="o">=</span> <span class="n">output_padding</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">padding_mode</span> <span class="o">=</span> <span class="n">padding_mode</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">groups</span> <span class="o">=</span> <span class="n">groups</span>
 
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">padding</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">)</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">padding</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+            <span class="n">_padding</span> <span class="o">=</span> <span class="n">padding</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">padding</span><span class="p">,</span> <span class="nb">int</span><span class="p">):</span>
+            <span class="n">_padding</span> <span class="o">=</span> <span class="p">(</span><span class="n">padding</span><span class="p">,</span> <span class="n">padding</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;padding needs to be either an integer or a tuple containing two integers but </span><span class="si">{}</span><span class="s1"> found&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">padding</span><span class="p">))</span>
+        
+        <span class="n">padding_modes</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;zeros&#39;</span><span class="p">,</span> <span class="s1">&#39;reflect&#39;</span><span class="p">,</span> <span class="s1">&#39;replicate&#39;</span><span class="p">,</span> <span class="s1">&#39;circular&#39;</span><span class="p">}</span>
+        <span class="k">if</span> <span class="n">padding_mode</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">padding_modes</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;padding_mode must be one of [</span><span class="si">{}</span><span class="s2">], but got padding_mode=&#39;</span><span class="si">{}</span><span class="s2">&#39;&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">padding_modes</span><span class="p">,</span> <span class="n">padding_mode</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_reversed_padding_repeated_twice</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">reversed</span><span class="p">(</span><span class="n">_padding</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">))</span>
+        
         <span class="k">if</span> <span class="n">groups</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
             <span class="c1"># Check the input and output classes can be split in `groups` groups, all equal to each other</span>
             <span class="c1"># first, check that the number of fields is divisible by `groups`</span>
@@ -300,12 +486,12 @@
             <span class="k">assert</span> <span class="nb">all</span><span class="p">(</span><span class="n">in_type</span><span class="o">.</span><span class="n">representations</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">==</span> <span class="n">in_type</span><span class="o">.</span><span class="n">representations</span><span class="p">[</span><span class="n">i</span> <span class="o">%</span> <span class="n">in_size</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">in_type</span><span class="p">)))</span>
             <span class="k">assert</span> <span class="nb">all</span><span class="p">(</span><span class="n">out_type</span><span class="o">.</span><span class="n">representations</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">==</span> <span class="n">out_type</span><span class="o">.</span><span class="n">representations</span><span class="p">[</span><span class="n">i</span> <span class="o">%</span> <span class="n">out_size</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">out_type</span><span class="p">)))</span>
             
-            <span class="c1"># finally, retrieve the type associated to a single group in output.</span>
+            <span class="c1"># finally, retrieve the type associated to a single group in input.</span>
             <span class="c1"># this type will be used to build a smaller kernel basis and a smaller filter</span>
-            <span class="c1"># as in PyTorch, to build a filter for grouped convolution, we build a filter which maps from all input</span>
-            <span class="c1"># groups to one output group. Then, PyTorch&#39;s standard convolution routine interpret this filter as `groups`</span>
+            <span class="c1"># as in PyTorch, to build a filter for grouped convolution, we build a filter which maps from one input</span>
+            <span class="c1"># group to all output groups. Then, PyTorch&#39;s standard convolution routine interpret this filter as `groups`</span>
             <span class="c1"># different filters, each mapping an input group to an output group.</span>
-            <span class="n">out_type</span> <span class="o">=</span> <span class="n">out_type</span><span class="o">.</span><span class="n">index_select</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">out_size</span><span class="p">)))</span>
+            <span class="n">in_type</span> <span class="o">=</span> <span class="n">in_type</span><span class="o">.</span><span class="n">index_select</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">in_size</span><span class="p">)))</span>
         
         <span class="k">if</span> <span class="n">bias</span><span class="p">:</span>
             <span class="c1"># bias can be applied only to trivial irreps inside the representation</span>
@@ -350,55 +536,95 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">bias</span> <span class="o">=</span> <span class="kc">None</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">expanded_bias</span> <span class="o">=</span> <span class="kc">None</span>
 
-        <span class="n">grid</span><span class="p">,</span> <span class="n">basis_filter</span><span class="p">,</span> <span class="n">rings</span><span class="p">,</span> <span class="n">sigma</span><span class="p">,</span> <span class="n">maximum_frequency</span> <span class="o">=</span> <span class="n">compute_basis_params</span><span class="p">(</span><span class="n">kernel_size</span><span class="p">,</span>
-                                                                                   <span class="n">frequencies_cutoff</span><span class="p">,</span>
-                                                                                   <span class="n">rings</span><span class="p">,</span>
-                                                                                   <span class="n">sigma</span><span class="p">,</span>
-                                                                                   <span class="n">dilation</span><span class="p">,</span>
-                                                                                   <span class="n">basis_filter</span><span class="p">)</span>
+        <span class="n">grid</span><span class="p">,</span> <span class="n">basis_filter</span><span class="p">,</span> <span class="n">params</span> <span class="o">=</span> <span class="n">compute_basis_params</span><span class="p">(</span><span class="n">kernel_size</span><span class="p">,</span>
+                                                          <span class="n">dilation</span><span class="p">,</span>
+                                                          <span class="n">basis_filter</span><span class="p">,</span>
+                                                          <span class="n">maximum_order</span><span class="p">,</span>
+                                                          <span class="n">maximum_power</span><span class="p">,</span>
+                                                          <span class="n">rbffd</span><span class="p">,</span>
+                                                          <span class="n">radial_basis_function</span><span class="p">,</span>
+                                                          <span class="n">smoothing</span><span class="p">,</span>
+                                                          <span class="n">angle_offset</span><span class="p">)</span>
+
         
         <span class="c1"># BasisExpansion: submodule which takes care of building the filter</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_basisexpansion</span> <span class="o">=</span> <span class="kc">None</span>
         
-        <span class="c1"># notice that `out_type` is used instead of `self.out_type` such that it works also when `groups &gt; 1`</span>
+        <span class="c1"># notice that `in_type` is used instead of `self.in_type` such that it works also when `groups &gt; 1`</span>
         <span class="k">if</span> <span class="n">basisexpansion</span> <span class="o">==</span> <span class="s1">&#39;blocks&#39;</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_basisexpansion</span> <span class="o">=</span> <span class="n">BlocksBasisExpansion</span><span class="p">(</span><span class="n">in_type</span><span class="p">,</span> <span class="n">out_type</span><span class="p">,</span>
-                                                        <span class="n">basis_generator</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">space</span><span class="o">.</span><span class="n">build_kernel_basis</span><span class="p">,</span>
+                                                        <span class="bp">self</span><span class="o">.</span><span class="n">space</span><span class="o">.</span><span class="n">build_diffop_basis</span><span class="p">,</span>
                                                         <span class="n">points</span><span class="o">=</span><span class="n">grid</span><span class="p">,</span>
-                                                        <span class="n">sigma</span><span class="o">=</span><span class="n">sigma</span><span class="p">,</span>
-                                                        <span class="n">rings</span><span class="o">=</span><span class="n">rings</span><span class="p">,</span>
                                                         <span class="n">maximum_offset</span><span class="o">=</span><span class="n">maximum_offset</span><span class="p">,</span>
-                                                        <span class="n">maximum_frequency</span><span class="o">=</span><span class="n">maximum_frequency</span><span class="p">,</span>
+                                                        <span class="o">**</span><span class="n">params</span><span class="p">,</span>
                                                         <span class="n">basis_filter</span><span class="o">=</span><span class="n">basis_filter</span><span class="p">,</span>
                                                         <span class="n">recompute</span><span class="o">=</span><span class="n">recompute</span><span class="p">)</span>
 
         <span class="k">else</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Basis Expansion algorithm &quot;</span><span class="si">%s</span><span class="s1">&quot; not recognized&#39;</span> <span class="o">%</span> <span class="n">basisexpansion</span><span class="p">)</span>
         
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">basisexpansion</span><span class="o">.</span><span class="n">dimension</span><span class="p">()</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;&#39;&#39;</span>
+<span class="s1">                The basis for the steerable filter is empty!</span>
+<span class="s1">                Tune the `frequencies_cutoff`, `kernel_size`, `rings`, `sigma` or `basis_filter` parameters to allow</span>
+<span class="s1">                for a larger basis.</span>
+<span class="s1">            &#39;&#39;&#39;</span><span class="p">)</span>
+
         <span class="bp">self</span><span class="o">.</span><span class="n">weights</span> <span class="o">=</span> <span class="n">Parameter</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">basisexpansion</span><span class="o">.</span><span class="n">dimension</span><span class="p">()),</span> <span class="n">requires_grad</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">register_buffer</span><span class="p">(</span><span class="s2">&quot;filter&quot;</span><span class="p">,</span> <span class="n">torch</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">in_type</span><span class="o">.</span><span class="n">size</span><span class="p">,</span> <span class="n">out_type</span><span class="o">.</span><span class="n">size</span><span class="p">,</span> <span class="n">kernel_size</span><span class="p">,</span> <span class="n">kernel_size</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">register_buffer</span><span class="p">(</span><span class="s2">&quot;filter&quot;</span><span class="p">,</span> <span class="n">torch</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">out_type</span><span class="o">.</span><span class="n">size</span><span class="p">,</span> <span class="n">in_type</span><span class="o">.</span><span class="n">size</span><span class="p">,</span> <span class="n">kernel_size</span><span class="p">,</span> <span class="n">kernel_size</span><span class="p">))</span>
         
         <span class="k">if</span> <span class="n">initialize</span><span class="p">:</span>
-            <span class="c1"># by default, the weights are initialized with a generalized form of he&#39;s weight initialization</span>
+            <span class="c1"># by default, the weights are initialized with a generalized form of He&#39;s weight initialization</span>
             <span class="n">init</span><span class="o">.</span><span class="n">generalized_he_init</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">weights</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">basisexpansion</span><span class="p">)</span>
-        
+
+        <span class="k">if</span> <span class="n">cache</span> <span class="ow">and</span> <span class="n">cache</span> <span class="o">!=</span> <span class="s2">&quot;load&quot;</span><span class="p">:</span>
+            <span class="n">store_cache</span><span class="p">()</span>
+    
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">basisexpansion</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">BasisExpansion</span><span class="p">:</span>
+        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Submodule which takes care of building the filter.</span>
+<span class="sd">        </span>
+<span class="sd">        It uses the learnt ``weights`` to expand a basis and returns a filter in the usual form used by conventional</span>
+<span class="sd">        convolutional modules.</span>
+<span class="sd">        It uses the learned ``weights`` to expand the PDO in the G-steerable basis and returns it in the shape</span>
+<span class="sd">        :math:`(c_\text{out}, c_\text{in}, s^2)`, where :math:`s` is the ``kernel_size``.</span>
+<span class="sd">        </span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_basisexpansion</span>
+    
+<div class="viewcode-block" id="R2Diffop.expand_parameters"><a class="viewcode-back" href="../../../../../api/e2cnn.nn.html#e2cnn.nn.R2Diffop.expand_parameters">[docs]</a>    <span class="k">def</span> <span class="nf">expand_parameters</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">,</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">]:</span>
+        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        </span>
+<span class="sd">        Expand the filter in terms of the :attr:`e2cnn.nn.R2Diffop.weights` and the</span>
+<span class="sd">        expanded bias in terms of :class:`e2cnn.nn.R2Diffop.bias`.</span>
+<span class="sd">        </span>
+<span class="sd">        Returns:</span>
+<span class="sd">            the expanded filter and bias</span>
 
-    <span class="k">def</span> <span class="nf">expand_parameters</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">,</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">]:</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">_filter</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">basisexpansion</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">weights</span><span class="p">)</span>
         <span class="n">_filter</span> <span class="o">=</span> <span class="n">_filter</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">_filter</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">_filter</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">kernel_size</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">kernel_size</span><span class="p">)</span>
-        <span class="n">_filter</span> <span class="o">=</span> <span class="n">_filter</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
         
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">bias</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">_bias</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">_bias</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">bias_expansion</span> <span class="o">@</span> <span class="bp">self</span><span class="o">.</span><span class="n">bias</span>
             
-        <span class="k">return</span> <span class="n">_filter</span><span class="p">,</span> <span class="n">_bias</span>
+        <span class="k">return</span> <span class="n">_filter</span><span class="p">,</span> <span class="n">_bias</span></div>
 
-    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">input</span><span class="p">:</span> <span class="n">GeometricTensor</span><span class="p">):</span>
+<div class="viewcode-block" id="R2Diffop.forward"><a class="viewcode-back" href="../../../../../api/e2cnn.nn.html#e2cnn.nn.R2Diffop.forward">[docs]</a>    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">input</span><span class="p">:</span> <span class="n">GeometricTensor</span><span class="p">):</span>
+        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Convolve the input with the expanded filter and bias.</span>
+<span class="sd">        </span>
+<span class="sd">        Args:</span>
+<span class="sd">            input (GeometricTensor): input feature field transforming according to ``in_type``</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            output feature field transforming according to ``out_type``</span>
+<span class="sd">            </span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        
         <span class="k">assert</span> <span class="nb">input</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">in_type</span>
 
         <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">training</span><span class="p">:</span>
@@ -409,18 +635,47 @@
             <span class="n">_filter</span><span class="p">,</span> <span class="n">_bias</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">expand_parameters</span><span class="p">()</span>
         
         <span class="c1"># use it for convolution and return the result</span>
-        <span class="n">output</span> <span class="o">=</span> <span class="n">conv_transpose2d</span><span class="p">(</span>
-                        <span class="nb">input</span><span class="o">.</span><span class="n">tensor</span><span class="p">,</span> <span class="n">_filter</span><span class="p">,</span>
-                        <span class="n">padding</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">padding</span><span class="p">,</span>
-                        <span class="n">output_padding</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">output_padding</span><span class="p">,</span>
-                        <span class="n">stride</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">stride</span><span class="p">,</span>
-                        <span class="n">dilation</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">dilation</span><span class="p">,</span>
-                        <span class="n">groups</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">groups</span><span class="p">,</span>
-                        <span class="n">bias</span><span class="o">=</span><span class="n">_bias</span><span class="p">)</span>
         
-        <span class="k">return</span> <span class="n">GeometricTensor</span><span class="p">(</span><span class="n">output</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">out_type</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">padding_mode</span> <span class="o">==</span> <span class="s1">&#39;zeros&#39;</span><span class="p">:</span>
+            <span class="n">output</span> <span class="o">=</span> <span class="n">conv2d</span><span class="p">(</span><span class="nb">input</span><span class="o">.</span><span class="n">tensor</span><span class="p">,</span> <span class="n">_filter</span><span class="p">,</span>
+                            <span class="n">stride</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">stride</span><span class="p">,</span>
+                            <span class="n">padding</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">padding</span><span class="p">,</span>
+                            <span class="n">dilation</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">dilation</span><span class="p">,</span>
+                            <span class="n">groups</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">groups</span><span class="p">,</span>
+                            <span class="n">bias</span><span class="o">=</span><span class="n">_bias</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">output</span> <span class="o">=</span> <span class="n">conv2d</span><span class="p">(</span><span class="n">pad</span><span class="p">(</span><span class="nb">input</span><span class="o">.</span><span class="n">tensor</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_reversed_padding_repeated_twice</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">padding_mode</span><span class="p">),</span>
+                            <span class="n">_filter</span><span class="p">,</span>
+                            <span class="n">stride</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">stride</span><span class="p">,</span>
+                            <span class="n">dilation</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">dilation</span><span class="p">,</span>
+                            <span class="n">padding</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">),</span>
+                            <span class="n">groups</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">groups</span><span class="p">,</span>
+                            <span class="n">bias</span><span class="o">=</span><span class="n">_bias</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">GeometricTensor</span><span class="p">(</span><span class="n">output</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">out_type</span><span class="p">)</span></div>
     
-    <span class="k">def</span> <span class="nf">train</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+<div class="viewcode-block" id="R2Diffop.train"><a class="viewcode-back" href="../../../../../api/e2cnn.nn.html#e2cnn.nn.R2Diffop.train">[docs]</a>    <span class="k">def</span> <span class="nf">train</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        </span>
+<span class="sd">        If ``mode=True``, the method sets the module in training mode and discards the :attr:`~e2cnn.nn.R2Diffop.filter`</span>
+<span class="sd">        and :attr:`~e2cnn.nn.R2Diffop.expanded_bias` attributes.</span>
+<span class="sd">        </span>
+<span class="sd">        If ``mode=False``, it sets the module in evaluation mode. Moreover, the method builds the filter and the bias using</span>
+<span class="sd">        the current values of the trainable parameters and store them in :attr:`~e2cnn.nn.R2Diffop.filter` and</span>
+<span class="sd">        :attr:`~e2cnn.nn.R2Diffop.expanded_bias` such that they are not recomputed at each forward pass.</span>
+<span class="sd">        </span>
+<span class="sd">        .. warning ::</span>
+<span class="sd">            </span>
+<span class="sd">            This behaviour can cause problems when storing the :meth:`~torch.nn.Module.state_dict` of a model while in</span>
+<span class="sd">            a mode and lately loading it in a model with a different mode, as the attributes of this class change.</span>
+<span class="sd">            To avoid this issue, we recommend converting the model to eval mode before storing or loading the state</span>
+<span class="sd">            dictionary.</span>
+<span class="sd">        </span>
+<span class="sd">        Args:</span>
+<span class="sd">            mode (bool, optional): whether to set training mode (``True``) or evaluation mode (``False``).</span>
+<span class="sd">                                   Default: ``True``.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
         
         <span class="k">if</span> <span class="n">mode</span><span class="p">:</span>
             <span class="c1"># TODO thoroughly check this is not causing problems</span>
@@ -430,16 +685,16 @@
                 <span class="k">del</span> <span class="bp">self</span><span class="o">.</span><span class="n">expanded_bias</span>
         <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">training</span><span class="p">:</span>
             <span class="c1"># avoid re-computation of the filter and the bias on multiple consecutive calls of `.eval()`</span>
-    
-            <span class="n">_filter</span><span class="p">,</span> <span class="n">_bias</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">expand_parameters</span><span class="p">()</span>
             
+            <span class="n">_filter</span><span class="p">,</span> <span class="n">_bias</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">expand_parameters</span><span class="p">()</span>
+    
             <span class="bp">self</span><span class="o">.</span><span class="n">register_buffer</span><span class="p">(</span><span class="s2">&quot;filter&quot;</span><span class="p">,</span> <span class="n">_filter</span><span class="p">)</span>
             <span class="k">if</span> <span class="n">_bias</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">register_buffer</span><span class="p">(</span><span class="s2">&quot;expanded_bias&quot;</span><span class="p">,</span> <span class="n">_bias</span><span class="p">)</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">expanded_bias</span> <span class="o">=</span> <span class="kc">None</span>
 
-        <span class="k">return</span> <span class="nb">super</span><span class="p">(</span><span class="n">R2ConvTransposed</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">train</span><span class="p">(</span><span class="n">mode</span><span class="p">)</span>
+        <span class="k">return</span> <span class="nb">super</span><span class="p">(</span><span class="n">R2Diffop</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">train</span><span class="p">(</span><span class="n">mode</span><span class="p">)</span></div>
 
     <span class="k">def</span> <span class="nf">evaluate_output_shape</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">input_shape</span><span class="p">:</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]:</span>
         <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">input_shape</span><span class="p">)</span> <span class="o">==</span> <span class="mi">4</span>
@@ -464,14 +719,12 @@
         
         <span class="n">c</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">in_type</span><span class="o">.</span><span class="n">size</span>
     
-        <span class="c1"># x = torch.randn(3, c, 10, 10)</span>
-        
         <span class="kn">import</span> <span class="nn">matplotlib.image</span> <span class="k">as</span> <span class="nn">mpimg</span>
         <span class="kn">from</span> <span class="nn">skimage.measure</span> <span class="kn">import</span> <span class="n">block_reduce</span>
         <span class="kn">from</span> <span class="nn">skimage.transform</span> <span class="kn">import</span> <span class="n">resize</span>
-
+        
         <span class="n">x</span> <span class="o">=</span> <span class="n">mpimg</span><span class="o">.</span><span class="n">imread</span><span class="p">(</span><span class="s1">&#39;../group/testimage.jpeg&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">transpose</span><span class="p">((</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">))[</span><span class="n">np</span><span class="o">.</span><span class="n">newaxis</span><span class="p">,</span> <span class="mi">0</span><span class="p">:</span><span class="n">c</span><span class="p">,</span> <span class="p">:,</span> <span class="p">:]</span>
-
+        
         <span class="n">x</span> <span class="o">=</span> <span class="n">resize</span><span class="p">(</span>
             <span class="n">x</span><span class="p">,</span>
             <span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">x</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">initial_size</span><span class="p">,</span> <span class="n">initial_size</span><span class="p">),</span>
@@ -526,11 +779,9 @@
             <span class="k">if</span> <span class="n">verbose</span><span class="p">:</span>
                 <span class="nb">print</span><span class="p">(</span><span class="n">el</span><span class="p">,</span> <span class="n">relerr</span><span class="o">.</span><span class="n">max</span><span class="p">(),</span> <span class="n">relerr</span><span class="o">.</span><span class="n">mean</span><span class="p">(),</span> <span class="n">relerr</span><span class="o">.</span><span class="n">var</span><span class="p">(),</span> <span class="n">errs</span><span class="o">.</span><span class="n">max</span><span class="p">(),</span> <span class="n">errs</span><span class="o">.</span><span class="n">mean</span><span class="p">(),</span> <span class="n">errs</span><span class="o">.</span><span class="n">var</span><span class="p">())</span>
         
-            <span class="c1"># tol = rtol*(np.abs(out1) + np.abs(out2)) + atol</span>
             <span class="n">tol</span> <span class="o">=</span> <span class="n">rtol</span> <span class="o">*</span> <span class="n">esum</span> <span class="o">+</span> <span class="n">atol</span>
             
             <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">any</span><span class="p">(</span><span class="n">errs</span> <span class="o">&gt;</span> <span class="n">tol</span><span class="p">)</span> <span class="ow">and</span> <span class="n">verbose</span><span class="p">:</span>
-                <span class="c1"># print(errs[errs &gt; tol])</span>
                 <span class="nb">print</span><span class="p">(</span><span class="n">out1</span><span class="p">[</span><span class="n">errs</span> <span class="o">&gt;</span> <span class="n">tol</span><span class="p">])</span>
                 <span class="nb">print</span><span class="p">(</span><span class="n">out2</span><span class="p">[</span><span class="n">errs</span> <span class="o">&gt;</span> <span class="n">tol</span><span class="p">])</span>
                 <span class="nb">print</span><span class="p">(</span><span class="n">tol</span><span class="p">[</span><span class="n">errs</span> <span class="o">&gt;</span> <span class="n">tol</span><span class="p">])</span>
@@ -548,34 +799,52 @@
         <span class="c1"># filter = filter[..., center, center]</span>
         <span class="c1"># assert torch.allclose(torch.eye(filter.shape[1]), filter.t() @ filter, atol=3e-7)</span>
 
-<div class="viewcode-block" id="R2ConvTransposed.export"><a class="viewcode-back" href="../../../../../api/e2cnn.nn.html#e2cnn.nn.R2ConvTransposed.export">[docs]</a>    <span class="k">def</span> <span class="nf">export</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="R2Diffop.export"><a class="viewcode-back" href="../../../../../api/e2cnn.nn.html#e2cnn.nn.R2Diffop.export">[docs]</a>    <span class="k">def</span> <span class="nf">export</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Export this module to a normal PyTorch :class:`torch.nn.ConvTranspose2d` module and set to &quot;eval&quot; mode.</span>
+<span class="sd">        Export this module to a normal PyTorch :class:`torch.nn.Conv2d` module and set to &quot;eval&quot; mode.</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
-    
+        
         <span class="c1"># set to eval mode so the filter and the bias are updated with the current</span>
         <span class="c1"># values of the weights</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">eval</span><span class="p">()</span>
         <span class="n">_filter</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">filter</span>
         <span class="n">_bias</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">expanded_bias</span>
-    
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">padding_mode</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;zeros&#39;</span><span class="p">]:</span>
+            <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">__version__</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;.&#39;</span><span class="p">)[:</span><span class="mi">2</span><span class="p">]</span>
+            <span class="k">if</span> <span class="nb">int</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">1</span> <span class="ow">or</span> <span class="nb">int</span><span class="p">(</span><span class="n">y</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">5</span><span class="p">:</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">padding_mode</span> <span class="o">==</span> <span class="s1">&#39;circular&#39;</span><span class="p">:</span>
+                    <span class="k">raise</span> <span class="ne">ImportError</span><span class="p">(</span>
+                        <span class="s2">&quot;&#39;</span><span class="si">{}</span><span class="s2">&#39; padding mode had some issues in old `torch` versions. Therefore, we only support conversion from version 1.5 but only version </span><span class="si">{}</span><span class="s2"> is installed.&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                            <span class="bp">self</span><span class="o">.</span><span class="n">padding_mode</span><span class="p">,</span> <span class="n">torch</span><span class="o">.</span><span class="n">__version__</span>
+                        <span class="p">)</span>
+                    <span class="p">)</span>
+
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="k">raise</span> <span class="ne">ImportError</span><span class="p">(</span>
+                        <span class="s2">&quot;`torch` supports &#39;</span><span class="si">{}</span><span class="s2">&#39; padding mode only from version 1.5 but only version </span><span class="si">{}</span><span class="s2"> is installed.&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                            <span class="bp">self</span><span class="o">.</span><span class="n">padding_mode</span><span class="p">,</span> <span class="n">torch</span><span class="o">.</span><span class="n">__version__</span>
+                        <span class="p">)</span>
+                    <span class="p">)</span>
+
         <span class="c1"># build the PyTorch Conv2d module</span>
         <span class="n">has_bias</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">bias</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
-        <span class="n">conv</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">ConvTranspose2d</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">in_type</span><span class="o">.</span><span class="n">size</span><span class="p">,</span>
-                                       <span class="bp">self</span><span class="o">.</span><span class="n">out_type</span><span class="o">.</span><span class="n">size</span><span class="p">,</span>
-                                       <span class="bp">self</span><span class="o">.</span><span class="n">kernel_size</span><span class="p">,</span>
-                                       <span class="n">padding</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">padding</span><span class="p">,</span>
-                                       <span class="n">stride</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">stride</span><span class="p">,</span>
-                                       <span class="n">dilation</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">dilation</span><span class="p">,</span>
-                                       <span class="n">groups</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">groups</span><span class="p">,</span>
-                                       <span class="n">bias</span><span class="o">=</span><span class="n">has_bias</span><span class="p">)</span>
-        
+        <span class="n">conv</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">Conv2d</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">in_type</span><span class="o">.</span><span class="n">size</span><span class="p">,</span>
+                               <span class="bp">self</span><span class="o">.</span><span class="n">out_type</span><span class="o">.</span><span class="n">size</span><span class="p">,</span>
+                               <span class="bp">self</span><span class="o">.</span><span class="n">kernel_size</span><span class="p">,</span>
+                               <span class="n">padding</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">padding</span><span class="p">,</span>
+                               <span class="n">padding_mode</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">padding_mode</span><span class="p">,</span>
+                               <span class="n">stride</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">stride</span><span class="p">,</span>
+                               <span class="n">dilation</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">dilation</span><span class="p">,</span>
+                               <span class="n">groups</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">groups</span><span class="p">,</span>
+                               <span class="n">bias</span><span class="o">=</span><span class="n">has_bias</span><span class="p">)</span>
+
         <span class="c1"># set the filter and the bias</span>
-        <span class="n">conv</span><span class="o">.</span><span class="n">weight</span><span class="o">.</span><span class="n">data</span><span class="p">[:]</span> <span class="o">=</span> <span class="n">_filter</span><span class="o">.</span><span class="n">data</span>
+        <span class="n">conv</span><span class="o">.</span><span class="n">weight</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="n">_filter</span><span class="o">.</span><span class="n">data</span>
         <span class="k">if</span> <span class="n">has_bias</span><span class="p">:</span>
-            <span class="n">conv</span><span class="o">.</span><span class="n">bias</span><span class="o">.</span><span class="n">data</span><span class="p">[:]</span> <span class="o">=</span> <span class="n">_bias</span><span class="o">.</span><span class="n">data</span>
-    
+            <span class="n">conv</span><span class="o">.</span><span class="n">bias</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="n">_bias</span><span class="o">.</span><span class="n">data</span>
+        
         <span class="k">return</span> <span class="n">conv</span></div>
 
     <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -583,7 +852,7 @@
         <span class="n">extra_repr</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">extra_repr</span><span class="p">()</span>
         <span class="k">if</span> <span class="n">extra_repr</span><span class="p">:</span>
             <span class="n">extra_lines</span> <span class="o">=</span> <span class="n">extra_repr</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
-    
+            
         <span class="n">main_str</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_name</span><span class="p">()</span> <span class="o">+</span> <span class="s1">&#39;(&#39;</span>
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">extra_lines</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
             <span class="n">main_str</span> <span class="o">+=</span> <span class="n">extra_lines</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
@@ -597,8 +866,6 @@
         <span class="n">s</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;</span><span class="si">{in_type}</span><span class="s1">, </span><span class="si">{out_type}</span><span class="s1">, kernel_size=</span><span class="si">{kernel_size}</span><span class="s1">, stride=</span><span class="si">{stride}</span><span class="s1">&#39;</span><span class="p">)</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">padding</span> <span class="o">!=</span> <span class="mi">0</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">padding</span> <span class="o">!=</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">):</span>
             <span class="n">s</span> <span class="o">+=</span> <span class="s1">&#39;, padding=</span><span class="si">{padding}</span><span class="s1">&#39;</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">output_padding</span> <span class="o">!=</span> <span class="mi">0</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">output_padding</span> <span class="o">!=</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">):</span>
-            <span class="n">s</span> <span class="o">+=</span> <span class="s1">&#39;, output_padding=</span><span class="si">{output_padding}</span><span class="s1">&#39;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">dilation</span> <span class="o">!=</span> <span class="mi">1</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">dilation</span> <span class="o">!=</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">):</span>
             <span class="n">s</span> <span class="o">+=</span> <span class="s1">&#39;, dilation=</span><span class="si">{dilation}</span><span class="s1">&#39;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">groups</span> <span class="o">!=</span> <span class="mi">1</span><span class="p">:</span>
@@ -606,37 +873,7 @@
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">bias</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">s</span> <span class="o">+=</span> <span class="s1">&#39;, bias=False&#39;</span>
         <span class="k">return</span> <span class="n">s</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="vm">__dict__</span><span class="p">)</span></div>
-
-
-<span class="k">def</span> <span class="nf">bandlimiting_filter</span><span class="p">(</span><span class="n">frequency_cutoff</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="n">Callable</span><span class="p">[[</span><span class="nb">float</span><span class="p">],</span> <span class="nb">float</span><span class="p">]])</span> <span class="o">-&gt;</span> <span class="n">Callable</span><span class="p">[[</span><span class="nb">dict</span><span class="p">],</span> <span class="nb">bool</span><span class="p">]:</span>
-    <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
-
-<span class="sd">    Returns a method which takes as input the attributes (as a dictionary) of a basis element and returns a boolean</span>
-<span class="sd">    value: whether to preserve that element (True) or not (False)</span>
-<span class="sd">    </span>
-<span class="sd">    If the parameter ``frequency_cutoff`` is a scalar value, the maximum frequency allowed at a certain radius is</span>
-<span class="sd">    proportional to the radius itself. In thi case, the parameter ``frequency_cutoff`` is the factor controlling this</span>
-<span class="sd">    proportionality relation.</span>
-<span class="sd">    </span>
-<span class="sd">    If the parameter ``frequency_cutoff`` is a callable, it needs to take as input a radius (a scalar value) and return</span>
-<span class="sd">    the maximum frequency which can be sampled at that radius.</span>
-
-<span class="sd">    Args:</span>
-<span class="sd">        frequency_cutoff (float): factor controlling the bandlimiting</span>
-
-<span class="sd">    Returns:</span>
-<span class="sd">        a function which checks the attributes of individual basis elements and chooses whether to discard them or not</span>
-
-<span class="sd">    &quot;&quot;&quot;</span>
     
-    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">frequency_cutoff</span><span class="p">,</span> <span class="nb">float</span><span class="p">):</span>
-        <span class="n">frequency_cutoff</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">r</span><span class="p">,</span> <span class="n">fco</span><span class="o">=</span><span class="n">frequency_cutoff</span><span class="p">:</span> <span class="n">r</span> <span class="o">*</span> <span class="n">frequency_cutoff</span>
-    
-    <span class="k">def</span> <span class="nf">bl_filter</span><span class="p">(</span><span class="n">attributes</span><span class="p">:</span> <span class="nb">dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
-        <span class="k">return</span> <span class="n">math</span><span class="o">.</span><span class="n">fabs</span><span class="p">(</span><span class="n">attributes</span><span class="p">[</span><span class="s2">&quot;frequency&quot;</span><span class="p">])</span> <span class="o">&lt;=</span> <span class="n">frequency_cutoff</span><span class="p">(</span><span class="n">attributes</span><span class="p">[</span><span class="s2">&quot;radius&quot;</span><span class="p">])</span>
-    
-    <span class="k">return</span> <span class="n">bl_filter</span>
-
 
 <span class="k">def</span> <span class="nf">get_grid_coords</span><span class="p">(</span><span class="n">kernel_size</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">dilation</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1</span><span class="p">):</span>
     
@@ -659,141 +896,60 @@
 
 
 <span class="k">def</span> <span class="nf">compute_basis_params</span><span class="p">(</span><span class="n">kernel_size</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
-                         <span class="n">frequencies_cutoff</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="n">Callable</span><span class="p">[[</span><span class="nb">float</span><span class="p">],</span> <span class="nb">float</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-                         <span class="n">rings</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-                         <span class="n">sigma</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-                         <span class="n">dilation</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>
-                         <span class="n">custom_basis_filter</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[[</span><span class="nb">dict</span><span class="p">],</span> <span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+                         <span class="n">dilation</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+                         <span class="n">custom_basis_filter</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[[</span><span class="nb">dict</span><span class="p">],</span> <span class="nb">bool</span><span class="p">],</span>
+                         <span class="n">maximum_order</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+                         <span class="n">maximum_power</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+                         <span class="n">rbffd</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
+                         <span class="n">radial_basis_function</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+                         <span class="n">smoothing</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+                         <span class="n">angle_offset</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
                          <span class="p">):</span>
-    
+
     <span class="c1"># compute the coordinates of the centers of the cells in the grid where the filter is sampled</span>
     <span class="n">grid</span> <span class="o">=</span> <span class="n">get_grid_coords</span><span class="p">(</span><span class="n">kernel_size</span><span class="p">,</span> <span class="n">dilation</span><span class="p">)</span>
-    
-    <span class="n">max_radius</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">((</span><span class="n">grid</span> <span class="o">**</span><span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="mi">1</span><span class="p">))</span><span class="o">.</span><span class="n">max</span><span class="p">()</span>
-    <span class="c1"># max_radius = kernel_size // 2</span>
-    
-    <span class="c1"># by default, the number of rings equals half of the filter size</span>
-    <span class="k">if</span> <span class="n">rings</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="n">n_rings</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">ceil</span><span class="p">(</span><span class="n">kernel_size</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span>
-        <span class="c1"># if self.group.order() &gt; 0:</span>
-        <span class="c1">#     # compute the number of edges of the polygon inscribed in the filter (which is a square)</span>
-        <span class="c1">#     # whose points stay inside the filter under the action of the group</span>
-        <span class="c1">#     # the number of edges is lcm(group&#39;s order, 4)</span>
-        <span class="c1">#     n_edges = self.group.order()</span>
-        <span class="c1">#     while n_edges % 4 &gt; 0:</span>
-        <span class="c1">#         n_edges *= 2</span>
-        <span class="c1">#     # the largest ring we can sample has radius equal to the circumradius of the polygon described above</span>
-        <span class="c1">#     n_rings /= math.cos(math.pi/n_edges)</span>
-        
-        <span class="c1"># n_rings = s // 2 + 1</span>
-        
-        <span class="c1"># rings = torch.linspace(1 - s % 2, s // 2, n_rings)</span>
-        <span class="n">rings</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="p">(</span><span class="n">kernel_size</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">//</span> <span class="mi">2</span><span class="p">,</span> <span class="n">n_rings</span><span class="p">)</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
-    
-    <span class="k">assert</span> <span class="nb">all</span><span class="p">([</span><span class="n">max_radius</span> <span class="o">&gt;=</span> <span class="n">r</span> <span class="o">&gt;=</span> <span class="mi">0</span> <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">rings</span><span class="p">])</span>
-    
-    <span class="k">if</span> <span class="n">sigma</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="n">sigma</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.6</span><span class="p">]</span> <span class="o">*</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">rings</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">+</span> <span class="p">[</span><span class="mf">0.4</span><span class="p">]</span>
-        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">r</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">rings</span><span class="p">):</span>
-            <span class="k">if</span> <span class="n">r</span> <span class="o">==</span> <span class="mf">0.</span><span class="p">:</span>
-                <span class="n">sigma</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.005</span>
-                
-    <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">sigma</span><span class="p">,</span> <span class="nb">float</span><span class="p">):</span>
-        <span class="n">sigma</span> <span class="o">=</span> <span class="p">[</span><span class="n">sigma</span><span class="p">]</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">rings</span><span class="p">)</span>
-        
-    <span class="c1"># TODO - use a string name for this setting</span>
-    <span class="k">if</span> <span class="n">frequencies_cutoff</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="n">frequencies_cutoff</span> <span class="o">=</span> <span class="o">-</span><span class="mf">1.</span>
-    
-    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">frequencies_cutoff</span><span class="p">,</span> <span class="nb">float</span><span class="p">):</span>
-        <span class="k">if</span> <span class="n">frequencies_cutoff</span> <span class="o">==</span> <span class="o">-</span><span class="mi">3</span><span class="p">:</span>
-            <span class="n">frequencies_cutoff</span> <span class="o">=</span> <span class="n">_manual_fco3</span><span class="p">(</span><span class="n">kernel_size</span> <span class="o">//</span> <span class="mi">2</span><span class="p">)</span>
-        <span class="k">elif</span> <span class="n">frequencies_cutoff</span> <span class="o">==</span> <span class="o">-</span><span class="mi">2</span><span class="p">:</span>
-            <span class="n">frequencies_cutoff</span> <span class="o">=</span> <span class="n">_manual_fco2</span><span class="p">(</span><span class="n">kernel_size</span> <span class="o">//</span> <span class="mi">2</span><span class="p">)</span>
-        <span class="k">elif</span> <span class="n">frequencies_cutoff</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span>
-            <span class="n">frequencies_cutoff</span> <span class="o">=</span> <span class="n">_manual_fco1</span><span class="p">(</span><span class="n">kernel_size</span> <span class="o">//</span> <span class="mi">2</span><span class="p">)</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="n">frequencies_cutoff</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">r</span><span class="p">,</span> <span class="n">fco</span><span class="o">=</span><span class="n">frequencies_cutoff</span><span class="p">:</span> <span class="n">fco</span> <span class="o">*</span> <span class="n">r</span>
-    
-    <span class="c1"># check if the object is a callable function</span>
-    <span class="k">assert</span> <span class="n">callable</span><span class="p">(</span><span class="n">frequencies_cutoff</span><span class="p">)</span>
-    
-    <span class="n">maximum_frequency</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">max</span><span class="p">(</span><span class="n">frequencies_cutoff</span><span class="p">(</span><span class="n">r</span><span class="p">)</span> <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">rings</span><span class="p">))</span>
 
-    <span class="n">fco_filter</span> <span class="o">=</span> <span class="n">bandlimiting_filter</span><span class="p">(</span><span class="n">frequencies_cutoff</span><span class="p">)</span>
-
-    <span class="k">if</span> <span class="n">custom_basis_filter</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="n">basis_filter</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">d</span><span class="p">,</span> <span class="n">custom_basis_filter</span><span class="o">=</span><span class="n">custom_basis_filter</span><span class="p">,</span> <span class="n">fco_filter</span><span class="o">=</span><span class="n">fco_filter</span><span class="p">:</span> <span class="p">(</span><span class="n">custom_basis_filter</span><span class="p">(</span><span class="n">d</span><span class="p">)</span> <span class="ow">and</span> <span class="n">fco_filter</span><span class="p">(</span><span class="n">d</span><span class="p">))</span>
+    <span class="k">if</span> <span class="n">custom_basis_filter</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">basis_filter</span> <span class="o">=</span> <span class="n">order_filter</span><span class="p">(</span><span class="n">maximum_order</span><span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
-        <span class="n">basis_filter</span> <span class="o">=</span> <span class="n">fco_filter</span>
+        <span class="n">basis_filter</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">d</span><span class="p">:</span> <span class="n">custom_basis_filter</span><span class="p">(</span><span class="n">d</span><span class="p">)</span> <span class="ow">and</span> <span class="n">order_filter</span><span class="p">(</span><span class="n">maximum_order</span><span class="p">)(</span><span class="n">d</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">maximum_power</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">maximum_power</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">maximum_power</span><span class="p">,</span> <span class="n">maximum_order</span> <span class="o">//</span> <span class="mi">2</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">maximum_power</span> <span class="o">=</span> <span class="n">maximum_order</span> <span class="o">//</span> <span class="mi">2</span>
     
-    <span class="k">return</span> <span class="n">grid</span><span class="p">,</span> <span class="n">basis_filter</span><span class="p">,</span> <span class="n">rings</span><span class="p">,</span> <span class="n">sigma</span><span class="p">,</span> <span class="n">maximum_frequency</span>
+    <span class="k">if</span> <span class="n">smoothing</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">rbffd</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;You can&#39;t use smoothing and RBF-FD at the same time.&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">smoothing</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">method</span> <span class="o">=</span> <span class="s2">&quot;gauss&quot;</span>
+    <span class="k">elif</span> <span class="n">rbffd</span><span class="p">:</span>
+        <span class="n">method</span> <span class="o">=</span> <span class="s2">&quot;rbffd&quot;</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">method</span> <span class="o">=</span> <span class="s2">&quot;fd&quot;</span>
+
+    <span class="n">disc</span> <span class="o">=</span> <span class="n">DiscretizationArgs</span><span class="p">(</span>
+        <span class="n">method</span><span class="o">=</span><span class="n">method</span><span class="p">,</span>
+        <span class="n">smoothing</span><span class="o">=</span><span class="n">smoothing</span><span class="p">,</span>
+        <span class="n">angle_offset</span><span class="o">=</span><span class="n">angle_offset</span><span class="p">,</span>
+        <span class="n">phi</span><span class="o">=</span><span class="n">radial_basis_function</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">params</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="c1"># to guarantee that all relevant tensor products</span>
+        <span class="c1"># are generated, we need Laplacian powers up to</span>
+        <span class="c1"># half the maximum order. Anything higher would be</span>
+        <span class="c1"># discarded anyways by the basis_filter</span>
+        <span class="s2">&quot;max_power&quot;</span><span class="p">:</span> <span class="n">maximum_power</span><span class="p">,</span>
+        <span class="c1"># frequencies higher than than the maximum order will be discarded anyway</span>
+        <span class="s2">&quot;maximum_frequency&quot;</span><span class="p">:</span> <span class="n">maximum_order</span><span class="p">,</span>
+        <span class="s2">&quot;discretization&quot;</span><span class="p">:</span> <span class="n">disc</span><span class="p">,</span>
+    <span class="p">}</span>
+
+    <span class="k">return</span> <span class="n">grid</span><span class="p">,</span> <span class="n">basis_filter</span><span class="p">,</span> <span class="n">params</span>
 
 
-<span class="k">def</span> <span class="nf">_manual_fco3</span><span class="p">(</span><span class="n">max_radius</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Callable</span><span class="p">[[</span><span class="nb">float</span><span class="p">],</span> <span class="nb">float</span><span class="p">]:</span>
-    <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
-
-<span class="sd">    Returns a method which takes as input the radius of a ring and returns the maximum frequency which can be sampled</span>
-<span class="sd">    on that ring.</span>
-
-<span class="sd">    Args:</span>
-<span class="sd">        max_radius (float): radius of the last ring touching the border of the grid</span>
-
-<span class="sd">    Returns:</span>
-<span class="sd">        a function which checks the attributes of individual basis elements and chooses whether to discard them or not</span>
-
-<span class="sd">    &quot;&quot;&quot;</span>
-    
-    <span class="k">def</span> <span class="nf">bl_filter</span><span class="p">(</span><span class="n">r</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
-        <span class="n">max_freq</span> <span class="o">=</span> <span class="mi">0</span> <span class="k">if</span> <span class="n">r</span> <span class="o">==</span> <span class="mf">0.</span> <span class="k">else</span> <span class="mi">1</span> <span class="k">if</span> <span class="n">r</span> <span class="o">==</span> <span class="n">max_radius</span> <span class="k">else</span> <span class="mi">2</span>
-        <span class="k">return</span> <span class="n">max_freq</span>
-    
-    <span class="k">return</span> <span class="n">bl_filter</span>
-
-
-<span class="k">def</span> <span class="nf">_manual_fco2</span><span class="p">(</span><span class="n">max_radius</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Callable</span><span class="p">[[</span><span class="nb">float</span><span class="p">],</span> <span class="nb">float</span><span class="p">]:</span>
-    <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
-
-<span class="sd">    Returns a method which takes as input the radius of a ring and returns the maximum frequency which can be sampled</span>
-<span class="sd">    on that ring.</span>
-
-<span class="sd">    Args:</span>
-<span class="sd">        max_radius (float): radius of the last ring touching the border of the grid</span>
-
-<span class="sd">    Returns:</span>
-<span class="sd">        a function which checks the attributes of individual basis elements and chooses whether to discard them or not</span>
-
-<span class="sd">    &quot;&quot;&quot;</span>
-    
-    <span class="k">def</span> <span class="nf">bl_filter</span><span class="p">(</span><span class="n">r</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
-        <span class="n">max_freq</span> <span class="o">=</span> <span class="mi">0</span> <span class="k">if</span> <span class="n">r</span> <span class="o">==</span> <span class="mf">0.</span> <span class="k">else</span> <span class="nb">min</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">r</span><span class="p">,</span> <span class="mi">1</span> <span class="k">if</span> <span class="n">r</span> <span class="o">==</span> <span class="n">max_radius</span> <span class="k">else</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">r</span> <span class="o">-</span> <span class="p">(</span><span class="n">r</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">%</span> <span class="mi">2</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">max_freq</span>
-    
-    <span class="k">return</span> <span class="n">bl_filter</span>
-
-
-<span class="k">def</span> <span class="nf">_manual_fco1</span><span class="p">(</span><span class="n">max_radius</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Callable</span><span class="p">[[</span><span class="nb">float</span><span class="p">],</span> <span class="nb">float</span><span class="p">]:</span>
-    <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
-
-<span class="sd">    Returns a method which takes as input the radius of a ring and returns the maximum frequency which can be sampled</span>
-<span class="sd">    on that ring.</span>
-
-<span class="sd">    Args:</span>
-<span class="sd">        max_radius (float): radius of the last ring touching the border of the grid</span>
-
-<span class="sd">    Returns:</span>
-<span class="sd">        a function which checks the attributes of individual basis elements and chooses whether to discard them or not</span>
-
-<span class="sd">    &quot;&quot;&quot;</span>
-    
-    <span class="k">def</span> <span class="nf">bl_filter</span><span class="p">(</span><span class="n">r</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
-        <span class="n">max_freq</span> <span class="o">=</span> <span class="mi">0</span> <span class="k">if</span> <span class="n">r</span> <span class="o">==</span> <span class="mf">0.</span> <span class="k">else</span> <span class="nb">min</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">r</span><span class="p">,</span> <span class="mi">2</span> <span class="k">if</span> <span class="n">r</span> <span class="o">==</span> <span class="n">max_radius</span> <span class="k">else</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">r</span> <span class="o">-</span> <span class="p">(</span><span class="n">r</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">%</span> <span class="mi">2</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">max_freq</span>
-    
-    <span class="k">return</span> <span class="n">bl_filter</span>
-
-
-
+<span class="k">def</span> <span class="nf">order_filter</span><span class="p">(</span><span class="n">maximum_order</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Callable</span><span class="p">[[</span><span class="nb">dict</span><span class="p">],</span> <span class="nb">bool</span><span class="p">]:</span>
+    <span class="k">return</span> <span class="k">lambda</span> <span class="n">attr</span><span class="p">:</span> <span class="n">attr</span><span class="p">[</span><span class="s2">&quot;order&quot;</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="n">maximum_order</span>
 </pre></div>
 
            </div>

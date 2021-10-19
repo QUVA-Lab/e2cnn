@@ -1,0 +1,695 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>e2cnn.diffops.utils &mdash; e2cnn 0.1.9 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/custom.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> e2cnn
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.1.9
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Package Reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../api/e2cnn.group.html">e2cnn.group</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/e2cnn.group.html#groups">Groups</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/e2cnn.group.html#representations">Representations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/e2cnn.group.html#utility-functions">Utility Functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/e2cnn.group.html#subpackages">Subpackages</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../api/e2cnn.kernels.html">e2cnn.kernels</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/e2cnn.kernels.html#abstract-classes">Abstract Classes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/e2cnn.kernels.html#kernel-bases">Kernel Bases</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/e2cnn.kernels.html#bases-for-group-actions-on-the-plane">Bases for Group Actions on the Plane</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../api/e2cnn.diffops.html">e2cnn.diffops</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/e2cnn.diffops.html#abstract-class">Abstract Class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/e2cnn.diffops.html#pdo-bases">PDO Bases</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/e2cnn.diffops.html#bases-for-group-actions-on-the-plane">Bases for Group Actions on the Plane</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/e2cnn.diffops.html#utility-functions">Utility functions</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../api/e2cnn.gspaces.html">e2cnn.gspaces</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/e2cnn.gspaces.html#abstract-group-space">Abstract Group Space</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/e2cnn.gspaces.html#group-actions-on-the-plane">Group Actions on the Plane</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../api/e2cnn.nn.html">e2cnn.nn</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/e2cnn.nn.html#field-type">Field Type</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/e2cnn.nn.html#geometric-tensor">Geometric Tensor</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/e2cnn.nn.html#equivariant-module">Equivariant Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/e2cnn.nn.html#utils">Utils</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/e2cnn.nn.html#planar-convolution-and-differential-operators">Planar Convolution and Differential Operators</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/e2cnn.nn.html#non-linearities">Non Linearities</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/e2cnn.nn.html#invariant-maps">Invariant Maps</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/e2cnn.nn.html#pooling">Pooling</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/e2cnn.nn.html#normalization">Normalization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/e2cnn.nn.html#dropout">Dropout</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/e2cnn.nn.html#other-modules">Other Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/e2cnn.nn.html#module-e2cnn.nn.init">Weight Initialization</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">e2cnn</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+      <li>e2cnn.diffops.utils</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for e2cnn.diffops.utils</h1><div class="highlight"><pre>
+<span></span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">List</span><span class="p">,</span> <span class="n">Union</span><span class="p">,</span> <span class="n">Iterable</span><span class="p">,</span> <span class="n">Tuple</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">warnings</span>
+<span class="kn">import</span> <span class="nn">pickle</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">scipy.special</span>
+
+<span class="k">try</span><span class="p">:</span>
+    <span class="kn">from</span> <span class="nn">sympy.calculus.finite_diff</span> <span class="kn">import</span> <span class="n">finite_diff_weights</span>
+    <span class="n">_SYMPY_AVAILABLE</span> <span class="o">=</span> <span class="kc">True</span>
+<span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
+    <span class="n">_SYMPY_AVAILABLE</span> <span class="o">=</span> <span class="kc">False</span>
+
+<span class="k">try</span><span class="p">:</span>
+    <span class="kn">from</span> <span class="nn">rbf.pde.fd</span> <span class="kn">import</span> <span class="n">weight_matrix</span> <span class="c1"># type: ignore</span>
+    <span class="kn">from</span> <span class="nn">rbf.basis</span> <span class="kn">import</span> <span class="n">set_symbolic_to_numeric_method</span><span class="p">,</span> <span class="n">get_rbf</span> <span class="c1"># type: ignore</span>
+
+    <span class="n">_RBF_AVAILABLE</span> <span class="o">=</span> <span class="kc">True</span>
+
+    <span class="n">set_symbolic_to_numeric_method</span><span class="p">(</span><span class="s1">&#39;lambdify&#39;</span><span class="p">)</span>
+    <span class="n">_gaussian</span> <span class="o">=</span> <span class="n">get_rbf</span><span class="p">(</span><span class="s2">&quot;ga&quot;</span><span class="p">)</span>
+
+<span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
+    <span class="n">_RBF_AVAILABLE</span> <span class="o">=</span> <span class="kc">False</span>
+
+<span class="n">_DIFFOP_CACHE</span> <span class="o">=</span> <span class="p">{}</span>
+<span class="n">_1D_KERNEL_CACHE</span> <span class="o">=</span> <span class="p">{}</span>
+
+<div class="viewcode-block" id="load_cache"><a class="viewcode-back" href="../../../api/e2cnn.diffops.html#e2cnn.diffops.load_cache">[docs]</a><span class="k">def</span> <span class="nf">load_cache</span><span class="p">(</span><span class="n">path</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;./.e2cnn_cache/diffops.pickle&quot;</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Load cached PDO discretizations from disk.</span>
+<span class="sd">    The cache should have been previously created using :func:`~e2cnn.diffops.store_cache`.</span>
+<span class="sd">    </span>
+<span class="sd">    Args:</span>
+<span class="sd">        path (str, optional): the path to the file with discretizations.</span>
+<span class="sd">        </span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">path</span><span class="p">):</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Loading cached Diffops&quot;</span><span class="p">)</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="s2">&quot;rb&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+            <span class="n">_DIFFOP_CACHE</span> <span class="o">=</span> <span class="n">pickle</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Diffop cache not found, skipping&quot;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="store_cache"><a class="viewcode-back" href="../../../api/e2cnn.diffops.html#e2cnn.diffops.store_cache">[docs]</a><span class="k">def</span> <span class="nf">store_cache</span><span class="p">(</span><span class="n">path</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;./.e2cnn_cache/diffops.pickle&quot;</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Cache PDO discretizations on disk.</span>
+<span class="sd">    The cache can later be loaded using :func:`~e2cnn.diffops.load_cache`.</span>
+<span class="sd">    This will speed up network instantiation as long as the architecture does not</span>
+<span class="sd">    change too much.</span>
+<span class="sd">    </span>
+<span class="sd">    Args:</span>
+<span class="sd">        path (str, optional): the path to the file with discretizations.</span>
+<span class="sd">        </span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">directory</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+    <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">directory</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="s2">&quot;w+b&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+        <span class="n">pickle</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">_DIFFOP_CACHE</span><span class="p">,</span> <span class="n">f</span><span class="p">)</span></div>
+
+
+<span class="k">def</span> <span class="nf">discretize_homogeneous_polynomial</span><span class="p">(</span>
+        <span class="n">points</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span>
+        <span class="n">coefficients</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span>
+        <span class="n">smoothing</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">phi</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;ga&quot;</span><span class="p">,</span>
+        <span class="n">method</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;fd&quot;</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+    <span class="sa">r</span><span class="sd">&quot;&quot;&quot;Discretize a homogeneous partial differential operator.</span>
+<span class="sd">    Homogeneous means that all terms have the same derivative order.</span>
+
+<span class="sd">    See :meth:`e2cnn.diffops.DiffopBasis.sample` for details.</span>
+<span class="sd">    </span>
+<span class="sd">    .. warning::</span>
+<span class="sd">        The discretization relies on two external packages: `sympy &lt;https://docs.sympy.org/&gt;`_ and `rbf &lt;https://rbf.readthedocs.io&gt;`_.</span>
+<span class="sd">        If they are not available, an error is raised.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">points</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="n">points</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="mi">2</span>
+    <span class="n">num_points</span> <span class="o">=</span> <span class="n">points</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+
+    <span class="n">targets</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]])</span>
+
+    <span class="n">key</span> <span class="o">=</span> <span class="p">(</span><span class="n">points</span><span class="o">.</span><span class="n">tobytes</span><span class="p">(),</span> <span class="n">coefficients</span><span class="o">.</span><span class="n">tobytes</span><span class="p">(),</span> <span class="n">smoothing</span><span class="p">,</span> <span class="n">phi</span><span class="p">,</span> <span class="n">method</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">_DIFFOP_CACHE</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">_DIFFOP_CACHE</span><span class="p">[</span><span class="n">key</span><span class="p">]</span>
+
+    <span class="n">n</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">coefficients</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span>
+
+    <span class="n">nonzero</span> <span class="o">=</span> <span class="p">(</span><span class="n">coefficients</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="n">nonzero_indices</span> <span class="o">=</span> <span class="p">[</span><span class="n">k</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="k">if</span> <span class="n">nonzero</span><span class="p">[</span><span class="n">k</span><span class="p">]]</span>
+
+    <span class="n">diffs</span> <span class="o">=</span> <span class="p">[[</span><span class="n">n</span> <span class="o">-</span> <span class="n">k</span><span class="p">,</span> <span class="n">k</span><span class="p">]</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">nonzero_indices</span><span class="p">]</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">diffs</span><span class="p">:</span>
+        <span class="c1"># we have the zero operator</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">num_points</span><span class="p">)</span>
+    
+    <span class="k">if</span> <span class="n">method</span> <span class="o">==</span> <span class="s2">&quot;gauss&quot;</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">smoothing</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;smoothing must be set when method = &#39;gauss&#39;&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">_RBF_AVAILABLE</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s2">&quot;Using derivatives of Gaussians for discretization &quot;</span>
+                               <span class="s2">&quot;requires the RBF package, please install it. &quot;</span>
+                               <span class="s2">&quot;See https://github.com/treverhines/RBF for instructions.&quot;</span><span class="p">)</span>
+        <span class="n">out</span> <span class="o">=</span> <span class="n">gaussian_derivative</span><span class="p">(</span><span class="n">coefficients</span><span class="p">,</span> <span class="n">points</span><span class="p">,</span> <span class="n">smoothing</span><span class="p">)</span>
+
+    <span class="k">elif</span> <span class="n">method</span> <span class="o">==</span> <span class="s2">&quot;fd&quot;</span><span class="p">:</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">_SYMPY_AVAILABLE</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s2">&quot;Using finite difference discretization &quot;</span>
+                               <span class="s2">&quot;requires sympy, please install it.&quot;</span><span class="p">)</span>
+        <span class="c1"># For FD, points needs to be a regular grid, and we need to</span>
+        <span class="c1"># extract its projection onto the two axes.</span>
+        <span class="n">axis_points</span> <span class="o">=</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">points</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">points</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span>
+        <span class="c1"># Here, we just check that everything went as expected</span>
+        <span class="c1"># (i.e. that the input had the expected format).</span>
+        <span class="c1"># The minus sign is the convention that get_grid_coords</span>
+        <span class="c1"># uses, which is what the modules in the nn package use.</span>
+        <span class="n">check_points</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">stack</span><span class="p">(</span>
+            <span class="n">np</span><span class="o">.</span><span class="n">meshgrid</span><span class="p">(</span><span class="n">axis_points</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="o">-</span><span class="n">axis_points</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">indexing</span><span class="o">=</span><span class="s2">&quot;xy&quot;</span><span class="p">)</span>
+        <span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">np</span><span class="o">.</span><span class="n">array_equal</span><span class="p">(</span><span class="n">check_points</span><span class="p">,</span> <span class="n">points</span><span class="p">):</span>
+            <span class="nb">print</span><span class="p">(</span><span class="n">axis_points</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="n">points</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="n">check_points</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Format of points doesn&#39;t match the one needed for FD.&quot;</span><span class="p">)</span>
+
+        <span class="n">kernels</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">stack</span><span class="p">(</span>
+            <span class="p">[</span>
+                <span class="c1"># type checkers get confused by expanding diff, but we know</span>
+                <span class="c1"># that it has length 2.</span>
+                <span class="n">discretize_2d_monomial</span><span class="p">(</span><span class="o">*</span><span class="n">diff</span><span class="p">,</span> <span class="n">axis_points</span><span class="p">)</span> <span class="c1"># type: ignore</span>
+                <span class="k">for</span> <span class="n">diff</span> <span class="ow">in</span> <span class="n">diffs</span>
+            <span class="p">]</span>
+        <span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">num_points</span><span class="p">)</span>
+
+        <span class="n">out</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span>
+            <span class="n">coefficients</span><span class="p">[</span><span class="n">nonzero</span><span class="p">][:,</span> <span class="kc">None</span><span class="p">]</span> <span class="o">*</span> <span class="n">kernels</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span>
+        <span class="p">)</span>
+
+    <span class="k">elif</span> <span class="n">method</span> <span class="o">==</span> <span class="s2">&quot;rbffd&quot;</span><span class="p">:</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">_RBF_AVAILABLE</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s2">&quot;Using RBF-FD for discretization &quot;</span>
+                               <span class="s2">&quot;requires the RBF package, please install it. &quot;</span>
+                               <span class="s2">&quot;See https://github.com/treverhines/RBF for instructions.&quot;</span><span class="p">)</span>
+        <span class="n">out</span> <span class="o">=</span> <span class="n">weight_matrix</span><span class="p">(</span><span class="n">targets</span><span class="p">,</span> <span class="n">points</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="n">num_points</span><span class="p">,</span> <span class="n">diffs</span><span class="p">,</span> <span class="n">coefficients</span><span class="p">[</span><span class="n">nonzero</span><span class="p">],</span> <span class="n">phi</span><span class="o">=</span><span class="n">phi</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">any</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="n">out</span><span class="o">.</span><span class="n">data</span><span class="p">)):</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;NaNs encountered while discretizing diffop </span><span class="si">{</span><span class="n">display_diffop</span><span class="p">(</span><span class="n">coefficients</span><span class="p">)</span><span class="si">}</span><span class="s2"> on </span><span class="si">{</span><span class="n">num_points</span><span class="si">}</span><span class="s2"> points.</span><span class="se">\n</span><span class="s2">&quot;</span>
+                            <span class="sa">f</span><span class="s2">&quot;Diffop passed to RBF: </span><span class="si">{</span><span class="n">diffs</span><span class="si">}</span><span class="s2"> with coefficients </span><span class="si">{</span><span class="n">coefficients</span><span class="p">[</span><span class="n">nonzero</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">all</span><span class="p">(</span><span class="n">out</span><span class="o">.</span><span class="n">data</span> <span class="o">==</span> <span class="mi">0</span><span class="p">):</span>
+            <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Zero filter encountered while discretizing diffop </span><span class="si">{</span><span class="n">display_diffop</span><span class="p">(</span><span class="n">coefficients</span><span class="p">)</span><span class="si">}</span><span class="s2"> on </span><span class="si">{</span><span class="n">num_points</span><span class="si">}</span><span class="s2"> points. &quot;</span>
+                        <span class="s2">&quot;This might indicate that the kernel size is too small for this differential operator.</span><span class="se">\n</span><span class="s2">&quot;</span>
+                        <span class="sa">f</span><span class="s2">&quot;Diffop passed to RBF: </span><span class="si">{</span><span class="n">diffs</span><span class="si">}</span><span class="s2"> with coefficients </span><span class="si">{</span><span class="n">coefficients</span><span class="p">[</span><span class="n">nonzero</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="ne">RuntimeWarning</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">any</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">out</span><span class="o">.</span><span class="n">data</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mf">1e2</span><span class="p">):</span>
+            <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Large filter values encountered while discretizing diffop </span><span class="si">{</span><span class="n">display_diffop</span><span class="p">(</span><span class="n">coefficients</span><span class="p">)</span><span class="si">}</span><span class="s2"> on </span><span class="si">{</span><span class="n">num_points</span><span class="si">}</span><span class="s2"> points. &quot;</span>
+                        <span class="s2">&quot;A larger kernel size or different RBF might help.</span><span class="se">\n</span><span class="s2">&quot;</span>
+                        <span class="sa">f</span><span class="s2">&quot;Max abs filter value: </span><span class="si">{</span><span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">out</span><span class="p">))</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span>
+                        <span class="sa">f</span><span class="s2">&quot;Diffop passed to RBF: </span><span class="si">{</span><span class="n">diffs</span><span class="si">}</span><span class="s2"> with coefficients </span><span class="si">{</span><span class="n">coefficients</span><span class="p">[</span><span class="n">nonzero</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="ne">RuntimeWarning</span><span class="p">)</span>
+
+        <span class="n">out</span> <span class="o">=</span> <span class="n">out</span><span class="o">.</span><span class="n">toarray</span><span class="p">()</span><span class="o">.</span><span class="n">flatten</span><span class="p">()</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Discretization method </span><span class="si">{</span><span class="n">method</span><span class="si">}</span><span class="s2"> not recognized. &quot;</span>
+                         <span class="s2">&quot;Choices are &#39;fd&#39;, &#39;gauss&#39; and &#39;rbffd&#39;.&quot;</span><span class="p">)</span>
+
+    <span class="n">_DIFFOP_CACHE</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">out</span>
+    <span class="k">return</span> <span class="n">out</span>
+
+
+<span class="k">def</span> <span class="nf">discretize_1d_monomial</span><span class="p">(</span><span class="n">n</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">points</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">float</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;Discretize the differential operator d^n/dx^n as a convolutional kernel.&quot;&quot;&quot;</span>
+    <span class="c1"># calculating the finite difference coefficients using sympy is fast,</span>
+    <span class="c1"># but given that this function is called extremely often when sampling</span>
+    <span class="c1"># a basis, it&#39;s still a bottleneck. Even with the cache on the level</span>
+    <span class="c1"># of differential operators (because that one only caches something</span>
+    <span class="c1"># if exactly the same operator appears multiple times).</span>
+    <span class="c1"># So we use an additional cache here, which caches single monomials.</span>
+    <span class="n">key</span> <span class="o">=</span> <span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">points</span><span class="p">))</span>
+    <span class="k">if</span> <span class="n">key</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">_1D_KERNEL_CACHE</span><span class="p">:</span>
+        <span class="k">assert</span> <span class="n">n</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">points</span><span class="p">),</span> <span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Can&#39;t discretize differential operator of order </span><span class="si">{</span><span class="n">n</span><span class="si">}</span><span class="s2"> on </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">points</span><span class="p">)</span><span class="si">}</span><span class="s2"> points, &quot;</span>
+                                <span class="sa">f</span><span class="s2">&quot;at least </span><span class="si">{</span><span class="n">n</span> <span class="o">+</span> <span class="mi">1</span><span class="si">}</span><span class="s2"> points are needed&quot;</span><span class="p">)</span>
+        <span class="n">_1D_KERNEL_CACHE</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">fd_weights</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">points</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">_1D_KERNEL_CACHE</span><span class="p">[</span><span class="n">key</span><span class="p">]</span>
+
+
+<span class="k">def</span> <span class="nf">fd_weights</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">points</span><span class="p">):</span>
+    <span class="n">weights</span> <span class="o">=</span> <span class="n">finite_diff_weights</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">points</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="c1"># first -1 is because we want the highest order (n),</span>
+    <span class="c1"># second -1 means we want the most accurate approximation (using all points)</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">weights</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">discretize_2d_monomial</span><span class="p">(</span><span class="n">n_x</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+                           <span class="n">n_y</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+                           <span class="n">points</span><span class="p">:</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">float</span><span class="p">],</span> <span class="n">List</span><span class="p">[</span><span class="nb">float</span><span class="p">]],</span>
+                           <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;Discretize the differential operator d^{n_x + n_y}/{dx^n_x dy^n_y}.&quot;&quot;&quot;</span>
+    <span class="n">x_kernel</span> <span class="o">=</span> <span class="n">discretize_1d_monomial</span><span class="p">(</span><span class="n">n_x</span><span class="p">,</span> <span class="n">points</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+    <span class="n">y_kernel</span> <span class="o">=</span> <span class="n">discretize_1d_monomial</span><span class="p">(</span><span class="n">n_y</span><span class="p">,</span> <span class="n">points</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+    <span class="k">return</span> <span class="n">x_kernel</span><span class="p">[:,</span> <span class="kc">None</span><span class="p">]</span> <span class="o">*</span> <span class="n">y_kernel</span><span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="p">:]</span>
+
+
+<span class="k">def</span> <span class="nf">multiply_polynomials</span><span class="p">(</span><span class="n">a</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">b</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Multiply two homogeneous polynomials.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        a (ndarray): coefficients of x^n, x^{n - 1}y, ..., y^n for the first polynomial</span>
+<span class="sd">        b (ndarray): coefficients for the second polynomial</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        coefficients of the product</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">n</span><span class="p">,</span> <span class="n">m</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">a</span><span class="p">),</span> <span class="nb">len</span><span class="p">(</span><span class="n">b</span><span class="p">)</span>
+
+    <span class="c1"># compute the Cauchy product</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span>
+        <span class="nb">sum</span><span class="p">(</span><span class="n">a</span><span class="p">[</span><span class="n">l</span><span class="p">]</span> <span class="o">*</span> <span class="n">b</span><span class="p">[</span><span class="n">k</span> <span class="o">-</span> <span class="n">l</span><span class="p">]</span> <span class="k">for</span> <span class="n">l</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">k</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="k">if</span> <span class="n">l</span> <span class="o">&lt;</span> <span class="n">n</span> <span class="ow">and</span> <span class="p">(</span><span class="n">k</span> <span class="o">-</span> <span class="n">l</span><span class="p">)</span> <span class="o">&lt;</span> <span class="n">m</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span> <span class="o">+</span> <span class="n">m</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="p">])</span>
+
+
+<span class="k">def</span> <span class="nf">expand_binomial</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">exponent</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Expand (ax + by)^exponent in terms of monomials and return their coefficients.&quot;&quot;&quot;</span>
+    <span class="n">ks</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">exponent</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="n">binom_coeffs</span> <span class="o">=</span> <span class="n">scipy</span><span class="o">.</span><span class="n">special</span><span class="o">.</span><span class="n">binom</span><span class="p">(</span><span class="n">exponent</span><span class="p">,</span> <span class="n">ks</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">binom_coeffs</span> <span class="o">*</span> <span class="n">a</span> <span class="o">**</span> <span class="p">(</span><span class="n">exponent</span> <span class="o">-</span> <span class="n">ks</span><span class="p">)</span> <span class="o">*</span> <span class="n">b</span> <span class="o">**</span> <span class="n">ks</span>
+
+
+<span class="k">def</span> <span class="nf">transform_polynomial</span><span class="p">(</span><span class="n">coefficients</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">matrix</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Calculate the coefficients of P(Ax), where P is the homogeneous polynomial</span>
+<span class="sd">    defined by the given coefficients and A is the given matrix.</span>
+<span class="sd">    </span>
+<span class="sd">    Args:</span>
+<span class="sd">        coefficients: ndarray of shape(..., n + 1), where the last axis enumerates</span>
+<span class="sd">            coefficients for x^n, x^{n - 1}y, ..., y^n. The other axes are batch</span>
+<span class="sd">            dimension.</span>
+<span class="sd">        matrix: ndarray of shape (2, 2)&quot;&quot;&quot;</span>
+    <span class="n">n</span> <span class="o">=</span> <span class="n">coefficients</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="mi">1</span>
+    <span class="n">batch_shape</span> <span class="o">=</span> <span class="n">coefficients</span><span class="o">.</span><span class="n">shape</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+    <span class="c1"># the transformed polynomial will have the same degree:</span>
+    <span class="n">transformed</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">batch_shape</span> <span class="o">+</span> <span class="p">(</span><span class="n">n</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="p">))</span>
+    <span class="c1"># now we iterate over all n + 1 coefficients:</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
+        <span class="c1"># we have a term coeff * x^{n - i} * y^i</span>
+        <span class="c1"># First, we calculate the transformed versions of the x and y terms:</span>
+        <span class="c1"># (x&#39;)^{n - i} = (A_11 x + A_21 y)^{n - i}</span>
+        <span class="n">x_trafo</span> <span class="o">=</span> <span class="n">expand_binomial</span><span class="p">(</span><span class="n">matrix</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">matrix</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">n</span> <span class="o">-</span> <span class="n">i</span><span class="p">)</span>
+        <span class="c1"># (y&#39;)^i = (A_12 x + A_22 y)^i</span>
+        <span class="n">y_trafo</span> <span class="o">=</span> <span class="n">expand_binomial</span><span class="p">(</span><span class="n">matrix</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">matrix</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">i</span><span class="p">)</span>
+        <span class="c1"># then we combine them</span>
+        <span class="n">xy_trafo</span> <span class="o">=</span> <span class="n">multiply_polynomials</span><span class="p">(</span><span class="n">x_trafo</span><span class="p">,</span> <span class="n">y_trafo</span><span class="p">)</span>
+        <span class="c1"># and finally scale by the coefficient</span>
+        <span class="c1"># broadcasting: (*batch_shape, 1) * (1, ..., 1, n + 1) -&gt; (*batch_shape, n + 1)</span>
+        <span class="n">transformed</span> <span class="o">+=</span> <span class="n">coefficients</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="kc">None</span><span class="p">]</span> <span class="o">*</span> <span class="n">xy_trafo</span><span class="p">[(</span><span class="kc">None</span><span class="p">,</span> <span class="p">)</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">batch_shape</span><span class="p">)]</span>
+    <span class="k">return</span> <span class="n">transformed</span>
+
+
+<span class="k">def</span> <span class="nf">gaussian_derivative</span><span class="p">(</span><span class="n">coefficients</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">points</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">std</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1.</span><span class="p">):</span>
+    <span class="n">n</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">coefficients</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span>
+    <span class="n">num_points</span> <span class="o">=</span> <span class="n">points</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+
+    <span class="n">nonzero</span> <span class="o">=</span> <span class="p">(</span><span class="n">coefficients</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="n">nonzero_indices</span> <span class="o">=</span> <span class="p">[</span><span class="n">k</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="k">if</span> <span class="n">nonzero</span><span class="p">[</span><span class="n">k</span><span class="p">]]</span>
+
+    <span class="n">diffs</span> <span class="o">=</span> <span class="p">[[</span><span class="n">n</span> <span class="o">-</span> <span class="n">k</span><span class="p">,</span> <span class="n">k</span><span class="p">]</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">nonzero_indices</span><span class="p">]</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">diffs</span><span class="p">:</span>
+        <span class="c1"># we have the zero operator</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">num_points</span><span class="p">)</span>
+    
+    <span class="n">center</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
+
+    <span class="n">kernels</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">stack</span><span class="p">(</span>
+        <span class="p">[</span><span class="n">_gaussian</span><span class="p">(</span><span class="n">points</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="n">center</span><span class="p">,</span> <span class="mi">1</span><span class="o">/</span><span class="n">std</span><span class="o">**</span><span class="mi">2</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">diff</span><span class="p">))</span><span class="o">.</span><span class="n">flatten</span><span class="p">()</span> <span class="k">for</span> <span class="n">diff</span> <span class="ow">in</span> <span class="n">diffs</span><span class="p">]</span>
+    <span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span>
+        <span class="n">coefficients</span><span class="p">[</span><span class="n">nonzero</span><span class="p">][:,</span> <span class="kc">None</span><span class="p">]</span> <span class="o">*</span> <span class="n">kernels</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span>
+    <span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">homogenized_cheby</span><span class="p">(</span><span class="n">n</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">kind</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;t&quot;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;Compute the coefficients for the homogenized version of T_n or U&#39;_n.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        n: degree of the polynomial. May be negative, in that case the degree will</span>
+<span class="sd">           be abs(n) but the sign may differ (see notes for exact definition)</span>
+<span class="sd">        kind: Either &#39;t&#39; for the first kind or &#39;u&#39; for the second kind</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        ndarray with coefficients, ordered in descending order of the power of x,</span>
+<span class="sd">        i.e. x^n, x^{n - 1}y, ..., y^n.&quot;&quot;&quot;</span>
+    <span class="n">sign</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sign</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+    <span class="n">n</span> <span class="o">=</span> <span class="nb">abs</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+
+    <span class="n">kind</span> <span class="o">=</span> <span class="n">kind</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+
+    <span class="n">result</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">n</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">kind</span> <span class="o">==</span> <span class="s2">&quot;t&quot;</span><span class="p">:</span>
+        <span class="n">q</span> <span class="o">=</span> <span class="n">n</span> <span class="o">//</span> <span class="mi">2</span>
+        <span class="n">ks</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">q</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="c1"># these are the coefficients of x^{n - 2k}y^{2k}, from k = 0 to n/2</span>
+        <span class="n">result</span><span class="p">[::</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="n">scipy</span><span class="o">.</span><span class="n">special</span><span class="o">.</span><span class="n">binom</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">ks</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="o">**</span> <span class="n">ks</span>
+    <span class="k">elif</span> <span class="n">kind</span> <span class="o">==</span> <span class="s2">&quot;u&quot;</span><span class="p">:</span>
+        <span class="n">q</span> <span class="o">=</span> <span class="p">(</span><span class="n">n</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">//</span> <span class="mi">2</span>
+        <span class="n">ks</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">q</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="c1"># these are the coefficients of x^{n - 2k - 1}y^{2k + 1}, from k = 0 to (n - 1)/2</span>
+        <span class="n">result</span><span class="p">[</span><span class="mi">1</span><span class="p">::</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="n">sign</span> <span class="o">*</span> <span class="n">scipy</span><span class="o">.</span><span class="n">special</span><span class="o">.</span><span class="n">binom</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">ks</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="o">**</span> <span class="n">ks</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;kind must be either &#39;u&#39; or &#39;t&#39;&quot;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">result</span>
+
+
+<span class="k">def</span> <span class="nf">laplacian_power</span><span class="p">(</span><span class="n">k</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Compute the coefficients of x^n, x^{n - 1}y, ..., y^n for the k-th power of the Laplacian.&quot;&quot;&quot;</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">k</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="c1"># The k-th power is given by (x^2 + y^2)^k = sum_{i = 0}^k {k choose i} x^{2i}y^{2(k - i)}.</span>
+    <span class="c1"># So the coefficient of x^{2i}y^{2(k - i)} is the binomial coefficient, and the coefficients</span>
+    <span class="c1"># at odd indices are zero</span>
+    <span class="n">result</span><span class="p">[::</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="n">scipy</span><span class="o">.</span><span class="n">special</span><span class="o">.</span><span class="n">binom</span><span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">k</span> <span class="o">+</span> <span class="mi">1</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">result</span>
+
+
+<span class="k">def</span> <span class="nf">display_diffop</span><span class="p">(</span><span class="n">coefficients</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Show a homogeneous differential operator as a pretty string.&quot;&quot;&quot;</span>
+    <span class="n">out</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+    <span class="n">n</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">coefficients</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span>
+    <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">coeff</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">coefficients</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">coeff</span><span class="p">,</span> <span class="nb">float</span><span class="p">)</span> <span class="ow">and</span> <span class="n">coeff</span><span class="o">.</span><span class="n">is_integer</span><span class="p">():</span>
+            <span class="n">coeff</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">coeff</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">coeff</span><span class="p">,</span> <span class="nb">float</span><span class="p">):</span>
+            <span class="n">coeff</span> <span class="o">=</span> <span class="nb">round</span><span class="p">(</span><span class="n">coeff</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">coeff</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">continue</span>
+
+        <span class="k">if</span> <span class="n">out</span> <span class="o">==</span> <span class="s2">&quot;&quot;</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">coeff</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span>
+                <span class="n">out</span> <span class="o">+=</span> <span class="s2">&quot;-&quot;</span>
+            <span class="k">elif</span> <span class="n">coeff</span> <span class="o">!=</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="n">out</span> <span class="o">+=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">coeff</span><span class="si">}</span><span class="s2">&quot;</span>
+            <span class="k">if</span> <span class="n">coeff</span> <span class="ow">in</span> <span class="p">{</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">}</span> <span class="ow">and</span> <span class="n">n</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="c1"># constant term, we can&#39;t drop the 1</span>
+                <span class="n">out</span> <span class="o">+=</span> <span class="s2">&quot;1&quot;</span>
+        <span class="k">elif</span> <span class="n">coeff</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="n">out</span> <span class="o">+=</span> <span class="s2">&quot; + &quot;</span>
+        <span class="k">elif</span> <span class="n">coeff</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span>
+            <span class="n">out</span> <span class="o">+=</span> <span class="s2">&quot; - &quot;</span>
+        <span class="k">elif</span> <span class="n">coeff</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">out</span> <span class="o">+=</span> <span class="sa">f</span><span class="s2">&quot; + </span><span class="si">{</span><span class="n">coeff</span><span class="si">}</span><span class="s2">&quot;</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">coeff</span><span class="p">,</span> <span class="nb">int</span><span class="p">):</span>
+                <span class="n">out</span> <span class="o">+=</span> <span class="s2">&quot; &quot;</span>
+        <span class="k">elif</span> <span class="n">coeff</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">out</span> <span class="o">+=</span> <span class="sa">f</span><span class="s2">&quot; - </span><span class="si">{</span><span class="nb">abs</span><span class="p">(</span><span class="n">coeff</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">coeff</span><span class="p">,</span> <span class="nb">int</span><span class="p">):</span>
+                <span class="n">out</span> <span class="o">+=</span> <span class="s2">&quot; &quot;</span>
+
+        <span class="k">if</span> <span class="n">n</span> <span class="o">-</span> <span class="n">k</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">out</span> <span class="o">+=</span> <span class="s2">&quot;x&quot;</span> <span class="o">+</span> <span class="n">prettify_exponent</span><span class="p">(</span><span class="n">n</span> <span class="o">-</span> <span class="n">k</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">n</span> <span class="o">-</span> <span class="n">k</span> <span class="o">&gt;</span> <span class="mi">3</span> <span class="ow">and</span> <span class="n">k</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">out</span> <span class="o">+=</span> <span class="s2">&quot; &quot;</span>
+        <span class="k">if</span> <span class="n">k</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">out</span> <span class="o">+=</span> <span class="s2">&quot;y&quot;</span> <span class="o">+</span> <span class="n">prettify_exponent</span><span class="p">(</span><span class="n">k</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">out</span> <span class="o">==</span> <span class="s2">&quot;&quot;</span><span class="p">:</span>
+        <span class="n">out</span> <span class="o">=</span> <span class="s2">&quot;0&quot;</span>
+    <span class="k">return</span> <span class="n">out</span>
+
+<span class="k">def</span> <span class="nf">prettify_exponent</span><span class="p">(</span><span class="n">k</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">k</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="k">return</span> <span class="s2">&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">k</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+        <span class="k">return</span> <span class="s2">&quot;²&quot;</span>
+    <span class="k">if</span> <span class="n">k</span> <span class="o">==</span> <span class="mi">3</span><span class="p">:</span>
+        <span class="k">return</span> <span class="s2">&quot;³&quot;</span>
+    <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;^</span><span class="si">{</span><span class="n">k</span><span class="si">}</span><span class="s2">&quot;</span>
+
+
+<span class="k">def</span> <span class="nf">eval_polys</span><span class="p">(</span><span class="n">coefficients</span><span class="p">,</span> <span class="n">points</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Evaluate homogeneous polynomials on a set of points.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        coefficients: list of ndarrays of shape (..., n + 1) with coefficients of x^n, x^{n - 1}y, ..., y^n</span>
+<span class="sd">        points: ndarray with shape (2, N)</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        ndarray with shape (L, ..., N) where N is the number of points and L the length of the input list</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">results</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">element</span> <span class="ow">in</span> <span class="n">coefficients</span><span class="p">:</span>
+        <span class="n">dims</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">element</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+        <span class="n">nones</span> <span class="o">=</span> <span class="p">(</span><span class="n">dims</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="p">)</span>
+        <span class="n">n</span> <span class="o">=</span> <span class="n">element</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="mi">1</span>
+        <span class="n">ks</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">n</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">xs</span> <span class="o">=</span> <span class="n">points</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="n">ys</span> <span class="o">=</span> <span class="n">points</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="n">monomials</span> <span class="o">=</span> <span class="n">xs</span><span class="o">**</span><span class="p">(</span><span class="n">n</span> <span class="o">-</span> <span class="n">ks</span><span class="p">)</span> <span class="o">*</span> <span class="n">ys</span><span class="o">**</span><span class="n">ks</span>
+        <span class="n">results</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">element</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="p">:]</span> <span class="o">*</span> <span class="n">monomials</span><span class="p">[</span><span class="n">nones</span><span class="p">])</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=-</span><span class="mi">1</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">stack</span><span class="p">(</span><span class="n">results</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">required_points</span><span class="p">(</span><span class="n">order</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">accuracy</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;Compute the number of points necessary to achieve an approximation of the given accuracy.</span>
+
+<span class="sd">    Important note: this function assumes that the points will arranged symmetrically</span>
+<span class="sd">    around 0. Corollary 7 from https://arxiv.org/pdf/1102.3203.pdf then says that the</span>
+<span class="sd">    order of accuracy may be boosted by 1 compared to the usual one, which is exploited in</span>
+<span class="sd">    this function to return a lower number of points when possible.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        order (int): order of the differential operator</span>
+<span class="sd">        accuracy (int): desired accuracy (e.g. 2 for approximation to quadratic order)</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        number of required sampling points</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># The usual formula for the required number of points:</span>
+    <span class="n">N</span> <span class="o">=</span> <span class="n">order</span> <span class="o">+</span> <span class="n">accuracy</span>
+    <span class="c1"># The remaining question is whether we can reduce this number by</span>
+    <span class="c1"># 1 and still retain the desired accuracy, an effect called &quot;boosted order of accuracy&quot;.</span>
+    <span class="c1"># Corollary 7 from https://arxiv.org/pdf/1102.3203.pdf says that</span>
+    <span class="c1"># boosting happens if the number of points minus the order is odd.</span>
+    <span class="c1"># We want to check whether N - 1 still has the desired accuracy,</span>
+    <span class="c1"># i.e. whether (N - 1) - order, or simply accuracy - 1, is odd:</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">accuracy</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">%</span> <span class="mi">2</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">N</span> <span class="o">-</span> <span class="mi">1</span>
+    <span class="k">return</span> <span class="n">N</span>
+
+<span class="k">def</span> <span class="nf">largest_possible_order</span><span class="p">(</span><span class="n">num_points</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">accuracy</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;Compute the largest diffop order such that the given accuracy is satisfied.</span>
+
+<span class="sd">    See ``required_points`` for details.&quot;&quot;&quot;</span>
+    <span class="n">order</span> <span class="o">=</span> <span class="n">num_points</span> <span class="o">-</span> <span class="n">accuracy</span>
+    <span class="k">assert</span> <span class="n">order</span> <span class="o">&gt;=</span> <span class="mi">0</span>
+    <span class="c1"># check if the next-larger order would be boosted:</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">num_points</span> <span class="o">-</span> <span class="p">(</span><span class="n">order</span> <span class="o">+</span> <span class="mi">1</span><span class="p">))</span> <span class="o">%</span> <span class="mi">2</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">order</span> <span class="o">+</span> <span class="mi">1</span>
+    <span class="k">return</span> <span class="n">order</span>
+
+<span class="k">def</span> <span class="nf">guaranteed_accuracy</span><span class="p">(</span><span class="n">num_points</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">order</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;Compute the accuracy that is guaranteed for the given order and number of points.</span>
+
+<span class="sd">    See ``required_points`` for details.&quot;&quot;&quot;</span>
+    <span class="n">accuracy</span> <span class="o">=</span> <span class="n">num_points</span> <span class="o">-</span> <span class="n">order</span>
+    <span class="k">assert</span> <span class="n">accuracy</span> <span class="o">&gt;=</span> <span class="mi">0</span>
+    <span class="c1"># check if boosting happens:</span>
+    <span class="k">if</span> <span class="n">accuracy</span> <span class="o">%</span> <span class="mi">2</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">accuracy</span> <span class="o">+</span> <span class="mi">1</span>
+    <span class="k">return</span> <span class="n">accuracy</span>
+
+<span class="k">def</span> <span class="nf">symmetric_points</span><span class="p">(</span><span class="n">n</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">dilation</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">float</span><span class="p">]:</span>
+    <span class="c1"># return e.g. [-1, 0, 1] for n = 3 and [-0.5, 0.5] for n = 2, etc.</span>
+    <span class="n">points</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+    <span class="n">offset</span> <span class="o">=</span> <span class="p">(</span><span class="n">n</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span>
+    <span class="k">return</span> <span class="p">[(</span><span class="n">x</span> <span class="o">-</span> <span class="n">offset</span><span class="p">)</span> <span class="o">*</span> <span class="n">dilation</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">points</span><span class="p">]</span>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2019, Qualcomm Innovation Center, Inc. Developed by Gabriele Cesa, Maurice Weiler.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

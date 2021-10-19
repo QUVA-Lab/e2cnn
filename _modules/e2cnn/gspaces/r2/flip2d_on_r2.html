@@ -102,6 +102,13 @@
 <li class="toctree-l2"><a class="reference internal" href="../../../../api/e2cnn.kernels.html#bases-for-group-actions-on-the-plane">Bases for Group Actions on the Plane</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../api/e2cnn.diffops.html">e2cnn.diffops</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../api/e2cnn.diffops.html#abstract-class">Abstract Class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../api/e2cnn.diffops.html#pdo-bases">PDO Bases</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../api/e2cnn.diffops.html#bases-for-group-actions-on-the-plane">Bases for Group Actions on the Plane</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../api/e2cnn.diffops.html#utility-functions">Utility functions</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../api/e2cnn.gspaces.html">e2cnn.gspaces</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../../../../api/e2cnn.gspaces.html#abstract-group-space">Abstract Group Space</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../api/e2cnn.gspaces.html#group-actions-on-the-plane">Group Actions on the Plane</a></li>
@@ -112,7 +119,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../../../../api/e2cnn.nn.html#geometric-tensor">Geometric Tensor</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../api/e2cnn.nn.html#equivariant-module">Equivariant Module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../api/e2cnn.nn.html#utils">Utils</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../../api/e2cnn.nn.html#planar-convolution">Planar Convolution</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../api/e2cnn.nn.html#planar-convolution-and-differential-operators">Planar Convolution and Differential Operators</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../api/e2cnn.nn.html#non-linearities">Non Linearities</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../api/e2cnn.nn.html#invariant-maps">Invariant Maps</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../api/e2cnn.nn.html#pooling">Pooling</a></li>
@@ -193,6 +200,7 @@
 
 <span class="kn">from</span> <span class="nn">e2cnn</span> <span class="kn">import</span> <span class="n">gspaces</span>
 <span class="kn">from</span> <span class="nn">e2cnn</span> <span class="kn">import</span> <span class="n">kernels</span>
+<span class="kn">from</span> <span class="nn">e2cnn</span> <span class="kn">import</span> <span class="n">diffops</span>
 
 <span class="kn">from</span> <span class="nn">.general_r2</span> <span class="kn">import</span> <span class="n">GeneralOnR2</span>
 <span class="kn">from</span> <span class="nn">.utils</span> <span class="kn">import</span> <span class="n">rotate_array</span>
@@ -317,6 +325,51 @@
             <span class="s1">&#39;Error! Either the maximum frequency or the maximum offset for the frequencies must be set&#39;</span>
     
         <span class="k">return</span> <span class="n">kernels</span><span class="o">.</span><span class="n">kernels_Flip_act_R2</span><span class="p">(</span><span class="n">in_repr</span><span class="p">,</span> <span class="n">out_repr</span><span class="p">,</span> <span class="n">rings</span><span class="p">,</span> <span class="n">sigma</span><span class="p">,</span>
+                                           <span class="n">axis</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">axis</span><span class="p">,</span>
+                                           <span class="n">max_frequency</span><span class="o">=</span><span class="n">maximum_frequency</span><span class="p">,</span>
+                                           <span class="n">max_offset</span><span class="o">=</span><span class="n">maximum_offset</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_diffop_basis_generator</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
+                                <span class="n">in_repr</span><span class="p">:</span> <span class="n">Representation</span><span class="p">,</span>
+                                <span class="n">out_repr</span><span class="p">:</span> <span class="n">Representation</span><span class="p">,</span>
+                                <span class="n">max_power</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+                                <span class="o">**</span><span class="n">kwargs</span><span class="p">,</span>
+                                <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">diffops</span><span class="o">.</span><span class="n">DiffopBasis</span><span class="p">:</span>
+        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Method that builds the analytical basis that spans the space of equivariant PDOs which</span>
+<span class="sd">        are intertwiners between the representations induced from the representation ``in_repr`` and ``out_repr``.</span>
+
+<span class="sd">        Either ``maximum_frequency`` or ``maximum_offset`` must be set in the keywords arguments.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            in_repr: the input representation</span>
+<span class="sd">            out_repr: the output representation</span>
+<span class="sd">            max_power (int): the maximum power of Laplacians to use</span>
+
+<span class="sd">        Keyword Args:</span>
+<span class="sd">            maximum_frequency (int): the maximum frequency allowed in the basis vectors</span>
+<span class="sd">            maximum_offset (int): the maximum frequencies offset for each basis vector with respect to its base ones</span>
+<span class="sd">                                  (sum and difference of the frequencies of the input and the output representations)</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            the basis built</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">maximum_frequency</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="n">maximum_offset</span> <span class="o">=</span> <span class="kc">None</span>
+
+        <span class="k">if</span> <span class="s1">&#39;maximum_frequency&#39;</span> <span class="ow">in</span> <span class="n">kwargs</span> <span class="ow">and</span> <span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;maximum_frequency&#39;</span><span class="p">]</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">maximum_frequency</span> <span class="o">=</span> <span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;maximum_frequency&#39;</span><span class="p">]</span>
+            <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">maximum_frequency</span><span class="p">,</span> <span class="nb">int</span><span class="p">)</span> <span class="ow">and</span> <span class="n">maximum_frequency</span> <span class="o">&gt;=</span> <span class="mi">0</span>
+
+        <span class="k">if</span> <span class="s1">&#39;maximum_offset&#39;</span> <span class="ow">in</span> <span class="n">kwargs</span> <span class="ow">and</span> <span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;maximum_offset&#39;</span><span class="p">]</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">maximum_offset</span> <span class="o">=</span> <span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;maximum_offset&#39;</span><span class="p">]</span>
+            <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">maximum_offset</span><span class="p">,</span> <span class="nb">int</span><span class="p">)</span> <span class="ow">and</span> <span class="n">maximum_offset</span> <span class="o">&gt;=</span> <span class="mi">0</span>
+
+        <span class="k">assert</span> <span class="p">(</span><span class="n">maximum_frequency</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">maximum_offset</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">),</span> \
+            <span class="s1">&#39;Error! Either the maximum frequency or the maximum offset for the frequencies must be set&#39;</span>
+
+        <span class="k">return</span> <span class="n">diffops</span><span class="o">.</span><span class="n">diffops_Flip_act_R2</span><span class="p">(</span><span class="n">in_repr</span><span class="p">,</span> <span class="n">out_repr</span><span class="p">,</span> <span class="n">max_power</span><span class="p">,</span>
                                            <span class="n">axis</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">axis</span><span class="p">,</span>
                                            <span class="n">max_frequency</span><span class="o">=</span><span class="n">maximum_frequency</span><span class="p">,</span>
                                            <span class="n">max_offset</span><span class="o">=</span><span class="n">maximum_offset</span><span class="p">)</span>

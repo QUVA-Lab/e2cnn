@@ -36,6 +36,8 @@ Examples include:
 
 For more details we refer to our NeurIPS 2019 paper [General E(2)-Equivariant Steerable CNNs](https://arxiv.org/abs/1911.08251).
 
+The library also supports equivariant Steerable partial differential operators as described in [Steerable Partial Differential Operators for Equivariant Neural Networks](https://arxiv.org/abs/2106.10163).
+
 --------------------------------------------------------------------------------
 
 The library is structured into four subpackages with different high-level features:
@@ -44,6 +46,7 @@ The library is structured into four subpackages with different high-level featur
 | ---------------------------------------------------------------------------| ---------------------------------------------------------------- |
 | [**e2cnn.group**](https://github.com/QUVA-Lab/e2cnn/blob/master/group/)                | implements basic concepts of *group* and *representation* theory |
 | [**e2cnn.kernels**](https://github.com/QUVA-Lab/e2cnn/blob/master/kernels/)            | solves for spaces of equivariant convolution kernels             |
+| [**e2cnn.diffops**](https://github.com/QUVA-Lab/e2cnn/blob/master/diffops/)            | solves for spaces of equivariant differential operators          |
 | [**e2cnn.gspaces**](https://github.com/QUVA-Lab/e2cnn/blob/master/gspaces/)            | defines the image plane and its symmetries                       |
 | [**e2cnn.nn**](https://github.com/QUVA-Lab/e2cnn/blob/master/nn/)                      | contains equivariant modules to build deep neural networks       |
 -------------------------------------------------------------------------------------------------------------------------------------------------
@@ -162,6 +165,14 @@ pymanopt
 autograd
 ```
 
+The following packages
+```
+sympy
+rbf
+```
+are required to use the steerable differential operators.
+
+
 Check the branch [legacy_py3.6](https://github.com/QUVA-Lab/e2cnn/tree/legacy_py3.6) for a Python 3.6 compatible version of the library.
 
 ## Installation
@@ -192,6 +203,21 @@ Please cite this work if you use our code:
     year={2019},
 }
 ```
+
+The implementation of steerable PDOs are part of the work done in the paper
+[Steerable Partial Differential Operators for Equivariant Neural Networks](https://arxiv.org/abs/2106.10163).
+Please, cite it if you use this code in your own work:
+```
+@misc{jenner2021steerable,
+    title={Steerable Partial Differential Operators for Equivariant Neural Networks},
+    author={Erik Jenner and Maurice Weiler},
+    year={2021},
+    eprint={2106.10163},
+    archivePrefix={arXiv},
+    primaryClass={cs.LG}
+}
+```
+
 
 Feel free to [contact us](mailto:cesa.gabriele@gmail.com,m.weiler.ml@gmail.com).
 

@@ -63,7 +63,7 @@ Please, cite us if you use this code in your own work::
         year={2019},
     }
 
-The implementation of steerable PDOs in :doc:`e2cnn.diffops <api/e2cnn.nn>` and the subpackage
+The implementation of steerable PDOs in :doc:`e2cnn.nn <api/e2cnn.nn>` and the subpackage
 :doc:`e2cnn.diffops <api/e2cnn.diffops>` are part of the work done in `this paper <https://arxiv.org/abs/2106.10163>`_ .
 Please, cite it if you use this code in your own work::
 

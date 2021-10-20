@@ -31,17 +31,81 @@ class TestDiffop(TestCase):
         cl.train()
         cl.check_equivariance()
 
-    def test_so2(self):
+    def test_cyclic_gauss(self):
+        N = 8
+        g = Rot2dOnR2(N)
+    
+        r1 = FieldType(g, list(g.representations.values()))
+        r2 = FieldType(g, list(g.representations.values()) * 2)
+    
+        s = 7
+    
+        cl = R2Diffop(r1, r2, s, maximum_order=4, smoothing=1., bias=True)
+        cl.bias.data = 20 * torch.randn_like(cl.bias.data)
+    
+        cl.eval()
+        cl.check_equivariance()
+    
+        cl.train()
+        cl.check_equivariance()
+
+    def test_cyclic_rbffd(self):
+        N = 8
+        g = Rot2dOnR2(N)
+    
+        r1 = FieldType(g, list(g.representations.values()))
+        r2 = FieldType(g, list(g.representations.values()) * 2)
+    
+        s = 7
+    
+        cl = R2Diffop(r1, r2, s, maximum_order=4, rbffd=True, bias=True)
+        cl.bias.data = 20 * torch.randn_like(cl.bias.data)
+    
+        cl.eval()
+        cl.check_equivariance()
+    
+        cl.train()
+        cl.check_equivariance()
+
+    def test_so2_gauss(self):
         N = 7
         g = Rot2dOnR2(-1, N)
-
+    
         r1 = FieldType(g, list(g.representations.values()))
         r2 = FieldType(g, list(g.representations.values()))
     
         s = 7
-        
+    
+        cl = R2Diffop(r1, r2, s, maximum_order=4, smoothing=1., bias=True)
+    
+        cl.eval()
+        cl.check_equivariance()
+
+    def test_so2_rbffd(self):
+        N = 7
+        g = Rot2dOnR2(-1, N)
+    
+        r1 = FieldType(g, list(g.representations.values()))
+        r2 = FieldType(g, list(g.representations.values()))
+    
+        s = 7
+    
+        cl = R2Diffop(r1, r2, s, maximum_order=4, rbffd=True, bias=True)
+    
+        cl.eval()
+        cl.check_equivariance()
+
+    def test_so2(self):
+        N = 7
+        g = Rot2dOnR2(-1, N)
+    
+        r1 = FieldType(g, list(g.representations.values()))
+        r2 = FieldType(g, list(g.representations.values()))
+    
+        s = 7
+    
         cl = R2Diffop(r1, r2, s, maximum_order=4, bias=True)
-        
+    
         cl.eval()
         cl.check_equivariance()
 
@@ -59,6 +123,34 @@ class TestDiffop(TestCase):
         cl.eval()
         cl.check_equivariance()
 
+    def test_dihedral_gauss(self):
+        N = 8
+        g = FlipRot2dOnR2(N, axis=np.pi / 3)
+    
+        r1 = FieldType(g, list(g.representations.values()))
+        r2 = FieldType(g, list(g.representations.values()))
+    
+        s = 7
+    
+        cl = R2Diffop(r1, r2, s, maximum_order=4, smoothing=1., bias=True)
+    
+        cl.eval()
+        cl.check_equivariance()
+
+    def test_dihedral_rbffd(self):
+        N = 8
+        g = FlipRot2dOnR2(N, axis=np.pi / 3)
+    
+        r1 = FieldType(g, list(g.representations.values()))
+        r2 = FieldType(g, list(g.representations.values()))
+    
+        s = 7
+    
+        cl = R2Diffop(r1, r2, s, maximum_order=4, rbffd=True, bias=True)
+    
+        cl.eval()
+        cl.check_equivariance()
+
     def test_o2(self):
         N = 7
         g = FlipRot2dOnR2(-1, N)
@@ -73,6 +165,34 @@ class TestDiffop(TestCase):
         cl.eval()
         cl.check_equivariance()
 
+    def test_o2_gauss(self):
+        N = 7
+        g = FlipRot2dOnR2(-1, N)
+    
+        r1 = FieldType(g, list(g.representations.values()))
+        r2 = FieldType(g, list(g.representations.values()))
+    
+        s = 7
+    
+        cl = R2Diffop(r1, r2, s, maximum_order=4, bias=True, smoothing=1.)
+    
+        cl.eval()
+        cl.check_equivariance()
+
+    def test_o2_rbffd(self):
+        N = 7
+        g = FlipRot2dOnR2(-1, N)
+    
+        r1 = FieldType(g, list(g.representations.values()))
+        r2 = FieldType(g, list(g.representations.values()))
+    
+        s = 7
+    
+        cl = R2Diffop(r1, r2, s, maximum_order=4, bias=True, rbffd=True)
+    
+        cl.eval()
+        cl.check_equivariance()
+
     def test_flip(self):
         # g = Flip2dOnR2(axis=np.pi/3)
         g = Flip2dOnR2(axis=np.pi/2)
@@ -84,6 +204,34 @@ class TestDiffop(TestCase):
         
         cl = R2Diffop(r1, r2, s, maximum_order=4, bias=True)
         
+        cl.eval()
+        cl.check_equivariance()
+
+    def test_flip_gauss(self):
+        # g = Flip2dOnR2(axis=np.pi/3)
+        g = Flip2dOnR2(axis=np.pi / 2)
+    
+        r1 = FieldType(g, list(g.representations.values()))
+        r2 = FieldType(g, list(g.representations.values()) * 3).sorted()
+    
+        s = 9
+    
+        cl = R2Diffop(r1, r2, s, maximum_order=4, bias=True, smoothing=1.)
+    
+        cl.eval()
+        cl.check_equivariance()
+
+    def test_flip_rbffd(self):
+        # g = Flip2dOnR2(axis=np.pi/3)
+        g = Flip2dOnR2(axis=np.pi / 2)
+    
+        r1 = FieldType(g, list(g.representations.values()))
+        r2 = FieldType(g, list(g.representations.values()) * 3).sorted()
+    
+        s = 9
+    
+        cl = R2Diffop(r1, r2, s, maximum_order=4, bias=True, rbffd=True)
+    
         cl.eval()
         cl.check_equivariance()
 

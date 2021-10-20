@@ -4,6 +4,7 @@ from e2cnn.gspaces import GSpace
 from e2cnn import kernels, diffops
 from e2cnn.group import Group
 from e2cnn.group import Representation
+from e2cnn.diffops import DiscretizationArgs
 
 from abc import abstractmethod
 from typing import List, Union
@@ -209,5 +210,6 @@ class GeneralOnR2(GSpace):
                                 in_repr: Representation,
                                 out_repr: Representation,
                                 max_power: int,
+                                discretization: DiscretizationArgs,
                                 **kwargs):
         pass

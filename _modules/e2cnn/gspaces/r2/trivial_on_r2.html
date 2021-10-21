@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>e2cnn.gspaces.r2.trivial_on_r2 &mdash; e2cnn 0.2 documentation</title>
+  <title>e2cnn.gspaces.r2.trivial_on_r2 &mdash; e2cnn 0.2.1 documentation</title>
   
 
   
@@ -62,7 +62,7 @@
             
             
               <div class="version">
-                0.2
+                0.2.1
               </div>
             
           
@@ -210,6 +210,8 @@
 <span class="kn">from</span> <span class="nn">e2cnn.group</span> <span class="kn">import</span> <span class="n">CyclicGroup</span>
 <span class="kn">from</span> <span class="nn">e2cnn.group</span> <span class="kn">import</span> <span class="n">cyclic_group</span>
 
+<span class="kn">from</span> <span class="nn">e2cnn.diffops</span> <span class="kn">import</span> <span class="n">DiscretizationArgs</span>
+
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 
 <span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;TrivialOnR2&quot;</span><span class="p">]</span>
@@ -319,6 +321,7 @@
                                 <span class="n">in_repr</span><span class="p">:</span> <span class="n">Representation</span><span class="p">,</span>
                                 <span class="n">out_repr</span><span class="p">:</span> <span class="n">Representation</span><span class="p">,</span>
                                 <span class="n">max_power</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+                                <span class="n">discretization</span><span class="p">:</span> <span class="n">DiscretizationArgs</span><span class="p">,</span>
                                 <span class="o">**</span><span class="n">kwargs</span><span class="p">,</span>
                                 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">diffops</span><span class="o">.</span><span class="n">DiffopBasis</span><span class="p">:</span>
         <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
@@ -331,6 +334,7 @@
 <span class="sd">            in_repr: the input representation</span>
 <span class="sd">            out_repr: the output representation</span>
 <span class="sd">            max_power (int): the maximum power of Laplacians to use</span>
+<span class="sd">            discretization (DiscretizationArgs): the parameters specifying a discretization procedure for PDOs</span>
 
 <span class="sd">        Keyword Args:</span>
 <span class="sd">            maximum_frequency (int): the maximum frequency allowed in the basis vectors</span>
@@ -357,7 +361,7 @@
     
         <span class="k">return</span> <span class="n">diffops</span><span class="o">.</span><span class="n">diffops_Trivial_act_R2</span><span class="p">(</span><span class="n">in_repr</span><span class="p">,</span> <span class="n">out_repr</span><span class="p">,</span> <span class="n">max_power</span><span class="p">,</span>
                                               <span class="n">maximum_frequency</span><span class="p">,</span>
-                                              <span class="n">max_offset</span><span class="o">=</span><span class="n">maximum_offset</span><span class="p">)</span>
+                                              <span class="n">max_offset</span><span class="o">=</span><span class="n">maximum_offset</span><span class="p">,</span> <span class="n">discretization</span><span class="o">=</span><span class="n">discretization</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">_basespace_action</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">input</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">element</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">int</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
         

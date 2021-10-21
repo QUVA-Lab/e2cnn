@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>e2cnn.gspaces &mdash; e2cnn 0.2 documentation</title>
+  <title>e2cnn.gspaces &mdash; e2cnn 0.2.1 documentation</title>
   
 
   
@@ -66,7 +66,7 @@
             
             
               <div class="version">
-                0.2
+                0.2.1
               </div>
             
           
@@ -521,7 +521,7 @@ If only one scalar is passed, it is used for all rings</p></li>
 
 <dl class="py method">
 <dt id="e2cnn.gspaces.GeneralOnR2.build_diffop_basis">
-<code class="sig-name descname"><span class="pre">build_diffop_basis</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">in_repr</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">out_repr</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_power</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/e2cnn/gspaces/r2/general_r2.html#GeneralOnR2.build_diffop_basis"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#e2cnn.gspaces.GeneralOnR2.build_diffop_basis" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">build_diffop_basis</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">in_repr</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">out_repr</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_power</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">discretization</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/e2cnn/gspaces/r2/general_r2.html#GeneralOnR2.build_diffop_basis"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#e2cnn.gspaces.GeneralOnR2.build_diffop_basis" title="Permalink to this definition">¶</a></dt>
 <dd><p>Builds a basis for the space of the equivariant PDOs with respect to the symmetries described by this
 <a class="reference internal" href="#e2cnn.gspaces.GSpace" title="e2cnn.gspaces.GSpace"><code class="xref py py-class docutils literal notranslate"><span class="pre">GSpace</span></code></a>.</p>
 <p>A <span class="math notranslate nohighlight">\(G\)</span>-equivariant PDO <span class="math notranslate nohighlight">\(D(P)\)</span> for a matrix of polynomials <span class="math notranslate nohighlight">\(P\)</span>, mapping between an input field, transforming under
@@ -550,6 +550,7 @@ If only one scalar is passed, it is used for all rings</p></li>
 <li><p><strong>in_repr</strong> (<a class="reference internal" href="e2cnn.group.html#e2cnn.group.Representation" title="e2cnn.group.Representation"><em>Representation</em></a>) – the input representation</p></li>
 <li><p><strong>out_repr</strong> (<a class="reference internal" href="e2cnn.group.html#e2cnn.group.Representation" title="e2cnn.group.Representation"><em>Representation</em></a>) – the output representation</p></li>
 <li><p><strong>max_power</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – the largest power of the Laplacian that will be used</p></li>
+<li><p><strong>discretization</strong> (<a class="reference internal" href="e2cnn.diffops.html#e2cnn.diffops.DiscretizationArgs" title="e2cnn.diffops.DiscretizationArgs"><em>DiscretizationArgs</em></a>) – the parameters specifying a discretization procedure for PDOs</p></li>
 <li><p><strong>**kwargs</strong> – Group-specific keywords arguments for <code class="docutils literal notranslate"><span class="pre">_basis_generator</span></code> method</p></li>
 </ul>
 </dd>

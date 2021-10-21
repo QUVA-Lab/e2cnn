@@ -13,6 +13,8 @@ from e2cnn.group import Group
 from e2cnn.group import CyclicGroup
 from e2cnn.group import cyclic_group
 
+from e2cnn.diffops import DiscretizationArgs
+
 import numpy as np
 
 __all__ = ["TrivialOnR2"]
@@ -122,6 +124,7 @@ class TrivialOnR2(GeneralOnR2):
                                 in_repr: Representation,
                                 out_repr: Representation,
                                 max_power: int,
+                                discretization: DiscretizationArgs,
                                 **kwargs,
                                 ) -> diffops.DiffopBasis:
         r"""
@@ -134,6 +137,7 @@ class TrivialOnR2(GeneralOnR2):
             in_repr: the input representation
             out_repr: the output representation
             max_power (int): the maximum power of Laplacians to use
+            discretization (DiscretizationArgs): the parameters specifying a discretization procedure for PDOs
 
         Keyword Args:
             maximum_frequency (int): the maximum frequency allowed in the basis vectors
@@ -160,7 +164,7 @@ class TrivialOnR2(GeneralOnR2):
     
         return diffops.diffops_Trivial_act_R2(in_repr, out_repr, max_power,
                                               maximum_frequency,
-                                              max_offset=maximum_offset)
+                                              max_offset=maximum_offset, discretization=discretization)
 
     def _basespace_action(self, input: np.ndarray, element: Union[float, int]) -> np.ndarray:
         

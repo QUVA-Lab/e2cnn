@@ -14,6 +14,8 @@ from e2cnn.group import O2
 from e2cnn.group import dihedral_group
 from e2cnn.group import o2_group
 
+from e2cnn.diffops import DiscretizationArgs
+
 import numpy as np
 
 
@@ -218,6 +220,7 @@ class FlipRot2dOnR2(GeneralOnR2):
                                 in_repr: Representation,
                                 out_repr: Representation,
                                 max_power: int,
+                                discretization: DiscretizationArgs,
                                 ** kwargs,
                                 ) -> diffops.DiffopBasis:
         r"""
@@ -231,6 +234,7 @@ class FlipRot2dOnR2(GeneralOnR2):
             in_repr: the input representation
             out_repr: the output representation
             max_power (int): the maximum power of Laplacians to use
+            discretization (DiscretizationArgs): the parameters specifying a discretization procedure for PDOs
 
         Keyword Args:
             maximum_frequency (int): the maximum frequency allowed in the basis vectors
@@ -241,7 +245,7 @@ class FlipRot2dOnR2(GeneralOnR2):
             the basis built
 
         """
-    
+        
         if self.fibergroup.order() > 0:
             maximum_frequency = None
             maximum_offset = None
@@ -260,9 +264,9 @@ class FlipRot2dOnR2(GeneralOnR2):
             return diffops.diffops_DN_act_R2(in_repr, out_repr, max_power,
                                              axis=self.axis,
                                              max_frequency=maximum_frequency,
-                                             max_offset=maximum_offset)
+                                             max_offset=maximum_offset, discretization=discretization)
         else:
-            return diffops.diffops_O2_act_R2(in_repr, out_repr, max_power, axis=self.axis)
+            return diffops.diffops_O2_act_R2(in_repr, out_repr, max_power, axis=self.axis, discretization=discretization)
 
     def _basespace_action(self, input: np.ndarray, element: Tuple[int, Union[float, int]]) -> np.ndarray:
     

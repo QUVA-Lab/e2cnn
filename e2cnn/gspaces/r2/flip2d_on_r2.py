@@ -17,6 +17,7 @@ import numpy as np
 
 
 from typing import Tuple, Callable, List
+from e2cnn.diffops import DiscretizationArgs
 
 __all__ = ["Flip2dOnR2"]
 
@@ -136,6 +137,7 @@ class Flip2dOnR2(GeneralOnR2):
                                 in_repr: Representation,
                                 out_repr: Representation,
                                 max_power: int,
+                                discretization: DiscretizationArgs,
                                 **kwargs,
                                 ) -> diffops.DiffopBasis:
         r"""
@@ -148,6 +150,7 @@ class Flip2dOnR2(GeneralOnR2):
             in_repr: the input representation
             out_repr: the output representation
             max_power (int): the maximum power of Laplacians to use
+            discretization (DiscretizationArgs): the parameters specifying a discretization procedure for PDOs
 
         Keyword Args:
             maximum_frequency (int): the maximum frequency allowed in the basis vectors
@@ -160,7 +163,7 @@ class Flip2dOnR2(GeneralOnR2):
         """
         maximum_frequency = None
         maximum_offset = None
-
+        
         if 'maximum_frequency' in kwargs and kwargs['maximum_frequency'] is not None:
             maximum_frequency = kwargs['maximum_frequency']
             assert isinstance(maximum_frequency, int) and maximum_frequency >= 0
@@ -175,7 +178,7 @@ class Flip2dOnR2(GeneralOnR2):
         return diffops.diffops_Flip_act_R2(in_repr, out_repr, max_power,
                                            axis=self.axis,
                                            max_frequency=maximum_frequency,
-                                           max_offset=maximum_offset)
+                                           max_offset=maximum_offset, discretization=discretization)
 
     def _basespace_action(self, input: np.ndarray, element: int) -> np.ndarray:
     

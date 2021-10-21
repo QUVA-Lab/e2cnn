@@ -172,7 +172,6 @@ rbf
 ```
 are required to use the steerable differential operators.
 
-
 Check the branch [legacy_py3.6](https://github.com/QUVA-Lab/e2cnn/tree/legacy_py3.6) for a Python 3.6 compatible version of the library.
 
 ## Installation
@@ -188,6 +187,11 @@ or you can clone this repository and manually install it with
 pip install git+https://github.com/QUVA-Lab/e2cnn
 ```
 
+
+NOTE: the ```rbf``` dependency (necessary to use differential operators) can not
+be installed automatically since PyPI does not support direct dependencies 
+(see [here](https://stackoverflow.com/a/54894359)).
+You can install ```rbf``` manually by following [these](https://github.com/treverhines/RBF) instructions.
 
 ## Cite
 

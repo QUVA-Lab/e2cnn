@@ -234,6 +234,7 @@ class FlipRot2dOnR2(GeneralOnR2):
             in_repr: the input representation
             out_repr: the output representation
             max_power (int): the maximum power of Laplacians to use
+            discretization (DiscretizationArgs): the parameters specifying a discretization procedure for PDOs
 
         Keyword Args:
             maximum_frequency (int): the maximum frequency allowed in the basis vectors

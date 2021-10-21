@@ -129,6 +129,7 @@ class GeneralOnR2(GSpace):
                            in_repr: Representation,
                            out_repr: Representation,
                            max_power: int,
+                           discretization: DiscretizationArgs,
                            **kwargs) -> diffops.DiffopBasis:
         r"""
         
@@ -168,6 +169,7 @@ class GeneralOnR2(GSpace):
             in_repr (Representation): the input representation
             out_repr (Representation): the output representation
             max_power (int): the largest power of the Laplacian that will be used
+            discretization (DiscretizationArgs): the parameters specifying a discretization procedure for PDOs
             **kwargs: Group-specific keywords arguments for ``_basis_generator`` method
 
         Returns:

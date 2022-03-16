@@ -190,7 +190,7 @@ class GeneralOnR2(GSpace):
         if (in_repr.name, out_repr.name) not in self._fields_intertwiners_basis_memory[key]:
             # TODO - we could use a flag in the args to choose whether to store it or not
             
-            basis = self._diffop_basis_generator(in_repr, out_repr, max_power, **kwargs)
+            basis = self._diffop_basis_generator(in_repr, out_repr, max_power, discretization, **kwargs)
        
             # store the basis in the dictionary
             self._fields_intertwiners_basis_memory[key][(in_repr.name, out_repr.name)] = basis

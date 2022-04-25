@@ -1,7 +1,11 @@
 
 General E(2)-Equivariant Steerable CNNs
 --------------------------------------------------------------------------------
-**[Documentation](https://quva-lab.github.io/e2cnn/)** | **[Experiments](https://github.com/QUVA-Lab/e2cnn_experiments)** | **[Paper](https://arxiv.org/abs/1911.08251)** | **[Thesis](https://gabri95.github.io/Thesis/thesis.pdf)**
+**[Documentation](https://quva-lab.github.io/e2cnn/)** | **[Experiments](https://github.com/QUVA-Lab/e2cnn_experiments)** | **[Paper](https://arxiv.org/abs/1911.08251)** | **[Thesis](https://gabri95.github.io/Thesis/thesis.pdf)** | **new [escnn](https://github.com/QUVA-Lab/escnn) library**
+
+Check out **our new [escnn](https://github.com/QUVA-Lab/escnn) library** which extends *e2cnn* to a wider class of equivariance groups.
+
+--------------------------------------------------------------------------------
 
 *e2cnn* is a [PyTorch](https://pytorch.org/) extension for equivariant deep learning.
 
@@ -212,13 +216,12 @@ The implementation of steerable PDOs are part of the work done in the paper
 [Steerable Partial Differential Operators for Equivariant Neural Networks](https://arxiv.org/abs/2106.10163).
 Please, cite it if you use this code in your own work:
 ```
-@misc{jenner2021steerable,
+@inproceedings{jenner2022steerable,
     title={Steerable Partial Differential Operators for Equivariant Neural Networks},
     author={Erik Jenner and Maurice Weiler},
-    year={2021},
-    eprint={2106.10163},
-    archivePrefix={arXiv},
-    primaryClass={cs.LG}
+    booktitle={International Conference on Learning Representations},
+    year={2022},
+    url={https://openreview.net/forum?id=N9W24a4zU}
 }
 ```
 

@@ -94,7 +94,8 @@ typehints_document_rtype = False
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']
 
-mathjax_config = {                  
+mathjax_path = 'https://cdn.jsdelivr.net/npm/mathjax@2/MathJax.js?config=TeX-AMS-MML_HTMLorMML'
+mathjax3_config = {
     "TeX": {         
         #"packages": {'[+]': ['bm']},
         "Macros": {

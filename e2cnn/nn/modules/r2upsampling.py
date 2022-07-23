@@ -35,7 +35,7 @@ class R2Upsampling(EquivariantModule):
         However, ``"nearest"`` is not equivariant; using this method may result in broken equivariance.
         For this reason, we suggest to use ``"bilinear"`` (default value).
 
-        ..warning ::
+        .. warning ::
             The module supports a ``size`` parameter as an alternative to ``scale_factor``.
             However, the use of ``scale_factor`` should be *preferred*, since it guarantees both axes are scaled
             uniformly, which preserves rotation equivariance.

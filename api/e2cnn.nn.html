@@ -17,8 +17,8 @@
         <script src="../_static/underscore.js"></script>
         <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../_static/doctools.js"></script>
-        <script type="text/x-mathjax-config">MathJax.Hub.Config({"TeX": {"Macros": {"bold": ["{\\bf #1}", 1], "R": "{\\mathbb R}", "N": "{\\mathbb N}", "Z": "{\\mathbb Z}", "Ind": ["{\\operatorname{Ind}_{#1}^{#2}}", 2], "Res": ["{\\operatorname{Res}_{#1}^{#2}}", 2], "GL": ["{\\operatorname{GL}(#1)}", 1], "E": ["{\\operatorname{E}(#1)}", 1], "SE": ["{\\operatorname{SE}(#1)}", 1], "O": ["{\\operatorname{O}(#1)}", 1], "SO": ["{\\operatorname{SO}(#1)}", 1], "U": ["{\\operatorname{U}(#1)}", 1], "D": ["{\\operatorname{D}_{#1}}", 1], "C": ["{\\operatorname{C}_{#1}}", 1], "DN": "{\\operatorname{D}_{\\!N}}", "CN": "{\\operatorname{C}_{\\!N}}"}}})</script>
-        <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+        <script>window.MathJax = {"TeX": {"Macros": {"bold": ["{\\bf #1}", 1], "R": "{\\mathbb R}", "N": "{\\mathbb N}", "Z": "{\\mathbb Z}", "Ind": ["{\\operatorname{Ind}_{#1}^{#2}}", 2], "Res": ["{\\operatorname{Res}_{#1}^{#2}}", 2], "GL": ["{\\operatorname{GL}(#1)}", 1], "E": ["{\\operatorname{E}(#1)}", 1], "SE": ["{\\operatorname{SE}(#1)}", 1], "O": ["{\\operatorname{O}(#1)}", 1], "SO": ["{\\operatorname{SO}(#1)}", 1], "U": ["{\\operatorname{U}(#1)}", 1], "D": ["{\\operatorname{D}_{#1}}", 1], "C": ["{\\operatorname{C}_{#1}}", 1], "DN": "{\\operatorname{D}_{\\!N}}", "CN": "{\\operatorname{C}_{\\!N}}"}}}</script>
+        <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@2/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -3015,14 +3015,14 @@ to its representation.</p>
 <p>Only <code class="docutils literal notranslate"><span class="pre">&quot;bilinear&quot;</span></code> and <code class="docutils literal notranslate"><span class="pre">&quot;nearest&quot;</span></code> methods are supported.
 However, <code class="docutils literal notranslate"><span class="pre">&quot;nearest&quot;</span></code> is not equivariant; using this method may result in broken equivariance.
 For this reason, we suggest to use <code class="docutils literal notranslate"><span class="pre">&quot;bilinear&quot;</span></code> (default value).</p>
-<dl class="simple">
-<dt>..warning ::</dt><dd><p>The module supports a <code class="docutils literal notranslate"><span class="pre">size</span></code> parameter as an alternative to <code class="docutils literal notranslate"><span class="pre">scale_factor</span></code>.
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>The module supports a <code class="docutils literal notranslate"><span class="pre">size</span></code> parameter as an alternative to <code class="docutils literal notranslate"><span class="pre">scale_factor</span></code>.
 However, the use of <code class="docutils literal notranslate"><span class="pre">scale_factor</span></code> should be <em>preferred</em>, since it guarantees both axes are scaled
 uniformly, which preserves rotation equivariance.
 A misuse of the parameter <code class="docutils literal notranslate"><span class="pre">size</span></code> can break the overall equivariance, since it might scale the two axes by
 two different factors.</p>
-</dd>
-</dl>
+</div>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">

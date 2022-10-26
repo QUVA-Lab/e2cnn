@@ -223,9 +223,9 @@ class InducedGatedNonLinearity1(EquivariantModule):
         if not self.drop_gates:
             # copy the gates in the output
             if self._contiguous[GATES_ID]:
-                output[:, self.gates_indices[0]:self.gates_indices[1], ...] = gates
+                output[:, self.gates_indices[0]:self.gates_indices[1], ...] = gates.flatten(1, 2)
             else:
-                output[:, self.gates_indices, ...] = gates
+                output[:, self.gates_indices, ...] = gates.flatten(1, 2)
         
         next_gate = 0
         

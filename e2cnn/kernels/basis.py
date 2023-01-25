@@ -124,7 +124,7 @@ class KernelBasis(Basis):
         """
         
         assert mask.shape == (self.dim, )
-        assert mask.dtype == np.bool
+        assert mask.dtype == bool
 
         basis = self.sample(points)
         

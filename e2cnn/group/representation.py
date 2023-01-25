@@ -737,14 +737,6 @@ def build_regular_representation(group: e2cnn.group.Group) -> Tuple[List[e2cnn.g
     change_of_basis_inv = change_of_basis.T
     
     return irreps, change_of_basis, change_of_basis_inv
-    
-    # return Representation(group,
-    #                       "regular",
-    #                       [r.name for r in irreps],
-    #                       change_of_basis,
-    #                       ['pointwise', 'norm', 'gated', 'concatenated'],
-    #                       representation=representation,
-    #                       change_of_basis_inv=change_of_basis_inv)
 
 
 def build_quotient_representation(group: e2cnn.group.Group,
@@ -1048,10 +1040,36 @@ def direct_sum_factory(irreps: List[e2cnn.group.IrreducibleRepresentation],
     
     unique_irreps = list({irr.name: irr for irr in irreps}.items())
     irreps_names = [irr.name for irr in irreps]
-    
-    def direct_sum(element,
-                   irreps_names=irreps_names, change_of_basis=change_of_basis,
-                   change_of_basis_inv=change_of_basis_inv, unique_irreps=unique_irreps):
+
+    return DirectSum(
+        irreps_names=irreps_names,
+        change_of_basis=change_of_basis,
+        change_of_basis_inv=change_of_basis_inv,
+        unique_irreps=unique_irreps
+    )
+
+
+class DirectSum:
+
+    def __init__(self, irreps_names, change_of_basis, change_of_basis_inv, unique_irreps):
+        self.irreps_names = irreps_names
+        self.change_of_basis = change_of_basis
+        self.change_of_basis_inv = change_of_basis_inv
+        self.unique_irreps = unique_irreps
+
+    def __call__(
+        self, 
+        element,
+        irreps_names=None, 
+        change_of_basis=None,
+        change_of_basis_inv=None, 
+        unique_irreps=None
+    ):
+        irreps_names = irreps_names if bool(irreps_names) else self.irreps_names
+        change_of_basis = change_of_basis if bool(change_of_basis) else self.change_of_basis
+        change_of_basis_inv = change_of_basis_inv if bool(change_of_basis_inv) else self.change_of_basis_inv
+        unique_irreps = unique_irreps if bool(unique_irreps) else self.unique_irreps
+
         reprs = {}
         for n, irr in unique_irreps:
             reprs[n] = irr(element)
@@ -1064,8 +1082,6 @@ def direct_sum_factory(irreps: List[e2cnn.group.IrreducibleRepresentation],
         P = sparse.block_diag(blocks, format='csc')
         
         return change_of_basis @ P @ change_of_basis_inv
-    
-    return direct_sum
 
 
 def null(A: Union[np.matrix, sparse.linalg.LinearOperator],

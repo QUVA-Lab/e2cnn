@@ -4,6 +4,18 @@
 e2cnn documentation
 =================================
 
+
+Deprecation Warning: check our new `escnn <https://github.com/QUVA-Lab/escnn>`_ library which extends *e2cnn* to a wider class of equivariance groups.
+------------------------------------------------------------------------------------------------------------------------------------------------------
+While we will still provide some support for this older version,
+this library is **deprecated** and we plan to slowly abandon it in favour of the newer version `escnn <https://github.com/QUVA-Lab/escnn>`_.
+Note that `escnn <https://github.com/QUVA-Lab/escnn>`_ already includes all features of *e2cnn* and many more.
+You can find a short summary of the main differences in the new version `here <https://github.com/QUVA-Lab/escnn/blob/master/changelog.txt>`_ .
+
+
+
+
+
 *e2cnn* is a Pytorch based library for equivariant deep learning.
 
 *Equivariant neural networks* guarantee a prespecified transformation behavior of their features under transformations of their input.

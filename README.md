@@ -3,9 +3,19 @@ General E(2)-Equivariant Steerable CNNs
 --------------------------------------------------------------------------------
 **[Documentation](https://quva-lab.github.io/e2cnn/)** | **[Experiments](https://github.com/QUVA-Lab/e2cnn_experiments)** | **[Paper](https://arxiv.org/abs/1911.08251)** | **[Thesis](https://gabri95.github.io/Thesis/thesis.pdf)** | **new [escnn](https://github.com/QUVA-Lab/escnn) library**
 
+--------------------------------------------------------------------------------
+
 Check out **our new [escnn](https://github.com/QUVA-Lab/escnn) library** which extends *e2cnn* to a wider class of equivariance groups.
+---------------------------------------------------------------------------------------------------------------------------------------
+While we will still provide some support for this older version,
+this library is **deprecated** and we plan to slowly abandon it in favour of the newer version **[escnn](https://github.com/QUVA-Lab/escnn)**.
+Note that **[escnn](https://github.com/QUVA-Lab/escnn)** already includes all features of *e2cnn* and many more.
+You can find a short summary of the main differences in the new version [here](https://github.com/QUVA-Lab/escnn/blob/master/changelog.txt).
+
 
 --------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+
 
 *e2cnn* is a [PyTorch](https://pytorch.org/) extension for equivariant deep learning.
 

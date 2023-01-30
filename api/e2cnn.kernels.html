@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>e2cnn.kernels &mdash; e2cnn 0.2.2 documentation</title>
+  <title>e2cnn.kernels &mdash; e2cnn 0.2.3 documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
@@ -15,7 +15,6 @@
         <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
         <script src="../_static/jquery.js"></script>
         <script src="../_static/underscore.js"></script>
-        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../_static/doctools.js"></script>
         <script>window.MathJax = {"TeX": {"Macros": {"bold": ["{\\bf #1}", 1], "R": "{\\mathbb R}", "N": "{\\mathbb N}", "Z": "{\\mathbb Z}", "Ind": ["{\\operatorname{Ind}_{#1}^{#2}}", 2], "Res": ["{\\operatorname{Res}_{#1}^{#2}}", 2], "GL": ["{\\operatorname{GL}(#1)}", 1], "E": ["{\\operatorname{E}(#1)}", 1], "SE": ["{\\operatorname{SE}(#1)}", 1], "O": ["{\\operatorname{O}(#1)}", 1], "SO": ["{\\operatorname{SO}(#1)}", 1], "U": ["{\\operatorname{U}(#1)}", 1], "D": ["{\\operatorname{D}_{#1}}", 1], "C": ["{\\operatorname{C}_{#1}}", 1], "DN": "{\\operatorname{D}_{\\!N}}", "CN": "{\\operatorname{C}_{\\!N}}"}}}</script>
         <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@2/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
@@ -34,7 +33,7 @@
             <a href="../index.html" class="icon icon-home"> e2cnn
           </a>
               <div class="version">
-                0.2.2
+                0.2.3
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
@@ -113,7 +112,7 @@
            <div itemprop="articleBody">
              
   <span class="target" id="module-e2cnn.kernels"></span><section id="e2cnn-kernels">
-<h1>e2cnn.kernels<a class="headerlink" href="#e2cnn-kernels" title="Permalink to this heading"></a></h1>
+<h1>e2cnn.kernels<a class="headerlink" href="#e2cnn-kernels" title="Permalink to this headline"></a></h1>
 <p>This subpackage implements the complete analytical solutions of the equivariance constraints on the kernel space as
 explained in <a class="reference external" href="https://arxiv.org/abs/1911.08251">General E(2)-Equivariant Steerable CNNs</a>.
 The bases of equivariant kernels should be built through <a class="reference internal" href="#factory-functions-bases"><span class="std std-ref">factory functions</span></a>.</p>
@@ -144,7 +143,7 @@ Instead, we suggest to use the interface provided in <a class="reference interna
 </ul>
 </div>
 <section id="abstract-classes">
-<h2><a class="toc-backref" href="#contents">Abstract Classes</a><a class="headerlink" href="#abstract-classes" title="Permalink to this heading"></a></h2>
+<h2><a class="toc-backref" href="#contents">Abstract Classes</a><a class="headerlink" href="#abstract-classes" title="Permalink to this headline"></a></h2>
 <dl class="py class">
 <dt class="sig sig-object py" id="e2cnn.kernels.Basis">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">Basis</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dim</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">shape</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/e2cnn/kernels/basis.html#Basis"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#e2cnn.kernels.Basis" title="Permalink to this definition"></a></dt>
@@ -158,14 +157,14 @@ feature spaces (either kernels or PDOs).</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>dim</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – the dimensionality of the basis (number of elements)</p></li>
-<li><p><strong>shape</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.10)"><em>tuple</em></a>) – a tuple containing <span class="math notranslate nohighlight">\(c_\text{out}\)</span> and <span class="math notranslate nohighlight">\(c_\text{in}\)</span></p></li>
+<li><p><strong>dim</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><em>int</em></a>) – the dimensionality of the basis (number of elements)</p></li>
+<li><p><strong>shape</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.11)"><em>tuple</em></a>) – a tuple containing <span class="math notranslate nohighlight">\(c_\text{out}\)</span> and <span class="math notranslate nohighlight">\(c_\text{in}\)</span></p></li>
 </ul>
 </dd>
 <dt class="field-even">Variables</dt>
 <dd class="field-even"><ul class="simple">
-<li><p><strong>~.dim</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – the dimensionality of the basis (number of elements)</p></li>
-<li><p><strong>~.shape</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.10)"><em>tuple</em></a>) – a tuple containing <span class="math notranslate nohighlight">\(c_\text{out}\)</span> and <span class="math notranslate nohighlight">\(c_\text{in}\)</span></p></li>
+<li><p><strong>~.dim</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><em>int</em></a>) – the dimensionality of the basis (number of elements)</p></li>
+<li><p><strong>~.shape</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.11)"><em>tuple</em></a>) – a tuple containing <span class="math notranslate nohighlight">\(c_\text{out}\)</span> and <span class="math notranslate nohighlight">\(c_\text{in}\)</span></p></li>
 </ul>
 </dd>
 </dl>
@@ -183,14 +182,14 @@ For instance, for planar images <span class="math notranslate nohighlight">\(X =
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>dim</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – the dimensionality of the basis <span class="math notranslate nohighlight">\(|\mathcal{K}|\)</span> (number of elements)</p></li>
-<li><p><strong>shape</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.10)"><em>tuple</em></a>) – a tuple containing <span class="math notranslate nohighlight">\(c_\text{out}\)</span> and <span class="math notranslate nohighlight">\(c_\text{in}\)</span></p></li>
+<li><p><strong>dim</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><em>int</em></a>) – the dimensionality of the basis <span class="math notranslate nohighlight">\(|\mathcal{K}|\)</span> (number of elements)</p></li>
+<li><p><strong>shape</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.11)"><em>tuple</em></a>) – a tuple containing <span class="math notranslate nohighlight">\(c_\text{out}\)</span> and <span class="math notranslate nohighlight">\(c_\text{in}\)</span></p></li>
 </ul>
 </dd>
 <dt class="field-even">Variables</dt>
 <dd class="field-even"><ul class="simple">
-<li><p><strong>~.dim</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – the dimensionality of the basis <span class="math notranslate nohighlight">\(|\mathcal{K}|\)</span> (number of elements)</p></li>
-<li><p><strong>~.shape</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.10)"><em>tuple</em></a>) – a tuple containing <span class="math notranslate nohighlight">\(c_\text{out}\)</span> and <span class="math notranslate nohighlight">\(c_\text{in}\)</span></p></li>
+<li><p><strong>~.dim</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><em>int</em></a>) – the dimensionality of the basis <span class="math notranslate nohighlight">\(|\mathcal{K}|\)</span> (number of elements)</p></li>
+<li><p><strong>~.shape</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.11)"><em>tuple</em></a>) – a tuple containing <span class="math notranslate nohighlight">\(c_\text{out}\)</span> and <span class="math notranslate nohighlight">\(c_\text{in}\)</span></p></li>
 </ul>
 </dd>
 </dl>
@@ -204,8 +203,8 @@ base space while <cite>N</cite> is the number of points.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>points</strong> (<a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.23)"><em>ndarray</em></a>) – points where to evaluate the basis elements</p></li>
-<li><p><strong>out</strong> (<a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.23)"><em>ndarray</em></a><em>, </em><em>optional</em>) – pre-existing array to use to store the output</p></li>
+<li><p><strong>points</strong> (<a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.24)"><em>ndarray</em></a>) – points where to evaluate the basis elements</p></li>
+<li><p><strong>out</strong> (<a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.24)"><em>ndarray</em></a><em>, </em><em>optional</em>) – pre-existing array to use to store the output</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
@@ -223,9 +222,9 @@ input <code class="docutils literal notranslate"><span class="pre">`mask`</span>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>points</strong> (<a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.23)"><em>ndarray</em></a>) – points where to evaluate the basis elements</p></li>
-<li><p><strong>mask</strong> (<a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.23)"><em>ndarray</em></a>) – binary array to mask the basis</p></li>
-<li><p><strong>out</strong> (<a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.23)"><em>ndarray</em></a><em>, </em><em>optional</em>) – pre-existing array to use to store the output</p></li>
+<li><p><strong>points</strong> (<a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.24)"><em>ndarray</em></a>) – points where to evaluate the basis elements</p></li>
+<li><p><strong>mask</strong> (<a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.24)"><em>ndarray</em></a>) – binary array to mask the basis</p></li>
+<li><p><strong>out</strong> (<a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.24)"><em>ndarray</em></a><em>, </em><em>optional</em>) – pre-existing array to use to store the output</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
@@ -244,13 +243,13 @@ input <code class="docutils literal notranslate"><span class="pre">`mask`</span>
 
 </section>
 <section id="kernel-bases">
-<h2><a class="toc-backref" href="#contents">Kernel Bases</a><a class="headerlink" href="#kernel-bases" title="Permalink to this heading"></a></h2>
+<h2><a class="toc-backref" href="#contents">Kernel Bases</a><a class="headerlink" href="#kernel-bases" title="Permalink to this headline"></a></h2>
 <section id="tensor-product-of-radial-and-angular-bases">
-<h3><a class="toc-backref" href="#contents">Tensor Product of radial and angular bases</a><a class="headerlink" href="#tensor-product-of-radial-and-angular-bases" title="Permalink to this heading"></a></h3>
+<h3><a class="toc-backref" href="#contents">Tensor Product of radial and angular bases</a><a class="headerlink" href="#tensor-product-of-radial-and-angular-bases" title="Permalink to this headline"></a></h3>
 <dl class="py class">
 <dt class="sig sig-object py" id="e2cnn.kernels.PolarBasis">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">PolarBasis</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">radial</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">angular</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/e2cnn/kernels/basis.html#PolarBasis"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#e2cnn.kernels.PolarBasis" title="Permalink to this definition"></a></dt>
-<dd><p>Bases: <a class="reference internal" href="#e2cnn.kernels.KernelBasis" title="e2cnn.kernels.basis.KernelBasis"><code class="xref py py-class docutils literal notranslate"><span class="pre">KernelBasis</span></code></a></p>
+<dd><p>Bases: <a class="reference internal" href="#e2cnn.kernels.KernelBasis" title="e2cnn.kernels.basis.KernelBasis"><code class="xref py py-class docutils literal notranslate"><span class="pre">e2cnn.kernels.basis.KernelBasis</span></code></a></p>
 <p>Build the tensor product basis of a radial profile basis and an angular profile basis for kernels over the
 plane. Given two bases <span class="math notranslate nohighlight">\(A = \{a_i\}_i\)</span> and <span class="math notranslate nohighlight">\(B = \{b_j\}_j\)</span>, this basis is defined as</p>
 <div class="math notranslate nohighlight">
@@ -280,8 +279,8 @@ Note that the points are specified in cartesian coordinates <span class="math no
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>points</strong> (<a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.23)"><em>ndarray</em></a>) – points on the plane where to evaluate the basis elements</p></li>
-<li><p><strong>out</strong> (<a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.23)"><em>ndarray</em></a><em>, </em><em>optional</em>) – pre-existing array to use to store the output</p></li>
+<li><p><strong>points</strong> (<a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.24)"><em>ndarray</em></a>) – points on the plane where to evaluate the basis elements</p></li>
+<li><p><strong>out</strong> (<a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.24)"><em>ndarray</em></a><em>, </em><em>optional</em>) – pre-existing array to use to store the output</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
@@ -294,11 +293,11 @@ Note that the points are specified in cartesian coordinates <span class="math no
 
 </section>
 <section id="radial-profile">
-<h3><a class="toc-backref" href="#contents">Radial Profile</a><a class="headerlink" href="#radial-profile" title="Permalink to this heading"></a></h3>
+<h3><a class="toc-backref" href="#contents">Radial Profile</a><a class="headerlink" href="#radial-profile" title="Permalink to this headline"></a></h3>
 <dl class="py class">
 <dt class="sig sig-object py" id="e2cnn.kernels.GaussianRadialProfile">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">GaussianRadialProfile</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">radii</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sigma</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/e2cnn/kernels/basis.html#GaussianRadialProfile"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#e2cnn.kernels.GaussianRadialProfile" title="Permalink to this definition"></a></dt>
-<dd><p>Bases: <a class="reference internal" href="#e2cnn.kernels.KernelBasis" title="e2cnn.kernels.basis.KernelBasis"><code class="xref py py-class docutils literal notranslate"><span class="pre">KernelBasis</span></code></a></p>
+<dd><p>Bases: <a class="reference internal" href="#e2cnn.kernels.KernelBasis" title="e2cnn.kernels.basis.KernelBasis"><code class="xref py py-class docutils literal notranslate"><span class="pre">e2cnn.kernels.basis.KernelBasis</span></code></a></p>
 <p>Basis for kernels defined over a radius in <span class="math notranslate nohighlight">\(\R^+_0\)</span>.</p>
 <p>Each basis element is defined as a Gaussian function.
 Different basis elements are centered at different radii (<code class="docutils literal notranslate"><span class="pre">rings</span></code>) and can possibly be associated with
@@ -311,9 +310,9 @@ angular profile through <a class="reference internal" href="#e2cnn.kernels.Polar
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>radii</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.10)"><em>list</em></a>) – centers of each basis element. They should be different and spread to cover all
+<li><p><strong>radii</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.11)"><em>list</em></a>) – centers of each basis element. They should be different and spread to cover all
 domain of interest</p></li>
-<li><p><strong>sigma</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.10)"><em>list</em></a><em> or </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)"><em>float</em></a>) – widths of each element. Can potentially be different.</p></li>
+<li><p><strong>sigma</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.11)"><em>list</em></a><em> or </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><em>float</em></a>) – widths of each element. Can potentially be different.</p></li>
 </ul>
 </dd>
 </dl>
@@ -326,8 +325,8 @@ Optionally, store the resulting multidimentional array in <code class="docutils 
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>radii</strong> (<a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.23)"><em>ndarray</em></a>) – radii where to evaluate the basis elements</p></li>
-<li><p><strong>out</strong> (<a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.23)"><em>ndarray</em></a><em>, </em><em>optional</em>) – pre-existing array to use to store the output</p></li>
+<li><p><strong>radii</strong> (<a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.24)"><em>ndarray</em></a>) – radii where to evaluate the basis elements</p></li>
+<li><p><strong>out</strong> (<a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.24)"><em>ndarray</em></a><em>, </em><em>optional</em>) – pre-existing array to use to store the output</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
@@ -340,11 +339,11 @@ Optionally, store the resulting multidimentional array in <code class="docutils 
 
 </section>
 <section id="general-steerable-basis-for-equivariant-kernels">
-<h3><a class="toc-backref" href="#contents">General Steerable Basis for equivariant kernels</a><a class="headerlink" href="#general-steerable-basis-for-equivariant-kernels" title="Permalink to this heading"></a></h3>
+<h3><a class="toc-backref" href="#contents">General Steerable Basis for equivariant kernels</a><a class="headerlink" href="#general-steerable-basis-for-equivariant-kernels" title="Permalink to this headline"></a></h3>
 <dl class="py class">
 <dt class="sig sig-object py" id="e2cnn.kernels.SteerableKernelBasis">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">SteerableKernelBasis</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">irreps_basis</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">in_repr</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">out_repr</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/e2cnn/kernels/steerable_basis.html#SteerableKernelBasis"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#e2cnn.kernels.SteerableKernelBasis" title="Permalink to this definition"></a></dt>
-<dd><p>Bases: <a class="reference internal" href="#e2cnn.kernels.KernelBasis" title="e2cnn.kernels.basis.KernelBasis"><code class="xref py py-class docutils literal notranslate"><span class="pre">KernelBasis</span></code></a></p>
+<dd><p>Bases: <a class="reference internal" href="#e2cnn.kernels.KernelBasis" title="e2cnn.kernels.basis.KernelBasis"><code class="xref py py-class docutils literal notranslate"><span class="pre">e2cnn.kernels.basis.KernelBasis</span></code></a></p>
 <p>Implements a general basis for the vector space of equivariant kernels.
 A <span class="math notranslate nohighlight">\(G\)</span>-equivariant kernel <span class="math notranslate nohighlight">\(\kappa\)</span>, mapping between an input field, transforming under
 <span class="math notranslate nohighlight">\(\rho_\text{in}\)</span> (<code class="docutils literal notranslate"><span class="pre">in_repr</span></code>), and an output field, transforming under  <span class="math notranslate nohighlight">\(\rho_\text{out}\)</span>
@@ -395,8 +394,8 @@ Optionally, store the resulting multidimentional array in <code class="docutils 
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>angles</strong> (<a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.23)"><em>ndarray</em></a>) – angles where to evaluate the basis elements</p></li>
-<li><p><strong>out</strong> (<a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.23)"><em>ndarray</em></a><em>, </em><em>optional</em>) – pre-existing array to use to store the output</p></li>
+<li><p><strong>angles</strong> (<a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.24)"><em>ndarray</em></a>) – angles where to evaluate the basis elements</p></li>
+<li><p><strong>out</strong> (<a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.24)"><em>ndarray</em></a><em>, </em><em>optional</em>) – pre-existing array to use to store the output</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
@@ -410,7 +409,7 @@ Optionally, store the resulting multidimentional array in <code class="docutils 
 </section>
 </section>
 <section id="bases-for-group-actions-on-the-plane">
-<span id="factory-functions-bases"></span><h2><a class="toc-backref" href="#contents">Bases for Group Actions on the Plane</a><a class="headerlink" href="#bases-for-group-actions-on-the-plane" title="Permalink to this heading"></a></h2>
+<span id="factory-functions-bases"></span><h2><a class="toc-backref" href="#contents">Bases for Group Actions on the Plane</a><a class="headerlink" href="#bases-for-group-actions-on-the-plane" title="Permalink to this headline"></a></h2>
 <p>The following factory functions provide an interface to build the bases for kernels equivariant to groups acting on the
 two dimensional plane.
 The names of the functions follow this convention <cite>kernels_[G]_act_R[d]</cite>, where <span class="math notranslate nohighlight">\(G\)</span> is the origin-preserving isometry
@@ -420,7 +419,7 @@ Here, <span class="math notranslate nohighlight">\(d=2\)</span> as we only consi
 In the language of <a class="reference external" href="https://arxiv.org/abs/1902.04615">Gauge Equivariant CNNs</a> , the origin-preserving isometry
 <span class="math notranslate nohighlight">\(G\)</span> is called <em>structure group</em> (or, sometimes, <em>gauge group</em>).</p>
 <section id="reflections-and-continuous-rotations">
-<h3><a class="toc-backref" href="#contents">Reflections and Continuous Rotations</a><a class="headerlink" href="#reflections-and-continuous-rotations" title="Permalink to this heading"></a></h3>
+<h3><a class="toc-backref" href="#contents">Reflections and Continuous Rotations</a><a class="headerlink" href="#reflections-and-continuous-rotations" title="Permalink to this headline"></a></h3>
 <dl class="py function">
 <dt class="sig sig-object py" id="e2cnn.kernels.kernels_O2_act_R2">
 <span class="sig-name descname"><span class="pre">kernels_O2_act_R2</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">in_repr</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">out_repr</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">radii</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sigma</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">axis</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.5707963267948966</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/e2cnn/kernels/r2.html#kernels_O2_act_R2"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#e2cnn.kernels.kernels_O2_act_R2" title="Permalink to this definition"></a></dt>
@@ -439,9 +438,9 @@ However, a choice of this axis is required to align the basis with respect to th
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>in_repr</strong> (<a class="reference internal" href="e2cnn.group.html#e2cnn.group.Representation" title="e2cnn.group.Representation"><em>Representation</em></a>) – the representation specifying the transformation of the input feature field</p></li>
 <li><p><strong>out_repr</strong> (<a class="reference internal" href="e2cnn.group.html#e2cnn.group.Representation" title="e2cnn.group.Representation"><em>Representation</em></a>) – the representation specifying the transformation of the output feature field</p></li>
-<li><p><strong>radii</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.10)"><em>list</em></a>) – radii of the rings defining the basis for the radial profile</p></li>
-<li><p><strong>sigma</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.10)"><em>list</em></a><em> or </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)"><em>float</em></a>) – widths of the rings defining the basis for the radial profile</p></li>
-<li><p><strong>axis</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)"><em>float</em></a><em>, </em><em>optional</em>) – angle of the axis of the reflection element</p></li>
+<li><p><strong>radii</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.11)"><em>list</em></a>) – radii of the rings defining the basis for the radial profile</p></li>
+<li><p><strong>sigma</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.11)"><em>list</em></a><em> or </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><em>float</em></a>) – widths of the rings defining the basis for the radial profile</p></li>
+<li><p><strong>axis</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><em>float</em></a><em>, </em><em>optional</em>) – angle of the axis of the reflection element</p></li>
 </ul>
 </dd>
 </dl>
@@ -449,7 +448,7 @@ However, a choice of this axis is required to align the basis with respect to th
 
 </section>
 <section id="continuous-rotations">
-<h3><a class="toc-backref" href="#contents">Continuous Rotations</a><a class="headerlink" href="#continuous-rotations" title="Permalink to this heading"></a></h3>
+<h3><a class="toc-backref" href="#contents">Continuous Rotations</a><a class="headerlink" href="#continuous-rotations" title="Permalink to this headline"></a></h3>
 <dl class="py function">
 <dt class="sig sig-object py" id="e2cnn.kernels.kernels_SO2_act_R2">
 <span class="sig-name descname"><span class="pre">kernels_SO2_act_R2</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">in_repr</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">out_repr</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">radii</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sigma</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/e2cnn/kernels/r2.html#kernels_SO2_act_R2"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#e2cnn.kernels.kernels_SO2_act_R2" title="Permalink to this definition"></a></dt>
@@ -465,8 +464,8 @@ of these rings (see <a class="reference internal" href="#e2cnn.kernels.GaussianR
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>in_repr</strong> (<a class="reference internal" href="e2cnn.group.html#e2cnn.group.Representation" title="e2cnn.group.Representation"><em>Representation</em></a>) – the representation specifying the transformation of the input feature field</p></li>
 <li><p><strong>out_repr</strong> (<a class="reference internal" href="e2cnn.group.html#e2cnn.group.Representation" title="e2cnn.group.Representation"><em>Representation</em></a>) – the representation specifying the transformation of the output feature field</p></li>
-<li><p><strong>radii</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.10)"><em>list</em></a>) – radii of the rings defining the basis for the radial profile</p></li>
-<li><p><strong>sigma</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.10)"><em>list</em></a><em> or </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)"><em>float</em></a>) – widths of the rings defining the basis for the radial profile</p></li>
+<li><p><strong>radii</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.11)"><em>list</em></a>) – radii of the rings defining the basis for the radial profile</p></li>
+<li><p><strong>sigma</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.11)"><em>list</em></a><em> or </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><em>float</em></a>) – widths of the rings defining the basis for the radial profile</p></li>
 </ul>
 </dd>
 </dl>
@@ -474,7 +473,7 @@ of these rings (see <a class="reference internal" href="#e2cnn.kernels.GaussianR
 
 </section>
 <section id="reflections-and-discrete-rotations">
-<h3><a class="toc-backref" href="#contents">Reflections and Discrete Rotations</a><a class="headerlink" href="#reflections-and-discrete-rotations" title="Permalink to this heading"></a></h3>
+<h3><a class="toc-backref" href="#contents">Reflections and Discrete Rotations</a><a class="headerlink" href="#reflections-and-discrete-rotations" title="Permalink to this headline"></a></h3>
 <dl class="py function">
 <dt class="sig sig-object py" id="e2cnn.kernels.kernels_DN_act_R2">
 <span class="sig-name descname"><span class="pre">kernels_DN_act_R2</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">in_repr</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">out_repr</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">radii</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sigma</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">axis</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.5707963267948966</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_frequency</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_offset</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/e2cnn/kernels/r2.html#kernels_DN_act_R2"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#e2cnn.kernels.kernels_DN_act_R2" title="Permalink to this definition"></a></dt>
@@ -499,11 +498,11 @@ parameter <span class="math notranslate nohighlight">\(t\)</span> or <span class
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>in_repr</strong> (<a class="reference internal" href="e2cnn.group.html#e2cnn.group.Representation" title="e2cnn.group.Representation"><em>Representation</em></a>) – the representation specifying the transformation of the input feature field</p></li>
 <li><p><strong>out_repr</strong> (<a class="reference internal" href="e2cnn.group.html#e2cnn.group.Representation" title="e2cnn.group.Representation"><em>Representation</em></a>) – the representation specifying the transformation of the output feature field</p></li>
-<li><p><strong>radii</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.10)"><em>list</em></a>) – radii of the rings defining the basis for the radial profile</p></li>
-<li><p><strong>sigma</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.10)"><em>list</em></a><em> or </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)"><em>float</em></a>) – widths of the rings defining the basis for the radial profile</p></li>
-<li><p><strong>max_frequency</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – maximum frequency of the basis</p></li>
-<li><p><strong>max_offset</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – maximum offset in the frequencies of the basis</p></li>
-<li><p><strong>axis</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)"><em>float</em></a>) – angle defining the reflection axis</p></li>
+<li><p><strong>radii</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.11)"><em>list</em></a>) – radii of the rings defining the basis for the radial profile</p></li>
+<li><p><strong>sigma</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.11)"><em>list</em></a><em> or </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><em>float</em></a>) – widths of the rings defining the basis for the radial profile</p></li>
+<li><p><strong>max_frequency</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><em>int</em></a>) – maximum frequency of the basis</p></li>
+<li><p><strong>max_offset</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><em>int</em></a>) – maximum offset in the frequencies of the basis</p></li>
+<li><p><strong>axis</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><em>float</em></a>) – angle defining the reflection axis</p></li>
 </ul>
 </dd>
 </dl>
@@ -511,7 +510,7 @@ parameter <span class="math notranslate nohighlight">\(t\)</span> or <span class
 
 </section>
 <section id="discrete-rotations">
-<h3><a class="toc-backref" href="#contents">Discrete Rotations</a><a class="headerlink" href="#discrete-rotations" title="Permalink to this heading"></a></h3>
+<h3><a class="toc-backref" href="#contents">Discrete Rotations</a><a class="headerlink" href="#discrete-rotations" title="Permalink to this headline"></a></h3>
 <dl class="py function">
 <dt class="sig sig-object py" id="e2cnn.kernels.kernels_CN_act_R2">
 <span class="sig-name descname"><span class="pre">kernels_CN_act_R2</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">in_repr</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">out_repr</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">radii</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sigma</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_frequency</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_offset</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/e2cnn/kernels/r2.html#kernels_CN_act_R2"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#e2cnn.kernels.kernels_CN_act_R2" title="Permalink to this definition"></a></dt>
@@ -538,10 +537,10 @@ parameter <span class="math notranslate nohighlight">\(t\)</span> or <span class
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>in_repr</strong> (<a class="reference internal" href="e2cnn.group.html#e2cnn.group.Representation" title="e2cnn.group.Representation"><em>Representation</em></a>) – the representation specifying the transformation of the input feature field</p></li>
 <li><p><strong>out_repr</strong> (<a class="reference internal" href="e2cnn.group.html#e2cnn.group.Representation" title="e2cnn.group.Representation"><em>Representation</em></a>) – the representation specifying the transformation of the output feature field</p></li>
-<li><p><strong>radii</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.10)"><em>list</em></a>) – radii of the rings defining the basis for the radial profile</p></li>
-<li><p><strong>sigma</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.10)"><em>list</em></a><em> or </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)"><em>float</em></a>) – widths of the rings defining the basis for the radial profile</p></li>
-<li><p><strong>max_frequency</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – maximum frequency of the basis</p></li>
-<li><p><strong>max_offset</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – maximum offset in the frequencies of the basis</p></li>
+<li><p><strong>radii</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.11)"><em>list</em></a>) – radii of the rings defining the basis for the radial profile</p></li>
+<li><p><strong>sigma</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.11)"><em>list</em></a><em> or </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><em>float</em></a>) – widths of the rings defining the basis for the radial profile</p></li>
+<li><p><strong>max_frequency</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><em>int</em></a>) – maximum frequency of the basis</p></li>
+<li><p><strong>max_offset</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><em>int</em></a>) – maximum offset in the frequencies of the basis</p></li>
 </ul>
 </dd>
 </dl>
@@ -549,7 +548,7 @@ parameter <span class="math notranslate nohighlight">\(t\)</span> or <span class
 
 </section>
 <section id="reflections">
-<h3><a class="toc-backref" href="#contents">Reflections</a><a class="headerlink" href="#reflections" title="Permalink to this heading"></a></h3>
+<h3><a class="toc-backref" href="#contents">Reflections</a><a class="headerlink" href="#reflections" title="Permalink to this headline"></a></h3>
 <dl class="py function">
 <dt class="sig sig-object py" id="e2cnn.kernels.kernels_Flip_act_R2">
 <span class="sig-name descname"><span class="pre">kernels_Flip_act_R2</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">in_repr</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">out_repr</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">radii</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sigma</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">axis</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.5707963267948966</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_frequency</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_offset</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/e2cnn/kernels/r2.html#kernels_Flip_act_R2"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#e2cnn.kernels.kernels_Flip_act_R2" title="Permalink to this definition"></a></dt>
@@ -575,11 +574,11 @@ See <a class="reference internal" href="#e2cnn.kernels.kernels_CN_act_R2" title=
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>in_repr</strong> (<a class="reference internal" href="e2cnn.group.html#e2cnn.group.Representation" title="e2cnn.group.Representation"><em>Representation</em></a>) – the representation specifying the transformation of the input feature field</p></li>
 <li><p><strong>out_repr</strong> (<a class="reference internal" href="e2cnn.group.html#e2cnn.group.Representation" title="e2cnn.group.Representation"><em>Representation</em></a>) – the representation specifying the transformation of the output feature field</p></li>
-<li><p><strong>radii</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.10)"><em>list</em></a>) – radii of the rings defining the basis for the radial profile</p></li>
-<li><p><strong>sigma</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.10)"><em>list</em></a><em> or </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)"><em>float</em></a>) – widths of the rings defining the basis for the radial profile</p></li>
-<li><p><strong>axis</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)"><em>float</em></a>) – angle defining the reflection axis</p></li>
-<li><p><strong>max_frequency</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – maximum frequency of the basis</p></li>
-<li><p><strong>max_offset</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – maximum offset in the frequencies of the basis</p></li>
+<li><p><strong>radii</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.11)"><em>list</em></a>) – radii of the rings defining the basis for the radial profile</p></li>
+<li><p><strong>sigma</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.11)"><em>list</em></a><em> or </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><em>float</em></a>) – widths of the rings defining the basis for the radial profile</p></li>
+<li><p><strong>axis</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><em>float</em></a>) – angle defining the reflection axis</p></li>
+<li><p><strong>max_frequency</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><em>int</em></a>) – maximum frequency of the basis</p></li>
+<li><p><strong>max_offset</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><em>int</em></a>) – maximum offset in the frequencies of the basis</p></li>
 </ul>
 </dd>
 </dl>
@@ -587,7 +586,7 @@ See <a class="reference internal" href="#e2cnn.kernels.kernels_CN_act_R2" title=
 
 </section>
 <section id="trivial-action">
-<h3><a class="toc-backref" href="#contents">Trivial Action</a><a class="headerlink" href="#trivial-action" title="Permalink to this heading"></a></h3>
+<h3><a class="toc-backref" href="#contents">Trivial Action</a><a class="headerlink" href="#trivial-action" title="Permalink to this headline"></a></h3>
 <dl class="py function">
 <dt class="sig sig-object py" id="e2cnn.kernels.kernels_Trivial_act_R2">
 <span class="sig-name descname"><span class="pre">kernels_Trivial_act_R2</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">in_repr</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">out_repr</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">radii</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sigma</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_frequency</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_offset</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/e2cnn/kernels/r2.html#kernels_Trivial_act_R2"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#e2cnn.kernels.kernels_Trivial_act_R2" title="Permalink to this definition"></a></dt>
@@ -613,11 +612,11 @@ See <a class="reference internal" href="#e2cnn.kernels.kernels_CN_act_R2" title=
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>in_repr</strong> (<a class="reference internal" href="e2cnn.group.html#e2cnn.group.Representation" title="e2cnn.group.Representation"><em>Representation</em></a>) – the representation specifying the transformation of the input feature field</p></li>
 <li><p><strong>out_repr</strong> (<a class="reference internal" href="e2cnn.group.html#e2cnn.group.Representation" title="e2cnn.group.Representation"><em>Representation</em></a>) – the representation specifying the transformation of the output feature field</p></li>
-<li><p><strong>radii</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.10)"><em>list</em></a>) – radii of the rings defining the basis for the radial profile</p></li>
-<li><p><strong>sigma</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.10)"><em>list</em></a><em> or </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)"><em>float</em></a>) – widths of the rings defining the basis for the radial profile</p></li>
-<li><p><strong>axis</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)"><em>float</em></a>) – angle defining the reflection axis</p></li>
-<li><p><strong>max_frequency</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – maximum frequency of the basis</p></li>
-<li><p><strong>max_offset</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – maximum offset in the frequencies of the basis</p></li>
+<li><p><strong>radii</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.11)"><em>list</em></a>) – radii of the rings defining the basis for the radial profile</p></li>
+<li><p><strong>sigma</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.11)"><em>list</em></a><em> or </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><em>float</em></a>) – widths of the rings defining the basis for the radial profile</p></li>
+<li><p><strong>axis</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><em>float</em></a>) – angle defining the reflection axis</p></li>
+<li><p><strong>max_frequency</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><em>int</em></a>) – maximum frequency of the basis</p></li>
+<li><p><strong>max_offset</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><em>int</em></a>) – maximum offset in the frequencies of the basis</p></li>
 </ul>
 </dd>
 </dl>

@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>e2cnn.nn.modules.nonlinearities.induced_gated1 &mdash; e2cnn 0.2.2 documentation</title>
+  <title>e2cnn.nn.modules.nonlinearities.induced_gated1 &mdash; e2cnn 0.2.3 documentation</title>
       <link rel="stylesheet" href="../../../../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../../../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../../../../_static/custom.css" type="text/css" />
@@ -14,7 +14,6 @@
         <script data-url_root="../../../../../" id="documentation_options" src="../../../../../_static/documentation_options.js"></script>
         <script src="../../../../../_static/jquery.js"></script>
         <script src="../../../../../_static/underscore.js"></script>
-        <script src="../../../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../../../../../_static/doctools.js"></script>
     <script src="../../../../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../../../../genindex.html" />
@@ -29,7 +28,7 @@
             <a href="../../../../../index.html" class="icon icon-home"> e2cnn
           </a>
               <div class="version">
-                0.2.2
+                0.2.3
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../../../../search.html" method="get">
@@ -333,9 +332,9 @@
         <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">drop_gates</span><span class="p">:</span>
             <span class="c1"># copy the gates in the output</span>
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_contiguous</span><span class="p">[</span><span class="n">GATES_ID</span><span class="p">]:</span>
-                <span class="n">output</span><span class="p">[:,</span> <span class="bp">self</span><span class="o">.</span><span class="n">gates_indices</span><span class="p">[</span><span class="mi">0</span><span class="p">]:</span><span class="bp">self</span><span class="o">.</span><span class="n">gates_indices</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="o">...</span><span class="p">]</span> <span class="o">=</span> <span class="n">gates</span>
+                <span class="n">output</span><span class="p">[:,</span> <span class="bp">self</span><span class="o">.</span><span class="n">gates_indices</span><span class="p">[</span><span class="mi">0</span><span class="p">]:</span><span class="bp">self</span><span class="o">.</span><span class="n">gates_indices</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="o">...</span><span class="p">]</span> <span class="o">=</span> <span class="n">gates</span><span class="o">.</span><span class="n">flatten</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
             <span class="k">else</span><span class="p">:</span>
-                <span class="n">output</span><span class="p">[:,</span> <span class="bp">self</span><span class="o">.</span><span class="n">gates_indices</span><span class="p">,</span> <span class="o">...</span><span class="p">]</span> <span class="o">=</span> <span class="n">gates</span>
+                <span class="n">output</span><span class="p">[:,</span> <span class="bp">self</span><span class="o">.</span><span class="n">gates_indices</span><span class="p">,</span> <span class="o">...</span><span class="p">]</span> <span class="o">=</span> <span class="n">gates</span><span class="o">.</span><span class="n">flatten</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
         
         <span class="n">next_gate</span> <span class="o">=</span> <span class="mi">0</span>
         

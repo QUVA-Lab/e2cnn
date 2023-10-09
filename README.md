@@ -22,9 +22,7 @@ You can find a short summary of the main differences in the new version [here](h
 *Equivariant neural networks* guarantee a specified transformation behavior of their feature spaces under transformations of their input.
 For instance, classical convolutional neural networks (*CNN*s) are by design equivariant to translations of their input.
 This means that a translation of an image leads to a corresponding translation of the network's feature maps.
-This package provides implementations of neural network modules which are equivariant under all *isometries* E(2) of the image plane 
-![my equation](https://chart.apis.google.com/chart?cht=tx&chs=19&chl=\mathbb{R}^2)
-, that is, under *translations*, *rotations* and *reflections*.
+This package provides implementations of neural network modules which are equivariant under all *isometries* E(2) of the image plane $\mathbb{R}^2$, that is, under *translations*, *rotations* and *reflections*.
 In contrast to conventional CNNs, E(2)-equivariant models are guaranteed to generalize over such transformations, and are therefore more data efficient.
 
 The feature spaces of E(2)-Equivariant Steerable CNNs are defined as spaces of *feature fields*, being characterized by their transformation law under rotations and reflections.
@@ -54,16 +52,16 @@ The library also supports equivariant Steerable partial differential operators a
 
 --------------------------------------------------------------------------------
 
-The library is structured into four subpackages with different high-level features:
+The library is structured into five subpackages with different high-level features:
 
-| Component                                                                  | Description                                                      |
-| ---------------------------------------------------------------------------| ---------------------------------------------------------------- |
-| [**e2cnn.group**](https://github.com/QUVA-Lab/e2cnn/blob/master/group/)                | implements basic concepts of *group* and *representation* theory |
-| [**e2cnn.kernels**](https://github.com/QUVA-Lab/e2cnn/blob/master/kernels/)            | solves for spaces of equivariant convolution kernels             |
-| [**e2cnn.diffops**](https://github.com/QUVA-Lab/e2cnn/blob/master/diffops/)            | solves for spaces of equivariant differential operators          |
-| [**e2cnn.gspaces**](https://github.com/QUVA-Lab/e2cnn/blob/master/gspaces/)            | defines the image plane and its symmetries                       |
-| [**e2cnn.nn**](https://github.com/QUVA-Lab/e2cnn/blob/master/nn/)                      | contains equivariant modules to build deep neural networks       |
--------------------------------------------------------------------------------------------------------------------------------------------------
+| Component                                                                              | Description                                                      |
+| ---------------------------------------------------------------------------------------| ---------------------------------------------------------------- |
+| [**e2cnn.group**](https://github.com/QUVA-Lab/e2cnn/tree/master/e2cnn/group/)          | implements basic concepts of *group* and *representation* theory |
+| [**e2cnn.kernels**](https://github.com/QUVA-Lab/e2cnn/tree/master/e2cnn/kernels/)      | solves for spaces of equivariant convolution kernels             |
+| [**e2cnn.diffops**](https://github.com/QUVA-Lab/e2cnn/tree/master/e2cnn/diffops/)      | solves for spaces of equivariant differential operators          |
+| [**e2cnn.gspaces**](https://github.com/QUVA-Lab/e2cnn/tree/master/e2cnn/gspaces/)      | defines the image plane and its symmetries                       |
+| [**e2cnn.nn**](https://github.com/QUVA-Lab/e2cnn/tree/master/e2cnn/nn/)                | contains equivariant modules to build deep neural networks       |
+-----------------------------------------------------------------------------------------------------------------------------------------------------------
 
 ## Demo
 
@@ -124,9 +122,7 @@ x = nn.GeometricTensor(x, feat_type_in)                            # 13
 y = relu(conv(x))                                                  # 15
 ```
 
-Line 5 specifies the symmetry group action on the image plane
-![my equation](https://chart.apis.google.com/chart?cht=tx&chs=19&chl=\mathbb{R}^2)
-under which the network should be equivariant.
+Line 5 specifies the symmetry group action on the image plane $\mathbb{R}^2$ under which the network should be equivariant.
 We choose the 
 [*cyclic group*](https://en.wikipedia.org/wiki/Cyclic_group)
  C<sub>8</sub>, which describes discrete rotations by multiples of 2π/8.

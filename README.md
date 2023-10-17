@@ -1,7 +1,7 @@
 
 General E(2)-Equivariant Steerable CNNs
 --------------------------------------------------------------------------------
-**[Documentation](https://quva-lab.github.io/e2cnn/)** | **[Experiments](https://github.com/QUVA-Lab/e2cnn_experiments)** | **[Paper](https://arxiv.org/abs/1911.08251)** | **[Thesis](https://gabri95.github.io/Thesis/thesis.pdf)** | **new [escnn](https://github.com/QUVA-Lab/escnn) library**
+**[Documentation](https://quva-lab.github.io/e2cnn/)** | **[Experiments](https://github.com/QUVA-Lab/e2cnn_experiments)** | **[Paper](https://arxiv.org/abs/1911.08251)** | **[Thesis Gabriele](https://gabri95.github.io/Thesis/thesis.pdf)** | **[Thesis Maurice](https://maurice-weiler.gitlab.io/#cnn_book)** | **new [escnn](https://github.com/QUVA-Lab/escnn) library**
 
 --------------------------------------------------------------------------------
 

@@ -1,5 +1,5 @@
 torch>=1.1
-numpy
+numpy<1.24
 scipy
 sympy
 pymanopt

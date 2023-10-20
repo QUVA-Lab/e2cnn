@@ -34,7 +34,7 @@ class GeneralOnR2(GSpace):
         # Store the computed intertwiners between irreps
         # - key = (filter size, sigma, rings)
         # - value = dictionary mapping (input_irrep, output_irrep) pairs to the corresponding basis
-        self._irreps_intertwiners_basis_memory = defaultdict(lambda: dict())
+        self._irreps_intertwiners_basis_memory = defaultdict(dict)
 
         # Store the computed intertwiners between general representations
         # - key = (filter size, sigma, rings)
